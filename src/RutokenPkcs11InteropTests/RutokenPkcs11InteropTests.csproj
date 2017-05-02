@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{84987BE4-7AC6-4430-BF04-80689EBD22A3}</ProjectGuid>
+    <ProjectGuid>{D23E3C51-EAA3-42B1-82BE-4F00FAD09B2B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RutokenPkcs11Interop</RootNamespace>
-    <AssemblyName>RutokenPkcs11Interop</AssemblyName>
+    <RootNamespace>RutokenPkcs11InteropTests</RootNamespace>
+    <AssemblyName>RutokenPkcs11InteropTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;bjjhghjhgjhg</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Pkcs11Interop, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Pkcs11Interop.3.3.0\lib\net45\Pkcs11Interop.dll</HintPath>
       <Private>True</Private>
@@ -44,15 +48,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Extended_CKA.cs" />
-    <Compile Include="Extended_CKD.cs" />
-    <Compile Include="Extended_CKK.cs" />
-    <Compile Include="Extended_CKM.cs" />
-    <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_DERIVE_PARAMS.cs" />
+    <Compile Include="LowLevelAPI41\Helpers.cs" />
+    <Compile Include="LowLevelAPI41\_02_GetInfoTest.cs" />
+    <Compile Include="LowLevelAPI41\_12_DigestTest.cs" />
+    <Compile Include="LowLevelAPI41\_20_EncryptAndDecryptTest.cs" />
+    <Compile Include="LowLevelAPI41\_21_SignAndVerifyTest.cs" />
+    <Compile Include="LowLevelAPI41\_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj">
+      <Project>{84987be4-7ac6-4430-bf04-80689ebd22a3}</Project>
+      <Name>RutokenPkcs11Interop</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
