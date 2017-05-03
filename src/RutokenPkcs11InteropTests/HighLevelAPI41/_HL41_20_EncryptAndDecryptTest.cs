@@ -2,18 +2,18 @@
 using System.IO;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI41;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RutokenPkcs11Interop;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI41
 {
-    [TestFixture()]
-    class _HL41_20_EncryptAndDecryptTest
+    [TestClass]
+    public class _HL41_20_EncryptAndDecryptTest
     {
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [Test()]
+        [TestMethod]
         public void _HL41_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -54,7 +54,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
         /// <summary>
         /// C_EncryptInit, C_EncryptUpdate, C_EncryptFinish, C_DecryptInit, C_DecryptUpdate and C_DecryptFinish test.
         /// </summary>
-        [Test()]
+        [TestMethod]
         public void _HL41_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

@@ -1,7 +1,7 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RutokenPkcs11Interop;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
@@ -9,13 +9,13 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
     /// <summary>
     /// C_DigestInit, C_Digest, C_DigestUpdate, C_DigestFinal and C_DigestKey tests.
     /// </summary>
-    [TestFixture()]
-    class _LL41_12_DigestTest
+    [TestClass]
+    public class _LL41_12_DigestTest
     {
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
-        [Test()]
+        [TestMethod]
         public void _LL41_12_01_Digest_SHA1_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -79,7 +79,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
-        [Test()]
+        [TestMethod]
         public void _LL41_12_02_Digest_Gost3411_12_512_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -146,7 +146,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
-        [Test()]
+        [TestMethod]
         public void _LL41_12_03_Digest_Gost3411_12_256_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -213,7 +213,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
-        [Test()]
+        [TestMethod]
         public void _LL41_12_04_Digest_Gost3411_94_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

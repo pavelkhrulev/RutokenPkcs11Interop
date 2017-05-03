@@ -1,7 +1,7 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RutokenPkcs11Interop;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
@@ -9,13 +9,13 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
     /// <summary>
     /// C_SignInit, C_Sign, C_SignUpdate, C_SignFinal, C_VerifyInit, C_Verify, C_VerifyUpdate and C_VerifyFinal tests.
     /// </summary>
-    [TestFixture()]
-    class _LL41_21_SignAndVerifyTest
+    [TestClass]
+    public class _LL41_21_SignAndVerifyTest
     {
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
-        [Test()]
+        [TestMethod]
         public void _LL41_21_01_SignAndVerify_Gost3410_01_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -127,7 +127,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
-        [Test()]
+        [TestMethod]
         public void _LL41_21_02_SignAndVerify_Gost3410_12_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

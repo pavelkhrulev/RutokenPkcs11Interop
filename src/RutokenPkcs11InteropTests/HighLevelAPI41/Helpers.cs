@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI41;
-using Net.Pkcs11Interop.LowLevelAPI41;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.HighLevelAPI41.MechanismParams;
-using Pkcs11 = Net.Pkcs11Interop.HighLevelAPI41.Pkcs11;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI41
 {

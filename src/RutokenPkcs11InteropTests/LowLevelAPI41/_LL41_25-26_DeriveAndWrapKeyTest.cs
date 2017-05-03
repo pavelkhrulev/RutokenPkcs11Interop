@@ -2,15 +2,15 @@
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using Net.Pkcs11Interop.LowLevelAPI41.MechanismParams;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RutokenPkcs11Interop;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
 {
-    [TestFixture()]
-    class _LL41_25_26_DeriveAndWrapKeyTest
+    [TestClass]
+    public class _LL41_25_26_DeriveAndWrapKeyTest
     {
-        [Test()]
+        [TestMethod]
         public void _LL41_25_26_01_DeriveAndWrap_VKO_Gost3410_01_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
