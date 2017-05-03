@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("RutokenPkcs11Interop")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Rutoken Api")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Aktiv")]
 [assembly: AssemblyProduct("RutokenPkcs11Interop")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
