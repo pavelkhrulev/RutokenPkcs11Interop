@@ -10,13 +10,13 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
     /// C_SignInit, C_Sign, C_SignUpdate, C_SignFinal, C_VerifyInit, C_Verify, C_VerifyUpdate and C_VerifyFinal tests.
     /// </summary>
     [TestFixture()]
-    class _21_SignAndVerifyTest
+    class _LL41_21_SignAndVerifyTest
     {
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
         [Test()]
-        public void _21_01_SignAndVerify_Gost3410_01_Test()
+        public void _LL41_21_01_SignAndVerify_Gost3410_01_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
@@ -48,13 +48,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                byte[] sourceData =
-                {
-                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                };
+                byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 
                 // Определение размера хэш-кода
                 uint digestLen = 0;
@@ -77,7 +71,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                // Инициализация операции подписи данны хпо алгоритму ГОСТ Р 34.10-2001
+                // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2001
                 CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410);
                 rv = pkcs11.C_SignInit(session, ref signMechanism, privKeyId);
                 if (rv != CKR.CKR_OK)
@@ -134,7 +128,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
         [Test()]
-        public void _21_02_SignAndVerify_Gost3410_12_Test()
+        public void _LL41_21_02_SignAndVerify_Gost3410_12_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
@@ -167,13 +161,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                byte[] sourceData =
-                {
-                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                   0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07
-                };
+                byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 
                 // Определение размера хэш-кода
                 uint digestLen = 0;
@@ -222,7 +210,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                // Проверить подпись для данных
+                // Проверка подписи для данных
                 rv = pkcs11.C_Verify(session, digest, Convert.ToUInt32(digest.Length), signature, Convert.ToUInt32(signature.Length));
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());

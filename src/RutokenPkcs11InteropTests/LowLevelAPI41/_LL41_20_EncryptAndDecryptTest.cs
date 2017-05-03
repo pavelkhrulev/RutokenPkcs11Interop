@@ -11,13 +11,13 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
     /// C_EncryptInit, C_Encrypt, C_EncryptUpdate, C_EncryptFinish, C_DecryptInit, C_Decrypt, C_DecryptUpdate and C_DecryptFinish tests.
     /// </summary>
     [TestFixture()]
-    class _20_EncryptAndDecryptTest
+    class _LL41_20_EncryptAndDecryptTest
     {
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
         [Test()]
-        public void _20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
+        public void _LL41_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
@@ -56,10 +56,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                byte[] sourceData = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                      0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
-                                      0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00 };
+                byte[] sourceData = TestData.Encrypt_Gost28147_89_ECB_SourceData;
 
                 // Получение длины массива с зашифрованными данными
                 uint encryptedDataLen = 0;
@@ -122,7 +119,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// C_EncryptInit, C_EncryptUpdate, C_EncryptFinish, C_DecryptInit, C_DecryptUpdate and C_DecryptFinish test.
         /// </summary>
         [Test()]
-        public void _20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
+        public void _LL41_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
@@ -156,22 +153,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
                 CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOST28147);
 
-                byte[] sourceData = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                      0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
-                                      0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                      0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
-                                      0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                      0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
-                                      0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x00,
-                                      0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-                                      0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
-                                      0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
-                                      0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09 };
+                byte[] sourceData = TestData.Encrypt_Gost28147_89_SourceData;
                 byte[] encryptedData = null;
                 byte[] decryptedData = null;
 
@@ -305,7 +287,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
         [Test()]
-        public void _20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
+        public void _LL41_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
             //if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
             //    Assert.Inconclusive("Test cannot be executed on this platform");

@@ -1,7 +1,6 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
-using Net.Pkcs11Interop.LowLevelAPI41.MechanismParams;
 using NUnit.Framework;
 using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.LowLevelAPI41.MechanismParams;

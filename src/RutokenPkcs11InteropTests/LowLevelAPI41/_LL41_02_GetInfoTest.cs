@@ -9,13 +9,13 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
     /// C_GetInfo tests.
     /// </summary>
     [TestFixture()]
-    class _02_GetInfoTest
+    class _LL41_02_GetInfoTest
     {
         /// <summary>
         /// Basic C_GetInfo test.
         /// </summary>
         [Test()]
-        public void _02_01_BasicGetInfoTest()
+        public void _LL41_02_01_BasicGetInfoTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");

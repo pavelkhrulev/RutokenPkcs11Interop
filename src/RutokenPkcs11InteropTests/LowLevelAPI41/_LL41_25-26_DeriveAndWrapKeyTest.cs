@@ -8,10 +8,10 @@ using RutokenPkcs11Interop;
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
 {
     [TestFixture()]
-    class _25_26_DeriveAndWrapKeyTest
+    class _LL41_25_26_DeriveAndWrapKeyTest
     {
         [Test()]
-        public void _25_26_01_DeriveAndWrap_VKO_Gost3410_01_Test()
+        public void _LL41_25_26_01_DeriveAndWrap_VKO_Gost3410_01_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
@@ -52,18 +52,6 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                // Шаблон для создания маскируемого ключа
-                CK_ATTRIBUTE[] sessionKeyTemplate = new CK_ATTRIBUTE[9];
-                sessionKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-                sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel);
-                sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
-                sessionKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
-                sessionKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
-                sessionKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
-                sessionKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_VALUE, sessionKeyValue);
-                sessionKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_EXTRACTABLE, true);
-                sessionKeyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_SENSITIVE, false);
-
                 // Генерация ключевой пары ГОСТ Р 34.10-2001 отправителя
                 uint senderPubKeyId = CK.CK_INVALID_HANDLE;
                 uint senderPrivKeyId = CK.CK_INVALID_HANDLE;
@@ -85,6 +73,18 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Assert.Fail(rv.ToString());
 
                 Assert.IsTrue(senderDerivedKeyId != CK.CK_INVALID_HANDLE);
+
+                // Шаблон для создания маскируемого ключа
+                CK_ATTRIBUTE[] sessionKeyTemplate = new CK_ATTRIBUTE[9];
+                sessionKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
+                sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel);
+                sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
+                sessionKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
+                sessionKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
+                sessionKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+                sessionKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_VALUE, sessionKeyValue);
+                sessionKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_EXTRACTABLE, true);
+                sessionKeyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_SENSITIVE, false);
 
                 // Выработка ключа, который будет замаскирован
                 uint sessionKeyId = CK.CK_INVALID_HANDLE;
@@ -136,7 +136,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 unwrappedKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_EXTRACTABLE, true);
                 unwrappedKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_SENSITIVE, false);
 
-                // Демаскировать сессионный ключ с помощью общего выработанного
+                // Демаскирование сессионного ключа с помощью общего выработанного
                 // ключа на стороне получателя
                 uint unwrappedKeyId = 0;
                 rv = pkcs11.C_UnwrapKey(session, ref wrapMechanism, recipientDerivedKeyId, wrappedKey, wrappedKeyLen,
