@@ -180,7 +180,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары ГОСТ Р 34.10-2012
                 uint pubKeyId = CK.CK_INVALID_HANDLE;
                 uint privKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGost512KeyPair(pkcs11, session, ref pubKeyId, ref privKeyId);
+                rv = Helpers.GenerateGost512KeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.Gost512KeyPairId1);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 

@@ -68,7 +68,10 @@ namespace RutokenPkcs11InteropTests
         public static string Gost512PrivateKeyLabel = @"Sample GOST R 34.10-2012(512) Private Key 1 (Aktiv Co.)";
 
         /* DEMO ID пары ключей #1 ГОСТ Р 34.10-2012(512) */
-        public static string Gost512KeyPairId = @"GOST R 34.10-2012(512) sample keypair 1 ID (Aktiv Co.)";
+        public static string Gost512KeyPairId1 = @"GOST R 34.10-2012(512) sample keypair 1 ID (Aktiv Co.)";
+
+        /* DEMO ID пары ключей #2 ГОСТ Р 34.10-2012(512) */
+        public static string Gost512KeyPairId2 = @"GOST R 34.10-2012(512) sample keypair 2 ID (Aktiv Co.)";
 
         /* DEMO-метка общего выработанного ключа */
         public static string DerivedKeyLabel = @"Derived GOST 28147-89 key";

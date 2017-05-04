@@ -153,7 +153,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             {
                 new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
                 new ObjectAttribute(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel),
-                new ObjectAttribute(CKA.CKA_ID, Settings.Gost512KeyPairId),
+                new ObjectAttribute(CKA.CKA_ID, Settings.Gost512KeyPairId1),
                 new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
                 new ObjectAttribute(CKA.CKA_TOKEN, true),
                 new ObjectAttribute(CKA.CKA_PRIVATE, false),
@@ -165,7 +165,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             {
                 new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
                 new ObjectAttribute(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel),
-                new ObjectAttribute(CKA.CKA_ID, Settings.Gost512KeyPairId),
+                new ObjectAttribute(CKA.CKA_ID, Settings.Gost512KeyPairId1),
                 new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
                 new ObjectAttribute(CKA.CKA_TOKEN, true),
                 new ObjectAttribute(CKA.CKA_PRIVATE, true),

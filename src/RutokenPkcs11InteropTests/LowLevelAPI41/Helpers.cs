@@ -177,7 +177,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='pubKeyId'>Output parameter for public key object handle</param>
         /// <param name='privKeyId'>Output parameter for private key object handle</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static CKR GenerateGost512KeyPair(Pkcs11 pkcs11, uint session, ref uint pubKeyId, ref uint privKeyId)
+        public static CKR GenerateGost512KeyPair(Pkcs11 pkcs11, uint session, ref uint pubKeyId, ref uint privKeyId, string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -185,7 +185,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             CK_ATTRIBUTE[] pubKeyTemplate = new CK_ATTRIBUTE[7];
             pubKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
             pubKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel);
-            pubKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.Gost512KeyPairId);
+            pubKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
             pubKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
             pubKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             pubKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
@@ -195,7 +195,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             CK_ATTRIBUTE[] privKeyTemplate = new CK_ATTRIBUTE[9];
             privKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
             privKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel);
-            privKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.Gost512KeyPairId);
+            privKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
             privKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
             privKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             privKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
@@ -226,12 +226,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             return rv;
         }
 
-        public static CKR DeriveKey(Pkcs11 pkcs11, uint session, uint pubKeyId, uint privKeyId, byte[] ukm, ref uint derivedKeyId)
+        public static CKR Derive_GostR3410_Key(Pkcs11 pkcs11, uint session, uint pubKeyId, uint privKeyId, byte[] ukm, ref uint derivedKeyId)
         {
             CKR rv = CKR.CKR_OK;
 
             // Шаблон для создания ключа обмена
-            CK_ATTRIBUTE[] derivedKeyTemplate = new CK_ATTRIBUTE[8];
+            var derivedKeyTemplate = new CK_ATTRIBUTE[8];
             derivedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
             derivedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.DerivedKeyLabel);
             derivedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
@@ -242,7 +242,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             derivedKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_SENSITIVE, false);
 
             // Получаем публичный ключ по его Id
-            CK_ATTRIBUTE[] valueTemplate = new CK_ATTRIBUTE[1];
+            var valueTemplate = new CK_ATTRIBUTE[1];
             valueTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_VALUE);
             // In LowLevelAPI we have to allocate unmanaged memory for attribute value
             valueTemplate[0].value = UnmanagedMemory.Allocate(Convert.ToInt32(64));
@@ -276,16 +276,76 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             if (rv != CKR.CKR_OK)
                 Assert.Fail(rv.ToString());
 
-            // Do something interesting with derived key
-            //Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
 
-            //// In LowLevelAPI we have to free all unmanaged memory we previously allocated
-            //UnmanagedMemory.Free(ref mechanismParams.Data);
-            //mechanismParams.Len = 0;
+            // In LowLevelAPI we have to free all unmanaged memory we previously allocated
+            UnmanagedMemory.Free(ref deriveMechanismParams.PublicData);
+            deriveMechanismParams.PublicDataLen = 0;
 
-            //// In LowLevelAPI we have to free unmanaged memory taken by mechanism parameter
-            //UnmanagedMemory.Free(ref mechanism.Parameter);
-            //mechanism.ParameterLen = 0;
+            UnmanagedMemory.Free(ref deriveMechanismParams.UKM);
+            deriveMechanismParams.UKMLen = 0;
+
+            // In LowLevelAPI we have to free unmanaged memory taken by mechanism parameter
+            UnmanagedMemory.Free(ref deriveMechanism.Parameter);
+            deriveMechanism.ParameterLen = 0;
+
+            return rv;
+        }
+
+        public static CKR Derive_GostR3410_12_Key(Pkcs11 pkcs11, uint session, uint pubKeyId, uint privKeyId, byte[] ukm, ref uint derivedKeyId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для создания ключа обмена
+            var derivedKeyTemplate = new CK_ATTRIBUTE[8];
+            derivedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
+            derivedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.DerivedKeyLabel);
+            derivedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
+            derivedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
+            derivedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
+            derivedKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+            derivedKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_EXTRACTABLE, true);
+            derivedKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_SENSITIVE, false);
+
+            // Получаем публичный ключ по его Id
+            CK_ATTRIBUTE[] valueTemplate = new CK_ATTRIBUTE[1];
+            valueTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_VALUE);
+            // In LowLevelAPI we have to allocate unmanaged memory for attribute value
+            valueTemplate[0].value = UnmanagedMemory.Allocate(Convert.ToInt32(128));
+            valueTemplate[0].valueLen = 128;
+
+            // Get attribute value in second call
+            rv = pkcs11.C_GetAttributeValue(session, pubKeyId, valueTemplate, Convert.ToUInt32(valueTemplate.Length));
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+            byte[] publicKey = UnmanagedMemory.Read(valueTemplate[0].value, Convert.ToInt32(valueTemplate[0].valueLen));
+
+            // Specify mechanism parameters
+            // Note that we are allocating unmanaged memory that will have to be freed later
+            var deriveMechanismParams = new CK_GOSTR3410_12_DERIVE_PARAMS
+            {
+                Kdf = (uint) Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
+                PublicDataLen = Convert.ToUInt32(publicKey.Length),
+                PublicData = publicKey,
+                UKM = ukm,
+                UKMLen = Convert.ToUInt32(ukm.Length)
+            };
+
+            // Specify derivation mechanism with parameters
+            // Note that CkmUtils.CreateMechanism() automaticaly copies mechanismParams into newly allocated unmanaged memory
+            CK_MECHANISM deriveMechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
+
+            // Derive key
+            rv = pkcs11.C_DeriveKey(session, ref deriveMechanism, privKeyId, derivedKeyTemplate,
+                Convert.ToUInt32(derivedKeyTemplate.Length), ref derivedKeyId);
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
+
+            // In LowLevelAPI we have to free unmanaged memory taken by mechanism parameter
+            UnmanagedMemory.Free(ref deriveMechanism.Parameter);
+            deriveMechanism.ParameterLen = 0;
 
             return rv;
         }

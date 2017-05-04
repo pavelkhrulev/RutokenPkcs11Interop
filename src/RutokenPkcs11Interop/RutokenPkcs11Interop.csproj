@@ -49,6 +49,7 @@
     <Compile Include="Extended_CKK.cs" />
     <Compile Include="Extended_CKM.cs" />
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410DeriveParams.cs" />
+    <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_12_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_DERIVE_PARAMS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -12,7 +12,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
     public class _HL41_25_26_DeriveAndWrapKeyTest
     {
         [TestMethod]
-        public void _LL41_25_26_01_DeriveAndWrap_VKO_Gost3410_01_Test()
+        public void _HL41_25_26_01_DeriveAndWrap_VKO_Gost3410_01_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
