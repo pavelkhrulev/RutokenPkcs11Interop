@@ -103,6 +103,12 @@ namespace RutokenPkcs11InteropTests
         /* Размер симметричного ключа ГОСТ 28147-89 в байтах */
         public static int GOST_28147_KEY_SIZE = 32;
 
+        /* Размер открытого ключа ГОСТ Р 34.10-2001 в байтах */
+        public static int GOST_3410_KEY_SIZE = 64;
+
+        /* Размер открытого ключа ГОСТ Р 34.10-2012(512) в байтах */
+        public static int GOST_3410_12_512_KEY_SIZE = 128;
+
         /// <summary>
         /// Arguments passed to the C_Initialize function in LowLevelAPI41 tests.
         /// </summary>

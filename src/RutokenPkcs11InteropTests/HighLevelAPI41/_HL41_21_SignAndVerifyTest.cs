@@ -91,7 +91,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                     // Генерация ключевой пары ГОСТ Р 34.10-2012
                     ObjectHandle publicKey = null;
                     ObjectHandle privateKey = null;
-                    Helpers.GenerateGost512KeyPair(session, out publicKey, out privateKey);
+                    Helpers.GenerateGost512KeyPair(session, out publicKey, out privateKey, Settings.Gost512KeyPairId1);
 
                     // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012(512)
                     Mechanism signMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512);

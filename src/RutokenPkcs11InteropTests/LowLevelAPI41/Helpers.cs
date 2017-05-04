@@ -245,8 +245,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             var valueTemplate = new CK_ATTRIBUTE[1];
             valueTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_VALUE);
             // In LowLevelAPI we have to allocate unmanaged memory for attribute value
-            valueTemplate[0].value = UnmanagedMemory.Allocate(Convert.ToInt32(64));
-            valueTemplate[0].valueLen = 64;
+            valueTemplate[0].value = UnmanagedMemory.Allocate(Settings.GOST_3410_KEY_SIZE);
+            valueTemplate[0].valueLen = Convert.ToUInt32(Settings.GOST_3410_KEY_SIZE);
 
             // Get attribute value in second call
             rv = pkcs11.C_GetAttributeValue(session, pubKeyId, valueTemplate, Convert.ToUInt32(valueTemplate.Length));
@@ -311,8 +311,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             CK_ATTRIBUTE[] valueTemplate = new CK_ATTRIBUTE[1];
             valueTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_VALUE);
             // In LowLevelAPI we have to allocate unmanaged memory for attribute value
-            valueTemplate[0].value = UnmanagedMemory.Allocate(Convert.ToInt32(128));
-            valueTemplate[0].valueLen = 128;
+            valueTemplate[0].value = UnmanagedMemory.Allocate(Settings.GOST_3410_12_512_KEY_SIZE);
+            valueTemplate[0].valueLen = Convert.ToUInt32(Settings.GOST_3410_12_512_KEY_SIZE);
 
             // Get attribute value in second call
             rv = pkcs11.C_GetAttributeValue(session, pubKeyId, valueTemplate, Convert.ToUInt32(valueTemplate.Length));
@@ -326,10 +326,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             {
                 Kdf = (uint) Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
                 PublicDataLen = Convert.ToUInt32(publicKey.Length),
-                PublicData = publicKey,
-                UKM = ukm,
-                UKMLen = Convert.ToUInt32(ukm.Length)
+                PublicData = new byte[Settings.GOST_3410_12_512_KEY_SIZE],
+                UKMLen = Convert.ToUInt32(ukm.Length),
+                UKM = new byte[Settings.UKM_LENGTH],
             };
+            Array.Copy(publicKey, deriveMechanismParams.PublicData, publicKey.Length);
+            Array.Copy(ukm, deriveMechanismParams.UKM, ukm.Length);
 
             // Specify derivation mechanism with parameters
             // Note that CkmUtils.CreateMechanism() automaticaly copies mechanismParams into newly allocated unmanaged memory

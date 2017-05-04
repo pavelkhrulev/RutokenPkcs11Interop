@@ -146,14 +146,14 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
         /// <param name = 'session' > Read - write session with user logged in</param>
         /// <param name = 'publicKeyHandle' > Output parameter for public key object handle</param>
         /// <param name = 'privateKeyHandle' > Output parameter for private key object handle</param>
-        public static void GenerateGost512KeyPair(Session session, out ObjectHandle publicKeyHandle, out ObjectHandle privateKeyHandle)
+        public static void GenerateGost512KeyPair(Session session, out ObjectHandle publicKeyHandle, out ObjectHandle privateKeyHandle, string keyPairId)
         {
             // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2001
             List<ObjectAttribute> pubKeyAttributes = new List<ObjectAttribute>()
             {
                 new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
                 new ObjectAttribute(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel),
-                new ObjectAttribute(CKA.CKA_ID, Settings.Gost512KeyPairId1),
+                new ObjectAttribute(CKA.CKA_ID, keyPairId),
                 new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
                 new ObjectAttribute(CKA.CKA_TOKEN, true),
                 new ObjectAttribute(CKA.CKA_PRIVATE, false),
@@ -165,7 +165,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             {
                 new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
                 new ObjectAttribute(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel),
-                new ObjectAttribute(CKA.CKA_ID, Settings.Gost512KeyPairId1),
+                new ObjectAttribute(CKA.CKA_ID, keyPairId),
                 new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
                 new ObjectAttribute(CKA.CKA_TOKEN, true),
                 new ObjectAttribute(CKA.CKA_PRIVATE, true),
@@ -184,7 +184,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             Assert.IsTrue(privateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
         }
 
-        public static void DeriveKey(Session session, ObjectHandle publicKeyHandle, ObjectHandle privateKeyHandle,
+        public static void Derive_GostR3410_Key(Session session, ObjectHandle publicKeyHandle, ObjectHandle privateKeyHandle,
             byte[] ukm, out ObjectHandle derivedKeyHandle)
         {
             // Шаблон для создания ключа обмена
@@ -214,6 +214,43 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
 
             // Определяем механизм наследования ключа
             Mechanism deriveMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_DERIVE, deriveMechanismParams);
+
+            // Наследуем ключ
+            derivedKeyHandle = session.DeriveKey(deriveMechanism, privateKeyHandle, derivedKeyAttributes);
+
+            Assert.IsTrue(derivedKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+        }
+
+        public static void Derive_GostR3410_12_Key(Session session, ObjectHandle publicKeyHandle, ObjectHandle privateKeyHandle,
+            byte[] ukm, out ObjectHandle derivedKeyHandle)
+        {
+            // Шаблон для создания ключа обмена
+            List<ObjectAttribute> derivedKeyAttributes = new List<ObjectAttribute>
+            {
+                new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+                new ObjectAttribute(CKA.CKA_LABEL, Settings.DerivedKeyLabel),
+                new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147),
+                new ObjectAttribute(CKA.CKA_TOKEN, false),
+                new ObjectAttribute(CKA.CKA_MODIFIABLE, true),
+                new ObjectAttribute(CKA.CKA_PRIVATE, true),
+                new ObjectAttribute(CKA.CKA_EXTRACTABLE, true),
+                new ObjectAttribute(CKA.CKA_SENSITIVE, false)
+            };
+
+            // Получаем публичный ключ по его Id
+            List<CKA> attributes = new List<CKA>
+            {
+                CKA.CKA_VALUE
+            };
+            List<ObjectAttribute> publicKeyAttributes = session.GetAttributeValue(publicKeyHandle, attributes);
+
+            // Определение параметров механизма наследования ключа
+            var deriveMechanismParams =
+                new CkGostR3410_12_DeriveParams(
+                    (uint)Extended_CKM.CKM_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
+
+            // Определяем механизм наследования ключа
+            Mechanism deriveMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
 
             // Наследуем ключ
             derivedKeyHandle = session.DeriveKey(deriveMechanism, privateKeyHandle, derivedKeyAttributes);
