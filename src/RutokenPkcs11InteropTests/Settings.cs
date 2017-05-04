@@ -38,6 +38,13 @@ namespace RutokenPkcs11InteropTests
         /// </summary>
         public static string NormalUserPin = @"12345678";
 
+        public static string NewUserPin = @"55555555";
+
+        public static string WrongUserPin = @"00000000";
+
+        /* DEMO метка Rutoken ("длинная") */
+        public static string TokenLongLabel = @"!!!Sample Rutoken Long-long-long-long-long label!!!";
+
         /* DEMO метка Rutoken ("обычная") */
         public static string TokenStdLabel = @"!!!Sample Rutoken label!!!";
 
@@ -124,6 +131,12 @@ namespace RutokenPkcs11InteropTests
         /* Размер открытого ключа ГОСТ Р 34.10-2012(512) в байтах */
         public static int GOST_3410_12_512_KEY_SIZE = 128;
 
+        /* Максимальное количество попыток ввода PIN-кода для Администратора */
+        public static int MAX_ADMIN_RETRY_COUNT = 10;
+
+        /* Максимальное количество попыток доступа для Пользователя */
+        public static int MAX_USER_RETRY_COUNT = 10;
+
         /// <summary>
         /// Arguments passed to the C_Initialize function in LowLevelAPI41 tests.
         /// </summary>
@@ -138,6 +151,15 @@ namespace RutokenPkcs11InteropTests
         /// PIN of the normal user.
         /// </summary>
         public static byte[] NormalUserPinArray = null;
+
+        public static byte[] NewUserPinArray = null;
+
+        public static byte[] WrongUserPinArray = null;
+
+        public static byte[] TokenLongLabelArray = null;
+
+        public static byte[] TokenStdLabelArray = null;
+
 
         /// <summary>
         /// Static class constructor
@@ -159,6 +181,10 @@ namespace RutokenPkcs11InteropTests
             // Convert strings to byte arrays
             SecurityOfficerPinArray = ConvertUtils.Utf8StringToBytes(SecurityOfficerPin);
             NormalUserPinArray = ConvertUtils.Utf8StringToBytes(NormalUserPin);
+            NewUserPinArray = ConvertUtils.Utf8StringToBytes(NewUserPin);
+            WrongUserPinArray = ConvertUtils.Utf8StringToBytes(WrongUserPin);
+            TokenLongLabelArray = ConvertUtils.Utf8StringToBytes(TokenLongLabel);
+            TokenStdLabelArray = ConvertUtils.Utf8StringToBytes(TokenStdLabel);
         }
     }
 }
