@@ -38,6 +38,9 @@ namespace RutokenPkcs11InteropTests
         /// </summary>
         public static string NormalUserPin = @"12345678";
 
+        /* DEMO метка Rutoken ("обычная") */
+        public static string TokenStdLabel = @"!!!Sample Rutoken label!!!";
+
         /// <summary>
         /// Application name that is used as a label for all objects created by these tests.
         /// </summary>
