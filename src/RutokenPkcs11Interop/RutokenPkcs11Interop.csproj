@@ -52,6 +52,8 @@
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
     <Compile Include="LowLevelAPI41\CK_RUTOKEN_INIT_PARAM.cs" />
     <Compile Include="LowLevelAPI41\CK_TOKEN_INFO_EXTENDED.cs" />
+    <Compile Include="LowLevelAPI41\CK_VOLUME_INFO_EXTENDED.cs" />
+    <Compile Include="LowLevelAPI41\CK_VOLUME_FORMAT_INFO_EXTENDED.cs" />
     <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_12_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI41\Pkcs11Extensions.cs" />
