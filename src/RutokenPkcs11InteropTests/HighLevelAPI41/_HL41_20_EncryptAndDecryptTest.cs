@@ -113,5 +113,54 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                 }
             }
         }
+
+        /// <summary>
+        /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
+        /// </summary>
+        [TestMethod]
+        public void _HL41_20_04_EncryptAndDecrypt_RSA_Test()
+        {
+            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            {
+                // Установление соединения с Рутокен в первом доступном слоте
+                Slot slot = Helpers.GetUsableSlot(pkcs11);
+
+                // Открытие RW сессии
+                using (Session session = slot.OpenSession(false))
+                {
+                    // Выполнение аутентификации пользователя
+                    session.Login(CKU.CKU_USER, Settings.NormalUserPin);
+
+                    // Генерация ключей для RSA шифрования
+                    ObjectHandle privateKeyHandle = null;
+                    ObjectHandle publicKeyHandle = null;
+                    Helpers.GenerateRSAKeyPair(session, out publicKeyHandle, out privateKeyHandle, Settings.RsaKeyPairId);
+
+                    // Инициализация механизма шифрования
+                    var mechanism = new Mechanism(CKM.CKM_RSA_PKCS);
+
+                    byte[] sourceData = TestData.Encrypt_RSA_SourceData;
+
+                    // Получение зашифрованных данных
+                    byte[] encryptedData = session.Encrypt(mechanism, publicKeyHandle, sourceData);
+
+                    // Получение расшифрованных данных
+                    byte[] decryptedData = session.Decrypt(mechanism, privateKeyHandle, encryptedData);
+
+                    // Проверка результата
+                    Assert.IsTrue(Convert.ToBase64String(sourceData) == Convert.ToBase64String(decryptedData));
+
+                    // Уничтожение созданных RSA ключей
+                    session.DestroyObject(privateKeyHandle);
+                    session.DestroyObject(publicKeyHandle);
+
+                    // Завершение сессии
+                    session.Logout();
+                }
+            }
+        }
     }
 }

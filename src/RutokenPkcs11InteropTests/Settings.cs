@@ -43,6 +43,15 @@ namespace RutokenPkcs11InteropTests
         /// </summary>
         public static string ApplicationName = @"RutokenPkcs11Interop";
 
+        /* DEMO-метка открытого ключа RSA */
+        public static string RsaPublicKeyLabel = @"Sample RSA Public Key (Aktiv Co.)";
+
+        /* DEMO-метка закрытого ключа RSA */
+        public static string RsaPrivateKeyLabel = @"Sample RSA Private Key (Aktiv Co.)";
+
+        /* DEMO ID пары ключей RSA */
+        public static string RsaKeyPairId = @"RSA sample keypair ID (Aktiv Co.)";
+
         /* DEMO-метка симметричного ключа ГОСТ 28147-89 */
         public static string GostSecretKeyLabel = @"Sample GOST 28147 - 89 Secret Key(Aktiv Co.)";
 
@@ -81,6 +90,9 @@ namespace RutokenPkcs11InteropTests
 
         /* DEMO-метка для демаскированного ключа */
         public static string UnwrappedKeyLabel = @"Unwrapped GOST 28147-89 key";
+
+        /* Длина модуля ключа RSA в битах */
+        public static uint RsaModulusBits = 512;
 
         /* Набор параметров КриптоПро A алгоритма ГОСТ 28147-89 */
         public static byte[] Gost28147Parameters = { 0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x1f, 0x01 };

@@ -184,6 +184,50 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             Assert.IsTrue(privateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
         }
 
+        /// <summary>
+        /// Generates asymetric key pair.
+        /// </summary>
+        /// <param name = 'session' > Read - write session with user logged in</param>
+        /// <param name = 'publicKeyHandle' > Output parameter for public key object handle</param>
+        /// <param name = 'privateKeyHandle' > Output parameter for private key object handle</param>
+        /// <param name="keyPairId"></param>
+        public static void GenerateRSAKeyPair(Session session, out ObjectHandle publicKeyHandle, out ObjectHandle privateKeyHandle, string keyPairId)
+        {
+            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2001
+            var publicKeyAttributes = new List<ObjectAttribute>()
+            {
+                new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
+                new ObjectAttribute(CKA.CKA_LABEL, Settings.RsaPublicKeyLabel),
+                new ObjectAttribute(CKA.CKA_ID, keyPairId),
+                new ObjectAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA),
+                new ObjectAttribute(CKA.CKA_TOKEN, true),
+                new ObjectAttribute(CKA.CKA_ENCRYPT, true),
+                new ObjectAttribute(CKA.CKA_PRIVATE, false),
+                new ObjectAttribute(CKA.CKA_MODULUS_BITS, Settings.RsaModulusBits)
+            };
+
+            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001
+            var privateKeyAttributes = new List<ObjectAttribute>()
+            {
+                new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+                new ObjectAttribute(CKA.CKA_LABEL, Settings.RsaPrivateKeyLabel),
+                new ObjectAttribute(CKA.CKA_ID, keyPairId),
+                new ObjectAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA),
+                new ObjectAttribute(CKA.CKA_TOKEN, true),
+                new ObjectAttribute(CKA.CKA_DECRYPT, true),
+                new ObjectAttribute(CKA.CKA_PRIVATE, true),
+            };
+
+            // Specify key generation mechanism
+            Mechanism mechanism = new Mechanism(CKM.CKM_RSA_PKCS_KEY_PAIR_GEN);
+
+            // Generate key pair
+            session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
+
+            Assert.IsTrue(publicKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+        }
+
         public static void Derive_GostR3410_Key(Session session, ObjectHandle publicKeyHandle, ObjectHandle privateKeyHandle,
             byte[] ukm, out ObjectHandle derivedKeyHandle)
         {

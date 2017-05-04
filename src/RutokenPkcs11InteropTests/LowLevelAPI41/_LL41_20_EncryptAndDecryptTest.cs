@@ -389,5 +389,111 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             //        Assert.Fail(rv.ToString());
             //}
         }
+
+        [TestMethod]
+        public void _LL41_20_04_EncryptAndDecrypt_RSA_Test()
+        {
+            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
+            CKR rv = CKR.CKR_OK;
+
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            {
+                rv = pkcs11.C_Initialize(Settings.InitArgs41);
+                if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
+                    Assert.Fail(rv.ToString());
+
+                // Установление соединения с Рутокен в первом доступном слоте
+                uint slotId = Helpers.GetUsableSlot(pkcs11);
+
+                uint session = CK.CK_INVALID_HANDLE;
+                rv = pkcs11.C_OpenSession(slotId, (CKF.CKF_SERIAL_SESSION | CKF.CKF_RW_SESSION), IntPtr.Zero, IntPtr.Zero, ref session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Выполнение аутентификации пользователя
+                rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Генерация ключей для RSA шифрования
+                uint privateKeyId = CK.CK_INVALID_HANDLE;
+                uint publicKeyId = CK.CK_INVALID_HANDLE;
+                rv = Helpers.GenerateRSAKeyPair(pkcs11, session, ref publicKeyId, ref privateKeyId, Settings.RsaKeyPairId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_RSA_PKCS);
+
+                // Инициализация операции шифрования
+                rv = pkcs11.C_EncryptInit(session, ref mechanism, publicKeyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                byte[] sourceData = TestData.Encrypt_RSA_SourceData;
+
+                // Получение длины массива с зашифрованными данными
+                uint encryptedDataLen = 0;
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), null, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(encryptedDataLen > 0);
+
+                // Выделение памяти для массива с зашифрованными данными
+                byte[] encryptedData = new byte[encryptedDataLen];
+
+                // Получение зашифрованных данных
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), encryptedData, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Инициализация операции расишфрования
+                rv = pkcs11.C_DecryptInit(session, ref mechanism, privateKeyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Получение длины массива с расшифрованными данными
+                uint decryptedDataLen = 0;
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), null, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(decryptedDataLen > 0);
+
+                // Выделение памяти для массива с расшифрованными данными
+                byte[] decryptedData = new byte[decryptedDataLen];
+
+                // Получение расшифрованных данных
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), decryptedData, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(Convert.ToBase64String(sourceData) == Convert.ToBase64String(decryptedData));
+
+                // Уничтожение созданных ключей
+                rv = pkcs11.C_DestroyObject(session, privateKeyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_DestroyObject(session, publicKeyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Завершение сессии
+                rv = pkcs11.C_Logout(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_CloseSession(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Finalize(IntPtr.Zero);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+            }
+        }
     }
 }

@@ -85,7 +85,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             CKR rv = CKR.CKR_OK;
 
             // Шаблон для создания симметричного ключа ГОСТ 28147-89
-            CK_ATTRIBUTE[] template = new CK_ATTRIBUTE[9];
+            var template = new CK_ATTRIBUTE[9];
             template[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
             template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.GostSecretKeyLabel);
             template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.GostSecretKeyId);
@@ -125,7 +125,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             CKR rv = CKR.CKR_OK;
 
             // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2001
-            CK_ATTRIBUTE[] pubKeyTemplate = new CK_ATTRIBUTE[7];
+            var pubKeyTemplate = new CK_ATTRIBUTE[7];
             pubKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
             pubKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.GostPublicKeyLabel);
             pubKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
@@ -135,7 +135,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             pubKeyTemplate[6] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters);
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001
-            CK_ATTRIBUTE[] privKeyTemplate = new CK_ATTRIBUTE[9];
+            var privKeyTemplate = new CK_ATTRIBUTE[9];
             privKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
             privKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.GostPrivateKeyLabel);
             privKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
@@ -182,7 +182,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             CKR rv = CKR.CKR_OK;
 
             // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012
-            CK_ATTRIBUTE[] pubKeyTemplate = new CK_ATTRIBUTE[7];
+            var pubKeyTemplate = new CK_ATTRIBUTE[7];
             pubKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
             pubKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel);
             pubKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
@@ -192,7 +192,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             pubKeyTemplate[6] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
-            CK_ATTRIBUTE[] privKeyTemplate = new CK_ATTRIBUTE[9];
+            var privKeyTemplate = new CK_ATTRIBUTE[9];
             privKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
             privKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel);
             privKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
@@ -221,6 +221,63 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             {
                 UnmanagedMemory.Free(ref pubKeyTemplate[i].value);
                 pubKeyTemplate[i].valueLen = 0;
+            }
+
+            return rv;
+        }
+
+        /// <summary>
+        /// Generates asymetric key pair.
+        /// </summary>
+        /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
+        /// <param name='session'>Read-write session with user logged in</param>
+        /// <param name='pubKeyId'>Output parameter for public key object handle</param>
+        /// <param name='privKeyId'>Output parameter for private key object handle</param>
+        /// <returns>Return value of C_GenerateKeyPair</returns>
+        public static CKR GenerateRSAKeyPair(Pkcs11 pkcs11, uint session, ref uint pubKeyId, ref uint privKeyId,
+            string keyPairId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для генерации открытого ключа RSA
+            var publicKeyTemplate = new CK_ATTRIBUTE[8];
+            publicKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
+            publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.RsaPublicKeyLabel);
+            publicKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
+            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA);
+            publicKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            publicKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
+            publicKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
+            publicKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_MODULUS_BITS, Settings.RsaModulusBits);
+
+            // Шаблон для генерации закрытого ключа RSA
+            var privateKeyTemplate = new CK_ATTRIBUTE[7];
+            privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
+            privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.RsaPrivateKeyLabel);
+            privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
+            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_RSA);
+            privateKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            privateKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);
+            privateKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_RSA_PKCS_KEY_PAIR_GEN);
+
+            // Генерация ключевой пары
+            rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt32(publicKeyTemplate.Length),
+                privateKeyTemplate, Convert.ToUInt32(privateKeyTemplate.Length),
+                ref pubKeyId, ref privKeyId);
+
+            // In LowLevelAPI we have to free unmanaged memory taken by attributes
+            for (int i = 0; i < privateKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref privateKeyTemplate[i].value);
+                privateKeyTemplate[i].valueLen = 0;
+            }
+
+            for (int i = 0; i < publicKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref publicKeyTemplate[i].value);
+                publicKeyTemplate[i].valueLen = 0;
             }
 
             return rv;
