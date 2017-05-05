@@ -61,6 +61,13 @@
     <Compile Include="HighLevelAPI41\_HL41_20_EncryptAndDecryptTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_21_SignAndVerifyTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="HighLevelAPI\Helpers.cs" />
+    <Compile Include="HighLevelAPI\_HL_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="HighLevelAPI\_HL_21_SignAndVerifyTest.cs" />
+    <Compile Include="HighLevelAPI\_HL_20_EncryptAndDecryptTest.cs" />
+    <Compile Include="HighLevelAPI\_HL_12_DigestTest.cs" />
+    <Compile Include="HighLevelAPI\_HL_09_InitTokenAndPinTest.cs" />
+    <Compile Include="HighLevelAPI\_HL_02_GetInfoTest.cs" />
     <Compile Include="LowLevelAPI41\Helpers.cs" />
     <Compile Include="LowLevelAPI41\_LL41_02_GetInfoTest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_04_TokenInfoTest.cs" />
