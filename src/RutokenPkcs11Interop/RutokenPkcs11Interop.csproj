@@ -48,8 +48,14 @@
     <Compile Include="Common\Extended_CKD.cs" />
     <Compile Include="Common\Extended_CKK.cs" />
     <Compile Include="Common\Extended_CKM.cs" />
+    <Compile Include="Common\RutokenBodyColor.cs" />
+    <Compile Include="Common\RutokenClass.cs" />
+    <Compile Include="Common\RutokenType.cs" />
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410DeriveParams.cs" />
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
+    <Compile Include="HighLevelAPI41\RutokenInitParam.cs" />
+    <Compile Include="HighLevelAPI41\SlotExtensions.cs" />
+    <Compile Include="HighLevelAPI41\TokenInfoExtended.cs" />
     <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410DeriveParams.cs" />
     <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
     <Compile Include="LowLevelAPI41\CK_RUTOKEN_INIT_PARAM.cs" />
@@ -61,7 +67,7 @@
     <Compile Include="LowLevelAPI41\Pkcs11Extensions.cs" />
     <Compile Include="LowLevelAPI41\RutokenDelegates.cs" />
     <Compile Include="LowLevelAPI41\RutokenNativeMethods.cs" />
-    <Compile Include="LowLevelAPI41\RutokenFlags.cs" />
+    <Compile Include="Common\RutokenFlag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

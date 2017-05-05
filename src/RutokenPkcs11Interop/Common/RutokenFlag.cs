@@ -3,7 +3,7 @@
 namespace RutokenPkcs11Interop.LowLevelAPI41
 {
     [Flags]
-    public enum RutokenFlags : uint
+    public enum RutokenFlag : uint
     {
         AdminChangeUserPin = 0x00000001,
         UserChangeUserPin = 0x00000002,

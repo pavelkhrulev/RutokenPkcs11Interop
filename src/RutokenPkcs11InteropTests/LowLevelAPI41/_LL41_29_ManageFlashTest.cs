@@ -38,7 +38,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                var isFlashMemoryAvailable = tokenInfo.Flags & (uint)RutokenFlags.HasFlashDrive;
+                var isFlashMemoryAvailable = tokenInfo.Flags & (uint)RutokenFlag.HasFlashDrive;
                 Assert.IsTrue(Convert.ToBoolean(isFlashMemoryAvailable));
 
                 rv = pkcs11.C_Finalize(IntPtr.Zero);
