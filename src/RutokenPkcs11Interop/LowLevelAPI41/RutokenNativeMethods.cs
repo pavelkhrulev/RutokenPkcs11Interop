@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
 
 namespace RutokenPkcs11Interop.LowLevelAPI41
 {
@@ -18,5 +20,13 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_GetTokenName(uint session, byte[] label, ref uint labelLen);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        internal static extern uint C_EX_CreateCSR(uint session, uint publicKey,
+            IntPtr dn, uint dnLength,
+            out IntPtr csr, out uint csrLength,
+            uint privateKey,
+            IntPtr attributes, uint attributesLength,
+            IntPtr extensions, uint extensionsLength);
     }
 }
