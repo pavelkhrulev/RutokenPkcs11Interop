@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
+using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI41;
 
 namespace RutokenPkcs11Interop.HighLevelAPI41

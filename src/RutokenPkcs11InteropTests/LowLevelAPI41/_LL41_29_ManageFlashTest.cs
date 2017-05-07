@@ -3,6 +3,7 @@ using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
+using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI41;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41

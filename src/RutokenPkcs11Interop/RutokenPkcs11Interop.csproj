@@ -59,6 +59,10 @@
     <Compile Include="HighLevelAPI41\TokenInfoExtended.cs" />
     <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410DeriveParams.cs" />
     <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
+    <Compile Include="HighLevelAPI\RutokenInitParam.cs" />
+    <Compile Include="HighLevelAPI\SessionExtensions.cs" />
+    <Compile Include="HighLevelAPI\SlotExtensions.cs" />
+    <Compile Include="HighLevelAPI\TokenInfoExtended.cs" />
     <Compile Include="LowLevelAPI41\CK_RUTOKEN_INIT_PARAM.cs" />
     <Compile Include="LowLevelAPI41\CK_TOKEN_INFO_EXTENDED.cs" />
     <Compile Include="LowLevelAPI41\CK_VOLUME_INFO_EXTENDED.cs" />

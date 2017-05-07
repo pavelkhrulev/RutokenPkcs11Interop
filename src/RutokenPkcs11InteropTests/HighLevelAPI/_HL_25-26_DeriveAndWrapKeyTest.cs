@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.MechanismParams;
 using RutokenPkcs11Interop;
+using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {

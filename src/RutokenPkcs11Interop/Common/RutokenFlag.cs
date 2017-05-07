@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RutokenPkcs11Interop.LowLevelAPI41
+namespace RutokenPkcs11Interop.Common
 {
     [Flags]
     public enum RutokenFlag : uint
