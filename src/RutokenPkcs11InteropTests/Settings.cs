@@ -132,10 +132,10 @@ namespace RutokenPkcs11InteropTests
         public static int GOST_3410_12_512_KEY_SIZE = 128;
 
         /* Максимальное количество попыток ввода PIN-кода для Администратора */
-        public static int MAX_ADMIN_RETRY_COUNT = 10;
+        public static uint MAX_ADMIN_RETRY_COUNT = 10;
 
         /* Максимальное количество попыток доступа для Пользователя */
-        public static int MAX_USER_RETRY_COUNT = 10;
+        public static uint MAX_USER_RETRY_COUNT = 10;
 
         /// <summary>
         /// Arguments passed to the C_Initialize function in LowLevelAPI41 tests.

@@ -100,8 +100,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     MinAdminPinLen = 6,
                     MinUserPinLen = 6,
                     ChangeUserPINPolicy = Convert.ToUInt32(RutokenFlag.AdminChangeUserPin | RutokenFlag.UserChangeUserPin),
-                    MaxAdminRetryCount = Convert.ToUInt32(Settings.MAX_ADMIN_RETRY_COUNT),
-                    MaxUserRetryCount = Convert.ToUInt32(Settings.MAX_USER_RETRY_COUNT),
+                    MaxAdminRetryCount = Settings.MAX_ADMIN_RETRY_COUNT,
+                    MaxUserRetryCount = Settings.MAX_USER_RETRY_COUNT,
                     LabelLen = Convert.ToUInt32(Settings.TokenStdLabelArray.Length),
                     SmMode = 0
                 };

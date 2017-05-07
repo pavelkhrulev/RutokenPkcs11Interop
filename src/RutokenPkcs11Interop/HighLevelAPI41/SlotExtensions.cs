@@ -22,7 +22,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             return new TokenInfoExtended(tokenInfo);
         }
 
-        public static void InitTokenExtended(this HLA41.Slot slot, byte[] pin, uint pinLen, RutokenInitParam initParam)
+        public static void InitTokenExtended(this HLA41.Slot slot, byte[] pin, RutokenInitParam initParam)
         {
             if (pin == null)
                 throw new ArgumentNullException("pin");
@@ -30,10 +30,11 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (initParam == null)
                 throw new ArgumentNullException("initParam");
 
-            //CK_RUTOKEN_INIT_PARAM ckInitParam = initParam
-            //CKR rv = slot.LowLevelPkcs11.C_EX_InitToken(slot.SlotId, pin, pinLen, ref initParam);
-            //if (rv != CKR.CKR_OK)
-            //    throw new Pkcs11Exception("C_EX_InitToken", rv);
+            CK_RUTOKEN_INIT_PARAM ckInitParam = initParam.CkRutokenInitParam;
+
+            CKR rv = slot.LowLevelPkcs11.C_EX_InitToken(slot.SlotId, pin, (uint)pin.Length, ref ckInitParam);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_InitToken", rv);
         }
     }
 }
