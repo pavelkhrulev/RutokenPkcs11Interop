@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI41;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RutokenPkcs11Interop;
+using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.HighLevelAPI41.MechanismParams;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI41

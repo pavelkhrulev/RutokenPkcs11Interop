@@ -1,4 +1,4 @@
-﻿namespace RutokenPkcs11Interop
+﻿namespace RutokenPkcs11Interop.Common
 {
     public enum Extended_CKK : uint
     {
