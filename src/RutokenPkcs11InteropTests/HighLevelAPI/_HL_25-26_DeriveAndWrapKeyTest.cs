@@ -116,6 +116,9 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     session.DestroyObject(senderDerivedKeyHandle);
                     session.DestroyObject(recipientDerivedKeyHandle);
 
+                    // Удаляем размаскированный ключ
+                    session.DestroyObject(unwrappedKeyHandle);
+
                     // Закрываем сессию
                     session.Logout();
                 }
