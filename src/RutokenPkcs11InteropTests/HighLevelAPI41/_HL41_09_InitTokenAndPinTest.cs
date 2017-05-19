@@ -60,7 +60,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                     Settings.MAX_ADMIN_RETRY_COUNT, Settings.MAX_USER_RETRY_COUNT, 0);
 
                 // Инициализация токена
-                slot.InitTokenExtended(Settings.SecurityOfficerPinArray, rutokenInitParam);
+                slot.InitTokenExtended(Settings.SecurityOfficerPin, rutokenInitParam);
 
                 // Открытие RW сессии
                 using (Session session = slot.OpenSession(false))

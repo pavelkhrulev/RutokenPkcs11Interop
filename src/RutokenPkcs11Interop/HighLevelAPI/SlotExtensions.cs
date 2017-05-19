@@ -34,7 +34,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             }
         }
 
-        public static void InitTokenExtended(this Slot slot, byte[] pin, RutokenInitParam initParam)
+        public static void InitTokenExtended(this Slot slot, string pin, RutokenInitParam initParam)
         {
             if (pin == null)
                 throw new ArgumentNullException("pin");
