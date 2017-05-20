@@ -18,5 +18,15 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_GetTokenName(uint session, byte[] label, ref uint labelLen);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_GetJournal(uint slotId, byte[] journal, ref uint journalLen);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_SetLocalPIN(uint slotId, byte[] userPin, uint userPinLen,
+            byte[] newLocalPin, uint localPinLen, uint localPinId);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_GetDriveSize(uint slotId, ref uint driveSize);
     }
 }

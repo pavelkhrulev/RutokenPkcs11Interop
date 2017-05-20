@@ -110,5 +110,69 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             uint rv = cGetTokenName(session, label, ref labelLen);
             return (CKR)rv;
         }
+
+        public static CKR C_EX_GetJournal(this Pkcs11 pkcs11, uint slotId, byte[] journal, ref uint journalLen)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_GetJournal cGetJournal = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cGetJournalPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_GetJournal");
+                cGetJournal = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_GetJournal>(cGetJournalPtr);
+            }
+            else
+            {
+                cGetJournal = RutokenNativeMethods.C_EX_GetJournal;
+            }
+
+            uint rv = cGetJournal(slotId, journal, ref journalLen);
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_SetLocalPIN(this Pkcs11 pkcs11, uint slotId, byte[] userPin, uint userPinLen,
+            byte[] newLocalPin, uint newLocalPinLen, uint localPinId)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_SetLocalPIN cSetLocalPin = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cSetLocalPinPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_SetLocalPIN");
+                cSetLocalPin = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_SetLocalPIN>(cSetLocalPinPtr);
+            }
+            else
+            {
+                cSetLocalPin = RutokenNativeMethods.C_EX_SetLocalPIN;
+            }
+
+            uint rv = cSetLocalPin(slotId, userPin, userPinLen, newLocalPin, newLocalPinLen, localPinId);
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_GetDriveSize(this Pkcs11 pkcs11, uint slotId, ref uint driveSize)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_GetDriveSize cGetDriveSize = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cGetDriveSizePtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_GetDriveSize");
+                cGetDriveSize = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_GetDriveSize>(cGetDriveSizePtr);
+            }
+            else
+            {
+                cGetDriveSize = RutokenNativeMethods.C_EX_GetDriveSize;
+            }
+
+            uint rv = cGetDriveSize(slotId, ref driveSize);
+            return (CKR)rv;
+        }
     }
 }

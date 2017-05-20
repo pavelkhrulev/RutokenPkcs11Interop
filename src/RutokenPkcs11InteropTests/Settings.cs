@@ -42,6 +42,8 @@ namespace RutokenPkcs11InteropTests
 
         public static string WrongUserPin = @"00000000";
 
+        public static string LocalPin = @"1234567890";
+
         /* DEMO метка Rutoken ("длинная") */
         public static string TokenLongLabel = @"!!!Sample Rutoken Long-long-long-long-long label!!!";
 
@@ -137,6 +139,11 @@ namespace RutokenPkcs11InteropTests
         /* Максимальное количество попыток доступа для Пользователя */
         public static uint MAX_USER_RETRY_COUNT = 10;
 
+        public static uint LocalPinId1 = 0x03;
+
+        public static uint LocalPinId2 = 0x1E;
+
+
         /// <summary>
         /// Arguments passed to the C_Initialize function in LowLevelAPI41 tests.
         /// </summary>
@@ -156,6 +163,8 @@ namespace RutokenPkcs11InteropTests
 
         public static byte[] WrongUserPinArray = null;
 
+        public static byte[] LocalPinArray = null;
+
         public static byte[] TokenLongLabelArray = null;
 
         public static byte[] TokenStdLabelArray = null;
@@ -166,16 +175,13 @@ namespace RutokenPkcs11InteropTests
         /// </summary>
         static Settings()
         {
-            // Uncomment following three lines to enable logging of PKCS#11 calls with PKCS11-LOGGER library
-            // System.Environment.SetEnvironmentVariable("PKCS11_LOGGER_LIBRARY_PATH", Pkcs11LibraryPath);
-            // System.Environment.SetEnvironmentVariable("PKCS11_LOGGER_LOG_FILE_PATH", @"c:\pkcs11-logger.txt");
-            // Pkcs11LibraryPath = @"c:\pkcs11-logger-x86.dll";
-
             // Setup arguments passed to the C_Initialize function
             if (UseOsLocking)
             {
-                InitArgs41 = new LLA41.CK_C_INITIALIZE_ARGS();
-                InitArgs41.Flags = CKF.CKF_OS_LOCKING_OK;
+                InitArgs41 = new LLA41.CK_C_INITIALIZE_ARGS
+                {
+                    Flags = CKF.CKF_OS_LOCKING_OK
+                };
             }
 
             // Convert strings to byte arrays
@@ -183,6 +189,7 @@ namespace RutokenPkcs11InteropTests
             NormalUserPinArray = ConvertUtils.Utf8StringToBytes(NormalUserPin);
             NewUserPinArray = ConvertUtils.Utf8StringToBytes(NewUserPin);
             WrongUserPinArray = ConvertUtils.Utf8StringToBytes(WrongUserPin);
+            LocalPinArray = ConvertUtils.Utf8StringToBytes(LocalPin);
             TokenLongLabelArray = ConvertUtils.Utf8StringToBytes(TokenLongLabel);
             TokenStdLabelArray = ConvertUtils.Utf8StringToBytes(TokenStdLabel);
         }

@@ -226,6 +226,49 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             return rv;
         }
 
+        public static CKR GenerateGost512JournalKeyPair(Pkcs11 pkcs11, uint session, ref uint pubKeyId, ref uint privKeyId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012
+            var publicKeyTemplate = new CK_ATTRIBUTE[5];
+            publicKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
+            publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            publicKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
+            publicKeyTemplate[4] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
+
+            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
+            var privateKeyTemplate = new CK_ATTRIBUTE[5];
+            privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
+            privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+            privateKeyTemplate[4] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
+
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+
+            // Генерация ключевой пары
+            rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt32(publicKeyTemplate.Length),
+                privateKeyTemplate, Convert.ToUInt32(privateKeyTemplate.Length),
+                ref pubKeyId, ref privKeyId);
+
+            // In LowLevelAPI we have to free unmanaged memory taken by attributes
+            for (int i = 0; i < privateKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref privateKeyTemplate[i].value);
+                privateKeyTemplate[i].valueLen = 0;
+            }
+
+            for (int i = 0; i < privateKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref privateKeyTemplate[i].value);
+                privateKeyTemplate[i].valueLen = 0;
+            }
+
+            return rv;
+        }
+
         /// <summary>
         /// Generates asymetric key pair.
         /// </summary>

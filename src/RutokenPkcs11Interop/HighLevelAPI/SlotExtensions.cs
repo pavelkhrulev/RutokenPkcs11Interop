@@ -65,5 +65,31 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
             }
         }
+
+        public static byte[] GetJournal(this Slot slot)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    return slot.HLA41Slot.GetJournal();
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
     }
 }

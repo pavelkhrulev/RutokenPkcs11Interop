@@ -37,5 +37,21 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_InitToken", rv);
         }
+
+        public static byte[] GetJournal(this HLA41.Slot slot)
+        {
+            uint journalLength = 0;
+            CKR rv = slot.LowLevelPkcs11.C_EX_GetJournal(slot.SlotId, null, ref journalLength);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_GetJournal", rv);
+
+            byte[] journal = new byte[journalLength];
+
+            rv = slot.LowLevelPkcs11.C_EX_GetJournal(slot.SlotId, journal, ref journalLength);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_GetJournal", rv);
+
+            return journal;
+        }
     }
 }

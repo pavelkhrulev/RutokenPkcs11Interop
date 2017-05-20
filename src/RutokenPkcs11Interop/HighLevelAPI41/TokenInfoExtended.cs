@@ -68,12 +68,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             AdminRetryCountLeft = ck_token_info_extended.AdminRetryCountLeft;
             MaxUserRetryCount = ck_token_info_extended.MaxUserRetryCount;
             UserRetryCountLeft = ck_token_info_extended.UserRetryCountLeft;
-            // Не уверен, что нужно конвертировать
-            SerialNumber = ConvertUtils.BytesToUtf8String(ck_token_info_extended.SerialNumber, true);
+            // TODO: может стоит оставить байты
+            SerialNumber = ConvertUtils.BytesToHexString(ck_token_info_extended.SerialNumber);
             TotalMemory = ck_token_info_extended.TotalMemory;
             FreeMemory = ck_token_info_extended.FreeMemory;
-            // Не уверен, что нужно конвертировать
-            ATR = ConvertUtils.BytesToUtf8String(ck_token_info_extended.ATR, true);
+            // TODO: может стоит оставить байты
+            ATR = ConvertUtils.BytesToHexString(ck_token_info_extended.ATR);
             ATRLen = ck_token_info_extended.ATRLen;
             TokenClass = ck_token_info_extended.TokenClass;
             BatteryVoltage = ck_token_info_extended.BatteryVoltage;

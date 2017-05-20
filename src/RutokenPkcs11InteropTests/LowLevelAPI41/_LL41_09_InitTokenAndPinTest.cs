@@ -203,5 +203,45 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Assert.Fail(rv.ToString());
             }
         }
+
+        /// <summary>
+        /// Тест для проверки работы с локальными ПИН-кодами
+        /// </summary>
+        [TestMethod]
+        public void _LL41_09_03_LocalPinTest()
+        {
+            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
+            CKR rv = CKR.CKR_OK;
+
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            {
+                // Инициализация библиотеки
+                rv = pkcs11.C_Initialize(Settings.InitArgs41);
+                if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
+                    Assert.Fail(rv.ToString());
+
+                // Установление соединения с Рутокен в первом доступном слоте
+                uint slotId = Helpers.GetUsableSlot(pkcs11);
+
+                // Создание локального PIN-кода токена с ID = 0x03
+                rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length),
+                    Settings.LocalPinArray, Convert.ToUInt32(Settings.LocalPinArray.Length), Settings.LocalPinId1);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Создание локального PIN-кода токена с ID = 0x1E
+                rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length),
+                    Settings.LocalPinArray, Convert.ToUInt32(Settings.LocalPinArray.Length), Settings.LocalPinId2);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Завершение сессии работы с библиотекой
+                rv = pkcs11.C_Finalize(IntPtr.Zero);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+            }
+        }
     }
 }

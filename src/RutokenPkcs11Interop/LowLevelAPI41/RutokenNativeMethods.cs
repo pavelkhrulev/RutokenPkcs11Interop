@@ -18,5 +18,16 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_GetTokenName(uint session, byte[] label, ref uint labelLen);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_GetJournal(uint slotId, byte[] journal, ref uint journalLen);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_SetLocalPIN(uint slotId, byte[] userPin, uint userPinLen,
+            byte[] newLocalPin, uint localPinLen, uint localPinId);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_GetDriveSize(uint slotId, ref uint driveSize);
+
     }
 }

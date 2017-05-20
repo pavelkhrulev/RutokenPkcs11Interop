@@ -185,6 +185,43 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         }
 
         /// <summary>
+        /// Вспомогательная функция для генерации пары ключей
+        /// для подписи журнала по ГОСТ Р 34.10-2012
+        /// </summary>
+        /// <param name="session">Открытая сессия с токеном</param>
+        /// <param name="publicKeyHandle">Хэндл публичного ключа</param>
+        /// <param name="privateKeyHandle">Хэндл приватного ключа</param>
+        public static void GenerateGost512JournalKeyPair(Session session, out ObjectHandle publicKeyHandle, out ObjectHandle privateKeyHandle)
+        {
+            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012
+            var publicKeyAttributes = new List<ObjectAttribute>()
+            {
+                new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
+                new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
+                new ObjectAttribute(CKA.CKA_TOKEN, true),
+                new ObjectAttribute(CKA.CKA_PRIVATE, false),
+            };
+
+            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
+            var privateKeyAttributes = new List<ObjectAttribute>()
+            {
+                new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+                new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
+                new ObjectAttribute(CKA.CKA_TOKEN, true),
+                new ObjectAttribute(CKA.CKA_PRIVATE, true),
+            };
+
+            // Определение механизма генерации ключей
+            var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+
+            // Генерация ключевой пары
+            session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
+
+            Assert.IsTrue(publicKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+        }
+
+        /// <summary>
         /// Generates asymetric key pair.
         /// </summary>
         /// <param name = 'session' > Read - write session with user logged in</param>
