@@ -52,33 +52,33 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
 
         public uint FirmwareChecksum { get; } = 0;
 
-        internal TokenInfoExtended(CK_TOKEN_INFO_EXTENDED ck_token_info_extended)
+        internal TokenInfoExtended(CK_TOKEN_INFO_EXTENDED ckTokenInfoExtended)
         {
-            _sizeofThisStructure = ck_token_info_extended.SizeofThisStructure;
-            TokenType = ck_token_info_extended.TokenType;
-            ProtocolNumber = ck_token_info_extended.ProtocolNumber;
-            MicrocodeNumber = ck_token_info_extended.MicrocodeNumber;
-            OrderNumber = ck_token_info_extended.OrderNumber;
-            Flags = ck_token_info_extended.Flags;
-            MaxAdminPinLen = ck_token_info_extended.MaxAdminPinLen;
-            MinAdminPinLen = ck_token_info_extended.MinAdminPinLen;
-            MaxUserPinLen = ck_token_info_extended.MaxUserPinLen;
-            MinUserPinLen = ck_token_info_extended.MinUserPinLen;
-            MaxAdminRetryCount = ck_token_info_extended.MaxAdminRetryCount;
-            AdminRetryCountLeft = ck_token_info_extended.AdminRetryCountLeft;
-            MaxUserRetryCount = ck_token_info_extended.MaxUserRetryCount;
-            UserRetryCountLeft = ck_token_info_extended.UserRetryCountLeft;
+            _sizeofThisStructure = ckTokenInfoExtended.SizeofThisStructure;
+            TokenType = ckTokenInfoExtended.TokenType;
+            ProtocolNumber = ckTokenInfoExtended.ProtocolNumber;
+            MicrocodeNumber = ckTokenInfoExtended.MicrocodeNumber;
+            OrderNumber = ckTokenInfoExtended.OrderNumber;
+            Flags = ckTokenInfoExtended.Flags;
+            MaxAdminPinLen = ckTokenInfoExtended.MaxAdminPinLen;
+            MinAdminPinLen = ckTokenInfoExtended.MinAdminPinLen;
+            MaxUserPinLen = ckTokenInfoExtended.MaxUserPinLen;
+            MinUserPinLen = ckTokenInfoExtended.MinUserPinLen;
+            MaxAdminRetryCount = ckTokenInfoExtended.MaxAdminRetryCount;
+            AdminRetryCountLeft = ckTokenInfoExtended.AdminRetryCountLeft;
+            MaxUserRetryCount = ckTokenInfoExtended.MaxUserRetryCount;
+            UserRetryCountLeft = ckTokenInfoExtended.UserRetryCountLeft;
             // TODO: может стоит оставить байты
-            SerialNumber = ConvertUtils.BytesToHexString(ck_token_info_extended.SerialNumber);
-            TotalMemory = ck_token_info_extended.TotalMemory;
-            FreeMemory = ck_token_info_extended.FreeMemory;
+            SerialNumber = ConvertUtils.BytesToHexString(ckTokenInfoExtended.SerialNumber);
+            TotalMemory = ckTokenInfoExtended.TotalMemory;
+            FreeMemory = ckTokenInfoExtended.FreeMemory;
             // TODO: может стоит оставить байты
-            ATR = ConvertUtils.BytesToHexString(ck_token_info_extended.ATR);
-            ATRLen = ck_token_info_extended.ATRLen;
-            TokenClass = ck_token_info_extended.TokenClass;
-            BatteryVoltage = ck_token_info_extended.BatteryVoltage;
-            BodyColor = ck_token_info_extended.BodyColor;
-            FirmwareChecksum = ck_token_info_extended.FirmwareChecksum;
+            ATR = ConvertUtils.BytesToHexString(ckTokenInfoExtended.ATR);
+            ATRLen = ckTokenInfoExtended.ATRLen;
+            TokenClass = ckTokenInfoExtended.TokenClass;
+            BatteryVoltage = ckTokenInfoExtended.BatteryVoltage;
+            BodyColor = ckTokenInfoExtended.BodyColor;
+            FirmwareChecksum = ckTokenInfoExtended.FirmwareChecksum;
         }
     }
 }

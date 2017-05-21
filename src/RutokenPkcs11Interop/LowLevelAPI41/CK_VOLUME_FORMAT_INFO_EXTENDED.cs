@@ -1,4 +1,6 @@
 ﻿using System.Runtime.InteropServices;
+using Net.Pkcs11Interop.Common;
+using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11Interop.LowLevelAPI41
 {
@@ -7,9 +9,9 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
     {
         public uint VolumeSize;
 
-        public uint AccessMode;
+        public FlashAccessMode AccessMode;
 
-        public uint VolumeOwner;
+        public CKU VolumeOwner;
 
         public uint Flags;
     }

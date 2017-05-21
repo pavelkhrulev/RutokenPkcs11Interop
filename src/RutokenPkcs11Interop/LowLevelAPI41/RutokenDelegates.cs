@@ -1,4 +1,7 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
+using Net.Pkcs11Interop.Common;
+using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11Interop.LowLevelAPI41
 {
@@ -28,5 +31,19 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_GetDriveSize(uint slotId, ref uint driveSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_FormatDrive(uint slotId, uint userType,
+            byte[] pin, uint pinLen,
+            CK_VOLUME_FORMAT_INFO_EXTENDED[] initParams, uint initParamsCount);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_GetVolumesInfo(uint slotId,
+            [Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 1)]CK_VOLUME_INFO_EXTENDED[] info, ref uint infoCount);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_ChangeVolumeAttributes(uint slotId, uint userType,
+            byte[] pin, uint pinLen,
+            uint volumeId, uint newAccessMode, bool permanent);
     }
 }

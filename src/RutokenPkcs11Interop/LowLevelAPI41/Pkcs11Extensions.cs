@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
+using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11Interop.LowLevelAPI41
 {
@@ -27,7 +29,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             return (CKR)rv;
         }
 
-        public static CKR C_EX_InitToken(this Pkcs11 pkcs11, uint slotId, byte[] pin, uint pinLen, ref CK_RUTOKEN_INIT_PARAM initInfo)
+        public static CKR C_EX_InitToken(this Pkcs11 pkcs11, uint slotId, byte[] pin, ref CK_RUTOKEN_INIT_PARAM initInfo)
         {
             if (pkcs11.Disposed)
                 throw new ObjectDisposedException(pkcs11.GetType().FullName);
@@ -44,7 +46,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cInitToken = RutokenNativeMethods.C_EX_InitToken;
             }
 
-            uint rv = cInitToken(slotId, pin, pinLen, ref initInfo);
+            uint rv = cInitToken(slotId, pin, Convert.ToUInt32(pin.Length), ref initInfo);
             return (CKR)rv;
         }
 
@@ -69,7 +71,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             return (CKR)rv;
         }
 
-        public static CKR C_EX_SetTokenName(this Pkcs11 pkcs11, uint session, byte[] label, uint labelLen)
+        public static CKR C_EX_SetTokenName(this Pkcs11 pkcs11, uint session, byte[] label)
         {
             if (pkcs11.Disposed)
                 throw new ObjectDisposedException(pkcs11.GetType().FullName);
@@ -86,7 +88,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cSetTokenName = RutokenNativeMethods.C_EX_SetTokenName;
             }
 
-            uint rv = cSetTokenName(session, label, labelLen);
+            uint rv = cSetTokenName(session, label, Convert.ToUInt32(label.Length));
             return (CKR)rv;
         }
 
@@ -132,8 +134,8 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             return (CKR)rv;
         }
 
-        public static CKR C_EX_SetLocalPIN(this Pkcs11 pkcs11, uint slotId, byte[] userPin, uint userPinLen,
-            byte[] newLocalPin, uint newLocalPinLen, uint localPinId)
+        public static CKR C_EX_SetLocalPIN(this Pkcs11 pkcs11, uint slotId, byte[] userPin,
+            byte[] newLocalPin, uint localPinId)
         {
             if (pkcs11.Disposed)
                 throw new ObjectDisposedException(pkcs11.GetType().FullName);
@@ -150,7 +152,8 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cSetLocalPin = RutokenNativeMethods.C_EX_SetLocalPIN;
             }
 
-            uint rv = cSetLocalPin(slotId, userPin, userPinLen, newLocalPin, newLocalPinLen, localPinId);
+            uint rv = cSetLocalPin(slotId, userPin, Convert.ToUInt32(userPin.Length),
+                newLocalPin, Convert.ToUInt32(newLocalPin.Length), localPinId);
             return (CKR)rv;
         }
 
@@ -172,6 +175,77 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             }
 
             uint rv = cGetDriveSize(slotId, ref driveSize);
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_FormatDrive(this Pkcs11 pkcs11, uint slotId, uint userType,
+            byte[] pin, CK_VOLUME_FORMAT_INFO_EXTENDED[] initParams)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_FormatDrive cFormatDrive = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cFormatDrivePtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_FormatDrive");
+                cFormatDrive = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_FormatDrive>(cFormatDrivePtr);
+            }
+            else
+            {
+                cFormatDrive = RutokenNativeMethods.C_EX_FormatDrive;
+            }
+
+            uint rv = cFormatDrive(slotId, userType, pin, Convert.ToUInt32(pin.Length),
+                initParams, Convert.ToUInt32(initParams.Length));
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_GetVolumesInfo(this Pkcs11 pkcs11, uint slotId,
+            CK_VOLUME_INFO_EXTENDED[] volumesInfo, ref uint volumesInfoCount)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_GetVolumesInfo cGetVolumesInfo = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cGetVolumesInfoPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_GetVolumesInfo");
+                cGetVolumesInfo = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_GetVolumesInfo>(cGetVolumesInfoPtr);
+            }
+            else
+            {
+                cGetVolumesInfo = RutokenNativeMethods.C_EX_GetVolumesInfo;
+            }
+
+            uint rv = cGetVolumesInfo(slotId, volumesInfo, ref volumesInfoCount);
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_ChangeVolumeAttributes(this Pkcs11 pkcs11, uint slotId, uint userType,
+            byte[] pin, uint volumeId, FlashAccessMode newAccessMode, bool permanent)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_ChangeVolumeAttributes cChangeVolumeAttributes = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cChangeVolumeAttributesPtr = UnmanagedLibrary.GetFunctionPointer(
+                    pkcs11.LibraryHandle, "C_EX_ChangeVolumeAttributes");
+                cChangeVolumeAttributes = UnmanagedLibrary.GetDelegateForFunctionPointer
+                    <RutokenDelegates.C_EX_ChangeVolumeAttributes>(cChangeVolumeAttributesPtr);
+            }
+            else
+            {
+                cChangeVolumeAttributes = RutokenNativeMethods.C_EX_ChangeVolumeAttributes;
+            }
+
+            uint rv = cChangeVolumeAttributes(slotId, userType,
+                pin, Convert.ToUInt32(pin.Length),
+                volumeId, (uint)newAccessMode, permanent);
             return (CKR)rv;
         }
     }

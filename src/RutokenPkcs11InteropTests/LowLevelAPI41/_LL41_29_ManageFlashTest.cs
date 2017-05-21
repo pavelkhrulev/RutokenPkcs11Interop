@@ -91,16 +91,16 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // (создание успешно только в случае их отсутствия)
 
                 // Создание локального PIN-кода токена с ID = 0x03
-                //rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length),
-                //    Settings.LocalPinArray, Convert.ToUInt32(Settings.LocalPinArray.Length), Settings.LocalPinId1);
-                //if (rv != CKR.CKR_OK)
-                //    Assert.Fail(rv.ToString());
+                rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray,
+                    Settings.LocalPinArray, Settings.LocalPinId1);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
 
-                //// Создание локального PIN-кода токена с ID = 0x1E
-                //rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length),
-                //    Settings.LocalPinArray, Convert.ToUInt32(Settings.LocalPinArray.Length), Settings.LocalPinId2);
-                //if (rv != CKR.CKR_OK)
-                //    Assert.Fail(rv.ToString());
+                // Создание локального PIN-кода токена с ID = 0x1E
+                rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray,
+                    Settings.LocalPinArray, Settings.LocalPinId2);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
 
                 // Получение объема флеш-памяти
                 uint driveSize = 0;
@@ -111,7 +111,59 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Полное удаление информации с флеш-памяти с последующим созданием
                 // разделов в соответствии с переданными параметрами
+                uint volumeRwSize = driveSize / 2;
+                uint volumeRoSize = driveSize / 4;
+                uint volumeHiSize = driveSize / 8;
+                uint volumeCdSize = driveSize - volumeRwSize - volumeRoSize - volumeHiSize;
 
+                var initParams = new CK_VOLUME_FORMAT_INFO_EXTENDED[4]
+                {
+                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeRwSize, AccessMode = FlashAccessMode.Readwrite, VolumeOwner = CKU.CKU_USER, Flags = 0},
+                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeRoSize, AccessMode = FlashAccessMode.Readonly, VolumeOwner = CKU.CKU_SO, Flags = 0},
+                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeHiSize, AccessMode = FlashAccessMode.Hidden, VolumeOwner = (CKU)Settings.LocalPinId1, Flags = 0},
+                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeCdSize, AccessMode = FlashAccessMode.Cdrom, VolumeOwner = (CKU)Settings.LocalPinId2, Flags = 0},
+                };
+
+                rv = pkcs11.C_EX_FormatDrive(slotId, (uint)CKU.CKU_SO,
+                    Settings.SecurityOfficerPinArray, initParams);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Выделение памяти под информацию о разделах флеш-памяти
+                uint volumesInfoCount = 0;
+                rv = pkcs11.C_EX_GetVolumesInfo(slotId, null, ref volumesInfoCount);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+                Assert.IsTrue(volumesInfoCount > 0);
+                var volumesInfo = new CK_VOLUME_INFO_EXTENDED[volumesInfoCount];
+
+                // Получение информации о разделах флеш-памяти
+                rv = pkcs11.C_EX_GetVolumesInfo(slotId, volumesInfo, ref volumesInfoCount);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                foreach (var volumeInfo in volumesInfo)
+                {
+                    Assert.IsTrue(volumeInfo.VolumeId != 0);
+                }
+
+                // Изменение атрибута доступа раздела флеш-памяти на постоянной основе
+                // (до следующего изменения атрибутов)
+                uint volumeRo = 2;
+                rv = pkcs11.C_EX_ChangeVolumeAttributes(slotId, (uint)CKU.CKU_SO,
+                    Settings.SecurityOfficerPinArray,
+                    volumeRo, FlashAccessMode.Readwrite, permanent: true);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Временно изменить атрибут доступа к разделу флеш-памяти
+                // (до первого извлечения устройства или следующего изменения атрибутов)
+                uint volumeRw = 1;
+                rv = pkcs11.C_EX_ChangeVolumeAttributes(slotId, (uint)CKU.CKU_USER,
+                    Settings.NormalUserPinArray,
+                    volumeRw, FlashAccessMode.Hidden, permanent: false);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
 
                 // Завершение сессии работы с библиотекой
                 rv = pkcs11.C_Finalize(IntPtr.Zero);

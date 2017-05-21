@@ -6,7 +6,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
 {
     public class TokenInfoExtended
     {
-        private HighLevelAPI41.TokenInfoExtended _tokenInfoExtended41 = null;
+        private readonly HighLevelAPI41.TokenInfoExtended _tokenInfoExtended41 = null;
 
         public RutokenType TokenType
         {
@@ -649,7 +649,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
         internal TokenInfoExtended(HighLevelAPI41.TokenInfoExtended tokenInfoExtended)
         {
             if (tokenInfoExtended == null)
-                throw new ArgumentNullException("tokenInfoExtended");
+                throw new ArgumentNullException(nameof(tokenInfoExtended));
 
             _tokenInfoExtended41 = tokenInfoExtended;
         }

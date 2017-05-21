@@ -17,7 +17,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
         public static void SetTokenName(this HLA41.Session session, string label)
         {
             var labelArray = ConvertUtils.Utf8StringToBytes(label);
-            CKR rv = session.LowLevelPkcs11.C_EX_SetTokenName(session.SessionId, labelArray, (uint)labelArray.Length);
+            CKR rv = session.LowLevelPkcs11.C_EX_SetTokenName(session.SessionId, labelArray);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SetTokenName", rv);
         }

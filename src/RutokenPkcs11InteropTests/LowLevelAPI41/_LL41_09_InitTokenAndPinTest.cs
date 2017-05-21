@@ -117,9 +117,10 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 UnmanagedMemory.Write(rutokenInitParam.TokenLabel, Settings.TokenStdLabelArray);
 
                 // Расширенная инициализация токена
-                rv = pkcs11.C_EX_InitToken(slotId,
-                    Settings.SecurityOfficerPinArray, Convert.ToUInt32(Settings.SecurityOfficerPinArray.Length),
+                rv = pkcs11.C_EX_InitToken(slotId, Settings.SecurityOfficerPinArray,
                     ref rutokenInitParam);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
 
                 // Освобождение выделенной памяти
                 UnmanagedMemory.Free(ref rutokenInitParam.NewAdminPin);
@@ -167,9 +168,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Assert.Fail(rv.ToString());
 
                 // Изменение метки токена на "длинную"
-                rv = pkcs11.C_EX_SetTokenName(session,
-                    Settings.TokenLongLabelArray,
-                    Convert.ToUInt32(Settings.TokenLongLabelArray.Length));
+                rv = pkcs11.C_EX_SetTokenName(session, Settings.TokenLongLabelArray);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
@@ -226,14 +225,14 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 uint slotId = Helpers.GetUsableSlot(pkcs11);
 
                 // Создание локального PIN-кода токена с ID = 0x03
-                rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length),
-                    Settings.LocalPinArray, Convert.ToUInt32(Settings.LocalPinArray.Length), Settings.LocalPinId1);
+                rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray,
+                    Settings.LocalPinArray, Settings.LocalPinId1);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
                 // Создание локального PIN-кода токена с ID = 0x1E
-                rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length),
-                    Settings.LocalPinArray, Convert.ToUInt32(Settings.LocalPinArray.Length), Settings.LocalPinId2);
+                rv = pkcs11.C_EX_SetLocalPIN(slotId, Settings.NormalUserPinArray,
+                    Settings.LocalPinArray, Settings.LocalPinId2);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
