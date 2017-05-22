@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.LowLevelAPI41.MechanismParams;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
@@ -450,6 +452,112 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             deriveMechanism.ParameterLen = 0;
 
             return rv;
+        }
+
+        /// <summary>
+        /// Вспомогательная функция для шифрования данных по алгоритму ГОСТ 28147-89
+        /// с зацеплением
+        /// </summary>
+        /// <param name="pkcs11">PKCS11 wrapper</param>
+        /// <param name="session">Текущая сессия</param>
+        /// <param name="data">Данные для шифрования</param>
+        /// <param name="initVector">Синхропосылка</param>
+        /// <param name="keyId">Ключ для шифрования</param>
+        /// <returns>Зашифрованные данные</returns>
+        public static byte[] CBC_Gost28147_89_Encrypt(Pkcs11 pkcs11, uint session, byte[] data,
+            byte[] initVector, uint keyId)
+        {
+            // Дополняем данные по ISO 10126
+            byte[] dataWithPadding = ISO_10126_Padding.Pad(data, Settings.GOST28147_89_BLOCK_SIZE);
+
+            byte[] round = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+            Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
+
+            using (var ms = new MemoryStream())
+            {
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
+
+                for (var i = 0; i < dataWithPadding.Length / Settings.GOST28147_89_BLOCK_SIZE; i++)
+                {
+                    CKR rv = CKR.CKR_OK;
+
+                    byte[] currentData = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+                    Buffer.BlockCopy(dataWithPadding, i * Settings.GOST28147_89_BLOCK_SIZE,
+                        currentData, 0, currentData.Length);
+                    byte[] block = round.Xor(currentData);
+
+                    // Инициализация операции шифрования
+                    rv = pkcs11.C_EncryptInit(session, ref mechanism, keyId);
+                    if (rv != CKR.CKR_OK)
+                        Assert.Fail(rv.ToString());
+
+                    // Получение зашифрованного блока данных
+                    byte[] encryptedBlock = new byte[block.Length];
+                    uint blockLength = Convert.ToUInt32(block.Length);
+                    rv = pkcs11.C_Encrypt(session, block, Convert.ToUInt32(block.Length), encryptedBlock, ref blockLength);
+                    if (rv != CKR.CKR_OK)
+                        Assert.Fail(rv.ToString());
+
+                    Buffer.BlockCopy(encryptedBlock, 0, round, 0, encryptedBlock.Length);
+                    ms.Write(encryptedBlock, 0, encryptedBlock.Length);
+                }
+
+                return ms.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Вспомогательная функция для расшифрования данных по алгоритму ГОСТ 28147-89
+        /// с зацеплением
+        /// </summary>
+        /// <param name="pkcs11">PKCS11 wrapper</param>
+        /// <param name="session">Текущая сессия</param>
+        /// <param name="data">Зашифрованные данные</param>
+        /// <param name="initVector">Синхропосылка</param>
+        /// <param name="keyId">Ключ для расшифрования</param>
+        /// <returns>Расшифрованные данные</returns>
+        public static byte[] CBC_Gost28147_89_Decrypt(Pkcs11 pkcs11, uint session,
+            byte[] data, byte[] initVector, uint keyId)
+        {
+            byte[] round = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+            Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
+
+            using (var ms = new MemoryStream())
+            {
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
+
+                for (var i = 0; i < data.Length / Settings.GOST28147_89_BLOCK_SIZE; i++)
+                {
+                    CKR rv = CKR.CKR_OK;
+
+                    byte[] currentData = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+                    Buffer.BlockCopy(data, i * Settings.GOST28147_89_BLOCK_SIZE,
+                        currentData, 0, currentData.Length);
+
+                    // Инициализация операции расшифрования
+                    rv = pkcs11.C_DecryptInit(session, ref mechanism, keyId);
+                    if (rv != CKR.CKR_OK)
+                        Assert.Fail(rv.ToString());
+
+                    // Получение расшифрованного блока данных
+                    byte[] decryptedBlock = new byte[currentData.Length];
+                    uint blockLength = Convert.ToUInt32(currentData.Length);
+                    rv = pkcs11.C_Decrypt(session, currentData, Convert.ToUInt32(currentData.Length),
+                        decryptedBlock, ref blockLength);
+                    if (rv != CKR.CKR_OK)
+                        Assert.Fail(rv.ToString());
+
+                    byte[] decryptedRound = round.Xor(decryptedBlock);
+                    Buffer.BlockCopy(currentData, 0, round, 0, currentData.Length);
+
+                    ms.Write(decryptedRound, 0, decryptedRound.Length);
+                }
+
+                byte[] decryptedData = ms.ToArray();
+
+                // Снимаем дополнение данных
+                return ISO_10126_Padding.Unpad(decryptedData);
+            }
         }
     }
 }

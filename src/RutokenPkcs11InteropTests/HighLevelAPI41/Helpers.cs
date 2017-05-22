@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI41;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.HighLevelAPI41.MechanismParams;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI41
@@ -338,6 +340,87 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             derivedKeyHandle = session.DeriveKey(deriveMechanism, privateKeyHandle, derivedKeyAttributes);
 
             Assert.IsTrue(derivedKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+        }
+
+        /// <summary>
+        /// Вспомогательная функция для шифрования данных по алгоритму ГОСТ 28147-89
+        /// с зацеплением
+        /// </summary>
+        /// <param name="session">Текущая сессия</param>
+        /// <param name="data">Данные для шифрования</param>
+        /// <param name="initVector">Синхропосылка</param>
+        /// <param name="keyId">Ключ для шифрования</param>
+        /// <returns>Зашифрованные данные</returns>
+        public static byte[] CBC_Gost28147_89_Encrypt(Session session, byte[] data,
+            byte[] initVector, ObjectHandle keyId)
+        {
+            // Дополняем данные по ISO 10126
+            byte[] dataWithPadding = ISO_10126_Padding.Pad(data, Settings.GOST28147_89_BLOCK_SIZE);
+
+            byte[] round = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+            Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
+
+            using (var ms = new MemoryStream())
+            {
+                var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
+
+                for (var i = 0; i < dataWithPadding.Length / Settings.GOST28147_89_BLOCK_SIZE; i++)
+                {
+                    byte[] currentData = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+                    Buffer.BlockCopy(dataWithPadding, i * Settings.GOST28147_89_BLOCK_SIZE,
+                        currentData, 0, currentData.Length);
+                    byte[] block = round.Xor(currentData);
+
+                    // Получение зашифрованного блока данных
+                    byte[] encryptedBlock = session.Encrypt(mechanism, keyId, block);
+
+                    Buffer.BlockCopy(encryptedBlock, 0, round, 0, encryptedBlock.Length);
+                    ms.Write(encryptedBlock, 0, encryptedBlock.Length);
+                }
+
+                return ms.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Вспомогательная функция для расшифрования данных по алгоритму ГОСТ 28147-89
+        /// с зацеплением
+        /// </summary>
+        /// <param name="session">Текущая сессия</param>
+        /// <param name="data">Зашифрованные данные</param>
+        /// <param name="initVector">Синхропосылка</param>
+        /// <param name="keyId">Ключ для расшифрования</param>
+        /// <returns>Расшифрованные данные</returns>
+        public static byte[] CBC_Gost28147_89_Decrypt(Session session, byte[] data,
+            byte[] initVector, ObjectHandle keyId)
+        {
+            byte[] round = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+            Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
+
+            using (var ms = new MemoryStream())
+            {
+                var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
+
+                for (var i = 0; i < data.Length / Settings.GOST28147_89_BLOCK_SIZE; i++)
+                {
+                    byte[] currentData = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+                    Buffer.BlockCopy(data, i * Settings.GOST28147_89_BLOCK_SIZE,
+                        currentData, 0, currentData.Length);
+
+                    // Получение расшифрованного блока данных
+                    byte[] decryptedBlock = session.Decrypt(mechanism, keyId, currentData);
+
+                    byte[] decryptedRound = round.Xor(decryptedBlock);
+                    Buffer.BlockCopy(currentData, 0, round, 0, currentData.Length);
+
+                    ms.Write(decryptedRound, 0, decryptedRound.Length);
+                }
+
+                byte[] decryptedData = ms.ToArray();
+
+                // Снимаем дополнение данных
+                return ISO_10126_Padding.Unpad(decryptedData);
+            }
         }
     }
 }

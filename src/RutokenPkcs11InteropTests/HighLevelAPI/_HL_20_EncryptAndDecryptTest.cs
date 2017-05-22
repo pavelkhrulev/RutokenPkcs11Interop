@@ -112,6 +112,49 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
         [TestMethod]
+        public void _HL_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
+        {
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            {
+                // Find first slot with token present
+                Slot slot = Helpers.GetUsableSlot(pkcs11);
+
+                // Open RW session
+                using (Session session = slot.OpenSession(false))
+                {
+                    // Login as normal user
+                    session.Login(CKU.CKU_USER, Settings.NormalUserPin);
+
+                    // Generate symetric key
+                    ObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
+
+                    byte[] sourceData = TestData.Encrypt_CBC_Gost28147_89_ECB_SourceData;
+
+                    // Получение синхропосылки
+                    var random = new Random();
+                    byte[] initVector = new byte[Settings.GOST28147_89_BLOCK_SIZE];
+                    random.NextBytes(initVector);
+
+                    // Encrypt data
+                    byte[] encryptedData = Helpers.CBC_Gost28147_89_Encrypt(
+                        session, sourceData, initVector, generatedKey);
+
+                    // Decrypt data
+                    byte[] decryptedData = Helpers.CBC_Gost28147_89_Decrypt(
+                        session, encryptedData, initVector, generatedKey);
+
+                    Assert.IsTrue(Convert.ToBase64String(sourceData) == Convert.ToBase64String(decryptedData));
+
+                    session.DestroyObject(generatedKey);
+                    session.Logout();
+                }
+            }
+        }
+
+        /// <summary>
+        /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
+        /// </summary>
+        [TestMethod]
         public void _HL_20_04_EncryptAndDecrypt_RSA_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
