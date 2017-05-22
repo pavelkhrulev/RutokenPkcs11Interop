@@ -90,5 +90,13 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             byte[] wrappedKey, uint wrappedKeyLen,
             CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
             ref uint key);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        internal static extern uint C_EX_CreateCSR(uint session, uint publicKey,
+            IntPtr dn, uint dnLength,
+            out IntPtr csr, out uint csrLength,
+            uint privateKey,
+            IntPtr attributes, uint attributesLength,
+            IntPtr extensions, uint extensionsLength);
     }
 }

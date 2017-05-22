@@ -415,5 +415,31 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
             return (CKR)rv;
         }
+        public static CKR C_EX_CreateCSR(this Pkcs11 pkcs11, uint session,
+                uint publicKey,
+                IntPtr dn, uint dnLength,
+                out IntPtr csr, out uint csrLength,
+                uint privateKey,
+                IntPtr attributes, uint attributesLength,
+                IntPtr extensions, uint extensionsLength)
+        {
+            RutokenDelegates.C_EX_CreateCSR cCreateCSR = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cCreateCSRPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_CreateCSR");
+                cCreateCSR = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_CreateCSR>(cCreateCSRPtr);
+            }
+            else
+            {
+                cCreateCSR = RutokenNativeMethods.C_EX_CreateCSR;
+            }
+
+            uint rv = cCreateCSR(session, publicKey, dn, dnLength, out csr, out csrLength, privateKey, attributes,
+                attributesLength, extensions, extensionsLength);
+
+            return (CKR)rv;
+        }
+
     }
 }
