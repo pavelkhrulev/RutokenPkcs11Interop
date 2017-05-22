@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Net.Pkcs11Interop.LowLevelAPI41;
 
 namespace RutokenPkcs11Interop.LowLevelAPI41
 {
@@ -22,6 +23,13 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_GetJournal(uint slotId, byte[] journal, ref uint journalLen);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_SignInvisibleInit(uint session, ref CK_MECHANISM mechanism, uint key);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_SignInvisible(
+            uint session, byte[] data, uint dataLen, byte[] signature, ref uint signatureLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_SetLocalPIN(uint slotId, byte[] userPin, uint userPinLen,
@@ -53,9 +61,34 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             uint session, uint licenseNum, byte[] license, ref uint licenseLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_GenerateActivationPassword(uint session, uint passwordNumber,
+            byte[] password, ref uint passwordSize, uint passwordCharacterSet);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_LoadActivationKey(uint session, byte[] key, uint keySize);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_SetActivationPassword(uint slotId, byte[] password);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_TokenManage(uint session, uint mode, IntPtr value);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_SlotManage(uint slotId, uint mode, IntPtr value);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_WrapKey(uint session, ref CK_MECHANISM generationMechanism,
+            CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
+            ref CK_MECHANISM derivationMechanism,
+            uint baseKey,
+            ref CK_MECHANISM wrappingMechanism,
+            byte[] wrappedKey, ref uint wrappedKeyLen, ref uint key);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_UnwrapKey(uint session, ref CK_MECHANISM derivationMechanism,
+            uint baseKey, ref CK_MECHANISM unwrappingMechanism,
+            byte[] wrappedKey, uint wrappedKeyLen,
+            CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
+            ref uint key);
     }
 }

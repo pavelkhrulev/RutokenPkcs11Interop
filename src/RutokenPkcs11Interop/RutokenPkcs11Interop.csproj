@@ -44,6 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ActivationPasswordCharacterSet.cs" />
+    <Compile Include="Common\ActivationPasswordNumber.cs" />
     <Compile Include="Common\Extended_CKA.cs" />
     <Compile Include="Common\Extended_CKD.cs" />
     <Compile Include="Common\Extended_CKK.cs" />
@@ -52,6 +54,7 @@
     <Compile Include="Common\RutokenBodyColor.cs" />
     <Compile Include="Common\RutokenClass.cs" />
     <Compile Include="Common\RutokenType.cs" />
+    <Compile Include="Common\TokenManageMode.cs" />
     <Compile Include="Helpers\ExtensionMethods.cs" />
     <Compile Include="Helpers\ISO_10126_Padding.cs" />
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410DeriveParams.cs" />

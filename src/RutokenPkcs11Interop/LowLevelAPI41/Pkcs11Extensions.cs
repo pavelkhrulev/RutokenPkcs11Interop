@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using RutokenPkcs11Interop.Common;
@@ -131,6 +130,50 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             }
 
             uint rv = cGetJournal(slotId, journal, ref journalLen);
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_SignInvisibleInit(this Pkcs11 pkcs11, uint session, ref CK_MECHANISM mechanism, uint key)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_SignInvisibleInit cSignInvisibleInit = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cSignInvisibleInitPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_SignInvisibleInit");
+                cSignInvisibleInit = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_SignInvisibleInit>(cSignInvisibleInitPtr);
+            }
+            else
+            {
+                cSignInvisibleInit = RutokenNativeMethods.C_EX_SignInvisibleInit;
+            }
+
+            uint rv = cSignInvisibleInit(session, ref mechanism, key);
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_SignInvisible(this Pkcs11 pkcs11,
+            uint session, byte[] data, byte[] signature, ref uint signatureLen)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_SignInvisible cSignInvisible = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cSignInvisiblePtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_SignInvisible");
+                cSignInvisible = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_SignInvisible>(cSignInvisiblePtr);
+            }
+            else
+            {
+                cSignInvisible = RutokenNativeMethods.C_EX_SignInvisible;
+            }
+
+            uint rv = cSignInvisible(
+                session, data, Convert.ToUInt32(data.Length), signature, ref signatureLen);
             return (CKR)rv;
         }
 
@@ -295,6 +338,32 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             }
 
             uint rv = cGetLicense(session, licenseNum, license, ref licenseLen);
+
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_GenerateActivationPassword(this Pkcs11 pkcs11, uint session, uint passwordNumber,
+            byte[] password, ref uint passwordSize, uint passwordCharacterSet)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_GenerateActivationPassword cGenerateActivationPassword = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cGenerateActivationPasswordPtr = UnmanagedLibrary.GetFunctionPointer(
+                    pkcs11.LibraryHandle, "C_EX_GenerateActivationPassword");
+                cGenerateActivationPassword = UnmanagedLibrary.GetDelegateForFunctionPointer
+                    <RutokenDelegates.C_EX_GenerateActivationPassword>(cGenerateActivationPasswordPtr);
+            }
+            else
+            {
+                cGenerateActivationPassword = RutokenNativeMethods.C_EX_GenerateActivationPassword;
+            }
+
+            uint rv = cGenerateActivationPassword(
+                session, passwordNumber, password, ref passwordSize, passwordCharacterSet);
 
             return (CKR)rv;
         }
