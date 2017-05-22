@@ -139,5 +139,16 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_ChangeVolumeAttributes", rv);
         }
+
+        public static void SetActivationPassword(this HLA41.Slot slot, byte[] password)
+        {
+            if (password == null)
+                throw new ArgumentNullException(nameof(password));
+
+            CKR rv = slot.LowLevelPkcs11.C_EX_SetActivationPassword(
+                slot.SlotId, password);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_SetActivationPassword", rv);
+        }
     }
 }

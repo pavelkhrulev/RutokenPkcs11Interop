@@ -231,6 +231,30 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             }
         }
 
-
+        public static void SetActivationPassword(this Slot slot, byte[] password)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    slot.HLA41Slot.SetActivationPassword(password);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
     }
 }

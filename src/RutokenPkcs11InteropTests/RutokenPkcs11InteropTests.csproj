@@ -84,6 +84,7 @@
     <Compile Include="LowLevelAPI41\_LL41_25-26_DeriveAndWrapKeyTest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_29_ManageFlashTest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_30_JournalTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL41_31_LicenseTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TestData.cs" />

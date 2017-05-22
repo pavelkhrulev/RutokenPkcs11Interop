@@ -40,5 +40,54 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
 
             return ConvertUtils.BytesToUtf8String(tokenLabel);
         }
+
+        public static void SetLicense(this HLA41.Session session, uint licenseNum, byte[] license)
+        {
+            if (Settings.LicenseAllowedNumbers.Contains(licenseNum))
+                throw new ArgumentOutOfRangeException(nameof(licenseNum));
+
+            if (license == null)
+                throw new ArgumentNullException(nameof(license));
+
+            CKR rv = session.LowLevelPkcs11.C_EX_SetLicense(
+                session.SessionId, licenseNum, license);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_SetLicense", rv);
+        }
+
+        public static byte[] GetLicense(this HLA41.Session session, uint licenseNum)
+        {
+            if (Settings.LicenseAllowedNumbers.Contains(licenseNum))
+                throw new ArgumentOutOfRangeException(nameof(licenseNum));
+
+            uint licenseLen = 0;
+            CKR rv = session.LowLevelPkcs11.C_EX_GetLicense(
+                session.SessionId, licenseNum, null, ref licenseLen);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_GetLicense", rv);
+
+            if (licenseLen == 0)
+                throw new InvalidOperationException("C_EX_GetLicense: no license found");
+
+            byte[] license = new byte[licenseLen];
+
+            rv = session.LowLevelPkcs11.C_EX_GetLicense(
+                session.SessionId, licenseNum, license, ref licenseLen);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_GetLicense", rv);
+
+            return license;
+        }
+
+        public static void LoadActivationKey(this HLA41.Session session, byte[] key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
+            CKR rv = session.LowLevelPkcs11.C_EX_LoadActivationKey(
+                session.SessionId, key);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_LoadActivationKey", rv);
+        }
     }
 }

@@ -43,5 +43,19 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
         internal static extern uint C_EX_ChangeVolumeAttributes(uint slotId, uint userType,
             byte[] pin, uint pinLen,
             uint volumeId, uint newAccessMode, bool permanent);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_SetLicense(
+            uint session, uint licenseNum, byte[] license, uint licenseLen);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_GetLicense(
+            uint session, uint licenseNum, byte[] license, ref uint licenseLen);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_LoadActivationKey(uint session, byte[] key, uint keySize);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_SetActivationPassword(uint slotId, byte[] password);
     }
 }

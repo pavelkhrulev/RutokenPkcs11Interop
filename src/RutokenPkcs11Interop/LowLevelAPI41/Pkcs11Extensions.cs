@@ -248,5 +248,103 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 volumeId, (uint)newAccessMode, permanent);
             return (CKR)rv;
         }
+
+        public static CKR C_EX_SetLicense(this Pkcs11 pkcs11, uint session,
+            uint licenseNum, byte[] license)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_SetLicense cSetLicense = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cSetLicensePtr = UnmanagedLibrary.GetFunctionPointer(
+                    pkcs11.LibraryHandle, "C_EX_SetLicense");
+                cSetLicense = UnmanagedLibrary.GetDelegateForFunctionPointer
+                    <RutokenDelegates.C_EX_SetLicense>(cSetLicensePtr);
+            }
+            else
+            {
+                cSetLicense = RutokenNativeMethods.C_EX_SetLicense;
+            }
+
+            uint rv = cSetLicense(session, licenseNum, license, Convert.ToUInt32(license.Length));
+
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_GetLicense(this Pkcs11 pkcs11, uint session,
+            uint licenseNum, byte[] license, ref uint licenseLen)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_GetLicense cGetLicense = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cGetLicensePtr = UnmanagedLibrary.GetFunctionPointer(
+                    pkcs11.LibraryHandle, "C_EX_GetLicense");
+                cGetLicense = UnmanagedLibrary.GetDelegateForFunctionPointer
+                    <RutokenDelegates.C_EX_GetLicense>(cGetLicensePtr);
+            }
+            else
+            {
+                cGetLicense = RutokenNativeMethods.C_EX_GetLicense;
+            }
+
+            uint rv = cGetLicense(session, licenseNum, license, ref licenseLen);
+
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_LoadActivationKey(this Pkcs11 pkcs11, uint session, byte[] key)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_LoadActivationKey cLoadActivationKey = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cLoadActivationKeyPtr = UnmanagedLibrary.GetFunctionPointer(
+                    pkcs11.LibraryHandle, "C_EX_LoadActivationKey");
+                cLoadActivationKey = UnmanagedLibrary.GetDelegateForFunctionPointer
+                    <RutokenDelegates.C_EX_LoadActivationKey>(cLoadActivationKeyPtr);
+            }
+            else
+            {
+                cLoadActivationKey = RutokenNativeMethods.C_EX_LoadActivationKey;
+            }
+
+            uint rv = cLoadActivationKey(session, key, Convert.ToUInt32(key.Length));
+
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_SetActivationPassword(this Pkcs11 pkcs11, uint slotId, byte[] password)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_SetActivationPassword cSetActivationPassword = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cSetActivationPasswordPtr = UnmanagedLibrary.GetFunctionPointer(
+                    pkcs11.LibraryHandle, "C_EX_SetActivationPassword");
+                cSetActivationPassword = UnmanagedLibrary.GetDelegateForFunctionPointer
+                    <RutokenDelegates.C_EX_SetActivationPassword>(cSetActivationPasswordPtr);
+            }
+            else
+            {
+                cSetActivationPassword = RutokenNativeMethods.C_EX_SetActivationPassword;
+            }
+
+            uint rv = cSetActivationPassword(slotId, password);
+
+            return (CKR)rv;
+        }
     }
 }

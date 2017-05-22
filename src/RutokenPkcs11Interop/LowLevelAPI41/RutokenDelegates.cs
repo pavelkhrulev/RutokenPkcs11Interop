@@ -45,5 +45,19 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
         internal delegate uint C_EX_ChangeVolumeAttributes(uint slotId, uint userType,
             byte[] pin, uint pinLen,
             uint volumeId, uint newAccessMode, bool permanent);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_SetLicense(
+            uint session, uint licenseNum, byte[] license, uint licenseLen);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_GetLicense(
+            uint session, uint licenseNum, byte[] license, ref uint licenseLen);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_LoadActivationKey(uint session, byte[] key, uint keySize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_SetActivationPassword(uint slotId, byte[] password);
     }
 }
