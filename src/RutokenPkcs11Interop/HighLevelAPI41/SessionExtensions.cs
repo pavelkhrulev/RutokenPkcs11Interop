@@ -43,7 +43,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
 
         public static void SetLicense(this HLA41.Session session, uint licenseNum, byte[] license)
         {
-            if (Settings.LicenseAllowedNumbers.Contains(licenseNum))
+            if (!Settings.LicenseAllowedNumbers.Contains(licenseNum))
                 throw new ArgumentOutOfRangeException(nameof(licenseNum));
 
             if (license == null)
@@ -57,7 +57,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
 
         public static byte[] GetLicense(this HLA41.Session session, uint licenseNum)
         {
-            if (Settings.LicenseAllowedNumbers.Contains(licenseNum))
+            if (!Settings.LicenseAllowedNumbers.Contains(licenseNum))
                 throw new ArgumentOutOfRangeException(nameof(licenseNum));
 
             uint licenseLen = 0;
