@@ -117,7 +117,6 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 var extsArray = exts.ToArray();
 
                 IntPtr[] dn_array_intptr = new IntPtr[dnArray.Length];
-                IntPtr[] exts_array_intptr = new IntPtr[extsArray.Length];
 
                 for (int i = 0; i < dnArray.Length; i++)
                 {
@@ -126,6 +125,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Marshal.Copy(utf8stringBytes, 0, dn_array_intptr[i], utf8stringBytes.Length);
                 }
 
+                IntPtr[] exts_array_intptr = new IntPtr[extsArray.Length];
                 for (int i = 0; i < extsArray.Length; i++)
                 {
                     var utf8stringBytes = ConvertUtils.Utf8StringToBytes(extsArray[i], extsArray[i].Length + 4, 0x0);
@@ -133,22 +133,32 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Marshal.Copy(utf8stringBytes, 0, exts_array_intptr[i], utf8stringBytes.Length);
                 }
 
-                GCHandle gcDn = GCHandle.Alloc(dn_array_intptr, GCHandleType.Pinned);
-                GCHandle gcExts = GCHandle.Alloc(exts_array_intptr, GCHandleType.Pinned);
+                int size = Marshal.SizeOf(typeof(IntPtr))*dn_array_intptr.Length;
+                IntPtr ptr = Marshal.AllocHGlobal(size);
+                Marshal.Copy(dn_array_intptr, 0, ptr, dn_array_intptr.Length);
 
-                var test1 = gcDn.AddrOfPinnedObject();
+                int size2 = Marshal.SizeOf(typeof(IntPtr)) * exts_array_intptr.Length;
+                IntPtr ptr2 = Marshal.AllocHGlobal(size2);
+                Marshal.Copy(exts_array_intptr, 0, ptr2, exts_array_intptr.Length);
+
+                //GCHandle gcDn = GCHandle.Alloc(dn_array_intptr, GCHandleType.Pinned);
+                //GCHandle gcExts = GCHandle.Alloc(exts_array_intptr, GCHandleType.Pinned);
+
+                //var test1 = gcDn.AddrOfPinnedObject();
+                //var test2 = gcExts.AddrOfPinnedObject();
+
 
                 rv = pkcs11.C_EX_CreateCSR(session, pubKeyId,
-                    gcDn.AddrOfPinnedObject(), (uint)dn_array_intptr.Length,
+                    ptr, (uint)dn_array_intptr.Length,
                     out csr, out csrLength,
                     privKeyId,
                     IntPtr.Zero, 0,
-                    gcExts.AddrOfPinnedObject(), (uint)exts_array_intptr.Length);
-
-                File.WriteAllText("test_cert_req.txt", GetBase64CSR(csr, (int) csrLength));
+                    ptr2, (uint)exts_array_intptr.Length);
 
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
+
+                File.WriteAllText("test_cert_req.txt", GetBase64CSR(csr, (int)csrLength));
 
                 rv = pkcs11.C_CloseSession(session);
                 if (rv != CKR.CKR_OK)

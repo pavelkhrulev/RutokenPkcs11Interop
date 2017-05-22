@@ -155,7 +155,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
         }
 
         public static CKR C_EX_SignInvisible(this Pkcs11 pkcs11,
-            uint session, byte[] data, byte[] signature, ref uint signatureLen)
+            uint session, byte[] data, uint dataLen, byte[] signature, ref uint signatureLen)
         {
             if (pkcs11.Disposed)
                 throw new ObjectDisposedException(pkcs11.GetType().FullName);
@@ -173,7 +173,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             }
 
             uint rv = cSignInvisible(
-                session, data, Convert.ToUInt32(data.Length), signature, ref signatureLen);
+                session, data, dataLen, signature, ref signatureLen);
             return (CKR)rv;
         }
 

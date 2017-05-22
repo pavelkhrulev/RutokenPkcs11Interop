@@ -1,5 +1,6 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
+using Net.Pkcs11Interop.LowLevelAPI41;
 using RutokenPkcs11Interop.LowLevelAPI41;
 using HLA41 = Net.Pkcs11Interop.HighLevelAPI41;
 
@@ -88,6 +89,43 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 session.SessionId, key);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_LoadActivationKey", rv);
+        }
+
+        public static byte[] SignInvisible(this HLA41.Session session,
+            ref HLA41.Mechanism mechanism, HLA41.ObjectHandle keyHandle, byte[] data)
+        {
+            if (mechanism == null)
+                throw new ArgumentNullException(nameof(mechanism));
+
+            if (keyHandle == null)
+                throw new ArgumentNullException(nameof(keyHandle));
+
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+
+            var ckMechanism = new CK_MECHANISM()
+            {
+                Mechanism = mechanism.Type
+            };
+
+            CKR rv = session.LowLevelPkcs11.C_EX_SignInvisibleInit(session.SessionId, ref ckMechanism, keyHandle.ObjectId);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_SignInvisibleInit", rv);
+
+            uint signatureLen = 0;
+            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length), null, ref signatureLen);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_SignInvisible", rv);
+
+            byte[] signature = new byte[signatureLen];
+            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length), signature, ref signatureLen);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_SignInvisible", rv);
+
+            if (signature.Length != signatureLen)
+                Array.Resize(ref signature, Convert.ToInt32(signatureLen));
+
+            return signature;
         }
     }
 }

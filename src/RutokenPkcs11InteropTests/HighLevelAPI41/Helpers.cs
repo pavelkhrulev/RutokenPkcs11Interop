@@ -203,6 +203,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                 new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
                 new ObjectAttribute(CKA.CKA_TOKEN, true),
                 new ObjectAttribute(CKA.CKA_PRIVATE, false),
+                new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true)
             };
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
@@ -212,6 +213,56 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                 new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
                 new ObjectAttribute(CKA.CKA_TOKEN, true),
                 new ObjectAttribute(CKA.CKA_PRIVATE, true),
+                new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true),
+                new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, false)
+            };
+
+            // Определение механизма генерации ключей
+            Mechanism mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+
+            // Генерация ключевой пары
+            session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
+
+            Assert.IsTrue(publicKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+        }
+
+        /// <summary>
+        /// Вспомогательная функция для генерации пары ключей по ГОСТ Р 34.10-2012
+        /// </summary>
+        /// <param name="session">Открытая сессия с токеном</param>
+        /// <param name="publicKeyHandle">Хэндл публичного ключа</param>
+        /// <param name="privateKeyHandle">Хэндл приватного ключа</param>
+        /// <param name="keyPairId">ID ключевой пары</param>
+        public static void GenerateGost512PINPadPair(
+            Session session, out ObjectHandle publicKeyHandle, out ObjectHandle privateKeyHandle, string keyPairId)
+        {
+            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012
+            var publicKeyAttributes = new List<ObjectAttribute>()
+            {
+                new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
+                new ObjectAttribute(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel),
+                new ObjectAttribute(CKA.CKA_ID, keyPairId),
+                new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
+                new ObjectAttribute(CKA.CKA_TOKEN, true),
+                new ObjectAttribute(CKA.CKA_PRIVATE, false),
+                new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
+                new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
+            };
+
+            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
+            var privateKeyAttributes = new List<ObjectAttribute>()
+            {
+                new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+                new ObjectAttribute(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel),
+                new ObjectAttribute(CKA.CKA_ID, keyPairId),
+                new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
+                new ObjectAttribute(CKA.CKA_TOKEN, true),
+                new ObjectAttribute(CKA.CKA_PRIVATE, true),
+                new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true),
+                new ObjectAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_PIN_ENTER, false),
+                new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
+                new ObjectAttribute((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
             };
 
             // Определение механизма генерации ключей

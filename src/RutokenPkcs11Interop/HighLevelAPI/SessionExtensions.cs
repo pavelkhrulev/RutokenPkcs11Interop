@@ -162,5 +162,35 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
             }
         }
+
+        public static byte[] SignInvisible(this Session session,
+            Mechanism mechanism, ObjectHandle keyHandle, byte[] data)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    var mechanism41 = new Net.Pkcs11Interop.HighLevelAPI41.Mechanism((uint)mechanism.Type);
+                    var keyHandle41 = new Net.Pkcs11Interop.HighLevelAPI41.ObjectHandle((uint)keyHandle.ObjectId);
+
+                    return session.HLA41Session.SignInvisible(ref mechanism41, keyHandle41, data);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
     }
 }

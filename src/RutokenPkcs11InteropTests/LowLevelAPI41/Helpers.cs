@@ -241,12 +241,64 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             publicKeyTemplate[4] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
-            var privateKeyTemplate = new CK_ATTRIBUTE[5];
+            var privateKeyTemplate = new CK_ATTRIBUTE[6];
             privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
             privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
             privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
             privateKeyTemplate[4] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
+            privateKeyTemplate[5] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, false);
+
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+
+            // Генерация ключевой пары
+            rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt32(publicKeyTemplate.Length),
+                privateKeyTemplate, Convert.ToUInt32(privateKeyTemplate.Length),
+                ref pubKeyId, ref privKeyId);
+
+            // In LowLevelAPI we have to free unmanaged memory taken by attributes
+            for (int i = 0; i < privateKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref privateKeyTemplate[i].value);
+                privateKeyTemplate[i].valueLen = 0;
+            }
+
+            for (int i = 0; i < privateKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref privateKeyTemplate[i].value);
+                privateKeyTemplate[i].valueLen = 0;
+            }
+
+            return rv;
+        }
+
+        public static CKR GenerateGost512PINPadKeyPair(Pkcs11 pkcs11, uint session, ref uint pubKeyId, ref uint privKeyId, string keyPairId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012
+            var publicKeyTemplate = new CK_ATTRIBUTE[8];
+            publicKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
+            publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel);
+            publicKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
+            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            publicKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            publicKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
+            publicKeyTemplate[6] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
+            publicKeyTemplate[7] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
+
+            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
+            var privateKeyTemplate = new CK_ATTRIBUTE[10];
+            privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
+            privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel);
+            privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
+            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            privateKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            privateKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+            privateKeyTemplate[6] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true);
+            privateKeyTemplate[7] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_PIN_ENTER, false);
+            privateKeyTemplate[8] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
+            privateKeyTemplate[9] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
 
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
