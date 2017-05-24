@@ -192,5 +192,92 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
             }
         }
+
+        public static string CreateCSR(this Session session, ObjectHandle publicKey,
+            string[] dn, ObjectHandle privateKey,
+            string[] attributes, string[] extensions)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    var publicKeyHandle41 = new Net.Pkcs11Interop.HighLevelAPI41.ObjectHandle((uint)publicKey.ObjectId);
+                    var privateKeyHandle41 = new Net.Pkcs11Interop.HighLevelAPI41.ObjectHandle((uint)privateKey.ObjectId);
+                    return session.HLA41Session.CreateCSR(publicKeyHandle41, dn, privateKeyHandle41, attributes, extensions);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
+
+        public static string GetCertificateInfoText(this Session session, ObjectHandle certificate)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    var certificateHandle41 = new Net.Pkcs11Interop.HighLevelAPI41.ObjectHandle((uint)certificate.ObjectId);
+                    return session.HLA41Session.GetCertificateInfoText(certificateHandle41);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
+
+        public static byte[] PKCS7Sign(this Session session, byte[] data, ObjectHandle certificate,
+            ObjectHandle privateKey, uint[] certificates, uint flags)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    var certificateHandle41 = new Net.Pkcs11Interop.HighLevelAPI41.ObjectHandle((uint)certificate.ObjectId);
+                    var privateKeyHandle41 = new Net.Pkcs11Interop.HighLevelAPI41.ObjectHandle((uint)privateKey.ObjectId);
+
+                    return session.HLA41Session.PKCS7Sign(data, certificateHandle41, privateKeyHandle41, certificates, flags);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
     }
 }

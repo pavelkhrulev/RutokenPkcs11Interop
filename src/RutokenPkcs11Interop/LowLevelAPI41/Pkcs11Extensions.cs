@@ -415,6 +415,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
             return (CKR)rv;
         }
+
         public static CKR C_EX_CreateCSR(this Pkcs11 pkcs11, uint session,
                 uint publicKey,
                 IntPtr dn, uint dnLength,
@@ -441,5 +442,71 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             return (CKR)rv;
         }
 
+        public static CKR C_EX_GetCertificateInfoText(this Pkcs11 pkcs11, uint session,
+                uint cert, out IntPtr info, out uint infoLen)
+        {
+            RutokenDelegates.C_EX_GetCertificateInfoText cGetCertificateInfoText = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cGetCertificateInfoTextPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_GetCertificateInfoText");
+                cGetCertificateInfoText = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_GetCertificateInfoText>(cGetCertificateInfoTextPtr);
+            }
+            else
+            {
+                cGetCertificateInfoText = RutokenNativeMethods.C_EX_GetCertificateInfoText;
+            }
+
+            uint rv = cGetCertificateInfoText(session, cert, out info, out infoLen);
+
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_PKCS7Sign(this Pkcs11 pkcs11, uint session,
+            byte[] data, uint cert,
+            out IntPtr envelope, out uint encelopeLen,
+            uint privateKey,
+            uint[] certificates,
+            uint flags)
+        {
+            RutokenDelegates.C_EX_PKCS7Sign cPkcs7Sign = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cPkcs7SignPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_PKCS7Sign");
+                cPkcs7Sign = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_PKCS7Sign>(cPkcs7SignPtr);
+            }
+            else
+            {
+                cPkcs7Sign = RutokenNativeMethods.C_EX_PKCS7Sign;
+            }
+
+            uint rv = cPkcs7Sign(session, data, Convert.ToUInt32(data.Length),
+                cert, out envelope, out encelopeLen,
+                privateKey,
+                certificates, Convert.ToUInt32(certificates.Length),
+                flags);
+
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_FreeBuffer(this Pkcs11 pkcs11, IntPtr buffer)
+        {
+            RutokenDelegates.C_EX_FreeBuffer cFreeBuffer = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cFreeBufferPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_FreeBuffer");
+                cFreeBuffer = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_FreeBuffer>(cFreeBufferPtr);
+            }
+            else
+            {
+                cFreeBuffer = RutokenNativeMethods.C_EX_FreeBuffer;
+            }
+
+            uint rv = cFreeBuffer(buffer);
+
+            return (CKR)rv;
+        }
     }
 }

@@ -91,12 +91,27 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
             ref uint key);
 
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_CreateCSR(uint session, uint publicKey,
             IntPtr dn, uint dnLength,
             out IntPtr csr, out uint csrLength,
             uint privateKey,
             IntPtr attributes, uint attributesLength,
             IntPtr extensions, uint extensionsLength);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_GetCertificateInfoText(
+            uint session, uint cert, out IntPtr info, out uint infoLen);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_PKCS7Sign(
+            uint session, byte[] data, uint dataLen,
+            uint cert,
+            out IntPtr envelope, out uint encelopeLen,
+            uint privateKey,
+            uint[] certificates, uint certificatesLen, uint flags);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate uint C_EX_FreeBuffer(IntPtr buffer);
     }
 }

@@ -2,50 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
+using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.LowLevelAPI41;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
 {
-    static class StringExtensions
-    {
-        public static IEnumerable<string> SplitInParts(this string s, int partLength)
-        {
-            if (s == null)
-                throw new ArgumentNullException("s");
-            if (partLength <= 0)
-                throw new ArgumentException();
-
-            for (var i = 0; i < s.Length; i += partLength)
-                yield return s.Substring(i, Math.Min(partLength, s.Length - i));
-        }
-    }
-
     [TestClass]
     public class _LL41_33_PKITest
     {
-        private string GetBase64CSR(IntPtr csr, int csrLength)
-        {
-            var base64CSR = new StringBuilder();
-            base64CSR.AppendLine("-----BEGIN NEW CERTIFICATE REQUEST-----");
-
-            byte[] managedArray = new byte[csrLength];
-            Marshal.Copy(csr, managedArray, 0, (int)csrLength);
-
-            var request = ConvertUtils.BytesToBase64String(managedArray);
-            var strings = request.SplitInParts(64);
-            foreach (var line in strings)
-            {
-                base64CSR.AppendLine(line);
-            }
-            base64CSR.AppendLine("-----END NEW CERTIFICATE REQUEST-----");
-
-            return base64CSR.ToString();
-        }
-
         [TestMethod]
         public void _LL41_33_01_CreateCSR_PKCS10Test()
         {
@@ -54,7 +21,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
             {
                 // Инициализация библиотеки
                 rv = pkcs11.C_Initialize(Settings.InitArgs41);
@@ -158,7 +125,89 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                File.WriteAllText("test_cert_req.txt", GetBase64CSR(csr, (int)csrLength));
+                File.WriteAllText("test_cert_req.txt", PKIHelpers.GetBase64CSR(csr, (int)csrLength));
+
+                rv = pkcs11.C_CloseSession(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Finalize(IntPtr.Zero);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+            }
+        }
+
+        [TestMethod]
+        public void _LL41_33_02_ImportCertificateTest()
+        {
+            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
+            CKR rv = CKR.CKR_OK;
+
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            {
+                // Инициализация библиотеки
+                rv = pkcs11.C_Initialize(Settings.InitArgs41);
+                if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
+                    Assert.Fail(rv.ToString());
+
+                // Установление соединения с Рутокен в первом доступном слоте
+                uint slotId = Helpers.GetUsableSlot(pkcs11);
+
+                // Открытие RW сессии
+                uint session = CK.CK_INVALID_HANDLE;
+                rv = pkcs11.C_OpenSession(slotId, (CKF.CKF_SERIAL_SESSION | CKF.CKF_RW_SESSION), IntPtr.Zero,
+                    IntPtr.Zero, ref session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Выполнение аутентификации пользователя
+                rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Получение сохраненного тестового сертификата в формате base64
+                string certificateBase64 = TestData.PKI_Certificate;
+
+                // Перекодирование в DER
+                byte[] certificateDer = PKIHelpers.GetDerFromBase64(certificateBase64);
+
+                // Импорт сертификата
+                uint certificateId = CK.CK_INVALID_HANDLE;
+                rv = Helpers.PKI_ImportCertificate(pkcs11, session, certificateDer, ref certificateId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Получение информации о сертификате
+                IntPtr certificateInfo;
+                uint certificateInfoLen;
+                rv = pkcs11.C_EX_GetCertificateInfoText(session, certificateId, out certificateInfo, out certificateInfoLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(certificateInfoLen > 0);
+
+                // Получение массива символов
+                // Далее нужно воспользоваться функцией ConvertUtils.BytesToUtf8String(),
+                // чтобы получить строку
+                byte[] certificateInfoArray = new byte[certificateInfoLen];
+                Marshal.Copy(certificateInfo, certificateInfoArray, 0, (int)certificateInfoLen);
+
+                // Очистка памяти токена
+                rv = pkcs11.C_EX_FreeBuffer(certificateInfo);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Удаление созданного сертификата
+                rv = pkcs11.C_DestroyObject(session, certificateId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Завершение сессии работы с токеном
+                rv = pkcs11.C_Logout(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
 
                 rv = pkcs11.C_CloseSession(session);
                 if (rv != CKR.CKR_OK)

@@ -92,5 +92,27 @@
               "<N>Наименование получателя:<V>Иванова Елена Ивановна<N>Номер счета получателя:<V>40817810338295201618" +
               "<N>БИК банка получателя:<V>044525225<N>Наименование банка получателя:<V>ОАО 'СБЕРБАНК РОССИИ' Г. МОСКВА" +
               "<N>Номер счета банка получателя:<V>30101810400000000225<N>Назначение платежа:<V>перевод личных средств";
+
+        public static string PKI_Certificate => "-----BEGIN CERTIFICATE-----" +
+                                                "MIIDcTCCAyCgAwIBAgITEgAclpNVufvDRF5+1AAAAByWkzAIBgYqhQMCAgMwfzEj" +
+                                                "MCEGCSqGSIb3DQEJARYUc3VwcG9ydEBjcnlwdG9wcm8ucnUxCzAJBgNVBAYTAlJV" +
+                                                "MQ8wDQYDVQQHEwZNb3Njb3cxFzAVBgNVBAoTDkNSWVBUTy1QUk8gTExDMSEwHwYD" +
+                                                "VQQDExhDUllQVE8tUFJPIFRlc3QgQ2VudGVyIDIwHhcNMTcwNTI0MTc1MjAxWhcN" +
+                                                "MTcwODI0MTgwMjAxWjBwMRUwEwYDVQQDDAzQmNCy0LDQvdC+0LIxCzAJBgNVBAYT" +
+                                                "AlJVMRQwEgYDVQQFEwsxMjMxMjMxMjMxMjEdMBsGCSqGSIb3DQEJARYOaXZhbm92" +
+                                                "QG1haWwucnUxFTATBgNVBAgMDNCc0L7RgdC60LLQsDBjMBwGBiqFAwICEzASBgcq" +
+                                                "hQMCAiMBBgcqhQMCAh4BA0MABECC0fFSeBBcRluo9RN1yB8JNpr58u8UMM5C/Ken" +
+                                                "uuf54IijXdR+hty/ONhMCgfhqtOK/+yurbFzHre79zGhNDWqo4IBgDCCAXwwCwYD" +
+                                                "VR0PBAQDAgTwMCYGA1UdJQQfMB0GByqFAwICIgYGCCsGAQUFBwMCBggrBgEFBQcD" +
+                                                "BDAdBgNVHQ4EFgQU/hF7k87GtQZeFhPhVdOpyll8D4EwHwYDVR0jBBgwFoAUFTF8" +
+                                                "sI0a3mbXFZxJUpcXJLkBeoMwWQYDVR0fBFIwUDBOoEygSoZIaHR0cDovL3Rlc3Rj" +
+                                                "YS5jcnlwdG9wcm8ucnUvQ2VydEVucm9sbC9DUllQVE8tUFJPJTIwVGVzdCUyMENl" +
+                                                "bnRlciUyMDIuY3JsMIGpBggrBgEFBQcBAQSBnDCBmTBhBggrBgEFBQcwAoZVaHR0" +
+                                                "cDovL3Rlc3RjYS5jcnlwdG9wcm8ucnUvQ2VydEVucm9sbC90ZXN0LWNhLTIwMTRf" +
+                                                "Q1JZUFRPLVBSTyUyMFRlc3QlMjBDZW50ZXIlMjAyLmNydDA0BggrBgEFBQcwAYYo" +
+                                                "aHR0cDovL3Rlc3RjYS5jcnlwdG9wcm8ucnUvb2NzcC9vY3NwLnNyZjAIBgYqhQMC" +
+                                                "AgMDQQD66rjc2gtbsMNZ3UhF+EhzGkiPbaKCKSxPwqinIAhQzttugXQiHd8m0B2T" +
+                                                "M2o7UZg9asK4rB9PoVLM/yTKqMyp" +
+                                                "-----END CERTIFICATE-----";
     }
 }

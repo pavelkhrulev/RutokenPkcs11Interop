@@ -91,12 +91,27 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
             ref uint key);
 
-        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_CreateCSR(uint session, uint publicKey,
             IntPtr dn, uint dnLength,
             out IntPtr csr, out uint csrLength,
             uint privateKey,
             IntPtr attributes, uint attributesLength,
             IntPtr extensions, uint extensionsLength);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_GetCertificateInfoText(
+            uint session, uint cert, out IntPtr info, out uint infoLen);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_PKCS7Sign(
+            uint session, byte[] data, uint dataLen,
+            uint cert,
+            out IntPtr envelope, out uint encelopeLen,
+            uint privateKey,
+            uint[] certificates, uint certificatesLen, uint flags);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_FreeBuffer(IntPtr buffer);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using RutokenPkcs11Interop.LowLevelAPI41;
@@ -126,6 +127,62 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 Array.Resize(ref signature, Convert.ToInt32(signatureLen));
 
             return signature;
+        }
+
+        public static string CreateCSR(this HLA41.Session session, HLA41.ObjectHandle publicKey,
+            string[] dn, HLA41.ObjectHandle privateKey, string[] attributes, string[] extensions)
+        {
+            return null;
+        }
+
+        public static string GetCertificateInfoText(this HLA41.Session session, HLA41.ObjectHandle certificate)
+        {
+            IntPtr certificateInfo;
+            uint certificateInfoLen;
+
+            CKR rv = session.LowLevelPkcs11.C_EX_GetCertificateInfoText(
+                session.SessionId, certificate.ObjectId, out certificateInfo, out certificateInfoLen);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_GetCertificateInfoText", rv);
+
+            if (certificateInfoLen <= 0)
+                throw new InvalidOperationException(
+                    "C_EX_GetCertificateInfoText: invalid certificate info length");
+
+            byte[] certificateInfoArray = new byte[certificateInfoLen];
+            Marshal.Copy(certificateInfo, certificateInfoArray, 0, (int)certificateInfoLen);
+
+            rv = session.LowLevelPkcs11.C_EX_FreeBuffer(certificateInfo);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
+
+            return ConvertUtils.BytesToUtf8String(certificateInfoArray);
+        }
+
+        public static byte[] PKCS7Sign(this HLA41.Session session, byte[] data, HLA41.ObjectHandle certificate,
+            HLA41.ObjectHandle privateKey, uint[] certificates, uint flags)
+        {
+            IntPtr signature;
+            uint signatureLen;
+
+            CKR rv = session.LowLevelPkcs11.C_EX_PKCS7Sign(session.SessionId, data, certificate.ObjectId,
+                out signature, out signatureLen,
+                privateKey.ObjectId,
+                certificates, flags);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_PKCS7Sign", rv);
+
+            if (signatureLen <= 0)
+                throw new InvalidOperationException("C_EX_PKCS7Sign: invalid signature length");
+
+            byte[] signatureArray = new byte[signatureLen];
+            Marshal.Copy(signature, signatureArray, 0, (int)signatureLen);
+
+            rv = session.LowLevelPkcs11.C_EX_FreeBuffer(signature);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
+
+            return signatureArray;
         }
     }
 }

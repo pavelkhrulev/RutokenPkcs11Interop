@@ -472,5 +472,26 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 return ISO_10126_Padding.Unpad(decryptedData);
             }
         }
+
+        public static void PKI_ImportCertificate(Session session, byte[] certificateDer, out ObjectHandle certificate)
+        {
+            // Шаблон для импорта сертификата
+            var certificateAttributes = new List<ObjectAttribute>
+            {
+                new ObjectAttribute(CKA.CKA_VALUE, certificateDer),
+                new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE),
+                new ObjectAttribute(CKA.CKA_ID, Settings.GostKeyPairId1),
+                new ObjectAttribute(CKA.CKA_TOKEN, true),
+                new ObjectAttribute(CKA.CKA_PRIVATE, false),
+                new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
+            };
+            uint tokenUserCertificate = 1;
+            certificateAttributes.Add(new ObjectAttribute(CKA.CKA_CERTIFICATE_CATEGORY, tokenUserCertificate));
+
+            // Создание сертификата на токене
+            certificate = session.CreateObject(certificateAttributes);
+
+            Assert.IsTrue(certificate.ObjectId != CK.CK_INVALID_HANDLE);
+        }
     }
 }

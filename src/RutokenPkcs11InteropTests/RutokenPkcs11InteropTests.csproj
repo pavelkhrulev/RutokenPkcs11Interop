@@ -65,6 +65,7 @@
     <Compile Include="HighLevelAPI41\_HL41_29_ManageFlashTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_30_JournalTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_31_LicenseTest.cs" />
+    <Compile Include="HighLevelAPI41\_HL41_33_PKITest.cs" />
     <Compile Include="HighLevelAPI\Helpers.cs" />
     <Compile Include="HighLevelAPI\_HL_04_TokenInfoTest.cs" />
     <Compile Include="HighLevelAPI\_HL_25-26_DeriveAndWrapKeyTest.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="HighLevelAPI\_HL_29_ManageFlashTest.cs" />
     <Compile Include="HighLevelAPI\_HL_30_JournalTest.cs" />
     <Compile Include="HighLevelAPI\_HL_31_LicenseTest.cs" />
+    <Compile Include="HighLevelAPI\_HL_33_PKITest.cs" />
     <Compile Include="LowLevelAPI41\Helpers.cs" />
     <Compile Include="LowLevelAPI41\_LL41_02_GetInfoTest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_04_TokenInfoTest.cs" />

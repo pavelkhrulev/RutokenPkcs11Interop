@@ -611,5 +611,31 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 return ISO_10126_Padding.Unpad(decryptedData);
             }
         }
+
+        public static CKR PKI_ImportCertificate(Pkcs11 pkcs11, uint session, byte[] certificateDer, ref uint certificateId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для импорта сертификата
+            CK_ATTRIBUTE[] certificateTemplate = new CK_ATTRIBUTE[7];
+            certificateTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_VALUE, certificateDer);
+            certificateTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE);
+            certificateTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.GostKeyPairId1);
+            certificateTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            certificateTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
+            certificateTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509);
+
+            uint tokenUserCertificate = 1;
+            certificateTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_CERTIFICATE_CATEGORY, tokenUserCertificate);
+
+            // Создание сертификата на токене
+            rv = pkcs11.C_CreateObject(session, certificateTemplate, Convert.ToUInt32(certificateTemplate.Length), ref certificateId);
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(certificateId != CK.CK_INVALID_HANDLE);
+
+            return rv;
+        }
     }
 }
