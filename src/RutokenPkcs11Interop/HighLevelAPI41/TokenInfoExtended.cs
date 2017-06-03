@@ -1,4 +1,6 @@
-﻿using Net.Pkcs11Interop.Common;
+﻿using System;
+using System.Linq;
+using Net.Pkcs11Interop.Common;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI41;
 
@@ -73,7 +75,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             TotalMemory = ckTokenInfoExtended.TotalMemory;
             FreeMemory = ckTokenInfoExtended.FreeMemory;
             // TODO: может стоит оставить байты
-            ATR = ConvertUtils.BytesToHexString(ckTokenInfoExtended.ATR);
+            ATR = ConvertUtils.BytesToHexString(ckTokenInfoExtended.ATR
+                .Take(Convert.ToInt32(ckTokenInfoExtended.ATRLen))
+                .ToArray());
             ATRLen = ckTokenInfoExtended.ATRLen;
             TokenClass = ckTokenInfoExtended.TokenClass;
             BatteryVoltage = ckTokenInfoExtended.BatteryVoltage;
