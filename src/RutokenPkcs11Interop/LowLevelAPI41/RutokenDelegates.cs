@@ -93,11 +93,11 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_CreateCSR(uint session, uint publicKey,
-            IntPtr dn, uint dnLength,
+            IntPtr[] dn, uint dnLength,
             out IntPtr csr, out uint csrLength,
             uint privateKey,
-            IntPtr attributes, uint attributesLength,
-            IntPtr extensions, uint extensionsLength);
+            IntPtr[] attributes, uint attributesLength,
+            IntPtr[] extensions, uint extensionsLength);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_GetCertificateInfoText(

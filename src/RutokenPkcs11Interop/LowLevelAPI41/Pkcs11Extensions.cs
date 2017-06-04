@@ -45,7 +45,11 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cInitToken = RutokenNativeMethods.C_EX_InitToken;
             }
 
-            uint rv = cInitToken(slotId, pin, Convert.ToUInt32(pin.Length), ref initInfo);
+            uint pinLength = 0;
+            if (pin != null)
+                pinLength = Convert.ToUInt32(pin.Length);
+
+            uint rv = cInitToken(slotId, pin, pinLength, ref initInfo);
             return (CKR)rv;
         }
 
@@ -87,7 +91,11 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cSetTokenName = RutokenNativeMethods.C_EX_SetTokenName;
             }
 
-            uint rv = cSetTokenName(session, label, Convert.ToUInt32(label.Length));
+            uint labelLength = 0;
+            if (label != null)
+                labelLength = Convert.ToUInt32(label.Length);
+
+            uint rv = cSetTokenName(session, label, labelLength);
             return (CKR)rv;
         }
 
@@ -195,8 +203,16 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cSetLocalPin = RutokenNativeMethods.C_EX_SetLocalPIN;
             }
 
-            uint rv = cSetLocalPin(slotId, userPin, Convert.ToUInt32(userPin.Length),
-                newLocalPin, Convert.ToUInt32(newLocalPin.Length), localPinId);
+            uint userPinLength = 0;
+            if (userPin != null)
+                userPinLength = Convert.ToUInt32(userPin.Length);
+
+            uint newLocalPinLength = 0;
+            if (newLocalPin != null)
+                newLocalPinLength = Convert.ToUInt32(newLocalPin.Length);
+
+            uint rv = cSetLocalPin(slotId, userPin, userPinLength,
+                newLocalPin, newLocalPinLength, localPinId);
             return (CKR)rv;
         }
 
@@ -239,8 +255,16 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cFormatDrive = RutokenNativeMethods.C_EX_FormatDrive;
             }
 
-            uint rv = cFormatDrive(slotId, userType, pin, Convert.ToUInt32(pin.Length),
-                initParams, Convert.ToUInt32(initParams.Length));
+            uint pinLength = 0;
+            if (pin != null)
+                pinLength = Convert.ToUInt32(pin.Length);
+
+            uint initParamsLength = 0;
+            if (initParams != null)
+                initParamsLength = Convert.ToUInt32(initParams.Length);
+
+            uint rv = cFormatDrive(slotId, userType, pin, pinLength,
+                initParams, initParamsLength);
             return (CKR)rv;
         }
 
@@ -286,8 +310,12 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cChangeVolumeAttributes = RutokenNativeMethods.C_EX_ChangeVolumeAttributes;
             }
 
+            uint pinLength = 0;
+            if (pin != null)
+                pinLength = Convert.ToUInt32(pin.Length);
+
             uint rv = cChangeVolumeAttributes(slotId, userType,
-                pin, Convert.ToUInt32(pin.Length),
+                pin, pinLength,
                 volumeId, (uint)newAccessMode, permanent);
             return (CKR)rv;
         }
@@ -312,7 +340,11 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cSetLicense = RutokenNativeMethods.C_EX_SetLicense;
             }
 
-            uint rv = cSetLicense(session, licenseNum, license, Convert.ToUInt32(license.Length));
+            uint licenseLength = 0;
+            if (license != null)
+                licenseLength = Convert.ToUInt32(license.Length);
+
+            uint rv = cSetLicense(session, licenseNum, license, licenseLength);
 
             return (CKR)rv;
         }
@@ -387,7 +419,11 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cLoadActivationKey = RutokenNativeMethods.C_EX_LoadActivationKey;
             }
 
-            uint rv = cLoadActivationKey(session, key, Convert.ToUInt32(key.Length));
+            uint keyLength = 0;
+            if (key != null)
+                keyLength = Convert.ToUInt32(key.Length);
+
+            uint rv = cLoadActivationKey(session, key, keyLength);
 
             return (CKR)rv;
         }
@@ -418,11 +454,11 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         public static CKR C_EX_CreateCSR(this Pkcs11 pkcs11, uint session,
                 uint publicKey,
-                IntPtr dn, uint dnLength,
+                IntPtr[] dn, uint dnLength,
                 out IntPtr csr, out uint csrLength,
                 uint privateKey,
-                IntPtr attributes, uint attributesLength,
-                IntPtr extensions, uint extensionsLength)
+                IntPtr[] attributes, uint attributesLength,
+                IntPtr[] extensions, uint extensionsLength)
         {
             RutokenDelegates.C_EX_CreateCSR cCreateCSR = null;
 
@@ -481,10 +517,18 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cPkcs7Sign = RutokenNativeMethods.C_EX_PKCS7Sign;
             }
 
-            uint rv = cPkcs7Sign(session, data, Convert.ToUInt32(data.Length),
+            uint dataLength = 0;
+            if (data != null)
+                dataLength = Convert.ToUInt32(data.Length);
+
+            uint certificatesLength = 0;
+            if (certificates != null)
+                certificatesLength = Convert.ToUInt32(certificates.Length);
+
+            uint rv = cPkcs7Sign(session, data, dataLength,
                 cert, out envelope, out encelopeLen,
                 privateKey,
-                certificates, Convert.ToUInt32(certificates.Length),
+                certificates, certificatesLength,
                 flags);
 
             return (CKR)rv;

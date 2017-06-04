@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Net.Pkcs11Interop.Common;
@@ -51,7 +49,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Assert.Fail(rv.ToString());
 
                 // Создание запроса на сертификат
-                List<string> dn = new List<string>()
+                string[] dn =
                 {
                     "CN",
                     "UTF8String:Иванов",
@@ -65,7 +63,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     "UTF8String:Москва",
                 };
 
-                List<string> exts = new List<string>()
+                string[] exts =
                 {
                     "keyUsage",
                     "digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment",
@@ -77,55 +75,41 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     "ASN1:UTF8String:СКЗИ \\\"Рутокен ЭЦП 2.0\\\""
                 };
 
+                IntPtr[] dnPtr = StringArrayHelpers.ConvertStringArrayToIntPtrArray(dn);
+                IntPtr[] extsPtr = StringArrayHelpers.ConvertStringArrayToIntPtrArray(exts);
+
                 IntPtr csr;
                 uint csrLength;
 
-                var dnArray = dn.ToArray();
-                var extsArray = exts.ToArray();
-
-                IntPtr[] dn_array_intptr = new IntPtr[dnArray.Length];
-
-                for (int i = 0; i < dnArray.Length; i++)
-                {
-                    var utf8stringBytes = ConvertUtils.Utf8StringToBytes(dnArray[i], dnArray[i].Length + 4, 0x0);
-                    dn_array_intptr[i] = Marshal.AllocHGlobal(utf8stringBytes.Length);
-                    Marshal.Copy(utf8stringBytes, 0, dn_array_intptr[i], utf8stringBytes.Length);
-                }
-
-                IntPtr[] exts_array_intptr = new IntPtr[extsArray.Length];
-                for (int i = 0; i < extsArray.Length; i++)
-                {
-                    var utf8stringBytes = ConvertUtils.Utf8StringToBytes(extsArray[i], extsArray[i].Length + 4, 0x0);
-                    exts_array_intptr[i] = Marshal.AllocHGlobal(utf8stringBytes.Length);
-                    Marshal.Copy(utf8stringBytes, 0, exts_array_intptr[i], utf8stringBytes.Length);
-                }
-
-                int size = Marshal.SizeOf(typeof(IntPtr))*dn_array_intptr.Length;
-                IntPtr ptr = Marshal.AllocHGlobal(size);
-                Marshal.Copy(dn_array_intptr, 0, ptr, dn_array_intptr.Length);
-
-                int size2 = Marshal.SizeOf(typeof(IntPtr)) * exts_array_intptr.Length;
-                IntPtr ptr2 = Marshal.AllocHGlobal(size2);
-                Marshal.Copy(exts_array_intptr, 0, ptr2, exts_array_intptr.Length);
-
-                //GCHandle gcDn = GCHandle.Alloc(dn_array_intptr, GCHandleType.Pinned);
-                //GCHandle gcExts = GCHandle.Alloc(exts_array_intptr, GCHandleType.Pinned);
-
-                //var test1 = gcDn.AddrOfPinnedObject();
-                //var test2 = gcExts.AddrOfPinnedObject();
-
-
                 rv = pkcs11.C_EX_CreateCSR(session, pubKeyId,
-                    ptr, (uint)dn_array_intptr.Length,
+                    dnPtr, (uint)dnPtr.Length,
                     out csr, out csrLength,
                     privKeyId,
-                    IntPtr.Zero, 0,
-                    ptr2, (uint)exts_array_intptr.Length);
+                    null, 0,
+                    extsPtr, (uint)extsPtr.Length);
+
+                StringArrayHelpers.FreeUnmanagedIntPtrArray(dnPtr);
+                StringArrayHelpers.FreeUnmanagedIntPtrArray(extsPtr);
 
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                File.WriteAllText("test_cert_req.txt", PKIHelpers.GetBase64CSR(csr, (int)csrLength));
+                var csrString = PKIHelpers.GetBase64CSR(csr, (int)csrLength);
+
+                Assert.IsTrue(csrString.Length > 0);
+
+                // Очистка памяти, выделенной для полученного буфера
+                rv = pkcs11.C_EX_FreeBuffer(csr);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_DestroyObject(session, privKeyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_DestroyObject(session, pubKeyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
 
                 rv = pkcs11.C_CloseSession(session);
                 if (rv != CKR.CKR_OK)

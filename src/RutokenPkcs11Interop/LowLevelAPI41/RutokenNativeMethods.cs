@@ -93,11 +93,11 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_CreateCSR(uint session, uint publicKey,
-            IntPtr dn, uint dnLength,
+            IntPtr[] dn, uint dnLength,
             out IntPtr csr, out uint csrLength,
             uint privateKey,
-            IntPtr attributes, uint attributesLength,
-            IntPtr extensions, uint extensionsLength);
+            IntPtr[] attributes, uint attributesLength,
+            IntPtr[] extensions, uint extensionsLength);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_GetCertificateInfoText(

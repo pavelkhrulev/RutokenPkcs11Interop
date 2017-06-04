@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Aktiv.RutokenPkcs11Interop</id>
-    <version>$version$-alpha01</version>
+    <version>$version$-alpha04</version>
     <title>$title$</title>
     <authors>Pavel Khrulev</authors>
     <owners>Pavel Khrulev</owners>

@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
+using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.LowLevelAPI41;
 using HLA41 = Net.Pkcs11Interop.HighLevelAPI41;
 
@@ -132,7 +133,39 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
         public static string CreateCSR(this HLA41.Session session, HLA41.ObjectHandle publicKey,
             string[] dn, HLA41.ObjectHandle privateKey, string[] attributes, string[] extensions)
         {
-            return null;
+            IntPtr[] dnPtr = StringArrayHelpers.ConvertStringArrayToIntPtrArray(dn);
+            IntPtr[] extsPtr = StringArrayHelpers.ConvertStringArrayToIntPtrArray(extensions);
+
+            IntPtr csr;
+            uint csrLength;
+
+            CKR rv = session.LowLevelPkcs11.C_EX_CreateCSR(session.SessionId, publicKey.ObjectId,
+                dnPtr, (uint)dnPtr.Length,
+                out csr, out csrLength,
+                privateKey.ObjectId,
+                null, 0,
+                extsPtr, (uint)extsPtr.Length);
+
+            StringArrayHelpers.FreeUnmanagedIntPtrArray(dnPtr);
+            StringArrayHelpers.FreeUnmanagedIntPtrArray(extsPtr);
+
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_CreateCSR", rv);
+
+            try
+            {
+                var csrString = PKIHelpers.GetBase64CSR(csr, (int)csrLength);
+                if (csrString.Length == 0)
+                    throw new InvalidOperationException("C_EX_CreateCSR: invalid csr length");
+
+                return csrString;
+            }
+            finally
+            {
+                rv = session.LowLevelPkcs11.C_EX_FreeBuffer(csr);
+                if (rv != CKR.CKR_OK)
+                    throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
+            }
         }
 
         public static string GetCertificateInfoText(this HLA41.Session session, HLA41.ObjectHandle certificate)
