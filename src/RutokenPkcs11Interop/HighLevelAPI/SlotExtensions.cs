@@ -256,5 +256,31 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
             }
         }
+
+        public static void SlotManage(this Slot slot, uint mode, byte[] value)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    slot.HLA41Slot.SlotManage(mode, value);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ using RutokenPkcs11Interop.LowLevelAPI41;
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
 {
     [TestClass]
-    public class _LL41_32_Activation
+    public class _LL41_32_ActivationPasswordTest
     {
         [TestMethod]
         public void _LL41_32_01_ActivationPasswordTest()
@@ -33,9 +33,18 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                // Выполнение аутентификации пользователя
+                // Выполнение аутентификации администратора
                 rv = pkcs11.C_Login(session, CKU.CKU_SO, Settings.SecurityOfficerPinArray,
-                    Convert.ToUInt32(Settings.NormalUserPinArray.Length));
+                    Convert.ToUInt32(Settings.SecurityOfficerPinArray.Length));
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // TODO: сделать вызов функций активации в правильном порядке
+                // и с правильными данными
+
+                // Загрузка ключа активации
+                byte[] activationKey = new byte[32];
+                rv = pkcs11.C_EX_LoadActivationKey(session, activationKey);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
@@ -53,6 +62,11 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 byte[] password = new byte[passwordLength];
                 rv = pkcs11.C_EX_GenerateActivationPassword(session, (uint)ActivationPasswordNumber.GenerateNextPassword,
                     password, ref passwordLength, (uint)ActivationPasswordCharacterSet.CapsAndDigits);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Установка пароля активации
+                rv = pkcs11.C_EX_SetActivationPassword(slotId, password);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 

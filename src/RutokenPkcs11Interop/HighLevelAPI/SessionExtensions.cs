@@ -1,6 +1,7 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
+using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.HighLevelAPI41;
 
 namespace RutokenPkcs11Interop.HighLevelAPI
@@ -137,7 +138,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             }
         }
 
-        public static void LoacActivationKey(this Session session, byte[] key)
+        public static void LoadActivationKey(this Session session, byte[] key)
         {
             if (Platform.UnmanagedLongSize == 4)
             {
@@ -148,6 +149,33 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 else
                 {
                     session.HLA41Session.LoadActivationKey(key);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
+
+        public static byte[] GenerateActivationPassword(this Session session,
+            ActivationPasswordNumber passwordNumber, ActivationPasswordCharacterSet characterSet)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    return session.HLA41Session.GenerateActivationPassword(passwordNumber, characterSet);
                 }
             }
             else
@@ -265,6 +293,32 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     var privateKeyHandle41 = new Net.Pkcs11Interop.HighLevelAPI41.ObjectHandle((uint)privateKey.ObjectId);
 
                     return session.HLA41Session.PKCS7Sign(data, certificateHandle41, privateKeyHandle41, certificates, flags);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    throw new NotImplementedException();
+                }
+            }
+        }
+
+        public static void TokenManage(this Session session, TokenManageMode mode, byte[] value)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    session.HLA41Session.TokenManage(mode, value);
                 }
             }
             else

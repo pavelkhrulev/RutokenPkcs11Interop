@@ -552,5 +552,45 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
             return (CKR)rv;
         }
+
+        public static CKR C_EX_TokenManage(this Pkcs11 pkcs11, uint session, uint mode, IntPtr value)
+        {
+            RutokenDelegates.C_EX_TokenManage cTokenManage = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cTokenManagePtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_TokenManage");
+                cTokenManage = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_TokenManage>(cTokenManagePtr);
+            }
+            else
+            {
+                cTokenManage = RutokenNativeMethods.C_EX_TokenManage;
+            }
+
+            uint rv = cTokenManage(session, mode, value);
+
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_SlotManage(this Pkcs11 pkcs11, uint slotId, uint mode, IntPtr value)
+        {
+            RutokenDelegates.C_EX_SlotManage cSlotManage = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cSlotManagePtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_SlotManage");
+                cSlotManage = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_SlotManage>(cSlotManagePtr);
+            }
+            else
+            {
+                cSlotManage = RutokenNativeMethods.C_EX_TokenManage;
+            }
+
+            uint rv = cSlotManage(slotId, mode, value);
+
+            return (CKR)rv;
+        }
+
+
     }
 }

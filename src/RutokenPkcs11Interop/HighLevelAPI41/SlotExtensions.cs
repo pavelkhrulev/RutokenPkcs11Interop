@@ -150,5 +150,25 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SetActivationPassword", rv);
         }
+
+        public static void SlotManage(this HLA41.Slot slot, uint mode, byte[] value)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            IntPtr valuePtr = Marshal.AllocHGlobal(value.Length);
+            Marshal.Copy(value, 0, valuePtr, value.Length);
+
+            try
+            {
+                CKR rv = slot.LowLevelPkcs11.C_EX_SlotManage(slot.SlotId, mode, valuePtr);
+                if (rv != CKR.CKR_OK)
+                    throw new Pkcs11Exception("C_EX_SlotManage", rv);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(valuePtr);
+            }
+        }
     }
 }

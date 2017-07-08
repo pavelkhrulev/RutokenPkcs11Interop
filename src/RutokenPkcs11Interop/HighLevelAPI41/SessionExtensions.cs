@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
+using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.LowLevelAPI41;
 using HLA41 = Net.Pkcs11Interop.HighLevelAPI41;
@@ -93,6 +94,30 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_LoadActivationKey", rv);
         }
 
+        public static byte[] GenerateActivationPassword(this HLA41.Session session,
+            ActivationPasswordNumber passwordNumber, ActivationPasswordCharacterSet characterSet)
+        {
+            // Получение длины пароля активации
+            uint passwordLength = 0;
+            CKR rv = session.LowLevelPkcs11.C_EX_GenerateActivationPassword(
+                session.SessionId, (uint)passwordNumber, null, ref passwordLength, (uint)characterSet);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_GenerateActivationPassword", rv);
+
+            if (passwordLength <= 0)
+                throw new InvalidOperationException(
+                    "C_EX_GenerateActivationPassword: invalid password length");
+
+            // Генерация пароля активации
+            byte[] password = new byte[passwordLength];
+            rv = session.LowLevelPkcs11.C_EX_GenerateActivationPassword(
+                session.SessionId, (uint)passwordNumber, password, ref passwordLength, (uint)characterSet);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_GenerateActivationPassword", rv);
+
+            return password;
+        }
+
         public static byte[] SignInvisible(this HLA41.Session session,
             ref HLA41.Mechanism mechanism, HLA41.ObjectHandle keyHandle, byte[] data)
         {
@@ -110,17 +135,20 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 Mechanism = mechanism.Type
             };
 
-            CKR rv = session.LowLevelPkcs11.C_EX_SignInvisibleInit(session.SessionId, ref ckMechanism, keyHandle.ObjectId);
+            CKR rv = session.LowLevelPkcs11.C_EX_SignInvisibleInit(session.SessionId, ref ckMechanism,
+                keyHandle.ObjectId);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisibleInit", rv);
 
             uint signatureLen = 0;
-            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length), null, ref signatureLen);
+            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length), null,
+                ref signatureLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisible", rv);
 
             byte[] signature = new byte[signatureLen];
-            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length), signature, ref signatureLen);
+            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length),
+                signature, ref signatureLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisible", rv);
 
@@ -140,11 +168,11 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             uint csrLength;
 
             CKR rv = session.LowLevelPkcs11.C_EX_CreateCSR(session.SessionId, publicKey.ObjectId,
-                dnPtr, (uint)dnPtr.Length,
+                dnPtr, (uint) dnPtr.Length,
                 out csr, out csrLength,
                 privateKey.ObjectId,
                 null, 0,
-                extsPtr, (uint)extsPtr.Length);
+                extsPtr, (uint) extsPtr.Length);
 
             StringArrayHelpers.FreeUnmanagedIntPtrArray(dnPtr);
             StringArrayHelpers.FreeUnmanagedIntPtrArray(extsPtr);
@@ -154,7 +182,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
 
             try
             {
-                var csrString = PKIHelpers.GetBase64CSR(csr, (int)csrLength);
+                var csrString = PKIHelpers.GetBase64CSR(csr, (int) csrLength);
                 if (csrString.Length == 0)
                     throw new InvalidOperationException("C_EX_CreateCSR: invalid csr length");
 
@@ -183,7 +211,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                     "C_EX_GetCertificateInfoText: invalid certificate info length");
 
             byte[] certificateInfoArray = new byte[certificateInfoLen];
-            Marshal.Copy(certificateInfo, certificateInfoArray, 0, (int)certificateInfoLen);
+            Marshal.Copy(certificateInfo, certificateInfoArray, 0, (int) certificateInfoLen);
 
             rv = session.LowLevelPkcs11.C_EX_FreeBuffer(certificateInfo);
             if (rv != CKR.CKR_OK)
@@ -209,13 +237,33 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new InvalidOperationException("C_EX_PKCS7Sign: invalid signature length");
 
             byte[] signatureArray = new byte[signatureLen];
-            Marshal.Copy(signature, signatureArray, 0, (int)signatureLen);
+            Marshal.Copy(signature, signatureArray, 0, (int) signatureLen);
 
             rv = session.LowLevelPkcs11.C_EX_FreeBuffer(signature);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
 
             return signatureArray;
+        }
+
+        public static void TokenManage(this HLA41.Session session, TokenManageMode mode, byte[] value)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            IntPtr valuePtr = Marshal.AllocHGlobal(value.Length);
+            Marshal.Copy(value, 0, valuePtr, value.Length);
+
+            try
+            {
+                CKR rv = session.LowLevelPkcs11.C_EX_TokenManage(session.SessionId, (uint)mode, valuePtr);
+                if (rv != CKR.CKR_OK)
+                    throw new Pkcs11Exception("C_EX_TokenManage", rv);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(valuePtr);
+            }
         }
     }
 }

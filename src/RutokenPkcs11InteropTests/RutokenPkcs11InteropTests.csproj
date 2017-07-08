@@ -65,8 +65,12 @@
     <Compile Include="HighLevelAPI41\_HL41_29_ManageFlashTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_30_JournalTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_31_LicenseTest.cs" />
+    <Compile Include="HighLevelAPI41\_HL41_32_ActivationPasswordTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_33_PKITest.cs" />
+    <Compile Include="HighLevelAPI41\_HL41_34_ManageEntityTest.cs" />
     <Compile Include="HighLevelAPI\Helpers.cs" />
+    <Compile Include="HighLevelAPI\_HL_32_ActivationPasswordTest.cs" />
+    <Compile Include="HighLevelAPI\_HL_34_ManageEntityTest.cs" />
     <Compile Include="HighLevelAPI\_HL_04_TokenInfoTest.cs" />
     <Compile Include="HighLevelAPI\_HL_25-26_DeriveAndWrapKeyTest.cs" />
     <Compile Include="HighLevelAPI\_HL_21_SignAndVerifyTest.cs" />
@@ -89,8 +93,9 @@
     <Compile Include="LowLevelAPI41\_LL41_29_ManageFlashTest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_30_JournalTest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_32_Activation.cs" />
+    <Compile Include="LowLevelAPI41\_LL41_32_ActivationPasswordTest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_33_PKITest.cs" />
+    <Compile Include="LowLevelAPI41\_LL41_34_ManageEntityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TestData.cs" />
