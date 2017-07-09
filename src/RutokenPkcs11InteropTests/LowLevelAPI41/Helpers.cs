@@ -83,7 +83,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='session'>Сессия пользователя</param>
         /// <param name='keyId'>Хэндл ключа</param>
         /// <returns>Return value of C_GenerateKey</returns>
-        public static CKR GenerateGostSymmetricKey(Pkcs11 pkcs11, uint session, ref uint keyId)
+        public static void GenerateGostSymmetricKey(Pkcs11 pkcs11, uint session, ref uint keyId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -111,7 +111,10 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 template[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(keyId != CK.CK_INVALID_HANDLE);
         }
 
         /// <summary>
@@ -123,7 +126,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static CKR GenerateGostKeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
+        public static void GenerateGostKeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -170,7 +173,11 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 publicKeyTemplate[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(publicKeyId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyId != CK.CK_INVALID_HANDLE);
         }
 
         /// <summary>
@@ -182,7 +189,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static CKR GenerateGost512KeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
+        public static void GenerateGost512KeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -229,7 +236,11 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 publicKeyTemplate[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(publicKeyId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyId != CK.CK_INVALID_HANDLE);
         }
 
         /// <summary>
@@ -240,7 +251,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='publicKeyId'>Хэндл публичного ключа</param>
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static CKR GenerateGost512JournalKeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId)
+        public static void GenerateGost512JournalKeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -281,7 +292,11 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 privateKeyTemplate[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(publicKeyId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyId != CK.CK_INVALID_HANDLE);
         }
 
         /// <summary>
@@ -293,7 +308,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static CKR GenerateGost512PINPadKeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
+        public static void GenerateGost512PINPadKeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -342,7 +357,11 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 privateKeyTemplate[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(publicKeyId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyId != CK.CK_INVALID_HANDLE);
         }
 
         /// <summary>
@@ -354,7 +373,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static CKR GenerateRSAKeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
+        public static void GenerateRSAKeyPair(Pkcs11 pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -400,7 +419,11 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 publicKeyTemplate[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(publicKeyId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyId != CK.CK_INVALID_HANDLE);
         }
 
         /// <summary>
@@ -413,7 +436,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name="ukm"></param>
         /// <param name="derivedKeyId">ID вырабатанного ключа</param>
         /// <returns>Return value of C_DeriveKey</returns>
-        public static CKR Derive_GostR3410_Key(Pkcs11 pkcs11, uint session, uint publicKeyId, uint privateKeyId,
+        public static void Derive_GostR3410_Key(Pkcs11 pkcs11, uint session, uint publicKeyId, uint privateKeyId,
             byte[] ukm, ref uint derivedKeyId)
         {
             CKR rv = CKR.CKR_OK;
@@ -459,10 +482,6 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             // Выработка ключа согласно установленному выше шаблону
             rv = pkcs11.C_DeriveKey(session, ref deriveMechanism, privateKeyId, derivedKeyTemplate,
                 Convert.ToUInt32(derivedKeyTemplate.Length), ref derivedKeyId);
-            if (rv != CKR.CKR_OK)
-                Assert.Fail(rv.ToString());
-
-            Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
 
             // Очистка памяти, выделенной под различные параметры
             UnmanagedMemory.Free(ref valueTemplate[0].value);
@@ -490,7 +509,10 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 derivedKeyTemplate[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
         }
 
         /// <summary>
@@ -503,7 +525,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name="ukm"></param>
         /// <param name="derivedKeyId">ID вырабатанного ключа</param>
         /// <returns>Return value of C_DeriveKey</returns>
-        public static CKR Derive_GostR3410_12_Key(Pkcs11 pkcs11, uint session, uint publicKeyId, uint privateKeyId,
+        public static void Derive_GostR3410_12_Key(Pkcs11 pkcs11, uint session, uint publicKeyId, uint privateKeyId,
             byte[] ukm, ref uint derivedKeyId)
         {
             CKR rv = CKR.CKR_OK;
@@ -549,10 +571,6 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             // Выработка ключа согласно установленному выше шаблону
             rv = pkcs11.C_DeriveKey(session, ref deriveMechanism, privateKeyId, derivedKeyTemplate,
                 Convert.ToUInt32(derivedKeyTemplate.Length), ref derivedKeyId);
-            if (rv != CKR.CKR_OK)
-                Assert.Fail(rv.ToString());
-
-            Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
 
             // Очистка памяти, выделенной под различные параметры
             UnmanagedMemory.Free(ref deriveMechanism.Parameter);
@@ -571,7 +589,10 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 derivedKeyTemplate[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
         }
 
         /// <summary>
@@ -688,7 +709,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name="certificateDer">Сертификат в формате DER</param>
         /// <param name="certificateId">Хэндл сертификата</param>
         /// <returns></returns>
-        public static CKR PKI_ImportCertificate(Pkcs11 pkcs11, uint session, byte[] certificateDer, ref uint certificateId)
+        public static void PKI_ImportCertificate(Pkcs11 pkcs11, uint session, byte[] certificateDer, ref uint certificateId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -706,10 +727,6 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
             // Создание сертификата на токене
             rv = pkcs11.C_CreateObject(session, certificateTemplate, Convert.ToUInt32(certificateTemplate.Length), ref certificateId);
-            if (rv != CKR.CKR_OK)
-                Assert.Fail(rv.ToString());
-
-            Assert.IsTrue(certificateId != CK.CK_INVALID_HANDLE);
 
             // Очистка памяти, выделенной под аттрибуты
             for (int i = 0; i < certificateTemplate.Length; i++)
@@ -718,7 +735,10 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 certificateTemplate[i].valueLen = 0;
             }
 
-            return rv;
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(certificateId != CK.CK_INVALID_HANDLE);
         }
     }
 }

@@ -69,9 +69,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары ГОСТ Р 34.10-2012
                 uint dataPublicKeyId = CK.CK_INVALID_HANDLE;
                 uint dataPrivateKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGost512KeyPair(pkcs11, session, ref dataPublicKeyId, ref dataPrivateKeyId, Settings.Gost512KeyPairId1);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateGost512KeyPair(pkcs11, session, ref dataPublicKeyId, ref dataPrivateKeyId, Settings.Gost512KeyPairId1);
 
                 // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012
                 CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512);
@@ -121,10 +119,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары ГОСТ Р 34.10-2012 для подписи журнала
                 uint journalPublicKeyId = CK.CK_INVALID_HANDLE;
                 uint journalPrivateKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGost512JournalKeyPair(
+                Helpers.GenerateGost512JournalKeyPair(
                     pkcs11, session, ref journalPublicKeyId, ref journalPrivateKeyId);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
 
                 // Инициализация хэш-функции
                 rv = pkcs11.C_DigestInit(session, ref digestMechanism);
@@ -264,10 +260,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары ГОСТ Р 34.10-2012
                 uint dataPublicKeyId = CK.CK_INVALID_HANDLE;
                 uint dataPrivateKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGost512PINPadKeyPair(
+                Helpers.GenerateGost512PINPadKeyPair(
                     pkcs11, session, ref dataPublicKeyId, ref dataPrivateKeyId, Settings.Gost512KeyPairId1);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
 
                 // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012 (512)
                 CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512);
@@ -317,10 +311,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары ГОСТ Р 34.10-2012 для подписи журнала
                 uint journalPublicKeyId = CK.CK_INVALID_HANDLE;
                 uint journalPrivateKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGost512JournalKeyPair(
+                Helpers.GenerateGost512JournalKeyPair(
                     pkcs11, session, ref journalPublicKeyId, ref journalPrivateKeyId);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
 
                 // Инициализация хэш-функции
                 rv = pkcs11.C_DigestInit(session, ref digestMechanism);

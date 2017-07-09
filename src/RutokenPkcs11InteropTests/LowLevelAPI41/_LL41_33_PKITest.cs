@@ -44,9 +44,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары ГОСТ Р 34.10-2001
                 uint pubKeyId = CK.CK_INVALID_HANDLE;
                 uint privKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGostKeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.GostKeyPairId1);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateGostKeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.GostKeyPairId1);
 
                 // Создание запроса на сертификат
                 string[] dn =
@@ -159,9 +157,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Импорт сертификата
                 uint certificateId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.PKI_ImportCertificate(pkcs11, session, certificateDer, ref certificateId);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.PKI_ImportCertificate(pkcs11, session, certificateDer, ref certificateId);
 
                 // Получение информации о сертификате
                 IntPtr certificateInfo;

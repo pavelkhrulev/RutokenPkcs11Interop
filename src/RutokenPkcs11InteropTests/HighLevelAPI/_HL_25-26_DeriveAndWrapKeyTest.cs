@@ -5,6 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.MechanismParams;
 using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.HighLevelAPI;
+using RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
@@ -229,6 +231,122 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     // Удаляем наследованные ключи
                     session.DestroyObject(senderDerivedKeyHandle);
                     session.DestroyObject(recipientDerivedKeyHandle);
+
+                    // Закрываем сессию
+                    session.Logout();
+                }
+            }
+        }
+
+        [TestMethod]
+        public void _HL_25_26_03_ExtendedWrap_VKO_Gost3410_12_Test()
+        {
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            {
+                // Установление соединения с Рутокен в первом доступном слоте
+                Slot slot = Helpers.GetUsableSlot(pkcs11);
+
+                // Открытие RW сессии
+                using (Session session = slot.OpenSession(false))
+                {
+                    // Выполнение аутентификации пользователя
+                    session.Login(CKU.CKU_USER, Settings.NormalUserPin);
+
+                    // Генерация ключевой пары ГОСТ Р 34.10-2012 отправителя
+                    ObjectHandle senderPublicKeyHandle = null;
+                    ObjectHandle senderPrivateKeyHandle = null;
+                    Helpers.GenerateGost512KeyPair(session, out senderPublicKeyHandle, out senderPrivateKeyHandle,
+                        Settings.GostKeyPairId1);
+
+                    // Генерация ключевой пары ГОСТ Р 34.10-2012 получателя
+                    ObjectHandle recipientPublicKeyHandle = null;
+                    ObjectHandle recipientPrivateKeyHandle = null;
+                    Helpers.GenerateGost512KeyPair(session, out recipientPublicKeyHandle, out recipientPrivateKeyHandle,
+                        Settings.GostKeyPairId2);
+
+                    // Шаблон для создания маскируемого ключа
+                    var sessionKeyAttributes = new List<ObjectAttribute>()
+                    {
+                        new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+                        new ObjectAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel),
+                        new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147),
+                        new ObjectAttribute(CKA.CKA_TOKEN, true),
+                        new ObjectAttribute(CKA.CKA_ENCRYPT, true),
+                        new ObjectAttribute(CKA.CKA_DECRYPT, true),
+                        new ObjectAttribute(CKA.CKA_PRIVATE, true)
+                    };
+
+                    // Генерация параметра для структуры типа CK_GOSTR3410_DERIVE_PARAMS
+                    // для выработки общего ключа
+                    byte[] ukm = session.GenerateRandom(Settings.UKM_LENGTH);
+
+                    // Определение механизма генерации ключа для маскирования
+                    var generationMechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147_KEY_GEN);
+
+                    // Получаем публичный ключ по его Id
+                    var publicKeyAttributeNames = new List<CKA>
+                    {
+                        CKA.CKA_VALUE
+                    };
+                    List<ObjectAttribute> publicKeyAttributes = session.GetAttributeValue(recipientPublicKeyHandle, publicKeyAttributeNames);
+
+                    // Определение параметров механизма наследования ключа
+                    var deriveMechanismParams =
+                        new CkGostR3410_12_DeriveParams(
+                            (uint)Extended_CKM.CKM_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
+
+                    // Определяем механизм наследования ключа
+                    var derivationMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
+
+                    // Определение параметров механизма маскирования
+                    var wrapMechanismParams = new CkKeyDerivationStringData(ukm);
+                    var wrappingMechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147_KEY_WRAP,
+                        wrapMechanismParams);
+
+                    // Маскирование ключа на общем ключе, выработанном на стороне отправителя
+                    ObjectHandle sessionKeyHandle = null;
+                    byte[] wrappedKey = session.ExtendedWrapKey(generationMechanism, sessionKeyAttributes,
+                        derivationMechanism, senderPrivateKeyHandle, wrappingMechanism, ref sessionKeyHandle);
+
+                    // Шаблон демаскированного ключа
+                    var unwrappedKeyAttributes = new List<ObjectAttribute>()
+                    {
+                        new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+                        new ObjectAttribute(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel),
+                        new ObjectAttribute(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147),
+                        new ObjectAttribute(CKA.CKA_TOKEN, true),
+                        new ObjectAttribute(CKA.CKA_ENCRYPT, true),
+                        new ObjectAttribute(CKA.CKA_DECRYPT, true),
+                        new ObjectAttribute(CKA.CKA_PRIVATE, true)
+                    };
+
+                    // Демаскирование сессионного ключа с помощью общего выработанного
+                    // ключа на стороне получателя
+                    ObjectHandle unwrappedKeyHandle = session.ExtendedUnwrapKey(derivationMechanism, senderPublicKeyHandle,
+                        wrappingMechanism, wrappedKey, unwrappedKeyAttributes);
+
+                    // Сравнение ключа
+                    // Получаем публичный ключ по его Id
+                    List<CKA> attributes = new List<CKA>
+                    {
+                        CKA.CKA_VALUE
+                    };
+                    List<ObjectAttribute> unwrappedKeyValueAttribute = session.GetAttributeValue(unwrappedKeyHandle,
+                        attributes);
+                    List<ObjectAttribute> sessionKeyValueAttribute = session.GetAttributeValue(sessionKeyHandle,
+                        attributes);
+
+                    Assert.IsTrue(Convert.ToBase64String(sessionKeyValueAttribute[0].GetValueAsByteArray()) ==
+                                  Convert.ToBase64String(unwrappedKeyValueAttribute[0].GetValueAsByteArray()));
+
+                    // Удаляем созданные пары ключей
+                    session.DestroyObject(senderPublicKeyHandle);
+                    session.DestroyObject(senderPrivateKeyHandle);
+                    session.DestroyObject(recipientPublicKeyHandle);
+                    session.DestroyObject(recipientPrivateKeyHandle);
+
+                    // Удаляем сессионный ключ
+                    session.DestroyObject(sessionKeyHandle);
 
                     // Закрываем сессию
                     session.Logout();

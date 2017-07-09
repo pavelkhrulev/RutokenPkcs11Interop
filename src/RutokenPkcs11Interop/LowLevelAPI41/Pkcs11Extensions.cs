@@ -591,6 +591,66 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             return (CKR)rv;
         }
 
+        public static CKR C_EX_WrapKey(this Pkcs11 pkcs11, uint session,
+            ref CK_MECHANISM generationMechanism,
+            CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
+            ref CK_MECHANISM derivationMechanism,
+            uint baseKey,
+            ref CK_MECHANISM wrappingMechanism,
+            byte[] wrappedKey, ref uint wrappedKeyLen, ref uint key)
+        {
+            RutokenDelegates.C_EX_WrapKey cWrapKey = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cWrapKeyPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_WrapKey");
+                cWrapKey = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_WrapKey>(cWrapKeyPtr);
+            }
+            else
+            {
+                cWrapKey = RutokenNativeMethods.C_EX_WrapKey;
+            }
+
+            uint rv = cWrapKey(session,
+                ref generationMechanism,
+                keyTemplate, keyAttributeCount,
+                ref derivationMechanism,
+                baseKey,
+                ref wrappingMechanism,
+                wrappedKey, ref wrappedKeyLen, ref key);
+
+            return (CKR)rv;
+        }
+
+        public static CKR C_EX_UnwrapKey(this Pkcs11 pkcs11,
+            uint session,
+            ref CK_MECHANISM derivationMechanism,
+            uint baseKey, ref CK_MECHANISM unwrappingMechanism,
+            byte[] wrappedKey, uint wrappedKeyLen,
+            CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
+            ref uint key)
+        {
+            RutokenDelegates.C_EX_UnwrapKey cUnwrapKey = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cUnwrapKeyPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_UnwrapKey");
+                cUnwrapKey = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_UnwrapKey>(cUnwrapKeyPtr);
+            }
+            else
+            {
+                cUnwrapKey = RutokenNativeMethods.C_EX_UnwrapKey;
+            }
+
+            uint rv = cUnwrapKey(session,
+                ref derivationMechanism,
+                baseKey, ref unwrappingMechanism,
+                wrappedKey, wrappedKeyLen,
+                keyTemplate, keyAttributeCount,
+                ref key);
+
+            return (CKR)rv;
+        }
 
     }
 }

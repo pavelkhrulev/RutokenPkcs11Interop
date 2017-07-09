@@ -67,9 +67,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары ГОСТ Р 34.10-2001
                 uint pubKeyId = CK.CK_INVALID_HANDLE;
                 uint privKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGostKeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.GostKeyPairId1);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateGostKeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.GostKeyPairId1);
 
                 // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2001
                 CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410);
@@ -180,9 +178,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары ГОСТ Р 34.10-2012
                 uint pubKeyId = CK.CK_INVALID_HANDLE;
                 uint privKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGost512KeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.Gost512KeyPairId1);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateGost512KeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.Gost512KeyPairId1);
 
                 // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012(512)
                 CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512);
@@ -294,9 +290,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключевой пары RSA
                 uint pubKeyId = CK.CK_INVALID_HANDLE;
                 uint privKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateRSAKeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.RsaKeyPairId);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateRSAKeyPair(pkcs11, session, ref pubKeyId, ref privKeyId, Settings.RsaKeyPairId);
 
                 // Инициализация операции подписи данных по алгоритму RSA
                 CK_MECHANISM signMechanism = CkmUtils.CreateMechanism(CKM.CKM_RSA_PKCS);

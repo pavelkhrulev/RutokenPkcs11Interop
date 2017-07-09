@@ -42,7 +42,6 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                 using (Session session = slot.OpenSession(false))
                 {
                     // TODO: актуализировать тест с реальными значениями
-                    uint mode = 0x00;
                     byte[] value = new byte[8];
                     session.TokenManage(TokenManageMode.BluetoothPoweroffTimeoutDefault, value);
                 }

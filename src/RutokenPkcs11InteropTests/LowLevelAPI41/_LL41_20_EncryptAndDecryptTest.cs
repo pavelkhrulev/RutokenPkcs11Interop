@@ -45,9 +45,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Генерация ключа для симметричного шифрования
                 uint keyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
 
                 CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
 
@@ -147,9 +145,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Generate symetric key
                 uint keyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
 
                 CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOST28147);
 
@@ -315,9 +311,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Генерация ключа для симметричного шифрования
                 uint keyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
 
                 // Получение исходных данных
                 byte[] sourceData = TestData.Encrypt_CBC_Gost28147_89_ECB_SourceData;
@@ -386,9 +380,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 // Генерация ключей для RSA шифрования
                 uint privateKeyId = CK.CK_INVALID_HANDLE;
                 uint publicKeyId = CK.CK_INVALID_HANDLE;
-                rv = Helpers.GenerateRSAKeyPair(pkcs11, session, ref publicKeyId, ref privateKeyId, Settings.RsaKeyPairId);
-                if (rv != CKR.CKR_OK)
-                    Assert.Fail(rv.ToString());
+                Helpers.GenerateRSAKeyPair(pkcs11, session, ref publicKeyId, ref privateKeyId, Settings.RsaKeyPairId);
 
                 CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_RSA_PKCS);
 

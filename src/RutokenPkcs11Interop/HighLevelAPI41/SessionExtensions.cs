@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
@@ -32,6 +34,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             CKR rv = session.LowLevelPkcs11.C_EX_GetTokenName(session.SessionId, null, ref tokenLabelLength);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetTokenName", rv);
+
+            if (tokenLabelLength <= 0)
+                throw new InvalidOperationException(
+                    "C_EX_GetTokenName: invalid token label length");
 
             byte[] tokenLabel = new byte[tokenLabelLength];
 
@@ -145,6 +151,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 ref signatureLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisible", rv);
+
+            if (signatureLen <= 0)
+                throw new InvalidOperationException(
+                    "C_EX_SignInvisible: invalid signature length");
 
             byte[] signature = new byte[signatureLen];
             rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length),
@@ -264,6 +274,139 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             {
                 Marshal.FreeHGlobal(valuePtr);
             }
+        }
+
+        public static byte[] ExtendedWrapKey(this HLA41.Session session,
+            HLA41.Mechanism generationMechanism, List<HLA41.ObjectAttribute> keyAttributes,
+            HLA41.Mechanism derivationMechanism, HLA41.ObjectHandle baseKey,
+            HLA41.Mechanism wrappingMechanism, ref HLA41.ObjectHandle key)
+        {
+            if (generationMechanism == null)
+                throw new ArgumentNullException(nameof(generationMechanism));
+
+            if (derivationMechanism == null)
+                throw new ArgumentNullException(nameof(derivationMechanism));
+
+            if (keyAttributes == null)
+                throw new ArgumentNullException(nameof(keyAttributes));
+
+            if (baseKey == null)
+                throw new ArgumentNullException(nameof(baseKey));
+
+            if (wrappingMechanism == null)
+                throw new ArgumentNullException(nameof(wrappingMechanism));
+
+            var ckGenerationMechanism = new CK_MECHANISM()
+            {
+                Mechanism = generationMechanism.Type
+            };
+
+            var ckDerivationMechanism = new CK_MECHANISM()
+            {
+                Mechanism = derivationMechanism.Type
+            };
+            var ckWrappingMechanism = new CK_MECHANISM()
+            {
+                Mechanism = wrappingMechanism.Type
+            };
+
+            // Преобразование ObjectAttributes в CK_ATTRIBUTES
+            CK_ATTRIBUTE[] ckKeyAttributes = null;
+            uint ckKeyAttributesLen = 0;
+            ckKeyAttributes = new CK_ATTRIBUTE[keyAttributes.Count];
+            for (int i = 0; i < keyAttributes.Count; i++)
+            {
+                ckKeyAttributes[i] = keyAttributes[i].GetPrivatePropertyValue<CK_ATTRIBUTE>("CkAttribute");
+            }
+            ckKeyAttributesLen = Convert.ToUInt32(keyAttributes.Count);
+
+            // Получение длины wrapped key
+            uint generatedKey = CK.CK_INVALID_HANDLE;
+            uint wrappedKeyLen = 0;
+            CKR rv = session.LowLevelPkcs11.C_EX_WrapKey(session.SessionId, ref ckGenerationMechanism, ckKeyAttributes,
+                ckKeyAttributesLen,
+                ref ckDerivationMechanism, baseKey.ObjectId, ref ckWrappingMechanism, null, ref wrappedKeyLen,
+                ref generatedKey);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_WrapKey", rv);
+
+            if (wrappedKeyLen <= 0)
+                throw new InvalidOperationException(
+                    "C_EX_WrapKey: invalid wrapped key length");
+
+            // Маскирование ключа
+            byte[] wrappedKey = new byte[wrappedKeyLen];
+            rv = session.LowLevelPkcs11.C_EX_WrapKey(session.SessionId, ref ckGenerationMechanism, ckKeyAttributes,
+                ckKeyAttributesLen,
+                ref ckDerivationMechanism, baseKey.ObjectId, ref ckWrappingMechanism, wrappedKey, ref wrappedKeyLen,
+                ref generatedKey);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_WrapKey", rv);
+
+            if (generatedKey == CK.CK_INVALID_HANDLE)
+                throw new InvalidOperationException("C_EX_WrapKey: invalid generated key handle");
+
+            if (wrappedKey.Length != wrappedKeyLen)
+                Array.Resize(ref wrappedKey, Convert.ToInt32(wrappedKeyLen));
+
+            key = new HLA41.ObjectHandle(generatedKey);
+
+            return wrappedKey;
+        }
+
+        public static HLA41.ObjectHandle ExtendedUnwrapKey(this HLA41.Session session,
+            HLA41.Mechanism derivationMechanism, HLA41.ObjectHandle baseKey,
+            HLA41.Mechanism unwrappingMechanism,
+            byte[] wrappedKey, List<HLA41.ObjectAttribute> keyAttributes)
+        {
+            if (derivationMechanism == null)
+                throw new ArgumentNullException(nameof(derivationMechanism));
+
+            if (baseKey == null)
+                throw new ArgumentNullException(nameof(baseKey));
+
+            if (unwrappingMechanism == null)
+                throw new ArgumentNullException(nameof(unwrappingMechanism));
+
+            if (wrappedKey == null)
+                throw new ArgumentNullException(nameof(wrappedKey));
+
+            if (keyAttributes == null)
+                throw new ArgumentNullException(nameof(keyAttributes));
+
+            var ckDerivationMechanism = new CK_MECHANISM()
+            {
+                Mechanism = derivationMechanism.Type
+            };
+            var ckUnwrappingMechanism = new CK_MECHANISM()
+            {
+                Mechanism = unwrappingMechanism.Type
+            };
+
+            // Преобразование ObjectAttributes в CK_ATTRIBUTES
+            CK_ATTRIBUTE[] ckKeyAttributes = null;
+            uint ckKeyAttributesLen = 0;
+            ckKeyAttributes = new CK_ATTRIBUTE[keyAttributes.Count];
+            for (int i = 0; i < keyAttributes.Count; i++)
+            {
+                ckKeyAttributes[i] = keyAttributes[i].GetPrivatePropertyValue<CK_ATTRIBUTE>("CkAttribute");
+            }
+            ckKeyAttributesLen = Convert.ToUInt32(keyAttributes.Count);
+
+            // Размаскирование ключа
+            uint unwrappedKey = CK.CK_INVALID_HANDLE;
+            CKR rv = session.LowLevelPkcs11.C_EX_UnwrapKey(session.SessionId,
+                ref ckDerivationMechanism, baseKey.ObjectId,
+                ref ckUnwrappingMechanism, wrappedKey, (uint) wrappedKey.Length,
+                ckKeyAttributes, ckKeyAttributesLen,
+                ref unwrappedKey);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_WrapKey", rv);
+
+            if (unwrappedKey == CK.CK_INVALID_HANDLE)
+                throw new InvalidOperationException("C_EX_WrapKey: invalid unwrapped key handle");
+
+            return new HLA41.ObjectHandle(unwrappedKey);
         }
     }
 }
