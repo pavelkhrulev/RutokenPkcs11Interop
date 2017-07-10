@@ -8,7 +8,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI
     {
         private readonly HighLevelAPI41.VolumeInfoExtended _volumeInfoExtended41 = null;
 
-        public uint VolumeSize
+        private readonly HighLevelAPI81.VolumeInfoExtended _volumeInfoExtended81 = null;
+
+        public ulong VolumeSize
         {
             get
             {
@@ -31,7 +33,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _volumeInfoExtended81.VolumeSize;
                     }
                 }
             }
@@ -60,7 +62,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _volumeInfoExtended81.AccessMode;
                     }
                 }
             }
@@ -89,13 +91,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _volumeInfoExtended81.VolumeOwner;
                     }
                 }
             }
         }
 
-        public uint Flags
+        public ulong Flags
         {
             get
             {
@@ -118,13 +120,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _volumeInfoExtended81.Flags;
                     }
                 }
             }
         }
 
-        public uint VolumeId
+        public ulong VolumeId
         {
             get
             {
@@ -147,7 +149,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _volumeInfoExtended81.VolumeId;
                     }
                 }
             }
@@ -159,6 +161,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 throw new ArgumentNullException(nameof(volumeInfoExtended));
 
             _volumeInfoExtended41 = volumeInfoExtended;
+        }
+
+        internal VolumeInfoExtended(HighLevelAPI81.VolumeInfoExtended volumeInfoExtended)
+        {
+            if (volumeInfoExtended == null)
+                throw new ArgumentNullException(nameof(volumeInfoExtended));
+
+            _volumeInfoExtended81 = volumeInfoExtended;
         }
     }
 }

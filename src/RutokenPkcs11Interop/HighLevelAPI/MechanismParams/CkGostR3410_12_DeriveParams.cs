@@ -16,6 +16,11 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
         private HighLevelAPI41.MechanismParams.CkGostR3410_12_DeriveParams _params41 = null;
 
         /// <summary>
+        /// Platform specific CkGostR3410_12_DeriveParams
+        /// </summary>
+        private HighLevelAPI81.MechanismParams.CkGostR3410_12_DeriveParams _params81 = null;
+
+        /// <summary>
         /// Initializes a new instance of the CkGostR3410_12_DeriveParams class.
         /// </summary>
         /// <param name='iv'>IV value (16 bytes)</param>
@@ -34,7 +39,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
                 if (Platform.StructPackingSize == 0)
                     throw new NotImplementedException();
                 else
-                    throw new NotImplementedException();
+                    _params81 = new HighLevelAPI81.MechanismParams.CkGostR3410_12_DeriveParams(kdf, publicData, uk);
             }
         }
 
@@ -61,7 +66,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
                 if (Platform.StructPackingSize == 0)
                     throw new NotImplementedException();
                 else
-                    throw new NotImplementedException();
+                    return _params81.ToMarshalableStructure();
             }
         }
 
@@ -92,6 +97,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
                     {
                         _params41.Dispose();
                         _params41 = null;
+                    }
+
+                    if (_params81 != null)
+                    {
+                        _params81.Dispose();
+                        _params81 = null;
                     }
                 }
 

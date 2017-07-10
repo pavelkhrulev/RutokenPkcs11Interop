@@ -14,6 +14,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI
 
         private HighLevelAPI41.RutokenInitParam _rutokenInitParam41 = null;
 
+        private HighLevelAPI81.RutokenInitParam _rutokenInitParam81 = null;
+
         internal HighLevelAPI41.RutokenInitParam RutokenInitParam41
         {
             get
@@ -22,6 +24,17 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     throw new ObjectDisposedException(this.GetType().FullName);
 
                 return _rutokenInitParam41;
+            }
+        }
+
+        internal HighLevelAPI81.RutokenInitParam RutokenInitParam81
+        {
+            get
+            {
+                if (this._disposed)
+                    throw new ObjectDisposedException(this.GetType().FullName);
+
+                return _rutokenInitParam81;
             }
         }
 
@@ -46,7 +59,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 if (Platform.StructPackingSize == 0)
                     throw new NotImplementedException();
                 else
-                    throw new NotImplementedException();
+                    _rutokenInitParam81 = new HighLevelAPI81.RutokenInitParam(
+                       newAdminPin, newUserPin, tokenLabel,
+                       changeUserPINPolicy,
+                       minAdminPinLen, minUserPinLen,
+                       maxAdminRetryCount, maxUserRetryCount,
+                       smMode);
             }
         }
 
@@ -75,6 +93,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     {
                         _rutokenInitParam41.Dispose();
                         _rutokenInitParam41 = null;
+                    }
+
+                    if (_rutokenInitParam81 != null)
+                    {
+                        _rutokenInitParam81.Dispose();
+                        _rutokenInitParam81 = null;
                     }
                 }
 

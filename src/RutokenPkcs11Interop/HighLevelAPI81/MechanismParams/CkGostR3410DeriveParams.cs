@@ -25,7 +25,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
         /// <param name="kdf">Additional key diversification algorithm (CKD)</param>
         /// <param name="publicData">Data with public key of a receiver</param>
         /// <param name="ukm">UKM data</param>
-        public CkGostR3410DeriveParams(uint kdf, byte[] publicData, byte[] ukm)
+        public CkGostR3410DeriveParams(ulong kdf, byte[] publicData, byte[] ukm)
         {
             _lowLevelStruct.Kdf = 0;
             _lowLevelStruct.PublicData = IntPtr.Zero;

@@ -345,7 +345,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
             // Определение параметров механизма наследования ключа
             CkGostR3410DeriveParams deriveMechanismParams =
                 new CkGostR3410DeriveParams(
-                    (uint)Extended_CKD.CKD_CPDIVERSIFY_KDF, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
+                    (ulong)Extended_CKD.CKD_CPDIVERSIFY_KDF, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
 
             // Определяем механизм наследования ключа
             Mechanism deriveMechanism = new Mechanism((ulong)Extended_CKM.CKM_GOSTR3410_DERIVE, deriveMechanismParams);
