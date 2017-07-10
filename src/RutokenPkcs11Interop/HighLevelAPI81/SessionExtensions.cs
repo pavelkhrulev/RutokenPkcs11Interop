@@ -2,24 +2,24 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
-using Net.Pkcs11Interop.LowLevelAPI41;
+using Net.Pkcs11Interop.LowLevelAPI81;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Helpers;
-using RutokenPkcs11Interop.LowLevelAPI41;
-using HLA41 = Net.Pkcs11Interop.HighLevelAPI41;
+using RutokenPkcs11Interop.LowLevelAPI81;
+using HLA81 = Net.Pkcs11Interop.HighLevelAPI81;
 
-namespace RutokenPkcs11Interop.HighLevelAPI41
+namespace RutokenPkcs11Interop.HighLevelAPI81
 {
     public static class SessionExtensions
     {
-        public static void UnblockUserPIN(this HLA41.Session session)
+        public static void UnblockUserPIN(this HLA81.Session session)
         {
             CKR rv = session.LowLevelPkcs11.C_EX_UnblockUserPIN(session.SessionId);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_UnblockUserPIN", rv);
         }
 
-        public static void SetTokenName(this HLA41.Session session, string label)
+        public static void SetTokenName(this HLA81.Session session, string label)
         {
             var labelArray = ConvertUtils.Utf8StringToBytes(label);
             CKR rv = session.LowLevelPkcs11.C_EX_SetTokenName(session.SessionId, labelArray);
@@ -27,9 +27,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_SetTokenName", rv);
         }
 
-        public static string GetTokenLabel(this HLA41.Session session)
+        public static string GetTokenLabel(this HLA81.Session session)
         {
-            uint tokenLabelLength = 0;
+            ulong tokenLabelLength = 0;
             CKR rv = session.LowLevelPkcs11.C_EX_GetTokenName(session.SessionId, null, ref tokenLabelLength);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetTokenName", rv);
@@ -44,15 +44,15 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetTokenName", rv);
 
-            if (tokenLabel.Length != tokenLabelLength)
+            if (tokenLabel.Length != Convert.ToInt32(tokenLabelLength))
                 Array.Resize(ref tokenLabel, Convert.ToInt32(tokenLabelLength));
 
             return ConvertUtils.BytesToUtf8String(tokenLabel);
         }
 
-        public static void SetLicense(this HLA41.Session session, uint licenseNum, byte[] license)
+        public static void SetLicense(this HLA81.Session session, ulong licenseNum, byte[] license)
         {
-            if (!Settings.LicenseAllowedNumbers.Contains(licenseNum))
+            if (!Settings.LicenseAllowedNumbers.Contains(Convert.ToUInt32(licenseNum)))
                 throw new ArgumentOutOfRangeException(nameof(licenseNum));
 
             if (license == null)
@@ -64,12 +64,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_SetLicense", rv);
         }
 
-        public static byte[] GetLicense(this HLA41.Session session, uint licenseNum)
+        public static byte[] GetLicense(this HLA81.Session session, ulong licenseNum)
         {
-            if (!Settings.LicenseAllowedNumbers.Contains(licenseNum))
+            if (!Settings.LicenseAllowedNumbers.Contains(Convert.ToUInt32(licenseNum)))
                 throw new ArgumentOutOfRangeException(nameof(licenseNum));
 
-            uint licenseLen = 0;
+            ulong licenseLen = 0;
             CKR rv = session.LowLevelPkcs11.C_EX_GetLicense(
                 session.SessionId, licenseNum, null, ref licenseLen);
             if (rv != CKR.CKR_OK)
@@ -88,7 +88,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             return license;
         }
 
-        public static void LoadActivationKey(this HLA41.Session session, byte[] key)
+        public static void LoadActivationKey(this HLA81.Session session, byte[] key)
         {
             if (key == null)
                 throw new ArgumentNullException(nameof(key));
@@ -99,13 +99,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_LoadActivationKey", rv);
         }
 
-        public static byte[] GenerateActivationPassword(this HLA41.Session session,
+        public static byte[] GenerateActivationPassword(this HLA81.Session session,
             ActivationPasswordNumber passwordNumber, ActivationPasswordCharacterSet characterSet)
         {
             // Получение длины пароля активации
-            uint passwordLength = 0;
+            ulong passwordLength = 0;
             CKR rv = session.LowLevelPkcs11.C_EX_GenerateActivationPassword(
-                session.SessionId, (uint)passwordNumber, null, ref passwordLength, (uint)characterSet);
+                session.SessionId, Convert.ToUInt64(passwordNumber), null, ref passwordLength, Convert.ToUInt64(characterSet));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GenerateActivationPassword", rv);
 
@@ -116,15 +116,15 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             // Генерация пароля активации
             byte[] password = new byte[passwordLength];
             rv = session.LowLevelPkcs11.C_EX_GenerateActivationPassword(
-                session.SessionId, (uint)passwordNumber, password, ref passwordLength, (uint)characterSet);
+                session.SessionId, Convert.ToUInt64(passwordNumber), password, ref passwordLength, Convert.ToUInt64(characterSet));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GenerateActivationPassword", rv);
 
             return password;
         }
 
-        public static byte[] SignInvisible(this HLA41.Session session,
-            ref HLA41.Mechanism mechanism, HLA41.ObjectHandle keyHandle, byte[] data)
+        public static byte[] SignInvisible(this HLA81.Session session,
+            ref HLA81.Mechanism mechanism, HLA81.ObjectHandle keyHandle, byte[] data)
         {
             if (mechanism == null)
                 throw new ArgumentNullException(nameof(mechanism));
@@ -145,8 +145,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisibleInit", rv);
 
-            uint signatureLen = 0;
-            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length), null,
+            ulong signatureLen = 0;
+            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt64(data.Length), null,
                 ref signatureLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisible", rv);
@@ -156,32 +156,32 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                     "C_EX_SignInvisible: invalid signature length");
 
             byte[] signature = new byte[signatureLen];
-            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt32(data.Length),
+            rv = session.LowLevelPkcs11.C_EX_SignInvisible(session.SessionId, data, Convert.ToUInt64(data.Length),
                 signature, ref signatureLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisible", rv);
 
-            if (signature.Length != signatureLen)
+            if (signature.Length != Convert.ToInt32(signatureLen))
                 Array.Resize(ref signature, Convert.ToInt32(signatureLen));
 
             return signature;
         }
 
-        public static string CreateCSR(this HLA41.Session session, HLA41.ObjectHandle publicKey,
-            string[] dn, HLA41.ObjectHandle privateKey, string[] attributes, string[] extensions)
+        public static string CreateCSR(this HLA81.Session session, HLA81.ObjectHandle publicKey,
+            string[] dn, HLA81.ObjectHandle privateKey, string[] attributes, string[] extensions)
         {
             IntPtr[] dnPtr = StringArrayHelpers.ConvertStringArrayToIntPtrArray(dn);
             IntPtr[] extsPtr = StringArrayHelpers.ConvertStringArrayToIntPtrArray(extensions);
 
             IntPtr csr;
-            uint csrLength;
+            ulong csrLength;
 
             CKR rv = session.LowLevelPkcs11.C_EX_CreateCSR(session.SessionId, publicKey.ObjectId,
-                dnPtr, (uint) dnPtr.Length,
+                dnPtr, (ulong) dnPtr.Length,
                 out csr, out csrLength,
                 privateKey.ObjectId,
                 null, 0,
-                extsPtr, (uint) extsPtr.Length);
+                extsPtr, (ulong) extsPtr.Length);
 
             StringArrayHelpers.FreeUnmanagedIntPtrArray(dnPtr);
             StringArrayHelpers.FreeUnmanagedIntPtrArray(extsPtr);
@@ -205,10 +205,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             }
         }
 
-        public static string GetCertificateInfoText(this HLA41.Session session, HLA41.ObjectHandle certificate)
+        public static string GetCertificateInfoText(this HLA81.Session session, HLA81.ObjectHandle certificate)
         {
             IntPtr certificateInfo;
-            uint certificateInfoLen;
+            ulong certificateInfoLen;
 
             CKR rv = session.LowLevelPkcs11.C_EX_GetCertificateInfoText(
                 session.SessionId, certificate.ObjectId, out certificateInfo, out certificateInfoLen);
@@ -229,11 +229,11 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             return ConvertUtils.BytesToUtf8String(certificateInfoArray);
         }
 
-        public static byte[] PKCS7Sign(this HLA41.Session session, byte[] data, HLA41.ObjectHandle certificate,
-            HLA41.ObjectHandle privateKey, uint[] certificates, uint flags)
+        public static byte[] PKCS7Sign(this HLA81.Session session, byte[] data, HLA81.ObjectHandle certificate,
+            HLA81.ObjectHandle privateKey, ulong[] certificates, ulong flags)
         {
             IntPtr signature;
-            uint signatureLen;
+            ulong signatureLen;
 
             CKR rv = session.LowLevelPkcs11.C_EX_PKCS7Sign(session.SessionId, data, certificate.ObjectId,
                 out signature, out signatureLen,
@@ -255,7 +255,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             return signatureArray;
         }
 
-        public static void TokenManage(this HLA41.Session session, TokenManageMode mode, byte[] value)
+        public static void TokenManage(this HLA81.Session session, TokenManageMode mode, byte[] value)
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
@@ -265,7 +265,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
 
             try
             {
-                CKR rv = session.LowLevelPkcs11.C_EX_TokenManage(session.SessionId, (uint)mode, valuePtr);
+                CKR rv = session.LowLevelPkcs11.C_EX_TokenManage(session.SessionId, Convert.ToUInt64(mode), valuePtr);
                 if (rv != CKR.CKR_OK)
                     throw new Pkcs11Exception("C_EX_TokenManage", rv);
             }
@@ -275,10 +275,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             }
         }
 
-        public static byte[] ExtendedWrapKey(this HLA41.Session session,
-            HLA41.Mechanism generationMechanism, List<HLA41.ObjectAttribute> keyAttributes,
-            HLA41.Mechanism derivationMechanism, HLA41.ObjectHandle baseKey,
-            HLA41.Mechanism wrappingMechanism, ref HLA41.ObjectHandle key)
+        public static byte[] ExtendedWrapKey(this HLA81.Session session,
+            HLA81.Mechanism generationMechanism, List<HLA81.ObjectAttribute> keyAttributes,
+            HLA81.Mechanism derivationMechanism, HLA81.ObjectHandle baseKey,
+            HLA81.Mechanism wrappingMechanism, ref HLA81.ObjectHandle key)
         {
             if (generationMechanism == null)
                 throw new ArgumentNullException(nameof(generationMechanism));
@@ -311,17 +311,17 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
 
             // Преобразование ObjectAttributes в CK_ATTRIBUTES
             CK_ATTRIBUTE[] ckKeyAttributes = null;
-            uint ckKeyAttributesLen = 0;
+            ulong ckKeyAttributesLen = 0;
             ckKeyAttributes = new CK_ATTRIBUTE[keyAttributes.Count];
             for (int i = 0; i < keyAttributes.Count; i++)
             {
                 ckKeyAttributes[i] = keyAttributes[i].GetPrivatePropertyValue<CK_ATTRIBUTE>("CkAttribute");
             }
-            ckKeyAttributesLen = Convert.ToUInt32(keyAttributes.Count);
+            ckKeyAttributesLen = Convert.ToUInt64(keyAttributes.Count);
 
             // Получение длины wrapped key
-            uint generatedKey = CK.CK_INVALID_HANDLE;
-            uint wrappedKeyLen = 0;
+            ulong generatedKey = CK.CK_INVALID_HANDLE;
+            ulong wrappedKeyLen = 0;
             CKR rv = session.LowLevelPkcs11.C_EX_WrapKey(session.SessionId, ref ckGenerationMechanism, ckKeyAttributes,
                 ckKeyAttributesLen,
                 ref ckDerivationMechanism, baseKey.ObjectId, ref ckWrappingMechanism, null, ref wrappedKeyLen,
@@ -345,18 +345,18 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (generatedKey == CK.CK_INVALID_HANDLE)
                 throw new InvalidOperationException("C_EX_WrapKey: invalid generated key handle");
 
-            if (wrappedKey.Length != wrappedKeyLen)
+            if (wrappedKey.Length != Convert.ToInt32(wrappedKeyLen))
                 Array.Resize(ref wrappedKey, Convert.ToInt32(wrappedKeyLen));
 
-            key = new HLA41.ObjectHandle(generatedKey);
+            key = new HLA81.ObjectHandle(generatedKey);
 
             return wrappedKey;
         }
 
-        public static HLA41.ObjectHandle ExtendedUnwrapKey(this HLA41.Session session,
-            HLA41.Mechanism derivationMechanism, HLA41.ObjectHandle baseKey,
-            HLA41.Mechanism unwrappingMechanism,
-            byte[] wrappedKey, List<HLA41.ObjectAttribute> keyAttributes)
+        public static HLA81.ObjectHandle ExtendedUnwrapKey(this HLA81.Session session,
+            HLA81.Mechanism derivationMechanism, HLA81.ObjectHandle baseKey,
+            HLA81.Mechanism unwrappingMechanism,
+            byte[] wrappedKey, List<HLA81.ObjectAttribute> keyAttributes)
         {
             if (derivationMechanism == null)
                 throw new ArgumentNullException(nameof(derivationMechanism));
@@ -384,19 +384,19 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
 
             // Преобразование ObjectAttributes в CK_ATTRIBUTES
             CK_ATTRIBUTE[] ckKeyAttributes = null;
-            uint ckKeyAttributesLen = 0;
+            ulong ckKeyAttributesLen = 0;
             ckKeyAttributes = new CK_ATTRIBUTE[keyAttributes.Count];
             for (int i = 0; i < keyAttributes.Count; i++)
             {
                 ckKeyAttributes[i] = keyAttributes[i].GetPrivatePropertyValue<CK_ATTRIBUTE>("CkAttribute");
             }
-            ckKeyAttributesLen = Convert.ToUInt32(keyAttributes.Count);
+            ckKeyAttributesLen = Convert.ToUInt64(keyAttributes.Count);
 
             // Размаскирование ключа
-            uint unwrappedKey = CK.CK_INVALID_HANDLE;
+            ulong unwrappedKey = CK.CK_INVALID_HANDLE;
             CKR rv = session.LowLevelPkcs11.C_EX_UnwrapKey(session.SessionId,
                 ref ckDerivationMechanism, baseKey.ObjectId,
-                ref ckUnwrappingMechanism, wrappedKey, (uint) wrappedKey.Length,
+                ref ckUnwrappingMechanism, wrappedKey, Convert.ToUInt64(wrappedKey.Length),
                 ckKeyAttributes, ckKeyAttributesLen,
                 ref unwrappedKey);
             if (rv != CKR.CKR_OK)
@@ -405,7 +405,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (unwrappedKey == CK.CK_INVALID_HANDLE)
                 throw new InvalidOperationException("C_EX_WrapKey: invalid unwrapped key handle");
 
-            return new HLA41.ObjectHandle(unwrappedKey);
+            return new HLA81.ObjectHandle(unwrappedKey);
         }
     }
 }

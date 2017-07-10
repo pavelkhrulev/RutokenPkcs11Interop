@@ -8,6 +8,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI
     {
         private readonly HighLevelAPI41.TokenInfoExtended _tokenInfoExtended41 = null;
 
+        private readonly HighLevelAPI81.TokenInfoExtended _tokenInfoExtended81 = null;
+
         public RutokenType TokenType
         {
             get
@@ -31,13 +33,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.TokenType;
                     }
                 }
             }
         }
 
-        public uint ProtocolNumber
+        public ulong ProtocolNumber
         {
             get
             {
@@ -60,13 +62,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.ProtocolNumber;
                     }
                 }
             }
         }
 
-        public uint MicrocodeNumber
+        public ulong MicrocodeNumber
         {
             get
             {
@@ -89,13 +91,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.MicrocodeNumber;
                     }
                 }
             }
         }
 
-        public uint OrderNumber
+        public ulong OrderNumber
         {
             get
             {
@@ -118,13 +120,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.OrderNumber;
                     }
                 }
             }
         }
 
-        public uint Flags
+        public ulong Flags
         {
             get
             {
@@ -147,13 +149,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.Flags;
                     }
                 }
             }
         }
 
-        public uint MaxAdminPinLen
+        public ulong MaxAdminPinLen
         {
             get
             {
@@ -176,13 +178,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.MaxAdminPinLen;
                     }
                 }
             }
         }
 
-        public uint MinAdminPinLen
+        public ulong MinAdminPinLen
         {
             get
             {
@@ -205,13 +207,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.MinAdminPinLen;
                     }
                 }
             }
         }
 
-        public uint MaxUserPinLen
+        public ulong MaxUserPinLen
         {
             get
             {
@@ -234,13 +236,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.MaxUserPinLen;
                     }
                 }
             }
         }
 
-        public uint MinUserPinLen
+        public ulong MinUserPinLen
         {
             get
             {
@@ -263,13 +265,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.MinUserPinLen;
                     }
                 }
             }
         }
 
-        public uint MaxAdminRetryCount
+        public ulong MaxAdminRetryCount
         {
             get
             {
@@ -292,13 +294,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.MaxAdminRetryCount;
                     }
                 }
             }
         }
 
-        public uint AdminRetryCountLeft
+        public ulong AdminRetryCountLeft
         {
             get
             {
@@ -321,13 +323,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.AdminRetryCountLeft;
                     }
                 }
             }
         }
 
-        public uint MaxUserRetryCount
+        public ulong MaxUserRetryCount
         {
             get
             {
@@ -350,13 +352,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.MaxUserRetryCount;
                     }
                 }
             }
         }
 
-        public uint UserRetryCountLeft
+        public ulong UserRetryCountLeft
         {
             get
             {
@@ -379,7 +381,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.UserRetryCountLeft;
                     }
                 }
             }
@@ -408,13 +410,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.SerialNumber;
                     }
                 }
             }
         }
 
-        public uint TotalMemory
+        public ulong TotalMemory
         {
             get
             {
@@ -437,13 +439,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.TotalMemory;
                     }
                 }
             }
         }
 
-        public uint FreeMemory
+        public ulong FreeMemory
         {
             get
             {
@@ -466,7 +468,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.FreeMemory;
                     }
                 }
             }
@@ -495,13 +497,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.ATR;
                     }
                 }
             }
         }
 
-        public uint ATRLen
+        public ulong ATRLen
         {
             get
             {
@@ -524,7 +526,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.ATRLen;
                     }
                 }
             }
@@ -553,13 +555,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.TokenClass;
                     }
                 }
             }
         }
 
-        public uint BatteryVoltage
+        public ulong BatteryVoltage
         {
             get
             {
@@ -582,7 +584,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.BatteryVoltage;
                     }
                 }
             }
@@ -611,13 +613,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.BodyColor;
                     }
                 }
             }
         }
 
-        public uint FirmwareChecksum
+        public ulong FirmwareChecksum
         {
             get
             {
@@ -640,7 +642,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     }
                     else
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended81.FirmwareChecksum;
                     }
                 }
             }
@@ -652,6 +654,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 throw new ArgumentNullException(nameof(tokenInfoExtended));
 
             _tokenInfoExtended41 = tokenInfoExtended;
+        }
+
+        internal TokenInfoExtended(HighLevelAPI81.TokenInfoExtended tokenInfoExtended)
+        {
+            if (tokenInfoExtended == null)
+                throw new ArgumentNullException(nameof(tokenInfoExtended));
+
+            _tokenInfoExtended81 = tokenInfoExtended;
         }
     }
 }

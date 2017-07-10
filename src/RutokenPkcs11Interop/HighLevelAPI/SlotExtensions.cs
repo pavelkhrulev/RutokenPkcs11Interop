@@ -5,6 +5,7 @@ using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.HighLevelAPI41;
+using RutokenPkcs11Interop.HighLevelAPI81;
 
 namespace RutokenPkcs11Interop.HighLevelAPI
 {
@@ -21,7 +22,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 else
                 {
                     HighLevelAPI41.TokenInfoExtended tokenInfoExtended = slot.HLA41Slot.GetTokenInfoExtended();
-                    return new HighLevelAPI.TokenInfoExtended(tokenInfoExtended);
+                    return new TokenInfoExtended(tokenInfoExtended);
                 }
             }
             else
@@ -32,7 +33,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    HighLevelAPI81.TokenInfoExtended tokenInfoExtended = slot.HLA81Slot.GetTokenInfoExtended();
+                    return new TokenInfoExtended(tokenInfoExtended);
                 }
             }
         }
@@ -64,7 +66,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    slot.HLA81Slot.InitTokenExtended(pin, initParam.RutokenInitParam81);
                 }
             }
         }
@@ -90,7 +92,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    return slot.HLA81Slot.GetJournal();
                 }
             }
         }
@@ -116,12 +118,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    slot.HLA81Slot.SetLocalPIN(userPin, localPin, localPinId);
                 }
             }
         }
 
-        public static uint GetDriveSize(this Slot slot)
+        public static ulong GetDriveSize(this Slot slot)
         {
             if (Platform.UnmanagedLongSize == 4)
             {
@@ -142,7 +144,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    return slot.HLA81Slot.GetDriveSize();
                 }
             }
         }
@@ -171,7 +173,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var formatParams = initParams.Select(initParam => initParam.VolumeFormatInfoExtended81)
+                                                  .ToList();
+                    slot.HLA81Slot.FormatDrive(userType, pin, formatParams);
                 }
             }
         }
@@ -199,7 +203,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var volumesInfo = slot.HLA81Slot.GetVolumesInfo();
+                    return volumesInfo.Select(volumeInfo => new VolumeInfoExtended(volumeInfo))
+                                      .ToList();
                 }
             }
         }
@@ -226,7 +232,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    slot.HLA81Slot.ChangeVolumeAttributes(userType, pin, volumeId, newAccessMode, permanent);
                 }
             }
         }
@@ -252,7 +258,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    slot.HLA81Slot.SetActivationPassword(password);
                 }
             }
         }
@@ -278,7 +284,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    slot.HLA81Slot.SlotManage(mode, value);
                 }
             }
         }

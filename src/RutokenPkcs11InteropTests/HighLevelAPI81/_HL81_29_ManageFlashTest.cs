@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Net.Pkcs11Interop.Common;
-using Net.Pkcs11Interop.HighLevelAPI;
+using Net.Pkcs11Interop.HighLevelAPI81;
 using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.HighLevelAPI;
+using RutokenPkcs11Interop.HighLevelAPI81;
 
-namespace RutokenPkcs11InteropTests.HighLevelAPI
+namespace RutokenPkcs11InteropTests.HighLevelAPI81
 {
     [TestClass]
-    public class _HL_29_ManageFlashTest
+    public class _HL81_29_ManageFlashTest
     {
         /// <summary>
         /// Тест для проверки наличия флеш-памяти у токена
         /// </summary>
         [TestMethod]
-        public void _HL_29_01_FlashAvailabilityTest()
+        public void _HL81_29_01_FlashAvailabilityTest()
         {
+            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
@@ -24,7 +27,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
                 var tokenInfo = slot.GetTokenInfoExtended();
 
-                var isFlashMemoryAvailable = tokenInfo.Flags & (uint)RutokenFlag.HasFlashDrive;
+                var isFlashMemoryAvailable = tokenInfo.Flags & (ulong)RutokenFlag.HasFlashDrive;
                 Assert.IsTrue(Convert.ToBoolean(isFlashMemoryAvailable));
             }
         }
@@ -34,8 +37,11 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// по работе с флеш-памятью токена
         /// </summary>
         [TestMethod]
-        public void _HL_29_02_FlashWorkTest()
+        public void _HL81_29_02_FlashWorkTest()
         {
+            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
@@ -43,7 +49,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
                 var tokenInfo = slot.GetTokenInfoExtended();
 
-                var isFlashMemoryAvailable = tokenInfo.Flags & (uint)RutokenFlag.HasFlashDrive;
+                var isFlashMemoryAvailable = tokenInfo.Flags & (ulong)RutokenFlag.HasFlashDrive;
                 Assert.IsTrue(Convert.ToBoolean(isFlashMemoryAvailable));
 
                 // Создание локальных PIN-кодов
@@ -85,13 +91,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
                 // Изменение атрибута доступа раздела флеш-памяти на постоянной основе
                 // (до следующего изменения атрибутов)
-                uint volumeRo = 2;
+                ulong volumeRo = 2;
                 slot.ChangeVolumeAttributes(CKU.CKU_SO, Settings.SecurityOfficerPin,
                     volumeRo, FlashAccessMode.Readwrite, permanent: true);
 
                 // Временно изменить атрибут доступа к разделу флеш-памяти
                 // (до первого извлечения устройства или следующего изменения атрибутов)
-                uint volumeRw = 1;
+                ulong volumeRw = 1;
                 slot.ChangeVolumeAttributes(CKU.CKU_USER, Settings.NormalUserPin,
                     volumeRw, FlashAccessMode.Hidden, permanent: false);
             }

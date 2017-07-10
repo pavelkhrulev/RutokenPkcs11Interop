@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.HighLevelAPI41;
+using RutokenPkcs11Interop.HighLevelAPI81;
 
 namespace RutokenPkcs11Interop.HighLevelAPI
 {
@@ -31,7 +33,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    session.HLA81Session.UnblockUserPIN();
                 }
             }
         }
@@ -57,7 +59,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    session.HLA81Session.SetTokenName(label);
                 }
             }
         }
@@ -83,7 +85,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    return session.HLA81Session.GetTokenLabel();
                 }
             }
         }
@@ -109,7 +111,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    session.HLA81Session.SetLicense(licenseNum, license);
                 }
             }
         }
@@ -135,7 +137,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    return session.HLA81Session.GetLicense(licenseNum);
                 }
             }
         }
@@ -161,7 +163,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    session.HLA81Session.LoadActivationKey(key);
                 }
             }
         }
@@ -188,7 +190,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    return session.HLA81Session.GenerateActivationPassword(passwordNumber, characterSet);
                 }
             }
         }
@@ -218,7 +220,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var mechanism81 = new Net.Pkcs11Interop.HighLevelAPI81.Mechanism((uint)mechanism.Type);
+                    var keyHandle81 = new Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle((uint)keyHandle.ObjectId);
+
+                    return session.HLA81Session.SignInvisible(ref mechanism81, keyHandle81, data);
                 }
             }
         }
@@ -249,7 +254,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var publicKeyHandle81 = new Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle((uint)publicKey.ObjectId);
+                    var privateKeyHandle81 = new Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle((uint)privateKey.ObjectId);
+
+                    return session.HLA81Session.CreateCSR(publicKeyHandle81, dn, privateKeyHandle81, attributes, extensions);
                 }
             }
         }
@@ -277,7 +285,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var certificateHandle81 = new Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle((uint)certificate.ObjectId);
+
+                    return session.HLA81Session.GetCertificateInfoText(certificateHandle81);
                 }
             }
         }
@@ -307,7 +317,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var certificateHandle81 = new Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle((uint)certificate.ObjectId);
+                    var privateKeyHandle81 = new Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle((uint)privateKey.ObjectId);
+
+                    var certificates81 = certificates.Select(cert => (ulong) cert).ToArray();
+
+                    return session.HLA81Session.PKCS7Sign(data, certificateHandle81, privateKeyHandle81, certificates81, flags);
                 }
             }
         }
@@ -333,7 +348,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    session.HLA81Session.TokenManage(mode, value);
                 }
             }
         }
@@ -384,7 +399,29 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var generationMechanism81 =
+                        generationMechanism.GetPrivatePropertyValue<Net.Pkcs11Interop.HighLevelAPI81.Mechanism>("Mechanism81");
+                    var derivationMechanism81 =
+                        derivationMechanism.GetPrivatePropertyValue<Net.Pkcs11Interop.HighLevelAPI81.Mechanism>("Mechanism81");
+                    var wrappingMechanism81 =
+                        wrappingMechanism.GetPrivatePropertyValue<Net.Pkcs11Interop.HighLevelAPI81.Mechanism>("Mechanism81");
+
+                    List<Net.Pkcs11Interop.HighLevelAPI81.ObjectAttribute> keyAttributes81 =
+                        (List<Net.Pkcs11Interop.HighLevelAPI81.ObjectAttribute>)
+                        ReflectionHelper.CallInternalStaticMethod(typeof(ObjectAttribute), "ConvertToHighLevelAPI81List",
+                            keyAttributes);
+
+                    var baseKeyHandle81 =
+                        baseKey.GetPrivatePropertyValue<Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle>("ObjectHandle81");
+
+                    Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle keyHandle81 = null;
+
+                    byte[] wrappedKey = session.HLA81Session.ExtendedWrapKey(generationMechanism81, keyAttributes81,
+                        derivationMechanism81, baseKeyHandle81, wrappingMechanism81, ref keyHandle81);
+
+                    key.SetPrivateFieldValue("_objectHandle81", keyHandle81);
+
+                    return wrappedKey;
                 }
             }
         }
@@ -431,7 +468,25 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    var derivationMechanism81 =
+                        derivationMechanism.GetPrivatePropertyValue<Net.Pkcs11Interop.HighLevelAPI81.Mechanism>("Mechanism81");
+                    var unwrappingMechanism81 =
+                        unwrappingMechanism.GetPrivatePropertyValue<Net.Pkcs11Interop.HighLevelAPI81.Mechanism>("Mechanism81");
+
+                    List<Net.Pkcs11Interop.HighLevelAPI81.ObjectAttribute> keyAttributes81 =
+                        (List<Net.Pkcs11Interop.HighLevelAPI81.ObjectAttribute>)
+                        ReflectionHelper.CallInternalStaticMethod(typeof(ObjectAttribute), "ConvertToHighLevelAPI81List",
+                            keyAttributes);
+
+                    var baseKeyHandle81 =
+                        baseKey.GetPrivatePropertyValue<Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle>("ObjectHandle81");
+
+                    Net.Pkcs11Interop.HighLevelAPI81.ObjectHandle keyHandle81 = session.HLA81Session.ExtendedUnwrapKey(derivationMechanism81, baseKeyHandle81,
+                        unwrappingMechanism81, wrappedKey, keyAttributes81);
+
+                    var keyHandle = new ObjectHandle();
+                    keyHandle.SetPrivateFieldValue("_objectHandle81", keyHandle81);
+                    return keyHandle;
                 }
             }
         }
