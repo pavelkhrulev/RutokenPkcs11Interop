@@ -96,6 +96,20 @@
     <Compile Include="LowLevelAPI41\_LL41_32_ActivationPasswordTest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_33_PKITest.cs" />
     <Compile Include="LowLevelAPI41\_LL41_34_ManageEntityTest.cs" />
+    <Compile Include="LowLevelAPI81\Helpers.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_02_GetInfoTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_04_TokenInfoTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_09_InitTokenAndPinTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_12_DigestTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_20_EncryptAndDecryptTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_21_SignAndVerifyTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_29_ManageFlashTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_30_JournalTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_31_LicenseTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_32_ActivationPasswordTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_33_PKITest.cs" />
+    <Compile Include="LowLevelAPI81\_LL81_34_ManageEntityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TestData.cs" />
@@ -108,6 +122,9 @@
       <Project>{84987be4-7ac6-4430-bf04-80689ebd22a3}</Project>
       <Name>RutokenPkcs11Interop</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HighLevelAPI81\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

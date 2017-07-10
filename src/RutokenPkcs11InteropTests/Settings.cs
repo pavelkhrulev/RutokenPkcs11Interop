@@ -1,5 +1,6 @@
 ﻿using Net.Pkcs11Interop.Common;
 using LLA41 = Net.Pkcs11Interop.LowLevelAPI41;
+using LLA81 = Net.Pkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11InteropTests
 {
@@ -146,11 +147,15 @@ namespace RutokenPkcs11InteropTests
 
         public static uint LocalPinId2 = 0x1E;
 
-
         /// <summary>
         /// Arguments passed to the C_Initialize function in LowLevelAPI41 tests.
         /// </summary>
         public static LLA41.CK_C_INITIALIZE_ARGS InitArgs41 = null;
+
+        /// <summary>
+        /// Arguments passed to the C_Initialize function in LowLevelAPI41 tests.
+        /// </summary>
+        public static LLA81.CK_C_INITIALIZE_ARGS InitArgs81 = null;
 
         /// <summary>
         /// PIN of the SO user a.k.a. PUK.
