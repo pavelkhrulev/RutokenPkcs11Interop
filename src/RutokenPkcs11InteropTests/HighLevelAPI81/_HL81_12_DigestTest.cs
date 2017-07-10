@@ -1,24 +1,24 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
-using Net.Pkcs11Interop.HighLevelAPI41;
+using Net.Pkcs11Interop.HighLevelAPI81;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RutokenPkcs11Interop.Common;
 
-namespace RutokenPkcs11InteropTests.HighLevelAPI41
+namespace RutokenPkcs11InteropTests.HighLevelAPI81
 {
     /// <summary>
     /// C_DigestInit, C_Digest, C_DigestUpdate, C_DigestFinal and C_DigestKey tests.
     /// </summary>
     [TestClass]
-    public class _HL41_12_DigestTest
+    public class _HL81_12_DigestTest
     {
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
         [TestMethod]
-        public void _HL41_12_01_Digest_SHA1_Test()
+        public void _HL81_12_01_Digest_SHA1_Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
@@ -47,9 +47,9 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
         /// C_DigestInit and C_Digest test.
         /// </summary>
         [TestMethod]
-        public void _HL41_12_02_Digest_Gost3411_12_512_Test()
+        public void _HL81_12_02_Digest_Gost3411_12_512_Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
@@ -61,7 +61,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                 using (Session session = slot.OpenSession(true))
                 {
                     // Specify digesting mechanism
-                    Mechanism mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_512);
+                    Mechanism mechanism = new Mechanism((ulong)Extended_CKM.CKM_GOSTR3411_12_512);
 
                     byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 
@@ -80,9 +80,9 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
         /// C_DigestInit and C_Digest test.
         /// </summary>
         [TestMethod]
-        public void _HL41_12_03_Digest_Gost3411_12_256_Test()
+        public void _HL81_12_03_Digest_Gost3411_12_256_Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
@@ -94,7 +94,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                 using (Session session = slot.OpenSession(true))
                 {
                     // Specify digesting mechanism
-                    Mechanism mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_256);
+                    Mechanism mechanism = new Mechanism((ulong)Extended_CKM.CKM_GOSTR3411_12_256);
 
                     byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 
@@ -112,9 +112,9 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
         /// C_DigestInit and C_Digest test.
         /// </summary>
         [TestMethod]
-        public void _HL41_12_04_Digest_Gost3411_94_Test()
+        public void _HL81_12_04_Digest_Gost3411_94_Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
@@ -126,7 +126,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
                 using (Session session = slot.OpenSession(true))
                 {
                     // Specify digesting mechanism
-                    Mechanism mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411);
+                    Mechanism mechanism = new Mechanism((ulong)Extended_CKM.CKM_GOSTR3411);
 
                     byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 

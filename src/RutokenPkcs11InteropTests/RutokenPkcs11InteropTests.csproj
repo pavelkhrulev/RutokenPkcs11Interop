@@ -68,6 +68,20 @@
     <Compile Include="HighLevelAPI41\_HL41_32_ActivationPasswordTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_33_PKITest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_34_ManageEntityTest.cs" />
+    <Compile Include="HighLevelAPI81\Helpers.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_02_GetInfoTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_04_TokenInfoTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_09_InitTokenAndPinTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_12_DigestTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_20_EncryptAndDecryptTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_21_SignAndVerifyTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_29_ManageFlashTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_30_JournalTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_31_LicenseTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_32_ActivationPasswordTest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_33_PKITest.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_34_ManageEntityTest.cs" />
     <Compile Include="HighLevelAPI\Helpers.cs" />
     <Compile Include="HighLevelAPI\_HL_32_ActivationPasswordTest.cs" />
     <Compile Include="HighLevelAPI\_HL_34_ManageEntityTest.cs" />
@@ -123,9 +137,7 @@
       <Name>RutokenPkcs11Interop</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="HighLevelAPI81\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
