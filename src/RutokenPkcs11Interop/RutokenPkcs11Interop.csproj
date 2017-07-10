@@ -70,6 +70,16 @@
     <Compile Include="HighLevelAPI41\VolumeFormatInfoExtended.cs" />
     <Compile Include="HighLevelAPI41\VolumeInfo.cs" />
     <Compile Include="HighLevelAPI41\VolumeInfoExtended.cs" />
+    <Compile Include="HighLevelAPI81\MechanismParams\CkGostR3410DeriveParams.cs" />
+    <Compile Include="HighLevelAPI81\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
+    <Compile Include="HighLevelAPI81\Pkcs11Extensions.cs" />
+    <Compile Include="HighLevelAPI81\RutokenInitParam.cs" />
+    <Compile Include="HighLevelAPI81\SessionExtensions.cs" />
+    <Compile Include="HighLevelAPI81\SlotExtensions.cs" />
+    <Compile Include="HighLevelAPI81\TokenInfoExtended.cs" />
+    <Compile Include="HighLevelAPI81\VolumeFormatInfoExtended.cs" />
+    <Compile Include="HighLevelAPI81\VolumeInfo.cs" />
+    <Compile Include="HighLevelAPI81\VolumeInfoExtended.cs" />
     <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410DeriveParams.cs" />
     <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
     <Compile Include="HighLevelAPI\RutokenInitParam.cs" />
