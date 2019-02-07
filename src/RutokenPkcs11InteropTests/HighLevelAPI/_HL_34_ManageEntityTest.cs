@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.HighLevelAPI;
@@ -11,7 +12,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_34_01_ManageSlotTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
@@ -26,13 +27,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_34_02_ManageTokenTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // TODO: актуализировать тест с реальными значениями
                     byte[] value = new byte[8];

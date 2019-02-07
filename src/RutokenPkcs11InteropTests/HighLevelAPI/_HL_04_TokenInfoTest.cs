@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
 using RutokenPkcs11Interop.HighLevelAPI;
@@ -15,7 +16,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod()]
         public void _HL_04_01_TokenInfoTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
@@ -34,7 +35,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod()]
         public void _HL_04_02_TokenInfoExtendedTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);

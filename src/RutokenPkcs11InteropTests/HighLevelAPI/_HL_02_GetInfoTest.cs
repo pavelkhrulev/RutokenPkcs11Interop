@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
@@ -16,7 +17,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_02_01_BasicGetInfoTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 LibraryInfo libraryInfo = pkcs11.GetInfo();
 

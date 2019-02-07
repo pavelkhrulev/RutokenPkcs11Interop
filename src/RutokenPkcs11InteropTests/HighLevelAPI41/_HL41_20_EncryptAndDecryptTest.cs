@@ -19,13 +19,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -60,13 +60,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -123,13 +123,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -169,13 +169,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);

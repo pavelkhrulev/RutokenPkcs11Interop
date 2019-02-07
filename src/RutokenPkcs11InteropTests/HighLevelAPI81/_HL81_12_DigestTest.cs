@@ -21,13 +21,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(true))
+                using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
                     Mechanism mechanism = new Mechanism(CKM.CKM_SHA_1);
@@ -52,13 +52,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(true))
+                using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
                     Mechanism mechanism = new Mechanism((ulong)Extended_CKM.CKM_GOSTR3411_12_512);
@@ -85,13 +85,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(true))
+                using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
                     Mechanism mechanism = new Mechanism((ulong)Extended_CKM.CKM_GOSTR3411_12_256);
@@ -117,13 +117,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(true))
+                using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
                     Mechanism mechanism = new Mechanism((ulong)Extended_CKM.CKM_GOSTR3411);

@@ -16,13 +16,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -54,13 +54,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -114,13 +114,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -157,13 +157,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_20_04_EncryptAndDecrypt_RSA_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);

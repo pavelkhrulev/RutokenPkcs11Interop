@@ -18,13 +18,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_12_01_Digest_SHA1_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(true))
+                using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
                     var mechanism = new Mechanism(CKM.CKM_SHA_1);
@@ -46,13 +46,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_12_02_Digest_Gost3411_12_512_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find firsst slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(true))
+                using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
                     var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_512);
@@ -76,13 +76,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_12_03_Digest_Gost3411_12_256_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(true))
+                using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
                     var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_256);
@@ -105,13 +105,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_12_04_Digest_Gost3411_94_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(true))
+                using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
                     var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411);

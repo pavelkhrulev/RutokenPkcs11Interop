@@ -14,13 +14,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_33_01_CreateCSR_PKCS10Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -69,13 +69,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_33_02_ImportCertificateTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -105,13 +105,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_33_03_PKCS7SignTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(false))
+                using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);

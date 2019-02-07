@@ -31,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Pkcs11Interop, Version=3.3.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pkcs11Interop.3.3.0\lib\net45\Pkcs11Interop.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Pkcs11Interop, Version=4.1.0.0, Culture=neutral, PublicKeyToken=c10e9c2d8c006d2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pkcs11Interop.4.1.0\lib\net45\Pkcs11Interop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -114,7 +113,6 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

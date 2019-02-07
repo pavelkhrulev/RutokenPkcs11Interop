@@ -18,7 +18,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
@@ -40,7 +40,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Find first slot with token present
                 Slot slot = Helpers.GetUsableSlot(pkcs11);

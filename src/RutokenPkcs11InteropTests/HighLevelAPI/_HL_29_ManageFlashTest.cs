@@ -17,7 +17,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_29_01_FlashAvailabilityTest()
         {
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
@@ -36,7 +36,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [TestMethod]
         public void _HL_29_02_FlashWorkTest()
         {
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, Settings.UseOsLocking))
+            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
