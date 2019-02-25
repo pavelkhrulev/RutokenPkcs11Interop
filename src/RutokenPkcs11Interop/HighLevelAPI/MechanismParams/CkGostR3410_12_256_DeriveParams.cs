@@ -3,7 +3,7 @@ using Net.Pkcs11Interop.Common;
 
 namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
 {
-    public class CkGostR3410_12_DeriveParams : IMechanismParams, IDisposable
+    public class CkGostR3410_12_256_DeriveParams : IMechanismParams, IDisposable
     {
         /// <summary>
         /// Flag indicating whether instance has been disposed
@@ -13,34 +13,34 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
         /// <summary>
         /// Platform specific CkGostR3410_12_DeriveParams
         /// </summary>
-        private HighLevelAPI41.MechanismParams.CkGostR3410_12_DeriveParams _params41;
+        private HighLevelAPI41.MechanismParams.CkGostR3410_12_256_DeriveParams _params41;
 
         /// <summary>
         /// Platform specific CkGostR3410_12_DeriveParams
         /// </summary>
-        private HighLevelAPI81.MechanismParams.CkGostR3410_12_DeriveParams _params81;
+        private HighLevelAPI81.MechanismParams.CkGostR3410_12_256_DeriveParams _params81;
 
         /// <summary>
         /// Initializes a new instance of the CkGostR3410_12_DeriveParams class.
         /// </summary>
         /// <param name='kdf'>Additional key diversification algorithm (CKD)</param>
-        /// <param name='publicData'>Public key (128 bytes long)</param>
+        /// <param name='publicData'>Public key (64 bytes long)</param>
         /// <param name='ukm'>UKM (8 bytes)</param>
-        public CkGostR3410_12_DeriveParams(uint kdf, byte[] publicData, byte[] ukm)
+        public CkGostR3410_12_256_DeriveParams(uint kdf, byte[] publicData, byte[] ukm)
         {
             if (Platform.UnmanagedLongSize == 4)
             {
                 if (Platform.StructPackingSize == 0)
                     throw new NotImplementedException();
                 else
-                    _params41 = new HighLevelAPI41.MechanismParams.CkGostR3410_12_DeriveParams(kdf, publicData, ukm);
+                    _params41 = new HighLevelAPI41.MechanismParams.CkGostR3410_12_256_DeriveParams(kdf, publicData, ukm);
             }
             else
             {
                 if (Platform.StructPackingSize == 0)
                     throw new NotImplementedException();
                 else
-                    _params81 = new HighLevelAPI81.MechanismParams.CkGostR3410_12_DeriveParams(kdf, publicData, ukm);
+                    _params81 = new HighLevelAPI81.MechanismParams.CkGostR3410_12_256_DeriveParams(kdf, publicData, ukm);
             }
         }
 
@@ -115,7 +115,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
         /// <summary>
         /// Class destructor that disposes object if caller forgot to do so
         /// </summary>
-        ~CkGostR3410_12_DeriveParams()
+        ~CkGostR3410_12_256_DeriveParams()
         {
             Dispose(false);
         }

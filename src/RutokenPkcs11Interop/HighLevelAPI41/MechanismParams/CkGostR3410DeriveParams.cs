@@ -12,12 +12,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI41.MechanismParams
         /// <summary>
         /// Flag indicating whether instance has been disposed
         /// </summary>
-        private bool _disposed = false;
+        private bool _disposed;
 
         /// <summary>
         /// Low level mechanism parameters
         /// </summary>
-        private CK_GOSTR3410_DERIVE_PARAMS _lowLevelStruct = new CK_GOSTR3410_DERIVE_PARAMS();
+        private CK_GOSTR3410_DERIVE_PARAMS _lowLevelStruct;
 
         /// <summary>
         /// Initializes a new instance of the CkGostR3410DeriveParams class.

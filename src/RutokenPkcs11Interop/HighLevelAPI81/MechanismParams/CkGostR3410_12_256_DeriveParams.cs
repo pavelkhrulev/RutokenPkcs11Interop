@@ -4,10 +4,7 @@ using RutokenPkcs11Interop.LowLevelAPI81.MechanismParams;
 
 namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
 {
-    /// <summary>
-    /// Parameters for the CKM_GOSTR3410_DERIVE mechanism
-    /// </summary>
-    public class CkGostR3410DeriveParams : IMechanismParams, IDisposable
+    public class CkGostR3410_12_256_DeriveParams : IMechanismParams, IDisposable
     {
         /// <summary>
         /// Flag indicating whether instance has been disposed
@@ -17,7 +14,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
         /// <summary>
         /// Low level mechanism parameters
         /// </summary>
-        private CK_GOSTR3410_DERIVE_PARAMS _lowLevelStruct;
+        private readonly CK_GOSTR3410_12_DERIVE_PARAMS _lowLevelStruct;
 
         /// <summary>
         /// Initializes a new instance of the CkGostR3410DeriveParams class.
@@ -25,13 +22,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
         /// <param name="kdf">Additional key diversification algorithm (CKD)</param>
         /// <param name="publicData">Data with public key of a receiver</param>
         /// <param name="ukm">UKM data</param>
-        public CkGostR3410DeriveParams(ulong kdf, byte[] publicData, byte[] ukm)
+        public CkGostR3410_12_256_DeriveParams(ulong kdf, byte[] publicData, byte[] ukm)
         {
             _lowLevelStruct.Kdf = 0;
-            _lowLevelStruct.PublicData = IntPtr.Zero;
             _lowLevelStruct.PublicDataLen = 0;
-            _lowLevelStruct.UKM = IntPtr.Zero;
+            _lowLevelStruct.PublicData = new byte[64];
             _lowLevelStruct.UKMLen = 0;
+            _lowLevelStruct.UKM = new byte[8];
 
             if (publicData == null)
                 throw new ArgumentNullException(nameof(publicData));
@@ -46,14 +43,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
                 throw new ArgumentOutOfRangeException(nameof(ukm), "Array has to be 8 bytes long");
 
             _lowLevelStruct.Kdf = kdf;
-
-            _lowLevelStruct.PublicData = UnmanagedMemory.Allocate(publicData.Length);
-            UnmanagedMemory.Write(_lowLevelStruct.PublicData, publicData);
             _lowLevelStruct.PublicDataLen = Convert.ToUInt64(publicData.Length);
-
-            _lowLevelStruct.UKM = UnmanagedMemory.Allocate(ukm.Length);
-            UnmanagedMemory.Write(_lowLevelStruct.UKM, ukm);
+            Array.Copy(publicData, _lowLevelStruct.PublicData, publicData.Length);
             _lowLevelStruct.UKMLen = Convert.ToUInt64(ukm.Length);
+            Array.Copy(ukm, _lowLevelStruct.UKM, ukm.Length);
         }
 
         #region IMechanismParams
@@ -96,13 +89,6 @@ namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
                     // Dispose managed objects
                 }
 
-                // Dispose unmanaged objects
-                _lowLevelStruct.Kdf = 0;
-                UnmanagedMemory.Free(ref _lowLevelStruct.PublicData);
-                _lowLevelStruct.PublicDataLen = 0;
-                UnmanagedMemory.Free(ref _lowLevelStruct.UKM);
-                _lowLevelStruct.UKMLen = 0;
-
                 _disposed = true;
             }
         }
@@ -110,7 +96,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
         /// <summary>
         /// Class destructor that disposes object if caller forgot to do so
         /// </summary>
-        ~CkGostR3410DeriveParams()
+        ~CkGostR3410_12_256_DeriveParams()
         {
             Dispose(false);
         }

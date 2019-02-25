@@ -62,6 +62,7 @@
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\StringArrayHelpers.cs" />
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410DeriveParams.cs" />
+    <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_256_DeriveParams.cs" />
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
     <Compile Include="HighLevelAPI41\Pkcs11Extensions.cs" />
     <Compile Include="HighLevelAPI41\RutokenInitParam.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="HighLevelAPI41\VolumeInfo.cs" />
     <Compile Include="HighLevelAPI41\VolumeInfoExtended.cs" />
     <Compile Include="HighLevelAPI81\MechanismParams\CkGostR3410DeriveParams.cs" />
+    <Compile Include="HighLevelAPI81\MechanismParams\CkGostR3410_12_256_DeriveParams.cs" />
     <Compile Include="HighLevelAPI81\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
     <Compile Include="HighLevelAPI81\Pkcs11Extensions.cs" />
     <Compile Include="HighLevelAPI81\RutokenInitParam.cs" />
@@ -82,6 +84,7 @@
     <Compile Include="HighLevelAPI81\VolumeInfo.cs" />
     <Compile Include="HighLevelAPI81\VolumeInfoExtended.cs" />
     <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410DeriveParams.cs" />
+    <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410_12_256_DeriveParams.cs" />
     <Compile Include="HighLevelAPI\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
     <Compile Include="HighLevelAPI\RutokenInitParam.cs" />
     <Compile Include="HighLevelAPI\SessionExtensions.cs" />
@@ -93,6 +96,7 @@
     <Compile Include="LowLevelAPI41\CK_TOKEN_INFO_EXTENDED.cs" />
     <Compile Include="LowLevelAPI41\CK_VOLUME_INFO_EXTENDED.cs" />
     <Compile Include="LowLevelAPI41\CK_VOLUME_FORMAT_INFO_EXTENDED.cs" />
+    <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_12_256_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_12_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI41\Pkcs11Extensions.cs" />
@@ -103,6 +107,7 @@
     <Compile Include="LowLevelAPI81\CK_TOKEN_INFO_EXTENDED.cs" />
     <Compile Include="LowLevelAPI81\CK_VOLUME_FORMAT_INFO_EXTENDED.cs" />
     <Compile Include="LowLevelAPI81\CK_VOLUME_INFO_EXTENDED.cs" />
+    <Compile Include="LowLevelAPI81\MechanismParams\CK_GOSTR3410_12_256_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI81\MechanismParams\CK_GOSTR3410_12_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI81\MechanismParams\CK_GOSTR3410_DERIVE_PARAMS.cs" />
     <Compile Include="LowLevelAPI81\Pkcs11Extensions.cs" />
