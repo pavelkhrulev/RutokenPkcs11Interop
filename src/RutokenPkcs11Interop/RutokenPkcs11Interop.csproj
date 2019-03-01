@@ -94,6 +94,8 @@
     <Compile Include="HighLevelAPI\VolumeInfoExtended.cs" />
     <Compile Include="LowLevelAPI41\CK_RUTOKEN_INIT_PARAM.cs" />
     <Compile Include="LowLevelAPI41\CK_TOKEN_INFO_EXTENDED.cs" />
+    <Compile Include="LowLevelAPI41\CK_VENDOR_BUFFER.cs" />
+    <Compile Include="LowLevelAPI41\CK_VENDOR_X509_STORE.cs" />
     <Compile Include="LowLevelAPI41\CK_VOLUME_INFO_EXTENDED.cs" />
     <Compile Include="LowLevelAPI41\CK_VOLUME_FORMAT_INFO_EXTENDED.cs" />
     <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_12_256_DERIVE_PARAMS.cs" />
