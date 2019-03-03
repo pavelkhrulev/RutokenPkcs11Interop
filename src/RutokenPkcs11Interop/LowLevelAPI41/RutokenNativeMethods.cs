@@ -110,6 +110,27 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             out IntPtr envelope, out uint encelopeLen,
             uint privateKey,
             uint[] certificates, uint certificatesLen, uint flags);
+        
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_PKCS7VerifyInit(
+            uint session, byte[] cms, uint cmsSize,
+            CK_VENDOR_X509_STORE store, uint mode, 
+            uint flags);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_PKCS7Verify(
+            uint session, 
+            out IntPtr data, out uint dataSize, 
+            [Out] CK_VENDOR_BUFFER[] signerCertificates, ref uint signerCertificatesCount);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_PKCS7VerifyUpdate(
+            uint session, byte[] data, uint dataSize);
+
+        [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
+        internal static extern uint C_EX_PKCS7VerifyFinal(
+            uint session, 
+            [Out] CK_VENDOR_BUFFER[] signerCertificates, ref uint signerCertificatesCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
         internal static extern uint C_EX_FreeBuffer(IntPtr buffer);
