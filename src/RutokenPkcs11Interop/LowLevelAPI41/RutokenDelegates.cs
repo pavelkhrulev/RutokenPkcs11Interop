@@ -114,14 +114,14 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_PKCS7VerifyInit(
             uint session, byte[] cms, uint cmsSize,
-            CK_VENDOR_X509_STORE store, uint mode, 
+            ref CK_VENDOR_X509_STORE store, uint mode,
             uint flags);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_PKCS7Verify(
-            uint session, 
-            out IntPtr data, out uint dataSize, 
-            [Out] CK_VENDOR_BUFFER[] signerCertificates, ref uint signerCertificatesCount);
+            uint session,
+            out IntPtr data, out uint dataSize,
+            out IntPtr signerCertificates, out uint signerCertificatesCount);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_PKCS7VerifyUpdate(
@@ -129,7 +129,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_PKCS7VerifyFinal(
-            uint session, 
+            uint session,
             [Out] CK_VENDOR_BUFFER[] signerCertificates, ref uint signerCertificatesCount);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

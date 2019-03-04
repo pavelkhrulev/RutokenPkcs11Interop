@@ -536,7 +536,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
 
         public static CKR C_EX_PKCS7VerifyInit(this Pkcs11 pkcs11, uint session,
             byte[] cms,
-            CK_VENDOR_X509_STORE store, uint mode, 
+            ref CK_VENDOR_X509_STORE store, uint mode,
             uint flags)
         {
             if (pkcs11.Disposed)
@@ -558,14 +558,14 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             if (cms != null)
                 cmsLength = Convert.ToUInt32(cms.Length);
 
-            uint rv = cPkcs7VerifyInit(session, cms, cmsLength, store, mode, flags);
+            uint rv = cPkcs7VerifyInit(session, cms, cmsLength, ref store, mode, flags);
 
             return (CKR)rv;
         }
 
         public static CKR C_EX_PKCS7Verify(this Pkcs11 pkcs11, uint session,
-            out IntPtr data, out uint dataSize, 
-            CK_VENDOR_BUFFER[] signerCertificates, ref uint signerCertificatesCount)
+            out IntPtr data, out uint dataSize,
+            out IntPtr signerCertificates, out uint signerCertificatesCount)
         {
             if (pkcs11.Disposed)
                 throw new ObjectDisposedException(pkcs11.GetType().FullName);
@@ -582,7 +582,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cPkcs7Verify = RutokenNativeMethods.C_EX_PKCS7Verify;
             }
 
-            uint rv = cPkcs7Verify(session, out data, out dataSize, signerCertificates, ref signerCertificatesCount);
+            uint rv = cPkcs7Verify(session, out data, out dataSize, out signerCertificates, out signerCertificatesCount);
 
             return (CKR)rv;
         }
@@ -613,7 +613,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             return (CKR)rv;
         }
 
-        public static CKR C_EX_PKCS7VerifyFinal(this Pkcs11 pkcs11, uint session, 
+        public static CKR C_EX_PKCS7VerifyFinal(this Pkcs11 pkcs11, uint session,
             CK_VENDOR_BUFFER[] signerCertificates, ref uint signerCertificatesCount)
         {
             if (pkcs11.Disposed)

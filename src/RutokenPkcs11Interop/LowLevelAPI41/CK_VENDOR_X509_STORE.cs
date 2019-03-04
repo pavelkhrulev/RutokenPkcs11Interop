@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace RutokenPkcs11Interop.LowLevelAPI41
 {
@@ -10,9 +11,9 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
     public struct CK_VENDOR_X509_STORE
     {
         /// <summary>
-        /// Массив доверенных сертификатов 
+        /// Массив доверенных сертификатов
         /// </summary>
-        public CK_VENDOR_BUFFER[] TrustedCertificates;
+        public IntPtr TrustedCertificates;
 
         /// <summary>
         /// Количество доверенных сертификатов в массиве
@@ -22,8 +23,8 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
         /// <summary>
         /// Массив, содержащий сертификаты для проверки подписи
         /// </summary>
-        public CK_VENDOR_BUFFER[] Certificates;
-         
+        public IntPtr Certificates;
+
         /// <summary>
         /// Количество сертификатов в цепочке сертификатов
         /// </summary>
@@ -32,7 +33,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
         /// <summary>
         /// Массив списков отзыва сертификатов
         /// </summary>
-        public CK_VENDOR_BUFFER[] Crls;
+        public IntPtr Crls;
 
         /// <summary>
         /// Количество списков отзыва сертификатов в массиве
