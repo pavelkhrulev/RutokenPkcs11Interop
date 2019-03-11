@@ -130,7 +130,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_PKCS7VerifyFinal(
             uint session,
-            [Out] CK_VENDOR_BUFFER[] signerCertificates, ref uint signerCertificatesCount);
+            out IntPtr signerCertificates, out uint signerCertificatesCount);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate uint C_EX_FreeBuffer(IntPtr buffer);

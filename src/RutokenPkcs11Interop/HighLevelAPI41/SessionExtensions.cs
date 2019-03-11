@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
@@ -312,7 +312,78 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 }
                 else
                 {
-                    throw new Pkcs11Exception("C_Verify", rv);
+                    throw new Pkcs11Exception("C_EX_PKCS7Verify", rv);
+                }
+
+                return result;
+            }
+            finally
+            {
+                storeNative.Dispose();
+            }
+        }
+
+        public static Pkcs7VerificationResult PKCS7Verify(this HLA41.Session session, byte[] cms, Stream inputStream, CkVendorX509Store vendorX509Store,
+            VendorCrlMode mode, uint flags)
+        {
+            if (session.Disposed)
+                throw new ObjectDisposedException(session.GetType().FullName);
+
+            if (cms == null)
+                throw new ArgumentNullException(nameof(cms));
+
+            if (vendorX509Store == null)
+                throw new ArgumentNullException(nameof(vendorX509Store));
+
+            var storeNative = new CK_VENDOR_X509_STORE(vendorX509Store);
+
+            try
+            {
+                CKR rv = session.LowLevelPkcs11.C_EX_PKCS7VerifyInit(session.SessionId, cms, ref storeNative, Convert.ToUInt32(mode), flags);
+                if (rv != CKR.CKR_OK)
+                    throw new Pkcs11Exception("C_EX_PKCS7VerifyInit", rv);
+
+                // TODO: OK with inputStream length?
+                byte[] part = new byte[inputStream.Length];
+
+                while (inputStream.Read(part, 0, part.Length) > 0)
+                {
+                    rv = session.LowLevelPkcs11.C_EX_PKCS7VerifyUpdate(session.SessionId, part);
+                    if (rv != CKR.CKR_OK)
+                        throw new Pkcs11Exception("C_EX_PKCS7VerifyUpdate", rv);
+                }
+
+                IntPtr signerSertificates;
+                uint signerSertificatesCount;
+
+                rv = session.LowLevelPkcs11.C_EX_PKCS7VerifyFinal(session.SessionId, out signerSertificates, out signerSertificatesCount);
+
+                var result = new Pkcs7VerificationResult();
+
+                if (rv == CKR.CKR_OK)
+                {
+                    result.Certificates = new List<byte[]>();
+                    var structSize = Marshal.SizeOf(typeof(CK_VENDOR_BUFFER));
+                    for (var i = 0; i < signerSertificatesCount; i++)
+                    {
+                        var certificatePtr = (CK_VENDOR_BUFFER)Marshal.PtrToStructure(signerSertificates, typeof(CK_VENDOR_BUFFER));
+                        signerSertificates += structSize;
+
+                        var certificateData = new byte[certificatePtr.Size];
+                        Marshal.Copy(certificatePtr.Data, certificateData, 0, (int)certificatePtr.Size);
+
+                        result.Certificates.Add(certificateData);
+                    }
+
+                    result.IsValid = true;
+                }
+                else if (rv == CKR.CKR_SIGNATURE_INVALID)
+                {
+                    result.IsValid = false;
+                }
+                else
+                {
+                    throw new Pkcs11Exception("C_EX_PKCS7VerifyFinal", rv);
                 }
 
                 return result;

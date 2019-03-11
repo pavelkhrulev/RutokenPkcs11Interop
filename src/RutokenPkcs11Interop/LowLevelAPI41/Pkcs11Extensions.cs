@@ -614,7 +614,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
         }
 
         public static CKR C_EX_PKCS7VerifyFinal(this Pkcs11 pkcs11, uint session,
-            CK_VENDOR_BUFFER[] signerCertificates, ref uint signerCertificatesCount)
+            out IntPtr signerCertificates, out uint signerCertificatesCount)
         {
             if (pkcs11.Disposed)
                 throw new ObjectDisposedException(pkcs11.GetType().FullName);
@@ -631,7 +631,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
                 cPkcs7VerifyFinal = RutokenNativeMethods.C_EX_PKCS7VerifyFinal;
             }
 
-            uint rv = cPkcs7VerifyFinal(session, signerCertificates, ref signerCertificatesCount);
+            uint rv = cPkcs7VerifyFinal(session, out signerCertificates, out signerCertificatesCount);
 
             return (CKR)rv;
         }
