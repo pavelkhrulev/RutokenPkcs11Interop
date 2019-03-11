@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
@@ -323,6 +324,63 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     var certificates81 = certificates.Select(cert => (ulong) cert).ToArray();
 
                     return session.HLA81Session.PKCS7Sign(data, certificateHandle81, privateKeyHandle81, certificates81, flags);
+                }
+            }
+        }
+
+        public static Pkcs7VerificationResult PKCS7Verify(this Session session, byte[] cms,
+            CkVendorX509Store vendorX509Store,
+            VendorCrlMode mode, uint flags)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    return session.HLA41Session.PKCS7Verify(cms, vendorX509Store, mode, flags);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    return session.HLA81Session.PKCS7Verify(cms, vendorX509Store, mode, flags);
+                }
+            }
+        }
+
+        public static Pkcs7VerificationResult PKCS7Verify(this Session session, byte[] cms,
+            Stream inputStream,
+            CkVendorX509Store vendorX509Store,
+            VendorCrlMode mode, uint flags)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    return session.HLA41Session.PKCS7Verify(cms, inputStream, vendorX509Store, mode, flags);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    return session.HLA81Session.PKCS7Verify(cms, inputStream, vendorX509Store, mode, flags);
                 }
             }
         }
