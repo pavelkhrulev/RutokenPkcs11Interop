@@ -320,6 +320,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             finally
             {
                 storeNative.Dispose();
+
+                // TODO: FreeBuffer
             }
         }
 
@@ -391,6 +393,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             finally
             {
                 storeNative.Dispose();
+
+                // TODO: FreeBuffer
             }
         }
 
