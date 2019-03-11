@@ -6,6 +6,7 @@ using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Helpers;
+using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.LowLevelAPI41;
 using HLA41 = Net.Pkcs11Interop.HighLevelAPI41;
 

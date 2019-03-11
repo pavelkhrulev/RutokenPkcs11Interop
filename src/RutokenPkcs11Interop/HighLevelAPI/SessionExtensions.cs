@@ -351,7 +351,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    return session.HLA81Session.PKCS7Verify(cms, vendorX509Store, mode, flags);
                 }
             }
         }
@@ -380,7 +380,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
                 else
                 {
-                    throw new NotImplementedException();
+                    return session.HLA81Session.PKCS7Verify(cms, inputStream, vendorX509Store, mode, flags);
                 }
             }
         }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace RutokenPkcs11Interop.HighLevelAPI41
+namespace RutokenPkcs11Interop.HighLevelAPI
 {
     public class CkVendorX509Store
     {
