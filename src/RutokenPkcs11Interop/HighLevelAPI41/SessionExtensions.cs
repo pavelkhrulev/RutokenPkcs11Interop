@@ -268,87 +268,59 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             if (vendorX509Store == null)
                 throw new ArgumentNullException(nameof(vendorX509Store));
 
-            var store = new CK_VENDOR_X509_STORE();
-            if (vendorX509Store.TrustedCertificates != null && vendorX509Store.TrustedCertificates.Any())
+            var storeNative = new CK_VENDOR_X509_STORE(vendorX509Store);
+
+            try
             {
-                var trustedCertificates = new CK_VENDOR_BUFFER[vendorX509Store.TrustedCertificates.Count];
-                for (var i = 0; i < vendorX509Store.TrustedCertificates.Count; i++)
+                CKR rv = session.LowLevelPkcs11.C_EX_PKCS7VerifyInit(session.SessionId, cms, ref storeNative, Convert.ToUInt32(mode), flags);
+                if (rv != CKR.CKR_OK)
+                    throw new Pkcs11Exception("C_EX_PKCS7VerifyInit", rv);
+
+                IntPtr data;
+                uint dataLen;
+
+                IntPtr signerSertificates;
+                uint signerSertificatesCount;
+
+                rv = session.LowLevelPkcs11.C_EX_PKCS7Verify(session.SessionId, out data, out dataLen, out signerSertificates, out signerSertificatesCount);
+
+                var result = new Pkcs7VerificationResult();
+
+                if (rv == CKR.CKR_OK)
                 {
-                    trustedCertificates[i].Data = UnmanagedMemory.Allocate(vendorX509Store.TrustedCertificates[i].Length);
-                    UnmanagedMemory.Write(trustedCertificates[i].Data, vendorX509Store.TrustedCertificates[i]);
-                    trustedCertificates[i].Size = Convert.ToUInt32(vendorX509Store.TrustedCertificates[i].Length);
+                    result.Data = new byte[dataLen];
+                    Marshal.Copy(data, result.Data, 0, (int)dataLen);
+
+                    result.Certificates = new List<byte[]>();
+                    var structSize = Marshal.SizeOf(typeof(CK_VENDOR_BUFFER));
+                    for (var i = 0; i < signerSertificatesCount; i++)
+                    {
+                        var certificatePtr = (CK_VENDOR_BUFFER)Marshal.PtrToStructure(signerSertificates, typeof(CK_VENDOR_BUFFER));
+                        signerSertificates += structSize;
+
+                        var certificateData = new byte[certificatePtr.Size];
+                        Marshal.Copy(certificatePtr.Data, certificateData, 0, (int)certificatePtr.Size);
+
+                        result.Certificates.Add(certificateData);
+                    }
+
+                    result.IsValid = true;
+                }
+                else if (rv == CKR.CKR_SIGNATURE_INVALID)
+                {
+                    result.IsValid = false;
+                }
+                else
+                {
+                    throw new Pkcs11Exception("C_Verify", rv);
                 }
 
-                store.TrustedCertificateCount = Convert.ToUInt32(vendorX509Store.TrustedCertificates.Count);
-
-                int structSize = Marshal.SizeOf(typeof(CK_VENDOR_BUFFER));
-                store.TrustedCertificates = Marshal.AllocHGlobal(vendorX509Store.TrustedCertificates.Count * structSize);
-                IntPtr ptr = store.TrustedCertificates;
-                for (int i = 0; i < vendorX509Store.TrustedCertificates.Count; i++)
-                {
-                    Marshal.StructureToPtr(trustedCertificates[i], ptr, false);
-                    ptr += structSize;
-                }
-
+                return result;
             }
-
-            if (vendorX509Store.Certificates != null && vendorX509Store.Certificates.Any())
+            finally
             {
-                //store.Certificates = new CK_VENDOR_BUFFER[vendorX509Store.Certificates.Count];
-                //for (var i = 0; i < vendorX509Store.Certificates.Count; i++)
-                //{
-                //    store.Certificates[i].Data = UnmanagedMemory.Allocate(vendorX509Store.Certificates[i].Length);
-                //    UnmanagedMemory.Write(store.Certificates[i].Data, vendorX509Store.Certificates[i]);
-                //    store.Certificates[i].Size = Convert.ToUInt32(vendorX509Store.Certificates[i].Length);
-                //}
-
-                //store.CertificateCount = Convert.ToUInt32(vendorX509Store.TrustedCertificates.Count);
+                storeNative.Dispose();
             }
-
-            if (vendorX509Store.Crls != null && vendorX509Store.Crls.Any())
-            {
-                //store.Crls = new CK_VENDOR_BUFFER[vendorX509Store.Crls.Count];
-                //for (var i = 0; i < vendorX509Store.Crls.Count; i++)
-                //{
-                //    store.Crls[i].Data = UnmanagedMemory.Allocate(vendorX509Store.Crls[i].Length);
-                //    UnmanagedMemory.Write(store.Crls[i].Data, vendorX509Store.Crls[i]);
-                //    store.Crls[i].Size = Convert.ToUInt32(vendorX509Store.Crls[i].Length);
-                //}
-
-                //store.CrlCount = Convert.ToUInt32(vendorX509Store.Crls.Count);
-            }
-
-            CKR rv = session.LowLevelPkcs11.C_EX_PKCS7VerifyInit(session.SessionId, cms, ref store, Convert.ToUInt32(mode), flags);
-            if (rv != CKR.CKR_OK)
-                throw new Pkcs11Exception("C_EX_PKCS7VerifyInit", rv);
-
-            IntPtr data;
-            uint dataLen;
-
-            IntPtr signerSertificates;
-            uint signerSertificatesCount;
-
-            rv = session.LowLevelPkcs11.C_EX_PKCS7Verify(session.SessionId, out data, out dataLen, out signerSertificates, out signerSertificatesCount);
-
-            var result = new Pkcs7VerificationResult();
-
-            if (rv == CKR.CKR_OK)
-            {
-                result.Data = new byte[dataLen];
-                Marshal.Copy(data, result.Data, 0, (int)dataLen);
-
-                result.IsValid = true;
-            }
-            else if (rv == CKR.CKR_SIGNATURE_INVALID)
-            {
-                result.IsValid = false;
-            }
-            else
-            {
-                throw new Pkcs11Exception("C_Verify", rv);
-            }
-
-            return result;
         }
 
         public static void TokenManage(this HLA41.Session session, TokenManageMode mode, byte[] value)
