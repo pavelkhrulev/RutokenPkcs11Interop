@@ -15,6 +15,6 @@ namespace RutokenPkcs11Interop
 
         public static uint DefaultLicenseLength => 72;
 
-        public static List<uint> LicenseAllowedNumbers = new List<uint> {1, 2};
+        public static List<uint> LicenseAllowedNumbers => new List<uint> {1, 2};
     }
 }

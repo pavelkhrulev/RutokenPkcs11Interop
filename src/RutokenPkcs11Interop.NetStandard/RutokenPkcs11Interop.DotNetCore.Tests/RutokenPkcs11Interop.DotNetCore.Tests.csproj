@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Include="Pkcs11Interop" Version="4.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop.NetStandard.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI41*\**\.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI81*\**\.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI41*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI81*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\Settings.cs">
+      <Link>Settings.cs</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\TestData.cs">
+      <Link>TestData.cs</Link>
+    </Compile>
+  </ItemGroup>
+
+</Project>
