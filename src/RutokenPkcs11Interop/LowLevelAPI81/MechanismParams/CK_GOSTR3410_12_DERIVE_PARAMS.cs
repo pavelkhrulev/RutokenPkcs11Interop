@@ -14,7 +14,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI81.MechanismParams
         public ulong Kdf;
 
         /// <summary>
-        /// Length of data with public key of a receiver. Must be 64.
+        /// Length of data with public key of a receiver. Must be 128.
         /// </summary>
         public ulong PublicDataLen;
 

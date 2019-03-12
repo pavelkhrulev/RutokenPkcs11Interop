@@ -11,38 +11,39 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
         /// <summary>
         /// Flag indicating whether instance has been disposed
         /// </summary>
-        private bool _disposed = false;
+        private bool _disposed;
 
         /// <summary>
         /// Platform specific CkGostR3410_12_DeriveParams
         /// </summary>
-        private HighLevelAPI41.MechanismParams.CkGostR3410DeriveParams _params41 = null;
+        private HighLevelAPI41.MechanismParams.CkGostR3410DeriveParams _params41;
 
         /// <summary>
         /// Platform specific CkGostR3410_12_DeriveParams
         /// </summary>
-        private HighLevelAPI81.MechanismParams.CkGostR3410DeriveParams _params81 = null;
+        private HighLevelAPI81.MechanismParams.CkGostR3410DeriveParams _params81;
 
         /// <summary>
         /// Initializes a new instance of the CkGostR3410_12_DeriveParams class.
         /// </summary>
-        /// <param name='iv'>IV value (16 bytes)</param>
-        /// <param name='data'>Data value part that must be a multiple of 16 bytes long</param>
-        public CkGostR3410DeriveParams(uint kdf, byte[] publicData, byte[] uk)
+        /// <param name='kdf'>Additional key diversification algorithm (CKD)</param>
+        /// <param name='publicData'>Public key (128 bytes long)</param>
+        /// <param name='ukm'>UKM (8 bytes)</param>
+        public CkGostR3410DeriveParams(uint kdf, byte[] publicData, byte[] ukm)
         {
             if (Platform.UnmanagedLongSize == 4)
             {
                 if (Platform.StructPackingSize == 0)
                     throw new NotImplementedException();
                 else
-                    _params41 = new HighLevelAPI41.MechanismParams.CkGostR3410DeriveParams(kdf, publicData, uk);
+                    _params41 = new HighLevelAPI41.MechanismParams.CkGostR3410DeriveParams(kdf, publicData, ukm);
             }
             else
             {
                 if (Platform.StructPackingSize == 0)
                     throw new NotImplementedException();
                 else
-                    _params81 = new HighLevelAPI81.MechanismParams.CkGostR3410DeriveParams(kdf, publicData, uk);
+                    _params81 = new HighLevelAPI81.MechanismParams.CkGostR3410DeriveParams(kdf, publicData, ukm);
             }
         }
 

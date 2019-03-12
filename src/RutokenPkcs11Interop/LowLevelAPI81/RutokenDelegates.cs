@@ -112,6 +112,27 @@ namespace RutokenPkcs11Interop.LowLevelAPI81
             ulong[] certificates, ulong certificatesLen, ulong flags);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate ulong C_EX_PKCS7VerifyInit(
+            ulong session, byte[] cms, ulong cmsSize,
+            ref CK_VENDOR_X509_STORE store, ulong mode,
+            ulong flags);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate ulong C_EX_PKCS7Verify(
+            ulong session,
+            out IntPtr data, out ulong dataSize,
+            out IntPtr signerCertificates, out ulong signerCertificatesCount);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate ulong C_EX_PKCS7VerifyUpdate(
+            ulong session, byte[] data, ulong dataSize);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        internal delegate ulong C_EX_PKCS7VerifyFinal(
+            ulong session,
+            out IntPtr signerCertificates, out ulong signerCertificatesCount);
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         internal delegate ulong C_EX_FreeBuffer(IntPtr buffer);
     }
 }

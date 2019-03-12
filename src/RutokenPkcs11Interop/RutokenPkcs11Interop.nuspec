@@ -9,8 +9,8 @@
     <projectUrl>https://github.com/pavelkhrulev/RutokenPkcs11Interop</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Rutoken interop API</description>
-    <releaseNotes>Version 1.1.1</releaseNotes>
-    <copyright>Copyright 2017</copyright>
+    <releaseNotes>Version 1.3.1</releaseNotes>
+    <copyright>Copyright 2019</copyright>
     <tags>rutoken pkcs11 library</tags>
   </metadata>
 </package>

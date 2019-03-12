@@ -9,12 +9,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
         /// <summary>
         /// Flag indicating whether instance has been disposed
         /// </summary>
-        private bool _disposed = false;
+        private bool _disposed;
 
         /// <summary>
         /// Low level mechanism parameters
         /// </summary>
-        private CK_GOSTR3410_12_DERIVE_PARAMS _lowLevelStruct = new CK_GOSTR3410_12_DERIVE_PARAMS();
+        private readonly CK_GOSTR3410_12_DERIVE_PARAMS _lowLevelStruct;
 
         /// <summary>
         /// Initializes a new instance of the CkGostR3410DeriveParams class.
@@ -31,16 +31,16 @@ namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
             _lowLevelStruct.UKM = new byte[8];
 
             if (publicData == null)
-                throw new ArgumentNullException("publicData");
+                throw new ArgumentNullException(nameof(publicData));
 
             if (publicData.Length != 128)
-                throw new ArgumentOutOfRangeException("publicData", "Array has to be 128 bytes long");
+                throw new ArgumentOutOfRangeException(nameof(publicData), "Array has to be 128 bytes long");
 
             if (ukm == null)
-                throw new ArgumentNullException("ukm");
+                throw new ArgumentNullException(nameof(ukm));
 
             if (ukm.Length != 8)
-                throw new ArgumentOutOfRangeException("ukm", "Array has to be 8 bytes long");
+                throw new ArgumentOutOfRangeException(nameof(ukm), "Array has to be 8 bytes long");
 
             _lowLevelStruct.Kdf = kdf;
             _lowLevelStruct.PublicDataLen = Convert.ToUInt64(publicData.Length);

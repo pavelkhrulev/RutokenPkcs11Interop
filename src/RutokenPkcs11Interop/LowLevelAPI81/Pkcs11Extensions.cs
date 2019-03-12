@@ -534,6 +534,108 @@ namespace RutokenPkcs11Interop.LowLevelAPI81
             return (CKR)Convert.ToUInt32(rv);
         }
 
+        public static CKR C_EX_PKCS7VerifyInit(this Pkcs11 pkcs11, ulong session,
+            byte[] cms,
+            ref CK_VENDOR_X509_STORE store, uint mode,
+            ulong flags)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_PKCS7VerifyInit cPkcs7VerifyInit = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cPkcs7VerifyInitPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_PKCS7VerifyInit");
+                cPkcs7VerifyInit = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_PKCS7VerifyInit>(cPkcs7VerifyInitPtr);
+            }
+            else
+            {
+                cPkcs7VerifyInit = RutokenNativeMethods.C_EX_PKCS7VerifyInit;
+            }
+
+            ulong cmsLength = 0;
+            if (cms != null)
+                cmsLength = Convert.ToUInt64(cms.Length);
+
+            ulong rv = cPkcs7VerifyInit(session, cms, cmsLength, ref store, mode, flags);
+
+            return (CKR)Convert.ToUInt32(rv);
+        }
+
+        public static CKR C_EX_PKCS7Verify(this Pkcs11 pkcs11, ulong session,
+            out IntPtr data, out ulong dataSize,
+            out IntPtr signerCertificates, out ulong signerCertificatesCount)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_PKCS7Verify cPkcs7Verify = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cPkcs7VerifyPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_PKCS7Verify");
+                cPkcs7Verify = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_PKCS7Verify>(cPkcs7VerifyPtr);
+            }
+            else
+            {
+                cPkcs7Verify = RutokenNativeMethods.C_EX_PKCS7Verify;
+            }
+
+            var rv = cPkcs7Verify(session, out data, out dataSize, out signerCertificates, out signerCertificatesCount);
+
+            return (CKR)Convert.ToUInt32(rv);
+        }
+
+        public static CKR C_EX_PKCS7VerifyUpdate(this Pkcs11 pkcs11, ulong session, byte[] data)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_PKCS7VerifyUpdate cPkcs7VerifyUpdate = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cPkcs7VerifyUpdatePtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_PKCS7VerifyUpdate");
+                cPkcs7VerifyUpdate = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_PKCS7VerifyUpdate>(cPkcs7VerifyUpdatePtr);
+            }
+            else
+            {
+                cPkcs7VerifyUpdate = RutokenNativeMethods.C_EX_PKCS7VerifyUpdate;
+            }
+
+            ulong dataLength = 0;
+            if (data != null)
+                dataLength = Convert.ToUInt64(data.Length);
+
+            var rv = cPkcs7VerifyUpdate(session, data, dataLength);
+
+            return (CKR)Convert.ToUInt32(rv);
+        }
+
+        public static CKR C_EX_PKCS7VerifyFinal(this Pkcs11 pkcs11, ulong session,
+            out IntPtr signerCertificates, out ulong signerCertificatesCount)
+        {
+            if (pkcs11.Disposed)
+                throw new ObjectDisposedException(pkcs11.GetType().FullName);
+
+            RutokenDelegates.C_EX_PKCS7VerifyFinal cPkcs7VerifyFinal = null;
+
+            if (pkcs11.LibraryHandle != IntPtr.Zero)
+            {
+                IntPtr cPkcs7VerifyFinalPtr = UnmanagedLibrary.GetFunctionPointer(pkcs11.LibraryHandle, "C_EX_PKCS7VerifyFinal");
+                cPkcs7VerifyFinal = UnmanagedLibrary.GetDelegateForFunctionPointer<RutokenDelegates.C_EX_PKCS7VerifyFinal>(cPkcs7VerifyFinalPtr);
+            }
+            else
+            {
+                cPkcs7VerifyFinal = RutokenNativeMethods.C_EX_PKCS7VerifyFinal;
+            }
+
+            var rv = cPkcs7VerifyFinal(session, out signerCertificates, out signerCertificatesCount);
+
+            return (CKR)Convert.ToUInt32(rv);
+        }
+
         public static CKR C_EX_FreeBuffer(this Pkcs11 pkcs11, IntPtr buffer)
         {
             RutokenDelegates.C_EX_FreeBuffer cFreeBuffer = null;
