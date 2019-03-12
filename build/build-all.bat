@@ -3,8 +3,6 @@
 @rem Argument "--with-tests" forces the build of test projects
 @set arg1=%1
 
-@rem call build-net20.bat %arg1% || goto :error
-@rem call build-net40.bat %arg1% || goto :error
 call build-net45.bat %arg1% || goto :error
 @rem call build-netstandard1.3.bat %arg1% || goto :error
 call build-netstandard2.0.bat %arg1% || goto :error
