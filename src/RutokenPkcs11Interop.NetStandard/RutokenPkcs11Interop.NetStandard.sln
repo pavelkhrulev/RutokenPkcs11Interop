@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RutokenPkcs11Interop.NetStandard", "RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop.NetStandard.csproj", "{C8A59FCB-1D54-4F8D-84A1-3D3B34563C2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RutokenPkcs11Interop", "RutokenPkcs11Interop\RutokenPkcs11Interop.csproj", "{C8A59FCB-1D54-4F8D-84A1-3D3B34563C2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RutokenPkcs11Interop.DotNetCore.Tests", "RutokenPkcs11Interop.DotNetCore.Tests\RutokenPkcs11Interop.DotNetCore.Tests.csproj", "{A0A2200A-6FD0-452C-9CFD-38F6B46B5DB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RutokenPkcs11Interop.DotNetCore.Tests", "RutokenPkcs11Interop.DotNetCore.Tests\RutokenPkcs11Interop.DotNetCore.Tests.csproj", "{A0A2200A-6FD0-452C-9CFD-38F6B46B5DB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

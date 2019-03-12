@@ -14,10 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop.NetStandard.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI41*\**\.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
@@ -58,6 +54,10 @@
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\TestData.cs">
       <Link>TestData.cs</Link>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj" />
   </ItemGroup>
 
 </Project>

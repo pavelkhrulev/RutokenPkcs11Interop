@@ -44,6 +44,9 @@ dlldata.c
 project.lock.json
 artifacts/
 
+*.dll
+build/nuget/*.nuspec
+
 *_i.c
 *_p.c
 *_i.h

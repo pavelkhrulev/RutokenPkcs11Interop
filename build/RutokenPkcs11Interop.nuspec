@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Aktiv.RutokenPkcs11Interop</id>
+    <version>2.0.0</version>
+    <title>Aktiv.RutokenPkcs11Interop</title>
+    <authors>Pavel Khrulev</authors>
+    <owners>Pavel Khrulev</owners>
+    <projectUrl>https://github.com/pavelkhrulev/RutokenPkcs11Interop</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Rutoken interop API</description>
+    <releaseNotes>Version 2.0.0</releaseNotes>
+    <copyright>Copyright 2019</copyright>
+    <tags>rutoken pkcs11 library</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5" />
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>
