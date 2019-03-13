@@ -17,6 +17,7 @@
       <group targetFramework="Xamarin.iOS1.0" />
       <group targetFramework="Xamarin.Mac2.0" />
       <group targetFramework=".NETStandard2.0" />
+      <group targetFramework="MonoAndroid2.3" />
     </dependencies>
   </metadata>
 </package>

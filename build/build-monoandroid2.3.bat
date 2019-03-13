@@ -26,6 +26,7 @@ rmdir /S /Q monoandroid2.3
 msbuild ..\src\RutokenPkcs11Interop.Android\RutokenPkcs11Interop.Android.sln ^
 	/p:Configuration=Release /p:Platform="Any CPU" /target:Clean || goto :error
 
+nuget restore ..\src\RutokenPkcs11Interop.Android\RutokenPkcs11Interop.Android.sln
 @if "%arg1%"=="--with-tests" (
 	@rem Build both RutokenRutokenPkcs11Interop and RutokenRutokenPkcs11Interop.Android.Tests projects via solution
 	msbuild ..\src\RutokenPkcs11Interop.Android\RutokenPkcs11Interop.Android.sln ^
