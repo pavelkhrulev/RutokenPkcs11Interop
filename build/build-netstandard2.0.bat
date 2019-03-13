@@ -32,6 +32,7 @@ msbuild ..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop.NetStandard
 )
 
 @rem Build RutokenPkcs11Interop project
+nuget restore ..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop.NetStandard.sln
 msbuild ..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj ^
 	/p:Configuration=Release /p:Platform=AnyCPU /p:TargetFramework=netstandard2.0 ^
 	/target:Build || goto :error

@@ -28,6 +28,7 @@ msbuild ..\src\RutokenPkcs11Interop\RutokenPkcs11Interop.sln ^
 	/target:Clean || goto :error
 
 @rem Build RutokenPkcs11Interop project
+nuget restore ..\src\RutokenPkcs11Interop\RutokenPkcs11Interop.sln
 msbuild ..\src\RutokenPkcs11Interop\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj ^
 	/p:Configuration=Release /p:Platform=AnyCPU /p:TargetFrameworkVersion=v4.5 ^
 	/target:Build || goto :error
