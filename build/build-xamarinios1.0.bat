@@ -26,6 +26,7 @@ rmdir /S /Q xamarinios1.0
 msbuild ..\src\RutokenPkcs11Interop.iOS\RutokenPkcs11Interop.iOS.sln ^
 	/p:Configuration=Release /p:Platform="Any CPU" /target:Clean || goto :error
 
+nuget restore ..\src\RutokenPkcs11Interop.iOS\RutokenPkcs11Interop.iOS.sln
 @if "%arg1%"=="--with-tests" (
 	@rem Build both RutokenPkcs11Interop and RutokenPkcs11Interop.iOS.Tests projects via solution
 	msbuild ..\src\RutokenPkcs11Interop.iOS\RutokenPkcs11Interop.iOS.sln ^
