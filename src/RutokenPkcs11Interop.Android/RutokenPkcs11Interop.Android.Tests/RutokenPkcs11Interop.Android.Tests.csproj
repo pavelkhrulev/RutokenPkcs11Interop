@@ -45,62 +45,48 @@
     <Reference Include="System" />
     <Reference Include="Xamarin.Android.NUnitLite" />
   </ItemGroup>
-  
   <ItemGroup>
     <PackageReference Include="Pkcs11Interop" Version="4.1.0" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI41*\**\.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI81*\**\.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
-
-
   <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI*\**\*.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI41*\**\*.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI81*\**\*.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\Settings.cs">
       <Link>Settings.cs</Link>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\TestData.cs">
       <Link>TestData.cs</Link>
     </Compile>
   </ItemGroup>
-
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
-    <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Icon.png" />

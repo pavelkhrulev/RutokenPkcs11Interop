@@ -141,12 +141,12 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     // Поиск закрытого ключа на токене
                     List<ObjectHandle> privateKeys = session.FindAllObjects(privateKeyAttributes);
                     Assert.IsTrue(privateKeys != null);
-                    Assert.IsTrue(privateKeys.Any());
+                    Assert.IsTrue(privateKeys.Count > 0);
 
                     // Поиск сертификата на токене
                     List<ObjectHandle> certificates = session.FindAllObjects(certificateAttributes);
                     Assert.IsTrue(certificates != null);
-                    Assert.IsTrue(certificates.Any());
+                    Assert.IsTrue(certificates.Count > 0);
 
                     // Подпись данных
                     byte[] signature =
