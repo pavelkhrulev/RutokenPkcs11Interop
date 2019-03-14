@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI81;
 using RutokenPkcs11Interop.Helpers;
@@ -6,10 +6,10 @@ using RutokenPkcs11Interop.HighLevelAPI81;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI81
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL81_33_PKITest
     {
-        [TestMethod]
+        [Test()]
         public void _HL81_33_01_CreateCSR_PKCS10Test()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -67,7 +67,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _HL81_33_02_ImportCertificateTest()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)

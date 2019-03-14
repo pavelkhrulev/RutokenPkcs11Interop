@@ -2,17 +2,17 @@
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using Net.Pkcs11Interop.LowLevelAPI41.MechanismParams;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI41;
 using RutokenPkcs11Interop.LowLevelAPI41.MechanismParams;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
 {
-    [TestClass]
+    [TestFixture()]
     public class _LL41_25_26_DeriveAndWrapKeyTest
     {
-        [TestMethod]
+        [Test()]
         public void _LL41_25_26_01_DeriveAndWrap_VKO_Gost3410_01_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -220,7 +220,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _LL41_25_26_02_DeriveAndWrap_VKO_Gost3410_12_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -409,7 +409,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _LL41_25_26_03_ExtendedWrap_VKO_Gost3410_12_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

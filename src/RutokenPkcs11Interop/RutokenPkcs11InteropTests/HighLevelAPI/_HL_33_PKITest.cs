@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Helpers;
@@ -8,10 +8,10 @@ using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL_33_PKITest
     {
-        [TestMethod]
+        [Test()]
         public void _HL_33_01_CreateCSR_PKCS10Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -66,7 +66,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _HL_33_02_ImportCertificateTest()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -102,7 +102,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _HL_33_03_PKCS7SignTest()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))

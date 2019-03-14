@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
@@ -8,13 +8,13 @@ using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL_29_ManageFlashTest
     {
         /// <summary>
         /// Тест для проверки наличия флеш-памяти у токена
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_29_01_FlashAvailabilityTest()
         {
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -33,7 +33,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// Тест для проверки различных действий
         /// по работе с флеш-памятью токена
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_29_02_FlashWorkTest()
         {
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))

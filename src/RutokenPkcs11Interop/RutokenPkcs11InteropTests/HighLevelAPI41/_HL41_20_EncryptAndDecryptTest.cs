@@ -2,18 +2,18 @@
 using System.IO;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI41;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI41
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL41_20_EncryptAndDecryptTest
     {
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL41_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -54,7 +54,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
         /// <summary>
         /// C_EncryptInit, C_EncryptUpdate, C_EncryptFinish, C_DecryptInit, C_DecryptUpdate and C_DecryptFinish test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL41_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -117,7 +117,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL41_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -163,7 +163,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL41_20_04_EncryptAndDecrypt_RSA_Test()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

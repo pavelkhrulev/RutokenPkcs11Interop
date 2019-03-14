@@ -1,17 +1,17 @@
 ﻿using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI81;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI81
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL81_21_SignAndVerifyTest
     {
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL81_21_01_SignAndVerify_Gost3410_01_Test()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -63,7 +63,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL81_21_02_SignAndVerify_Gost3410_12_Test()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -115,7 +115,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL81_21_03_SignAndVerify_RSA_Test()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)

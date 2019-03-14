@@ -1,19 +1,19 @@
 ﻿using System;
 using System.IO;
 using Net.Pkcs11Interop.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL_20_EncryptAndDecryptTest
     {
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -51,7 +51,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_EncryptInit, C_EncryptUpdate, C_EncryptFinish, C_DecryptInit, C_DecryptUpdate and C_DecryptFinish test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -111,7 +111,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -154,7 +154,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_20_04_EncryptAndDecrypt_RSA_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))

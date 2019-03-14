@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI81;
 using RutokenPkcs11Interop.Common;
@@ -6,10 +6,10 @@ using RutokenPkcs11Interop.HighLevelAPI81;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI81
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL81_34_ManageEntityTest
     {
-        [TestMethod]
+        [Test()]
         public void _HL81_34_01_ManageSlotTest()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -27,7 +27,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _HL81_34_02_ManageTokenTest()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)

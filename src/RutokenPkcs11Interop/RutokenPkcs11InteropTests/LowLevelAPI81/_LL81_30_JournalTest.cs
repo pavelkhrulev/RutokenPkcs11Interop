@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI81;
 using RutokenPkcs11Interop.Common;
@@ -7,7 +7,7 @@ using RutokenPkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI81
 {
-    [TestClass]
+    [TestFixture()]
     public class _LL81_30_JournalTest
     {
         /// <summary>
@@ -16,7 +16,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// 2. Получаем журнал.
         /// 3. Подписываем журнал.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _LL81_30_01_SignJournalTest()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -205,7 +205,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// 2. Получаем журнал.
         /// 3. Подписываем журнал.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _LL81_30_02_SignInvisibleJournalTest()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)

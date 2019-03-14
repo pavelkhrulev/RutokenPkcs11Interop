@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
@@ -7,13 +7,13 @@ using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL_09_InitTokenAndPinTest
     {
         /// <summary>
         /// Basic C_InitToken and C_InitPIN test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _HL_09_01_BasicInitTokenAndPinTest()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -39,7 +39,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             }
         }
 
-        [TestMethod()]
+        [Test()]
         public void _HL_09_02_ExtendedInitTokenAndPinTest()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))

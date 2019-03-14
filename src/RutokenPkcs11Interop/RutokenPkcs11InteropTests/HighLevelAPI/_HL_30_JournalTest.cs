@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
@@ -6,10 +6,10 @@ using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL_30_JournalTest
     {
-        [TestMethod]
+        [Test()]
         public void _HL_30_01_SignJournalTest()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -79,7 +79,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _HL_30_02_SignInvisibleJournalTest()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
