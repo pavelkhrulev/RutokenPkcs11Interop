@@ -5,7 +5,7 @@ using Xamarin.Android.NUnitLite;
 
 namespace Pkcs11Interop.Android.Tests
 {
-    [Activity(Label = "Pkcs11Interop.Android.Tests", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "RutokenPkcs11Interop.Android.Tests", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : TestSuiteActivity
     {
         protected override void OnCreate(Bundle bundle)
