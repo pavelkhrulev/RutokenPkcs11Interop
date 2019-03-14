@@ -4,7 +4,9 @@ using System.Linq;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.HighLevelAPI40;
 using RutokenPkcs11Interop.HighLevelAPI41;
+using RutokenPkcs11Interop.HighLevelAPI80;
 using RutokenPkcs11Interop.HighLevelAPI81;
 
 namespace RutokenPkcs11Interop.HighLevelAPI
@@ -17,7 +19,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    HighLevelAPI40.TokenInfoExtended tokenInfoExtended = slot.HLA40Slot.GetTokenInfoExtended();
+                    return new TokenInfoExtended(tokenInfoExtended);
                 }
                 else
                 {
@@ -29,7 +32,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    HighLevelAPI80.TokenInfoExtended tokenInfoExtended = slot.HLA80Slot.GetTokenInfoExtended();
+                    return new TokenInfoExtended(tokenInfoExtended);
                 }
                 else
                 {
@@ -51,7 +55,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA40Slot.InitTokenExtended(pin, initParam.RutokenInitParam40);
                 }
                 else
                 {
@@ -62,7 +66,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA80Slot.InitTokenExtended(pin, initParam.RutokenInitParam80);
                 }
                 else
                 {
@@ -77,7 +81,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    return slot.HLA40Slot.GetJournal();
                 }
                 else
                 {
@@ -88,7 +92,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    return slot.HLA80Slot.GetJournal();
                 }
                 else
                 {
@@ -103,7 +107,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA40Slot.SetLocalPIN(userPin, localPin, localPinId);
                 }
                 else
                 {
@@ -114,7 +118,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA80Slot.SetLocalPIN(userPin, localPin, localPinId);
                 }
                 else
                 {
@@ -129,7 +133,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    return slot.HLA40Slot.GetDriveSize();
                 }
                 else
                 {
@@ -140,7 +144,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    return slot.HLA80Slot.GetDriveSize();
                 }
                 else
                 {
@@ -156,12 +160,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    var formatParams = initParams.Select(initParam => initParam.VolumeFormatInfoExtended40)
+                                                 .ToList();
+                    slot.HLA40Slot.FormatDrive(userType, pin, formatParams);
                 }
                 else
                 {
                     var formatParams = initParams.Select(initParam => initParam.VolumeFormatInfoExtended41)
-                                                  .ToList();
+                                                 .ToList();
                     slot.HLA41Slot.FormatDrive(userType, pin, formatParams);
                 }
             }
@@ -169,12 +175,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    var formatParams = initParams.Select(initParam => initParam.VolumeFormatInfoExtended80)
+                                                 .ToList();
+                    slot.HLA80Slot.FormatDrive(userType, pin, formatParams);
                 }
                 else
                 {
                     var formatParams = initParams.Select(initParam => initParam.VolumeFormatInfoExtended81)
-                                                  .ToList();
+                                                 .ToList();
                     slot.HLA81Slot.FormatDrive(userType, pin, formatParams);
                 }
             }
@@ -186,7 +194,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    var volumesInfo = slot.HLA40Slot.GetVolumesInfo();
+                    return volumesInfo.Select(volumeInfo => new VolumeInfoExtended(volumeInfo))
+                                      .ToList();
                 }
                 else
                 {
@@ -199,7 +209,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    var volumesInfo = slot.HLA80Slot.GetVolumesInfo();
+                    return volumesInfo.Select(volumeInfo => new VolumeInfoExtended(volumeInfo))
+                                      .ToList();
                 }
                 else
                 {
@@ -217,7 +229,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA40Slot.ChangeVolumeAttributes(userType, pin, volumeId, newAccessMode, permanent);
                 }
                 else
                 {
@@ -228,7 +240,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA80Slot.ChangeVolumeAttributes(userType, pin, volumeId, newAccessMode, permanent);
                 }
                 else
                 {
@@ -243,7 +255,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA40Slot.SetActivationPassword(password);
                 }
                 else
                 {
@@ -254,7 +266,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA80Slot.SetActivationPassword(password);
                 }
                 else
                 {
@@ -269,7 +281,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA40Slot.SlotManage(mode, value);
                 }
                 else
                 {
@@ -280,7 +292,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    throw new NotImplementedException();
+                    slot.HLA80Slot.SlotManage(mode, value);
                 }
                 else
                 {
