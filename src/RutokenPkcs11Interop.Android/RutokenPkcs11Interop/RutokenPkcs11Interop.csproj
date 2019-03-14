@@ -58,7 +58,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11Interop\HighLevelAPI40*\**\.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11Interop\HighLevelAPI41*\**\.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11Interop\HighLevelAPI80*\**\.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
@@ -73,7 +83,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11Interop\LowLevelAPI40*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11Interop\LowLevelAPI41*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11Interop\LowLevelAPI80*\**\*.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>

@@ -49,7 +49,17 @@
     <PackageReference Include="Pkcs11Interop" Version="4.1.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI40*\**\.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI41*\**\.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI80*\**\.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
@@ -64,7 +74,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI40*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI41*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI80*\**\*.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
