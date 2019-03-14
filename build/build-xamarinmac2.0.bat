@@ -60,7 +60,7 @@ call :disablexamarinmac
 @rem Use "MSBuild.Sdk.Extras" instead of "Microsoft.NET.Sdk" which does not support "xamarinmac2.0" target framework
 set csprojfile=..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj
 powershell -Command "(Get-Content %csprojfile%).replace('Microsoft.NET.Sdk', 'MSBuild.Sdk.Extras/1.6.65') | Set-Content -Encoding ASCII %csprojfile%"
-powershell -Command "(Get-Content %csprojfile%).replace('</TargetFrameworks>', ';xamarinmac2.0</TargetFrameworks>') | Set-Content -Encoding ASCII %csprojfile%"
+powershell -Command "(Get-Content %csprojfile%).replace('<TargetFramework>netstandard2.0</TargetFramework>', '<TargetFrameworks>netstandard2.0;xamarinmac2.0</TargetFrameworks>') | Set-Content -Encoding ASCII %csprojfile%"
 set assemblyinfofile=..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\Properties\AssemblyInfo.cs 
 powershell -Command "(Get-Content %assemblyinfofile%).replace('NetStandard version', 'Mac version') | Set-Content -Encoding ASCII %assemblyinfofile%"
 @exit /b 0
@@ -69,7 +69,7 @@ powershell -Command "(Get-Content %assemblyinfofile%).replace('NetStandard versi
 @rem Revert from "MSBuild.Sdk.Extras" back to "Microsoft.NET.Sdk"
 set csprojfile=..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj
 powershell -Command "(Get-Content %csprojfile%).replace('MSBuild.Sdk.Extras/1.6.65', 'Microsoft.NET.Sdk') | Set-Content -Encoding ASCII %csprojfile%"
-powershell -Command "(Get-Content %csprojfile%).replace(';xamarinmac2.0</TargetFrameworks>', '</TargetFrameworks>') | Set-Content -Encoding ASCII %csprojfile%"
+powershell -Command "(Get-Content %csprojfile%).replace('<TargetFrameworks>netstandard2.0;xamarinmac2.0</TargetFrameworks>', '<TargetFramework>netstandard2.0</TargetFramework>') | Set-Content -Encoding ASCII %csprojfile%"
 set assemblyinfofile=..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\Properties\AssemblyInfo.cs 
 powershell -Command "(Get-Content %assemblyinfofile%).replace('Mac version', 'NetStandard version') | Set-Content -Encoding ASCII %assemblyinfofile%"
 @exit /b 0
