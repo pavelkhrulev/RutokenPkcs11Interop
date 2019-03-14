@@ -1,5 +1,7 @@
 ﻿using Net.Pkcs11Interop.Common;
+using LLA40 = Net.Pkcs11Interop.LowLevelAPI40;
 using LLA41 = Net.Pkcs11Interop.LowLevelAPI41;
+using LLA80 = Net.Pkcs11Interop.LowLevelAPI80;
 using LLA81 = Net.Pkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11InteropTests
@@ -148,12 +150,22 @@ namespace RutokenPkcs11InteropTests
         public static uint LocalPinId2 = 0x1E;
 
         /// <summary>
+        /// Arguments passed to the C_Initialize function in LowLevelAPI40 tests.
+        /// </summary>
+        public static LLA40.CK_C_INITIALIZE_ARGS InitArgs40 = null;
+
+        /// <summary>
         /// Arguments passed to the C_Initialize function in LowLevelAPI41 tests.
         /// </summary>
         public static LLA41.CK_C_INITIALIZE_ARGS InitArgs41 = null;
 
         /// <summary>
-        /// Arguments passed to the C_Initialize function in LowLevelAPI41 tests.
+        /// Arguments passed to the C_Initialize function in LowLevelAPI80 tests.
+        /// </summary>
+        public static LLA80.CK_C_INITIALIZE_ARGS InitArgs80 = null;
+
+        /// <summary>
+        /// Arguments passed to the C_Initialize function in LowLevelAPI81 tests.
         /// </summary>
         public static LLA81.CK_C_INITIALIZE_ARGS InitArgs81 = null;
 
@@ -186,7 +198,19 @@ namespace RutokenPkcs11InteropTests
             // Setup arguments passed to the C_Initialize function
             if (UseOsLocking)
             {
+                InitArgs40 = new LLA40.CK_C_INITIALIZE_ARGS
+                {
+                    Flags = CKF.CKF_OS_LOCKING_OK
+                };
                 InitArgs41 = new LLA41.CK_C_INITIALIZE_ARGS
+                {
+                    Flags = CKF.CKF_OS_LOCKING_OK
+                };
+                InitArgs80 = new LLA80.CK_C_INITIALIZE_ARGS
+                {
+                    Flags = CKF.CKF_OS_LOCKING_OK
+                };
+                InitArgs81 = new LLA81.CK_C_INITIALIZE_ARGS
                 {
                     Flags = CKF.CKF_OS_LOCKING_OK
                 };
