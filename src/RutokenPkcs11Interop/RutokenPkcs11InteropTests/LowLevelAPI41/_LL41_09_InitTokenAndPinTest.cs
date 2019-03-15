@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using RutokenPkcs11Interop.Common;
@@ -8,13 +8,13 @@ using RutokenPkcs11Interop.LowLevelAPI41;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
 {
-    [TestClass]
+    [TestFixture()]
     public class _LL41_09_InitTokenAndPinTest
     {
         /// <summary>
         /// Basic C_InitToken and C_InitPIN test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _LL41_09_01_BasicInitTokenAndPinTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -73,7 +73,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <summary>
         /// Basic C_InitToken and C_InitPIN test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _LL41_09_02_ExtendedInitTokenAndPinTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -206,7 +206,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <summary>
         /// Тест для проверки работы с локальными ПИН-кодами
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _LL41_09_03_LocalPinTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

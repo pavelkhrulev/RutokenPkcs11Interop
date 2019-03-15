@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop;
@@ -7,13 +7,13 @@ using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL_04_TokenInfoTest
     {
         /// <summary>
         /// Basic C_GetTokenInfo test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _HL_04_01_TokenInfoTest()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -32,7 +32,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_EX_GetTokenInfoExtended test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _HL_04_02_TokenInfoExtendedTest()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))

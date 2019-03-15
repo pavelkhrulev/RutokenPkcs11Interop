@@ -6,7 +6,11 @@ namespace RutokenPkcs11Interop.HighLevelAPI
 {
     public class TokenInfoExtended
     {
+        private readonly HighLevelAPI40.TokenInfoExtended _tokenInfoExtended40 = null;
+
         private readonly HighLevelAPI41.TokenInfoExtended _tokenInfoExtended41 = null;
+
+        private readonly HighLevelAPI80.TokenInfoExtended _tokenInfoExtended80 = null;
 
         private readonly HighLevelAPI81.TokenInfoExtended _tokenInfoExtended81 = null;
 
@@ -18,7 +22,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.TokenType;
                     }
                     else
                     {
@@ -29,7 +33,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.TokenType;
                     }
                     else
                     {
@@ -47,7 +51,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.ProtocolNumber;
                     }
                     else
                     {
@@ -58,7 +62,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.ProtocolNumber;
                     }
                     else
                     {
@@ -76,7 +80,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.MicrocodeNumber;
                     }
                     else
                     {
@@ -87,7 +91,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.MicrocodeNumber;
                     }
                     else
                     {
@@ -105,7 +109,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.OrderNumber;
                     }
                     else
                     {
@@ -116,7 +120,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.OrderNumber;
                     }
                     else
                     {
@@ -134,7 +138,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.Flags;
                     }
                     else
                     {
@@ -145,7 +149,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.Flags;
                     }
                     else
                     {
@@ -163,7 +167,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.MaxAdminPinLen;
                     }
                     else
                     {
@@ -174,7 +178,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.MaxAdminPinLen;
                     }
                     else
                     {
@@ -192,7 +196,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.MinAdminPinLen;
                     }
                     else
                     {
@@ -203,7 +207,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.MinAdminPinLen;
                     }
                     else
                     {
@@ -221,7 +225,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.MaxUserPinLen;
                     }
                     else
                     {
@@ -232,7 +236,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.MaxUserPinLen;
                     }
                     else
                     {
@@ -250,7 +254,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.MinUserPinLen;
                     }
                     else
                     {
@@ -261,7 +265,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.MinUserPinLen;
                     }
                     else
                     {
@@ -279,7 +283,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.MaxAdminRetryCount;
                     }
                     else
                     {
@@ -290,7 +294,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.MaxAdminRetryCount;
                     }
                     else
                     {
@@ -308,7 +312,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.AdminRetryCountLeft;
                     }
                     else
                     {
@@ -319,7 +323,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.AdminRetryCountLeft;
                     }
                     else
                     {
@@ -337,7 +341,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.MaxUserRetryCount;
                     }
                     else
                     {
@@ -348,7 +352,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.MaxUserRetryCount;
                     }
                     else
                     {
@@ -366,7 +370,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.UserRetryCountLeft;
                     }
                     else
                     {
@@ -377,7 +381,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.UserRetryCountLeft;
                     }
                     else
                     {
@@ -395,7 +399,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.SerialNumber;
                     }
                     else
                     {
@@ -406,7 +410,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.SerialNumber;
                     }
                     else
                     {
@@ -424,7 +428,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.TotalMemory;
                     }
                     else
                     {
@@ -435,7 +439,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.TotalMemory;
                     }
                     else
                     {
@@ -453,7 +457,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.FreeMemory;
                     }
                     else
                     {
@@ -464,7 +468,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.FreeMemory;
                     }
                     else
                     {
@@ -482,7 +486,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.ATR;
                     }
                     else
                     {
@@ -493,7 +497,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.ATR;
                     }
                     else
                     {
@@ -511,7 +515,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.ATRLen;
                     }
                     else
                     {
@@ -522,7 +526,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.ATRLen;
                     }
                     else
                     {
@@ -540,7 +544,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.TokenClass;
                     }
                     else
                     {
@@ -551,7 +555,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.TokenClass;
                     }
                     else
                     {
@@ -569,7 +573,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.BatteryVoltage;
                     }
                     else
                     {
@@ -580,7 +584,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.BatteryVoltage;
                     }
                     else
                     {
@@ -598,7 +602,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.BodyColor;
                     }
                     else
                     {
@@ -609,7 +613,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.BodyColor;
                     }
                     else
                     {
@@ -627,7 +631,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended40.FirmwareChecksum;
                     }
                     else
                     {
@@ -638,7 +642,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 {
                     if (Platform.StructPackingSize == 0)
                     {
-                        throw new NotImplementedException();
+                        return _tokenInfoExtended80.FirmwareChecksum;
                     }
                     else
                     {
@@ -648,12 +652,28 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             }
         }
 
+        internal TokenInfoExtended(HighLevelAPI40.TokenInfoExtended tokenInfoExtended)
+        {
+            if (tokenInfoExtended == null)
+                throw new ArgumentNullException(nameof(tokenInfoExtended));
+
+            _tokenInfoExtended40 = tokenInfoExtended;
+        }
+
         internal TokenInfoExtended(HighLevelAPI41.TokenInfoExtended tokenInfoExtended)
         {
             if (tokenInfoExtended == null)
                 throw new ArgumentNullException(nameof(tokenInfoExtended));
 
             _tokenInfoExtended41 = tokenInfoExtended;
+        }
+
+        internal TokenInfoExtended(HighLevelAPI80.TokenInfoExtended tokenInfoExtended)
+        {
+            if (tokenInfoExtended == null)
+                throw new ArgumentNullException(nameof(tokenInfoExtended));
+
+            _tokenInfoExtended80 = tokenInfoExtended;
         }
 
         internal TokenInfoExtended(HighLevelAPI81.TokenInfoExtended tokenInfoExtended)

@@ -12,9 +12,24 @@ namespace RutokenPkcs11Interop.HighLevelAPI
         /// </summary>
         private bool _disposed = false;
 
+        private HighLevelAPI40.RutokenInitParam _rutokenInitParam40 = null;
+
         private HighLevelAPI41.RutokenInitParam _rutokenInitParam41 = null;
 
+        private HighLevelAPI80.RutokenInitParam _rutokenInitParam80 = null;
+
         private HighLevelAPI81.RutokenInitParam _rutokenInitParam81 = null;
+
+        internal HighLevelAPI40.RutokenInitParam RutokenInitParam40
+        {
+            get
+            {
+                if (this._disposed)
+                    throw new ObjectDisposedException(this.GetType().FullName);
+
+                return _rutokenInitParam40;
+            }
+        }
 
         internal HighLevelAPI41.RutokenInitParam RutokenInitParam41
         {
@@ -24,6 +39,17 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                     throw new ObjectDisposedException(this.GetType().FullName);
 
                 return _rutokenInitParam41;
+            }
+        }
+
+        internal HighLevelAPI80.RutokenInitParam RutokenInitParam80
+        {
+            get
+            {
+                if (this._disposed)
+                    throw new ObjectDisposedException(this.GetType().FullName);
+
+                return _rutokenInitParam80;
             }
         }
 
@@ -45,7 +71,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             if (Platform.UnmanagedLongSize == 4)
             {
                 if (Platform.StructPackingSize == 0)
-                    throw new NotImplementedException();
+                    _rutokenInitParam40 = new HighLevelAPI40.RutokenInitParam(
+                        newAdminPin, newUserPin, tokenLabel,
+                        changeUserPINPolicy,
+                        minAdminPinLen, minUserPinLen,
+                        maxAdminRetryCount, maxUserRetryCount,
+                        smMode);
                 else
                     _rutokenInitParam41 = new HighLevelAPI41.RutokenInitParam(
                         newAdminPin, newUserPin, tokenLabel,
@@ -57,7 +88,12 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             else
             {
                 if (Platform.StructPackingSize == 0)
-                    throw new NotImplementedException();
+                    _rutokenInitParam80 = new HighLevelAPI80.RutokenInitParam(
+                        newAdminPin, newUserPin, tokenLabel,
+                        changeUserPINPolicy,
+                        minAdminPinLen, minUserPinLen,
+                        maxAdminRetryCount, maxUserRetryCount,
+                        smMode);
                 else
                     _rutokenInitParam81 = new HighLevelAPI81.RutokenInitParam(
                        newAdminPin, newUserPin, tokenLabel,
@@ -89,10 +125,22 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (disposing)
                 {
+                    if (_rutokenInitParam40 != null)
+                    {
+                        _rutokenInitParam40.Dispose();
+                        _rutokenInitParam40 = null;
+                    }
+
                     if (_rutokenInitParam41 != null)
                     {
                         _rutokenInitParam41.Dispose();
                         _rutokenInitParam41 = null;
+                    }
+
+                    if (_rutokenInitParam80 != null)
+                    {
+                        _rutokenInitParam80.Dispose();
+                        _rutokenInitParam80 = null;
                     }
 
                     if (_rutokenInitParam81 != null)

@@ -1,18 +1,18 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI81;
 using RutokenPkcs11Interop.HighLevelAPI81;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI81
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL81_04_TokenInfoTest
     {
         /// <summary>
         /// Basic C_GetTokenInfo test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _HL81_04_01_TokenInfoTest()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -34,7 +34,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI81
         /// <summary>
         /// C_EX_GetTokenInfoExtended test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _HL81_04_02_TokenInfoExtendedTest()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)

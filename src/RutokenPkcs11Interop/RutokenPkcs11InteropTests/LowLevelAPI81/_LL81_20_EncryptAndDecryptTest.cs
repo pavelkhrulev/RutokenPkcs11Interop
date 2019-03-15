@@ -2,7 +2,7 @@
 using System.IO;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI81;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI81
@@ -10,13 +10,13 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
     /// <summary>
     /// C_EncryptInit, C_Encrypt, C_EncryptUpdate, C_EncryptFinish, C_DecryptInit, C_Decrypt, C_DecryptUpdate and C_DecryptFinish tests.
     /// </summary>
-    [TestClass]
+    [TestFixture()]
     public class _LL81_20_EncryptAndDecryptTest
     {
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _LL81_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -116,7 +116,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <summary>
         /// C_EncryptInit, C_EncryptUpdate, C_EncryptFinish, C_DecryptInit, C_DecryptUpdate and C_DecryptFinish test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _LL81_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -282,7 +282,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <summary>
         /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _LL81_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
@@ -350,7 +350,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _LL81_20_04_EncryptAndDecrypt_RSA_Test()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)

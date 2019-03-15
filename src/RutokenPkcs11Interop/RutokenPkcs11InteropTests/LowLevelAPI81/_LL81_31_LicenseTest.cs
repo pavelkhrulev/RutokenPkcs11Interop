@@ -1,15 +1,15 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI81;
 using RutokenPkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI81
 {
-    [TestClass]
+    [TestFixture()]
     public class _LL81_31_LicenseTest
     {
-        [TestMethod]
+        [Test()]
         public void _LL81_31_01_SetAndGetLicenseTest()
         {
             if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)

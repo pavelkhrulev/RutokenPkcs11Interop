@@ -1,20 +1,20 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI41;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI41
 {
     /// <summary>
     /// C_GetInfo tests.
     /// </summary>
-    [TestClass]
+    [TestFixture()]
     public class _HL41_02_GetInfoTest
     {
         /// <summary>
         /// Basic C_GetInfo test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL41_02_01_BasicGetInfoTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

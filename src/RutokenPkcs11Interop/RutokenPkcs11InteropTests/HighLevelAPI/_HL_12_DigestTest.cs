@@ -1,6 +1,6 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
 
@@ -9,13 +9,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
     /// <summary>
     /// C_DigestInit, C_Digest, C_DigestUpdate, C_DigestFinal and C_DigestKey tests.
     /// </summary>
-    [TestClass]
+    [TestFixture()]
     public class _HL_12_DigestTest
     {
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_12_01_Digest_SHA1_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -43,7 +43,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_12_02_Digest_Gost3411_12_512_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -73,7 +73,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_12_03_Digest_Gost3411_12_256_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -102,7 +102,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_DigestInit and C_Digest test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_12_04_Digest_Gost3411_94_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))

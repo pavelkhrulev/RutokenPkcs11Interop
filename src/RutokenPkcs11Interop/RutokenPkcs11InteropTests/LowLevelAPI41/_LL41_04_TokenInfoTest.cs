@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using RutokenPkcs11Interop.LowLevelAPI41;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
 {
-    [TestClass]
+    [TestFixture()]
     public class _LL41_04_TokenInfoTest
     {
         /// <summary>
         /// Basic C_GetTokenInfo test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _LL41_04_01_TokenInfoTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -49,7 +49,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         /// <summary>
         /// C_EX_GetTokenInfoExtended test.
         /// </summary>
-        [TestMethod()]
+        [Test()]
         public void _LL41_04_02_TokenInfoExtendedTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

@@ -1,17 +1,17 @@
 ﻿using Net.Pkcs11Interop.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL_21_SignAndVerifyTest
     {
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_21_01_SignAndVerify_Gost3410_01_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -60,7 +60,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_21_02_SignAndVerify_Gost3410_12_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -109,7 +109,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         /// <summary>
         /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
         /// </summary>
-        [TestMethod]
+        [Test()]
         public void _HL_21_03_SignAndVerify_RSA_Test()
         {
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))

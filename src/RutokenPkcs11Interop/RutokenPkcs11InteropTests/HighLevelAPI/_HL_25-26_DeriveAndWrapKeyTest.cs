@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Net.Pkcs11Interop.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.MechanismParams;
 using RutokenPkcs11Interop.Common;
@@ -10,10 +10,10 @@ using RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL_25_26_DeriveAndWrapKeyTest
     {
-        [TestMethod]
+        [Test()]
         public void _HL_25_26_01_DeriveAndWrap_VKO_Gost3410_01_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -127,7 +127,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _HL_25_26_02_DeriveAndWrap_VKO_Gost3410_12_Test()
         {
             using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
@@ -238,7 +238,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _HL_25_26_03_ExtendedWrap_VKO_Gost3410_12_Test()
         {
             using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))

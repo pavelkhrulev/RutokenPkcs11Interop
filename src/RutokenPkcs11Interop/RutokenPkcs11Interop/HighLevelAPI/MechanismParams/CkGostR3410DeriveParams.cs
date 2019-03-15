@@ -16,7 +16,17 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
         /// <summary>
         /// Platform specific CkGostR3410_12_DeriveParams
         /// </summary>
+        private HighLevelAPI40.MechanismParams.CkGostR3410DeriveParams _params40;
+
+        /// <summary>
+        /// Platform specific CkGostR3410_12_DeriveParams
+        /// </summary>
         private HighLevelAPI41.MechanismParams.CkGostR3410DeriveParams _params41;
+
+        /// <summary>
+        /// Platform specific CkGostR3410_12_DeriveParams
+        /// </summary>
+        private HighLevelAPI80.MechanismParams.CkGostR3410DeriveParams _params80;
 
         /// <summary>
         /// Platform specific CkGostR3410_12_DeriveParams
@@ -34,14 +44,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
             if (Platform.UnmanagedLongSize == 4)
             {
                 if (Platform.StructPackingSize == 0)
-                    throw new NotImplementedException();
+                    _params40 = new HighLevelAPI40.MechanismParams.CkGostR3410DeriveParams(kdf, publicData, ukm);
                 else
                     _params41 = new HighLevelAPI41.MechanismParams.CkGostR3410DeriveParams(kdf, publicData, ukm);
             }
             else
             {
                 if (Platform.StructPackingSize == 0)
-                    throw new NotImplementedException();
+                    _params80 = new HighLevelAPI80.MechanismParams.CkGostR3410DeriveParams(kdf, publicData, ukm);
                 else
                     _params81 = new HighLevelAPI81.MechanismParams.CkGostR3410DeriveParams(kdf, publicData, ukm);
             }
@@ -61,14 +71,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
             if (Platform.UnmanagedLongSize == 4)
             {
                 if (Platform.StructPackingSize == 0)
-                    throw new NotImplementedException();
+                    return _params40.ToMarshalableStructure();
                 else
                     return _params41.ToMarshalableStructure();
             }
             else
             {
                 if (Platform.StructPackingSize == 0)
-                    throw new NotImplementedException();
+                    return _params80.ToMarshalableStructure();
                 else
                     return _params81.ToMarshalableStructure();
             }
@@ -97,10 +107,22 @@ namespace RutokenPkcs11Interop.HighLevelAPI.MechanismParams
             {
                 if (disposing)
                 {
+                    if (_params40 != null)
+                    {
+                        _params40.Dispose();
+                        _params40 = null;
+                    }
+
                     if (_params41 != null)
                     {
                         _params41.Dispose();
                         _params41 = null;
+                    }
+
+                    if (_params80 != null)
+                    {
+                        _params80.Dispose();
+                        _params80 = null;
                     }
 
                     if (_params81 != null)

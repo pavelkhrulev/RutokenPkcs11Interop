@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Net.Pkcs11Interop.Common;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Net.Pkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Helpers;

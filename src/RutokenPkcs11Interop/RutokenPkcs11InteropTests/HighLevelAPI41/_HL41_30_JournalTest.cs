@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI41;
 using RutokenPkcs11Interop.Common;
@@ -6,10 +6,10 @@ using RutokenPkcs11Interop.HighLevelAPI41;
 
 namespace RutokenPkcs11InteropTests.HighLevelAPI41
 {
-    [TestClass]
+    [TestFixture()]
     public class _HL41_30_JournalTest
     {
-        [TestMethod]
+        [Test()]
         public void _HL41_30_01_SignJournalTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
@@ -82,7 +82,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI41
             }
         }
 
-        [TestMethod]
+        [Test()]
         public void _HL41_30_02_SignInvisibleJournalTest()
         {
             if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)

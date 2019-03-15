@@ -8,13 +8,25 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <PackageReference Include="NUnit" Version="3.11.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
     <PackageReference Include="Pkcs11Interop" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI40*\**\.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI41*\**\.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI80*\**\.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
@@ -25,7 +37,6 @@
     </Compile>
   </ItemGroup>
 
-
   <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\HighLevelAPI*\**\*.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
@@ -33,7 +44,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI40*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI41*\**\*.cs">
+      <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11InteropTests\LowLevelAPI80*\**\*.cs">
       <Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
     </Compile>
   </ItemGroup>
