@@ -1,4 +1,5 @@
-﻿using Net.Pkcs11Interop.Common;
+﻿using System;
+using Net.Pkcs11Interop.Common;
 using LLA40 = Net.Pkcs11Interop.LowLevelAPI40;
 using LLA41 = Net.Pkcs11Interop.LowLevelAPI41;
 using LLA80 = Net.Pkcs11Interop.LowLevelAPI80;
@@ -11,7 +12,32 @@ namespace RutokenPkcs11InteropTests
         /// <summary>
         /// Relative name or absolute path of unmanaged PKCS#11 library provided by smartcard or HSM vendor.
         /// </summary>
-        public static string Pkcs11LibraryPath = @"rtpkcs11ecp.dll";
+        public static string Pkcs11LibraryPath
+        {
+            get
+            {
+#if __ANDROID__
+                return @"librtpkcs11ecp.so";
+#elif __IOS__
+                // TODO: not implemented yet
+                return string.Empty;
+#else
+                if (Platform.IsWindows)
+                {
+                    return "rtpkcs11ecp.dll";
+                }
+                else if (Platform.IsLinux)
+                {
+                    return "librtpkcs11ecp.so";
+                }
+                else if (Platform.IsMacOsX)
+                {
+                    return "librtpkcs11ecp.dylib";
+                }
+#endif
+                throw new InvalidOperationException("Native rutoken library path is not set");
+            }
+        }
 
         /// <summary>
         /// Flag indicating whether PKCS#11 library should use its internal native threading model for locking.
