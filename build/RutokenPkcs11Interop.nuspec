@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Aktiv.RutokenPkcs11Interop</id>
-    <version>2.0.0</version>
+    <version>2.0.0-alpha1</version>
     <title>Aktiv.RutokenPkcs11Interop</title>
     <authors>Pavel Khrulev</authors>
     <owners>Pavel Khrulev</owners>
@@ -13,21 +13,11 @@
     <copyright>Copyright 2019</copyright>
     <tags>rutoken pkcs11 library</tags>
     <dependencies>
-      <group targetFramework=".NETFramework4.5">
-        <dependency id="Pkcs11Interop" version="4.1.0" />
-      </group>
-      <group targetFramework="Xamarin.iOS1.0">
-        <dependency id="Pkcs11Interop" version="4.1.0" />
-      </group>
-      <group targetFramework="Xamarin.Mac2.0">
-        <dependency id="Pkcs11Interop" version="4.1.0" />
-      </group>
-      <group targetFramework=".NETStandard2.0">
-        <dependency id="Pkcs11Interop" version="4.1.0" />
-      </group>
-      <group targetFramework="MonoAndroid2.3">
-        <dependency id="Pkcs11Interop" version="4.1.0" />
-      </group>
+      <group targetFramework=".NETFramework4.5"/>
+      <group targetFramework="Xamarin.iOS1.0"/>
+      <group targetFramework="Xamarin.Mac2.0"/>
+      <group targetFramework=".NETStandard2.0"/>
+      <group targetFramework="MonoAndroid2.3"/>
     </dependencies>
   </metadata>
 </package>
