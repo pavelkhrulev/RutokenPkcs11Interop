@@ -19,7 +19,6 @@ namespace RutokenPkcs11InteropTests
 #if __ANDROID__
                 return @"librtpkcs11ecp.so";
 #elif __IOS__
-                // TODO: not implemented yet
                 return string.Empty;
 #else
                 if (Platform.IsWindows)
