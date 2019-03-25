@@ -3,28 +3,15 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Android.App;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
 [assembly: AssemblyTitle("RutokenPkcs11Interop")]
 [assembly: AssemblyDescription("Managed .NET wrapper for unmanaged Rutoken PKCS#11 library (Android version)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Aktiv")]
 [assembly: AssemblyProduct("RutokenPkcs11Interop")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCopyright("Copyright 2017-2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
+[assembly: Guid("9907a0c9-1b2c-470f-a59f-84def58f15fb")]
 [assembly: AssemblyVersion("2.0.0")]
 [assembly: AssemblyFileVersion("2.0.0")]
