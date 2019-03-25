@@ -271,17 +271,18 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
 
             var storeNative = new CK_VENDOR_X509_STORE(vendorX509Store);
 
+            var data = IntPtr.Zero;
+            ulong dataLen = 0;
+
+            var initialSignerSertificates = IntPtr.Zero;
+            var signerSertificates = IntPtr.Zero;
+            ulong signerSertificatesCount = 0;
+
             try
             {
                 CKR rv = session.LowLevelPkcs11.C_EX_PKCS7VerifyInit(session.SessionId, cms, ref storeNative, Convert.ToUInt32(mode), flags);
                 if (rv != CKR.CKR_OK)
                     throw new Pkcs11Exception("C_EX_PKCS7VerifyInit", rv);
-
-                IntPtr data;
-                ulong dataLen;
-
-                IntPtr signerSertificates;
-                ulong signerSertificatesCount;
 
                 rv = session.LowLevelPkcs11.C_EX_PKCS7Verify(session.SessionId, out data, out dataLen, out signerSertificates, out signerSertificatesCount);
 
@@ -294,6 +295,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
 
                     result.Certificates = new List<byte[]>();
                     var structSize = Marshal.SizeOf(typeof(CK_VENDOR_BUFFER));
+                    initialSignerSertificates = signerSertificates;
                     for (var i = 0; i < (int)signerSertificatesCount; i++)
                     {
                         var certificatePtr = (CK_VENDOR_BUFFER)Marshal.PtrToStructure(signerSertificates, typeof(CK_VENDOR_BUFFER));
@@ -322,7 +324,27 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
             {
                 storeNative.Dispose();
 
-                // TODO: FreeBuffer
+                if (initialSignerSertificates != IntPtr.Zero)
+                {
+                    var structSize = Marshal.SizeOf(typeof(CK_VENDOR_BUFFER));
+
+                    for (ulong i = 0; i < signerSertificatesCount; i++)
+                    {
+                        var certificatePtr = (CK_VENDOR_BUFFER)Marshal.PtrToStructure(initialSignerSertificates, typeof(CK_VENDOR_BUFFER));
+                        initialSignerSertificates += structSize;
+
+                        CKR rv = session.LowLevelPkcs11.C_EX_FreeBuffer(certificatePtr.Data);
+                        if (rv != CKR.CKR_OK)
+                            throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
+                    }
+                }
+
+                if (data != IntPtr.Zero)
+                {
+                    CKR rv = session.LowLevelPkcs11.C_EX_FreeBuffer(data);
+                    if (rv != CKR.CKR_OK)
+                        throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
+                }
             }
         }
 
@@ -340,13 +362,16 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
 
             var storeNative = new CK_VENDOR_X509_STORE(vendorX509Store);
 
+            var initialSignerSertificates = IntPtr.Zero;
+            var signerSertificates = IntPtr.Zero;
+            ulong signerSertificatesCount = 0;
+
             try
             {
                 CKR rv = session.LowLevelPkcs11.C_EX_PKCS7VerifyInit(session.SessionId, cms, ref storeNative, Convert.ToUInt32(mode), flags);
                 if (rv != CKR.CKR_OK)
                     throw new Pkcs11Exception("C_EX_PKCS7VerifyInit", rv);
 
-                // TODO: OK with inputStream length?
                 byte[] part = new byte[inputStream.Length];
 
                 while (inputStream.Read(part, 0, part.Length) > 0)
@@ -356,9 +381,6 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
                         throw new Pkcs11Exception("C_EX_PKCS7VerifyUpdate", rv);
                 }
 
-                IntPtr signerSertificates;
-                ulong signerSertificatesCount;
-
                 rv = session.LowLevelPkcs11.C_EX_PKCS7VerifyFinal(session.SessionId, out signerSertificates, out signerSertificatesCount);
 
                 var result = new Pkcs7VerificationResult();
@@ -367,6 +389,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
                 {
                     result.Certificates = new List<byte[]>();
                     var structSize = Marshal.SizeOf(typeof(CK_VENDOR_BUFFER));
+                    initialSignerSertificates = signerSertificates;
+
                     for (var i = 0; i < (int)signerSertificatesCount; i++)
                     {
                         var certificatePtr = (CK_VENDOR_BUFFER)Marshal.PtrToStructure(signerSertificates, typeof(CK_VENDOR_BUFFER));
@@ -395,7 +419,20 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
             {
                 storeNative.Dispose();
 
-                // TODO: FreeBuffer
+                if (initialSignerSertificates != IntPtr.Zero)
+                {
+                    var structSize = Marshal.SizeOf(typeof(CK_VENDOR_BUFFER));
+
+                    for (ulong i = 0; i < signerSertificatesCount; i++)
+                    {
+                        var certificatePtr = (CK_VENDOR_BUFFER)Marshal.PtrToStructure(initialSignerSertificates, typeof(CK_VENDOR_BUFFER));
+                        initialSignerSertificates += structSize;
+
+                        CKR rv = session.LowLevelPkcs11.C_EX_FreeBuffer(certificatePtr.Data);
+                        if (rv != CKR.CKR_OK)
+                            throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
+                    }
+                }
             }
         }
 
