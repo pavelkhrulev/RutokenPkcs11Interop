@@ -110,8 +110,8 @@
     <MtouchTlsProvider>Default</MtouchTlsProvider>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Pkcs11Interop, Version=4.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pkcs11Interop.4.1.0\lib\xamarinios1.0\Pkcs11Interop.dll</HintPath>
+    <Reference Include="Pkcs11Interop, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pkcs11Interop.4.1.1\lib\xamarinios1.0\Pkcs11Interop.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
