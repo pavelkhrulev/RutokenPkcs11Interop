@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RutokenPkcs11Interop", "RutokenPkcs11Interop\RutokenPkcs11Interop.csproj", "{C8A59FCB-1D54-4F8D-84A1-3D3B34563C2F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RutokenPkcs11Interop.DotNetCore.Tests", "RutokenPkcs11Interop.DotNetCore.Tests\RutokenPkcs11Interop.DotNetCore.Tests.csproj", "{A0A2200A-6FD0-452C-9CFD-38F6B46B5DB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8A59FCB-1D54-4F8D-84A1-3D3B34563C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8A59FCB-1D54-4F8D-84A1-3D3B34563C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8A59FCB-1D54-4F8D-84A1-3D3B34563C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8A59FCB-1D54-4F8D-84A1-3D3B34563C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0A2200A-6FD0-452C-9CFD-38F6B46B5DB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0A2200A-6FD0-452C-9CFD-38F6B46B5DB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0A2200A-6FD0-452C-9CFD-38F6B46B5DB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0A2200A-6FD0-452C-9CFD-38F6B46B5DB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5D7A93F6-E7B8-46CC-8AAB-04DE292F12AB}
+	EndGlobalSection
+EndGlobal
