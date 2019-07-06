@@ -96,5 +96,24 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 }
             }
         }
+
+        [Test()]
+        public void _HL_09_03_ExtendedInitTokenRepairModeTest()
+        {
+            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            {
+                // Установление соединения с Рутокен в первом доступном слоте
+                Slot slot = Helpers.GetUsableSlot(pkcs11);
+
+                // Формирование параметров для инициализации токена
+                var rutokenInitParam = new RutokenInitParam(Settings.SecurityOfficerPin, Settings.NewUserPin,
+                    Settings.TokenStdLabel,
+                    new List<RutokenFlag> { RutokenFlag.AdminChangeUserPin, RutokenFlag.UserChangeUserPin }, 6, 6,
+                    Settings.MAX_ADMIN_RETRY_COUNT, Settings.MAX_USER_RETRY_COUNT, 0, true);
+
+                // Инициализация токена
+                slot.InitTokenExtended(Settings.SecurityOfficerPin, rutokenInitParam);
+            }
+        }
     }
 }

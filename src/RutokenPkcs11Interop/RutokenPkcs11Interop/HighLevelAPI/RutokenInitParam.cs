@@ -104,6 +104,46 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             }
         }
 
+        public RutokenInitParam(string newAdminPin, string newUserPin, string tokenLabel,
+            IList<RutokenFlag> changeUserPINPolicy, uint minAdminPinLen, uint minUserPinLen,
+            uint maxAdminRetryCount, uint maxUserRetryCount, uint smMode, bool useRepairMode)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                    _rutokenInitParam40 = new HighLevelAPI40.RutokenInitParam(
+                        newAdminPin, newUserPin, tokenLabel,
+                        changeUserPINPolicy,
+                        minAdminPinLen, minUserPinLen,
+                        maxAdminRetryCount, maxUserRetryCount,
+                        smMode, useRepairMode);
+                else
+                    _rutokenInitParam41 = new HighLevelAPI41.RutokenInitParam(
+                        newAdminPin, newUserPin, tokenLabel,
+                        changeUserPINPolicy,
+                        minAdminPinLen, minUserPinLen,
+                        maxAdminRetryCount, maxUserRetryCount,
+                        smMode, useRepairMode);
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                    _rutokenInitParam80 = new HighLevelAPI80.RutokenInitParam(
+                        newAdminPin, newUserPin, tokenLabel,
+                        changeUserPINPolicy,
+                        minAdminPinLen, minUserPinLen,
+                        maxAdminRetryCount, maxUserRetryCount,
+                        smMode, useRepairMode);
+                else
+                    _rutokenInitParam81 = new HighLevelAPI81.RutokenInitParam(
+                        newAdminPin, newUserPin, tokenLabel,
+                        changeUserPINPolicy,
+                        minAdminPinLen, minUserPinLen,
+                        maxAdminRetryCount, maxUserRetryCount,
+                        smMode, useRepairMode);
+            }
+        }
+
         #region IDisposable
 
         /// <summary>

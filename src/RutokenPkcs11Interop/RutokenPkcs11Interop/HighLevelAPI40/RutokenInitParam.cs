@@ -73,6 +73,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI40
             _ckRutokenInitParam.SmMode = smMode;
         }
 
+        public RutokenInitParam(string newAdminPin, string newUserPin, string tokenLabel,
+            IList<RutokenFlag> changeUserPINPolicy, uint minAdminPinLen, uint minUserPinLen,
+            uint maxAdminRetryCount, uint maxUserRetryCount, uint smMode, bool useRepairMode)
+            : this(newAdminPin, newUserPin, tokenLabel, changeUserPINPolicy, minAdminPinLen, minUserPinLen, maxAdminRetryCount, maxUserRetryCount, smMode)
+        {
+            _ckRutokenInitParam.UseRepairMode = Convert.ToUInt32(useRepairMode);
+        }
+
         #region IDisposable
 
         /// <summary>
