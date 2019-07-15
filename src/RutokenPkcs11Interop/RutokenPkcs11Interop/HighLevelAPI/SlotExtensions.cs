@@ -127,6 +127,32 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             }
         }
 
+        public static void SetPIN2(this Slot slot, uint pinId)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    slot.HLA40Slot.SetPIN2(pinId);
+                }
+                else
+                {
+                    slot.HLA41Slot.SetPIN2(pinId);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    slot.HLA80Slot.SetPIN2(pinId);
+                }
+                else
+                {
+                    slot.HLA81Slot.SetPIN2(pinId);
+                }
+            }
+        }
+
         public static ulong GetDriveSize(this Slot slot)
         {
             if (Platform.UnmanagedLongSize == 4)

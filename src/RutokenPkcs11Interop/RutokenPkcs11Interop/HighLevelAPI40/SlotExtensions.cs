@@ -73,6 +73,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI40
                 throw new Pkcs11Exception("C_EX_SetLocalPIN", rv);
         }
 
+        public static void SetPIN2(this HLA40.Slot slot, uint pinId)
+        {
+            CKR rv = slot.LowLevelPkcs11.C_EX_SetLocalPIN(slot.SlotId, null, null, pinId);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_EX_SetLocalPIN", rv);
+        }
+
         public static uint GetDriveSize(this HLA40.Slot slot)
         {
             uint driveSize = 0;
