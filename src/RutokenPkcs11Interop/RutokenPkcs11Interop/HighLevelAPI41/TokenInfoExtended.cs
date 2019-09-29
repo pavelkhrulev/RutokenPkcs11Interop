@@ -57,7 +57,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
         internal TokenInfoExtended(CK_TOKEN_INFO_EXTENDED ckTokenInfoExtended)
         {
             _sizeofThisStructure = ckTokenInfoExtended.SizeofThisStructure;
-            TokenType = ckTokenInfoExtended.TokenType;
+            TokenType = (RutokenType) ckTokenInfoExtended.TokenType;
             ProtocolNumber = ckTokenInfoExtended.ProtocolNumber;
             MicrocodeNumber = ckTokenInfoExtended.MicrocodeNumber;
             OrderNumber = ckTokenInfoExtended.OrderNumber;
@@ -79,9 +79,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 .Take(Convert.ToInt32(ckTokenInfoExtended.ATRLen))
                 .ToArray());
             ATRLen = ckTokenInfoExtended.ATRLen;
-            TokenClass = ckTokenInfoExtended.TokenClass;
+            TokenClass = (RutokenClass) ckTokenInfoExtended.TokenClass;
             BatteryVoltage = ckTokenInfoExtended.BatteryVoltage;
-            BodyColor = ckTokenInfoExtended.BodyColor;
+            BodyColor = (RutokenBodyColor) ckTokenInfoExtended.BodyColor;
             FirmwareChecksum = ckTokenInfoExtended.FirmwareChecksum;
         }
     }

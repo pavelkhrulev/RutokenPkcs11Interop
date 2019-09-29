@@ -11,11 +11,11 @@ namespace RutokenPkcs11Interop.HighLevelAPI40
         public VolumeFormatInfoExtended(uint volumeSize, FlashAccessMode accessMode,
             CKU volumeOwner, uint flags)
         {
-            CkVolumeFormatInfoExtended = new CK_VOLUME_FORMAT_INFO_EXTENDED()
+            CkVolumeFormatInfoExtended = new CK_VOLUME_FORMAT_INFO_EXTENDED
             {
                 VolumeSize = volumeSize,
-                AccessMode = accessMode,
-                VolumeOwner = volumeOwner,
+                AccessMode = (uint) accessMode,
+                VolumeOwner = (uint) volumeOwner,
                 Flags = flags
             };
         }

@@ -14,8 +14,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
             CkVolumeFormatInfoExtended = new CK_VOLUME_FORMAT_INFO_EXTENDED()
             {
                 VolumeSize = volumeSize,
-                AccessMode = accessMode,
-                VolumeOwner = volumeOwner,
+                AccessMode = (ulong) accessMode,
+                VolumeOwner = (ulong) volumeOwner,
                 Flags = flags
             };
         }

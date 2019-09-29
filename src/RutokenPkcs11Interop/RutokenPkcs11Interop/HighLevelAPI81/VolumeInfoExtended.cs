@@ -1,4 +1,6 @@
-﻿using RutokenPkcs11Interop.LowLevelAPI81;
+﻿using Net.Pkcs11Interop.Common;
+using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11Interop.HighLevelAPI81
 {
@@ -10,8 +12,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
         {
             VolumeId = ckVolumeInfoExtended.VolumeId;
             VolumeSize = ckVolumeInfoExtended.VolumeSize;
-            AccessMode = ckVolumeInfoExtended.AccessMode;
-            VolumeOwner = ckVolumeInfoExtended.VolumeOwner;
+            AccessMode = (FlashAccessMode) ckVolumeInfoExtended.AccessMode;
+            VolumeOwner = (CKU) ckVolumeInfoExtended.VolumeOwner;
             Flags = ckVolumeInfoExtended.Flags;
         }
     }
