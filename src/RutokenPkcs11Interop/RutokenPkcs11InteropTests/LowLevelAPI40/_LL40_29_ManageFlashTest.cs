@@ -118,10 +118,10 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
 
                 var initParams = new CK_VOLUME_FORMAT_INFO_EXTENDED[4]
                 {
-                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeRwSize, AccessMode = FlashAccessMode.Readwrite, VolumeOwner = CKU.CKU_USER, Flags = 0},
-                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeRoSize, AccessMode = FlashAccessMode.Readonly, VolumeOwner = CKU.CKU_SO, Flags = 0},
-                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeHiSize, AccessMode = FlashAccessMode.Hidden, VolumeOwner = (CKU)Settings.LocalPinId1, Flags = 0},
-                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeCdSize, AccessMode = FlashAccessMode.Cdrom, VolumeOwner = (CKU)Settings.LocalPinId2, Flags = 0},
+                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeRwSize, AccessMode = (uint) FlashAccessMode.Readwrite, VolumeOwner = (uint) CKU.CKU_USER, Flags = 0},
+                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeRoSize, AccessMode = (uint) FlashAccessMode.Readonly, VolumeOwner = (uint) CKU.CKU_SO, Flags = 0},
+                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeHiSize, AccessMode = (uint) FlashAccessMode.Hidden, VolumeOwner = Settings.LocalPinId1, Flags = 0},
+                    new CK_VOLUME_FORMAT_INFO_EXTENDED() { VolumeSize = volumeCdSize, AccessMode = (uint) FlashAccessMode.Cdrom, VolumeOwner = Settings.LocalPinId2, Flags = 0},
                 };
 
                 rv = pkcs11.C_EX_FormatDrive(slotId, (uint)CKU.CKU_SO,

@@ -1,5 +1,4 @@
 ﻿using System.Runtime.InteropServices;
-using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11Interop.LowLevelAPI40
 {
@@ -11,7 +10,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI40
     {
         public uint SizeofThisStructure;
 
-        public RutokenType TokenType;
+        public uint TokenType;
 
         public uint ProtocolNumber;
 
@@ -58,11 +57,11 @@ namespace RutokenPkcs11Interop.LowLevelAPI40
 
         public uint ATRLen;
 
-        public RutokenClass TokenClass;
+        public uint TokenClass;
 
         public uint BatteryVoltage;
 
-        public RutokenBodyColor BodyColor;
+        public uint BodyColor;
 
         public uint FirmwareChecksum;
     }
