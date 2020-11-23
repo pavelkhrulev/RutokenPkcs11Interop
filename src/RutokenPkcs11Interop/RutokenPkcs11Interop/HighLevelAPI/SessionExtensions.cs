@@ -654,5 +654,31 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
             }
         }
+
+        public static PinPolicy GetPinPolicy(this Session session, CKU userType)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    return session.HLA40Session.GetPinPolicy(userType);
+                }
+                else
+                {
+                    return session.HLA41Session.GetPinPolicy(userType);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    return session.HLA80Session.GetPinPolicy(userType);
+                }
+                else
+                {
+                    return session.HLA81Session.GetPinPolicy(userType);
+                }
+            }
+        }
     }
 }
