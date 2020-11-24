@@ -631,7 +631,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI40
             return pinPolicyTemplate[0].valueLen != 0;
         }
 
-        public static PinPolicy getPinPolicy(this HLA40.Session session, CKU userType)
+        public static PinPolicy GetPinPolicy(this HLA40.Session session, CKU userType)
         {
             CKR rv;
             PinPolicy pinPolicy = new PinPolicy();
