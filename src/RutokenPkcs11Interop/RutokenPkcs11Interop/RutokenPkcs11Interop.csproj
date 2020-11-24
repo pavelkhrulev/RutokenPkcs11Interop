@@ -48,6 +48,7 @@
     <Compile Include="Common\ActivationPasswordNumber.cs" />
     <Compile Include="Common\Extended_CKA.cs" />
     <Compile Include="Common\Extended_CKD.cs" />
+    <Compile Include="Common\Extended_CKH.cs" />
     <Compile Include="Common\Extended_CKK.cs" />
     <Compile Include="Common\Extended_CKM.cs" />
     <Compile Include="Common\FlashAccessMode.cs" />
