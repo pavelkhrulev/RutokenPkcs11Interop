@@ -588,5 +588,137 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
 
             return new HLA80.ObjectHandle(unwrappedKey);
         }
+
+        public static HLA80.ObjectHandle GetPinPolicyObject(this HLA80.Session session, CKU userType)
+        {
+            CKR rv;
+            CK_ATTRIBUTE[] pinPolicyTemplate = new CK_ATTRIBUTE[3];
+
+            pinPolicyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_HW_FEATURE);
+            pinPolicyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_HW_FEATURE_TYPE, (ulong)Extended_CKH.CKH_VENDOR_PIN_POLICY);
+            pinPolicyTemplate[2] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_USER_TYPE, (ulong)userType);
+
+            ulong foundObjectCount = 0;
+            ulong[] foundObjectIds = new ulong[1];
+
+            rv = session.LowLevelPkcs11.C_FindObjectsInit(session.SessionId, pinPolicyTemplate, Convert.ToUInt64(pinPolicyTemplate.Length));
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_FindObjectsInit", rv);
+
+            rv = session.LowLevelPkcs11.C_FindObjects(session.SessionId, foundObjectIds, Convert.ToUInt64(foundObjectIds.Length), ref foundObjectCount);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_FindObjects", rv);
+
+            rv = session.LowLevelPkcs11.C_FindObjectsFinal(session.SessionId);
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_FindObjectsFinal", rv);
+
+            if (foundObjectCount != 1)
+                throw new Exception("Pin policy object not found");
+
+            return new HLA80.ObjectHandle(foundObjectIds[0]);
+        }
+
+        public static bool PinPolicySupports(this HLA80.Session session, CKU userType)
+        {
+            CKR rv;
+            HLA80.ObjectHandle pinPolicyObj = GetPinPolicyObject(session, userType);
+            CK_ATTRIBUTE[] pinPolicyTemplate = new CK_ATTRIBUTE[1];
+            pinPolicyTemplate[0] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_SUPPORTED_PIN_POLICIES);
+
+            rv = session.LowLevelPkcs11.C_GetAttributeValue(session.SessionId, pinPolicyObj.ObjectId, pinPolicyTemplate, Convert.ToUInt64(pinPolicyTemplate.Length));
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_GetAttributeValue", rv);
+
+            return pinPolicyTemplate[0].valueLen != 0;
+        }
+
+        public static PinPolicy GetPinPolicy(this HLA80.Session session, CKU userType)
+        {
+            CKR rv;
+            PinPolicy pinPolicy = new PinPolicy();
+            HLA80.ObjectHandle pinPolicyObj = GetPinPolicyObject(session, userType);
+
+            CK_ATTRIBUTE[] pinPolicyTemplate = new CK_ATTRIBUTE[10];
+            pinPolicyTemplate[0] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_MIN_LENGTH, new byte[1]);
+            pinPolicyTemplate[1] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_HISTORY_DEPTH, new byte[1]);
+            pinPolicyTemplate[2] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_ALLOW_DEFAULT_PIN_USAGE, new byte[1]);
+            pinPolicyTemplate[3] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_DIGIT_REQUIRED, new byte[1]);
+            pinPolicyTemplate[4] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_UPPERCASE_REQUIRED, new byte[1]);
+            pinPolicyTemplate[5] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_LOWERCASE_REQUIRED, new byte[1]);
+            pinPolicyTemplate[6] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_SPEC_CHAR_REQUIRED, new byte[1]);
+            pinPolicyTemplate[7] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_DIFF_CHARS_REQUIRED, new byte[1]);
+            pinPolicyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, new bool());
+            pinPolicyTemplate[9] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICIES_DELETABLE, new bool());
+
+            rv = session.LowLevelPkcs11.C_GetAttributeValue(session.SessionId, pinPolicyObj.ObjectId, pinPolicyTemplate, Convert.ToUInt64(pinPolicyTemplate.Length));
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_GetAttributeValue", rv);
+
+            byte[] minPolicyLength;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[0], out minPolicyLength);
+            pinPolicy.MinPinLength = minPolicyLength[0];
+
+            byte[] pinHistoryDepth;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[1], out pinHistoryDepth);
+            pinPolicy.PinHistoryDepth = pinHistoryDepth[0];
+
+            byte[] allowDefaultPinUsage;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[2], out allowDefaultPinUsage);
+            pinPolicy.AllowDefaultPinUsage = allowDefaultPinUsage[0] != 0;
+
+            byte[] pinContainsDigit;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[3], out pinContainsDigit);
+            pinPolicy.PinContainsDigit = pinContainsDigit[0] != 0;
+
+            byte[] pinContainsUpperLetter;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[4], out pinContainsUpperLetter);
+            pinPolicy.PinContainsUpperLetter = pinContainsUpperLetter[0] != 0;
+
+            byte[] pinContainsLowerLetter;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[5], out pinContainsLowerLetter);
+            pinPolicy.PinContainsLowerLetter = pinContainsLowerLetter[0] != 0;
+
+            byte[] pinContainsSpecChar;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[6], out pinContainsSpecChar);
+            pinPolicy.PinContainsSpecChar = pinContainsSpecChar[0] != 0;
+
+            byte[] restrictOneCharPin;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[7], out restrictOneCharPin);
+            pinPolicy.RestrictOneCharPin = restrictOneCharPin[0] != 0;
+
+            bool allowChangePinPolicy;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[8], out allowChangePinPolicy);
+            pinPolicy.AllowChangePinPolicy = allowChangePinPolicy;
+
+            bool removePinPolicyAfterFormat;
+            CkaUtils.ConvertValue(ref pinPolicyTemplate[9], out removePinPolicyAfterFormat);
+            pinPolicy.RemovePinPolicyAfterFormat = removePinPolicyAfterFormat;
+
+            return pinPolicy;
+        }
+
+        public static void SetPinPolicy(this HLA80.Session session, PinPolicy pinPolicy, CKU userType)
+        {
+            CKR rv;
+            HLA80.ObjectHandle pinPolicyObj = GetPinPolicyObject(session, userType);
+
+
+            CK_ATTRIBUTE[] pinPolicyTemplate = new CK_ATTRIBUTE[10];
+            pinPolicyTemplate[0] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_MIN_LENGTH, new byte[] { Convert.ToByte(pinPolicy.MinPinLength) });
+            pinPolicyTemplate[1] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_HISTORY_DEPTH, new byte[] { Convert.ToByte(pinPolicy.PinHistoryDepth) });
+            pinPolicyTemplate[2] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_ALLOW_DEFAULT_PIN_USAGE, new byte[] { Convert.ToByte(pinPolicy.AllowDefaultPinUsage) });
+            pinPolicyTemplate[3] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_DIGIT_REQUIRED, new byte[] { Convert.ToByte(pinPolicy.PinContainsDigit) });
+            pinPolicyTemplate[4] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_UPPERCASE_REQUIRED, new byte[] { Convert.ToByte(pinPolicy.PinContainsUpperLetter) });
+            pinPolicyTemplate[5] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_LOWERCASE_REQUIRED, new byte[] { Convert.ToByte(pinPolicy.PinContainsLowerLetter) });
+            pinPolicyTemplate[6] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_SPEC_CHAR_REQUIRED, new byte[] { Convert.ToByte(pinPolicy.PinContainsSpecChar) });
+            pinPolicyTemplate[7] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_DIFF_CHARS_REQUIRED, new byte[] { Convert.ToByte(pinPolicy.RestrictOneCharPin) });
+            pinPolicyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, Convert.ToBoolean(pinPolicy.AllowChangePinPolicy));
+            pinPolicyTemplate[9] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICIES_DELETABLE, Convert.ToBoolean(pinPolicy.RemovePinPolicyAfterFormat));
+
+            rv = session.LowLevelPkcs11.C_SetAttributeValue(session.SessionId, pinPolicyObj.ObjectId, pinPolicyTemplate, Convert.ToUInt64(pinPolicyTemplate.Length));
+            if (rv != CKR.CKR_OK)
+                throw new Pkcs11Exception("C_GetAttributeValue", rv);
+        }
     }
 }

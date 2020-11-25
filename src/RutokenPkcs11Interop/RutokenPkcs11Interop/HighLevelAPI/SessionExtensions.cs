@@ -687,22 +687,22 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    return session.HLA40Session.SetPinPolicy(pinPolicy, userType);
+                    session.HLA40Session.SetPinPolicy(pinPolicy, userType);
                 }
                 else
                 {
-                    return session.HLA41Session.SetPinPolicy(pinPolicy, userType);
+                    session.HLA41Session.SetPinPolicy(pinPolicy, userType);
                 }
             }
             else
             {
                 if (Platform.StructPackingSize == 0)
                 {
-                    return session.HLA80Session.SetPinPolicy(pinPolicy, userType);
+                    session.HLA80Session.SetPinPolicy(pinPolicy, userType);
                 }
                 else
                 {
-                    return session.HLA81Session.SetPinPolicy(pinPolicy, userType);
+                    session.HLA81Session.SetPinPolicy(pinPolicy, userType);
                 }
             }
         }
