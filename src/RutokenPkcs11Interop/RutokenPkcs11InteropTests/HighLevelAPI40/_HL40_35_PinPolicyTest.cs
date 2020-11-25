@@ -80,14 +80,14 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI40
 
                     Console.WriteLine("Min pin Length: " + pinPolicy.MinPinLength + "\n");
                     Console.WriteLine("History depth: " + pinPolicy.PinHistoryDepth + "\n");
-                    Console.WriteLine("Allow default Pin-code usage: " + (pinPolicy.AllowDefaultPinUsage ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres digits: " + (pinPolicy.PinContainsDigit ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres uppercase chars: " + (pinPolicy.PinContainsUpperLetter ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres lowercase chars: " + (pinPolicy.PinContainsLowerLetter ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres spec chars: " + (pinPolicy.PinContainsSpecChar ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres different char usage: " + (pinPolicy.RestrictOneCharPin ? "true" : "false") + "\n");
-                    Console.WriteLine("PIN-policy is modifiable by Admin: " + (pinPolicy.AllowChangePinPolicy ? "true" : "false") + "\n");
-                    Console.WriteLine("PIN-policy will be deleted after formating: " + (pinPolicy.RemovePinPolicyAfterFormat ? "true" : "false") + "\n");
+                    Console.WriteLine("Allow default Pin-code usage: " + ((bool)pinPolicy.AllowDefaultPinUsage ? "true" : "false") + "\n");
+                    Console.WriteLine("Pin-code requeres digits: " + ((bool)pinPolicy.PinContainsDigit ? "true" : "false") + "\n");
+                    Console.WriteLine("Pin-code requeres uppercase chars: " + ((bool)pinPolicy.PinContainsUpperLetter ? "true" : "false") + "\n");
+                    Console.WriteLine("Pin-code requeres lowercase chars: " + ((bool)pinPolicy.PinContainsLowerLetter ? "true" : "false") + "\n");
+                    Console.WriteLine("Pin-code requeres spec chars: " + ((bool)pinPolicy.PinContainsSpecChar ? "true" : "false") + "\n");
+                    Console.WriteLine("Pin-code requeres different char usage: " + ((bool)pinPolicy.RestrictOneCharPin ? "true" : "false") + "\n");
+                    Console.WriteLine("PIN-policy is modifiable by Admin: " + ((bool)pinPolicy.AllowChangePinPolicy ? "true" : "false") + "\n");
+                    Console.WriteLine("PIN-policy will be deleted after formating: " + ((bool)pinPolicy.RemovePinPolicyAfterFormat ? "true" : "false") + "\n");
                 }
             }
         }
@@ -128,14 +128,14 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI40
                     PinPolicy pinPolicy = new PinPolicy();
                     pinPolicy.MinPinLength = 0;
                     pinPolicy.PinHistoryDepth = 0;
-                    pinPolicy.AllowDefaultPinUsage = true;
+                    //pinPolicy.AllowDefaultPinUsage = true;
                     pinPolicy.PinContainsDigit = false;
                     pinPolicy.PinContainsUpperLetter = false;
                     pinPolicy.PinContainsLowerLetter = false;
                     pinPolicy.PinContainsSpecChar = false;
                     pinPolicy.RestrictOneCharPin = false;
-                    pinPolicy.AllowChangePinPolicy = true;
-                    pinPolicy.RemovePinPolicyAfterFormat = true;
+                    //pinPolicy.AllowChangePinPolicy = true;
+                    //pinPolicy.RemovePinPolicyAfterFormat = true;
 
                     session.SetPinPolicy(pinPolicy, CKU.CKU_USER);
 
