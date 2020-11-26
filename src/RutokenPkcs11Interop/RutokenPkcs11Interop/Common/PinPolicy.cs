@@ -43,5 +43,15 @@ namespace RutokenPkcs11Interop.Common
                 return true;
             return false;
         }
+
+        public bool IsEmpty()
+        {
+            return !this;
+        }
+
+        public bool ToBool()
+        {
+            return this;
+        }
     }
 }
