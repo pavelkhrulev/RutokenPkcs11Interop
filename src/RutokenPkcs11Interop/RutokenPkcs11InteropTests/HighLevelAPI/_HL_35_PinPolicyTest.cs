@@ -56,7 +56,6 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 // Open RO session
                 using (Session session = slot.OpenSession(SessionType.ReadOnly))
                 {
-                    bool res;
                     try
                     {
                         if (!session.PinPolicySupports(CKU.CKU_USER)) {
@@ -101,7 +100,6 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 using (Session session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     session.Login(CKU.CKU_SO, Settings.SecurityOfficerPin);
-                    bool res;
                     try
                     {
                         if (!session.PinPolicySupports(CKU.CKU_USER))
