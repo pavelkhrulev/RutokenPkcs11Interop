@@ -18,5 +18,30 @@ namespace RutokenPkcs11Interop.Common
         public bool? RemovePinPolicyAfterFormat { get; set; }
         public byte? MinPinLength { get; set; }
         public byte? PinHistoryDepth { get; set; }
+
+        public static implicit operator bool(PinPolicy value)
+        {
+            if (value.PinContainsLowerLetter != null)
+                return true;
+            if (value.PinContainsUpperLetter != null)
+                return true;
+            if (value.PinContainsDigit != null)
+                return true;
+            if (value.PinContainsSpecChar != null)
+                return true;
+            if (value.RestrictOneCharPin != null)
+                return true;
+            if (value.AllowDefaultPinUsage != null)
+                return true;
+            if (value.AllowChangePinPolicy != null)
+                return true;
+            if (value.RemovePinPolicyAfterFormat != null)
+                return true;
+            if (value.MinPinLength != null)
+                return true;
+            if (value.PinHistoryDepth != null)
+                return true;
+            return false;
+        }
     }
 }
