@@ -33,11 +33,11 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     {
                         res = session.PinPolicySupports(CKU.CKU_USER);
                     } catch (Exception ex) {
-                        Console.WriteLine(ex.Message, "\n");
+                        Console.WriteLine(ex.Message);
                         return;
                     }
 
-                    Console.WriteLine("Pin policy supports by token: " + (res ? "true" : "false"), "\n");
+                    Console.WriteLine("Pin policy supports by token: " + (res ? "true" : "false"));
                 }
             }
         }
@@ -59,28 +59,28 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     try
                     {
                         if (!session.PinPolicySupports(CKU.CKU_USER)) {
-                            Console.WriteLine("Token doesn't support PIN-policies\n");
+                            Console.WriteLine("Token doesn't support PIN-policies");
                             return;
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message, "\n");
+                        Console.WriteLine(ex.Message);
                         return;
                     }
 
                     PinPolicy pinPolicy = session.GetPinPolicy(CKU.CKU_USER);
 
-                    Console.WriteLine("Min pin Length: " + pinPolicy.MinPinLength + "\n");
-                    Console.WriteLine("History depth: " + pinPolicy.PinHistoryDepth + "\n");
-                    Console.WriteLine("Allow default Pin-code usage: " + ((bool) pinPolicy.AllowDefaultPinUsage ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres digits: " + ((bool)pinPolicy.PinContainsDigit ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres uppercase chars: " + ((bool)pinPolicy.PinContainsUpperLetter ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres lowercase chars: " + ((bool)pinPolicy.PinContainsLowerLetter ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres spec chars: " + ((bool)pinPolicy.PinContainsSpecChar ? "true" : "false") + "\n");
-                    Console.WriteLine("Pin-code requeres different char usage: " + ((bool)pinPolicy.RestrictOneCharPin ? "true" : "false") + "\n");
-                    Console.WriteLine("PIN-policy is modifiable by Admin: " + ((bool)pinPolicy.AllowChangePinPolicy ? "true" : "false") + "\n");
-                    Console.WriteLine("PIN-policy will be deleted after formating: " + ((bool)pinPolicy.RemovePinPolicyAfterFormat ? "true" : "false") + "\n");
+                    Console.WriteLine("Min PIN Length: " + pinPolicy.MinPinLength);
+                    Console.WriteLine("PIN history depth: " + pinPolicy.PinHistoryDepth);
+                    Console.WriteLine("Allow default PIN-code usage: " + pinPolicy.AllowDefaultPinUsage);
+                    Console.WriteLine("PIN requeres digits: " + pinPolicy.PinContainsDigit);
+                    Console.WriteLine("PIN requeres uppercase chars: " + pinPolicy.PinContainsUpperLetter);
+                    Console.WriteLine("PIN requeres lowercase chars: " + pinPolicy.PinContainsLowerLetter);
+                    Console.WriteLine("PIN requeres spec chars: " + pinPolicy.PinContainsSpecChar);
+                    Console.WriteLine("PIN requeres different char usage: " + pinPolicy.RestrictOneCharPin);
+                    Console.WriteLine("PIN policy is modifiable by Admin: " + pinPolicy.AllowChangePinPolicy);
+                    Console.WriteLine("PIN policy will be deleted after formating: " + pinPolicy.RemovePinPolicyAfterFormat);
                 }
             }
         }
@@ -104,13 +104,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     {
                         if (!session.PinPolicySupports(CKU.CKU_USER))
                         {
-                            Console.WriteLine("Token doesn't support PIN-policies\n");
+                            Console.WriteLine("Token doesn't support PIN-policies");
                             return;
                         }
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message, "\n");
+                        Console.WriteLine(ex.Message);
                         return;
                     }
 
