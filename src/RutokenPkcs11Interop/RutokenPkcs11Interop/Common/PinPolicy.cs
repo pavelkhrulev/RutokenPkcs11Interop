@@ -48,10 +48,5 @@ namespace RutokenPkcs11Interop.Common
         {
             return !this;
         }
-
-        public bool ToBool()
-        {
-            return this;
-        }
     }
 }
