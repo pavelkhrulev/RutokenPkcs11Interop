@@ -654,5 +654,83 @@ namespace RutokenPkcs11Interop.HighLevelAPI
                 }
             }
         }
+
+        public static PinPolicy GetPinPolicy(this Session session, CKU userType)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    return session.HLA40Session.GetPinPolicy(userType);
+                }
+                else
+                {
+                    return session.HLA41Session.GetPinPolicy(userType);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    return session.HLA80Session.GetPinPolicy(userType);
+                }
+                else
+                {
+                    return session.HLA81Session.GetPinPolicy(userType);
+                }
+            }
+        }
+
+        public static void SetPinPolicy(this Session session, PinPolicy pinPolicy, CKU userType)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    session.HLA40Session.SetPinPolicy(pinPolicy, userType);
+                }
+                else
+                {
+                    session.HLA41Session.SetPinPolicy(pinPolicy, userType);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    session.HLA80Session.SetPinPolicy(pinPolicy, userType);
+                }
+                else
+                {
+                    session.HLA81Session.SetPinPolicy(pinPolicy, userType);
+                }
+            }
+        }
+
+        public static bool PinPolicySupports(this Session session, CKU userType)
+        {
+            if (Platform.UnmanagedLongSize == 4)
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    return session.HLA40Session.PinPolicySupports(userType);
+                }
+                else
+                {
+                    return session.HLA41Session.PinPolicySupports(userType);
+                }
+            }
+            else
+            {
+                if (Platform.StructPackingSize == 0)
+                {
+                    return session.HLA80Session.PinPolicySupports(userType);
+                }
+                else
+                {
+                    return session.HLA81Session.PinPolicySupports(userType);
+                }
+            }
+        }
     }
 }

@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -71,6 +72,7 @@
     <Compile Include="HighLevelAPI40\_HL40_33_PKITest.cs" />
     <Compile Include="HighLevelAPI40\_HL40_34_ManageEntityTest.cs" />
     <Compile Include="HighLevelAPI41\Helpers.cs" />
+    <Compile Include="HighLevelAPI41\_HL41_35_PinPolicyTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_02_GetInfoTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_09_InitTokenAndPinTest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_12_DigestTest.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="HighLevelAPI41\_HL41_33_PKITest.cs" />
     <Compile Include="HighLevelAPI41\_HL41_34_ManageEntityTest.cs" />
     <Compile Include="HighLevelAPI80\Helpers.cs" />
+    <Compile Include="HighLevelAPI80\_HL80_35_PinPolicyTest.cs" />
     <Compile Include="HighLevelAPI80\_HL80_02_GetInfoTest.cs" />
     <Compile Include="HighLevelAPI80\_HL80_04_TokenInfoTest.cs" />
     <Compile Include="HighLevelAPI80\_HL80_09_InitTokenAndPinTest.cs" />
@@ -99,6 +102,7 @@
     <Compile Include="HighLevelAPI80\_HL80_33_PKITest.cs" />
     <Compile Include="HighLevelAPI80\_HL80_34_ManageEntityTest.cs" />
     <Compile Include="HighLevelAPI81\Helpers.cs" />
+    <Compile Include="HighLevelAPI81\_HL81_35_PinPolicyTest.cs" />
     <Compile Include="HighLevelAPI81\_HL81_02_GetInfoTest.cs" />
     <Compile Include="HighLevelAPI81\_HL81_04_TokenInfoTest.cs" />
     <Compile Include="HighLevelAPI81\_HL81_09_InitTokenAndPinTest.cs" />
@@ -113,6 +117,8 @@
     <Compile Include="HighLevelAPI81\_HL81_33_PKITest.cs" />
     <Compile Include="HighLevelAPI81\_HL81_34_ManageEntityTest.cs" />
     <Compile Include="HighLevelAPI\Helpers.cs" />
+    <Compile Include="HighLevelAPI40\_HL40_35_PinPolicyTest.cs" />
+    <Compile Include="HighLevelAPI\_HL_35_PinPolicyTest.cs" />
     <Compile Include="HighLevelAPI\_HL_32_ActivationPasswordTest.cs" />
     <Compile Include="HighLevelAPI\_HL_34_ManageEntityTest.cs" />
     <Compile Include="HighLevelAPI\_HL_04_TokenInfoTest.cs" />
