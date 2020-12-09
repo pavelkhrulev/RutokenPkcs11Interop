@@ -22,6 +22,6 @@ $env:Path += ";C:\path\to\nuget\dir"
 Для этой сборки необходимо установить пакет для мобильной разработки под .Net для Visual Suudio 2019. После его установки запустите скрипт build-xamarinios1.0.bat
 
 ### Сборка для Mac Os. Xamarin 2.0
-Запустите скрипт build-xamarinmac2.0.bat
+Для этой сборки необходимо установить пакет xamarin для Visual Suudio 2019. Запустите скрипт build-xamarinmac2.0.bat
 
 Скрипт build-all.bat активирует сборку библиотеки сразу под все платформы.

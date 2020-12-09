@@ -29,7 +29,7 @@ msbuild ..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop.NetStandard
 @if not "%arg2%"=="--skip-cleaning" (
 	@rem Clean solution
 	msbuild ..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop.NetStandard.sln ^
-		/p:Configuration=Release /p:Platform="Any CPU" /target:Clean || goto :error
+	/p:Configuration=Release /p:Platform="Any CPU" /target:Clean || goto :error
 )
 
 @rem Build RutokenPkcs11Interop project
@@ -59,7 +59,7 @@ call :disablexamarinmac
 :enablexamarinmac
 @rem Use "MSBuild.Sdk.Extras" instead of "Microsoft.NET.Sdk" which does not support "xamarinmac2.0" target framework
 set csprojfile=..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj
-powershell -Command "(Get-Content %csprojfile%).replace('Microsoft.NET.Sdk', 'MSBuild.Sdk.Extras/1.6.65') | Set-Content -Encoding ASCII %csprojfile%"
+powershell -Command "(Get-Content %csprojfile%).replace('Microsoft.NET.Sdk', 'MSBuild.Sdk.Extras/2.1.2') | Set-Content -Encoding ASCII %csprojfile%"
 powershell -Command "(Get-Content %csprojfile%).replace('<TargetFramework>netstandard2.0</TargetFramework>', '<TargetFrameworks>netstandard2.0;xamarinmac2.0</TargetFrameworks>') | Set-Content -Encoding ASCII %csprojfile%"
 set assemblyinfofile=..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\Properties\AssemblyInfo.cs 
 powershell -Command "(Get-Content %assemblyinfofile%).replace('NetStandard version', 'Mac version') | Set-Content -Encoding ASCII %assemblyinfofile%"
@@ -68,7 +68,7 @@ powershell -Command "(Get-Content %assemblyinfofile%).replace('NetStandard versi
 :disablexamarinmac
 @rem Revert from "MSBuild.Sdk.Extras" back to "Microsoft.NET.Sdk"
 set csprojfile=..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj
-powershell -Command "(Get-Content %csprojfile%).replace('MSBuild.Sdk.Extras/1.6.65', 'Microsoft.NET.Sdk') | Set-Content -Encoding ASCII %csprojfile%"
+powershell -Command "(Get-Content %csprojfile%).replace('MSBuild.Sdk.Extras/2.1.2', 'Microsoft.NET.Sdk') | Set-Content -Encoding ASCII %csprojfile%"
 powershell -Command "(Get-Content %csprojfile%).replace('<TargetFrameworks>netstandard2.0;xamarinmac2.0</TargetFrameworks>', '<TargetFramework>netstandard2.0</TargetFramework>') | Set-Content -Encoding ASCII %csprojfile%"
 set assemblyinfofile=..\src\RutokenPkcs11Interop.NetStandard\RutokenPkcs11Interop\Properties\AssemblyInfo.cs 
 powershell -Command "(Get-Content %assemblyinfofile%).replace('Mac version', 'NetStandard version') | Set-Content -Encoding ASCII %assemblyinfofile%"
