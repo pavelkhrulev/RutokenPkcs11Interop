@@ -167,8 +167,10 @@
     <Compile Include="LowLevelAPI81\Pkcs11Extensions.cs" />
     <Compile Include="LowLevelAPI81\RutokenDelegates.cs" />
     <Compile Include="LowLevelAPI81\RutokenNativeMethods.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfoCommon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

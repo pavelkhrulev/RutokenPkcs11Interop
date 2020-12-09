@@ -90,6 +90,10 @@
     <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11Interop\Settings.cs">
       <Link>Settings.cs</Link>
     </Compile>
+    
+    <Compile Include="..\..\RutokenPkcs11Interop\RutokenPkcs11Interop\Properties\AssemblyInfoCommon.cs">
+      <Link>Properties\AssemblyInfoCommon.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
 
