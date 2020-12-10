@@ -48,6 +48,7 @@
     <Compile Include="Common\ActivationPasswordNumber.cs" />
     <Compile Include="Common\Extended_CKA.cs" />
     <Compile Include="Common\Extended_CKD.cs" />
+    <Compile Include="Common\Extended_CKH.cs" />
     <Compile Include="Common\Extended_CKK.cs" />
     <Compile Include="Common\Extended_CKM.cs" />
     <Compile Include="Common\FlashAccessMode.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_256_DeriveParams.cs" />
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
     <Compile Include="HighLevelAPI41\Pkcs11Extensions.cs" />
+    <Compile Include="Common\PinPolicy.cs" />
     <Compile Include="HighLevelAPI\Pkcs7VerificationResult.cs" />
     <Compile Include="HighLevelAPI41\RutokenInitParam.cs" />
     <Compile Include="HighLevelAPI41\SessionExtensions.cs" />
@@ -165,8 +167,10 @@
     <Compile Include="LowLevelAPI81\Pkcs11Extensions.cs" />
     <Compile Include="LowLevelAPI81\RutokenDelegates.cs" />
     <Compile Include="LowLevelAPI81\RutokenNativeMethods.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
+    
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfoCommon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
