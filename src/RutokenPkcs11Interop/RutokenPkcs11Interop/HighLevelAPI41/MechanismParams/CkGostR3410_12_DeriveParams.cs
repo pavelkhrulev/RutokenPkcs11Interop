@@ -1,10 +1,10 @@
 ﻿using System;
-using Net.Pkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI41.MechanismParams;
+using RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
 namespace RutokenPkcs11Interop.HighLevelAPI41.MechanismParams
 {
-    public class CkGostR3410_12_DeriveParams : IMechanismParams, IDisposable
+    public class CkGostR3410_12_DeriveParams : ICkGostR3410_12_DeriveParams
     {
         /// <summary>
         /// Flag indicating whether instance has been disposed

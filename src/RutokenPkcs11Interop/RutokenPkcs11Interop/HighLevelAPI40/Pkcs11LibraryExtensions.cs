@@ -1,17 +1,15 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
-using Net.Pkcs11Interop.HighLevelAPI81;
+using Net.Pkcs11Interop.HighLevelAPI40;
 using Net.Pkcs11Interop.HighLevelAPI;
 
 using RutokenPkcs11Interop.HighLevelAPI;
-using LLA = RutokenPkcs11Interop.LowLevelAPI81;
+using LLA = RutokenPkcs11Interop.LowLevelAPI40;
 
-namespace RutokenPkcs11Interop.HighLevelAPI81
+namespace RutokenPkcs11Interop.HighLevelAPI40
 {
-    public class Pkcs11LibraryExtensions : Pkcs11Library, IPkcs11LibraryExtensions
+    public class Pkcs11LibraryExtensions: Pkcs11Library, IPkcs11LibraryExtensions
     {
-        protected LLA.Pkcs11LibraryExtensions _pkcs11LibraryExtention = null;
-
         protected Pkcs11LibraryExtensions(Pkcs11InteropFactories factories, string libraryPath)
             : base(factories, libraryPath)
         {
@@ -21,13 +19,13 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
         public Pkcs11LibraryExtensions(Pkcs11InteropFactories factories, string libraryPath, AppType appType)
             : base(factories, libraryPath, appType)
         {
-            _pkcs11LibraryExtention = new LLA.Pkcs11LibraryExtensions(libraryPath);
+
         }
 
         public Pkcs11LibraryExtensions(Pkcs11InteropFactories factories, string libraryPath, AppType appType, InitType initType)
             : base(factories, libraryPath, appType, initType)
         {
-            _pkcs11LibraryExtention = new LLA.Pkcs11LibraryExtensions(libraryPath);
+
         }
 
         public void FreeBuffer(IntPtr buffer)
@@ -35,7 +33,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
             if (buffer == null)
                 throw new ArgumentNullException(nameof(buffer));
 
-            CKR rv = _pkcs11LibraryExtention.C_EX_FreeBuffer(buffer);
+            CKR rv = _pkcs11Library.C_EX_FreeBuffer(buffer);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
         }

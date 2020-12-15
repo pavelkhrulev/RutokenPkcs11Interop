@@ -8,20 +8,20 @@ using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.HighLevelAPI;
 using RutokenPkcs11Interop.LowLevelAPI40;
-using HLA40 = Net.Pkcs11Interop.HighLevelAPI40;
+using Net.Pkcs11Interop.HighLevelAPI40;
 
 namespace RutokenPkcs11Interop.HighLevelAPI40
 {
-    public static class SessionExtensions
+    public class SessionExtensions: Session, ISessionExtensions
     {
-        public static void UnblockUserPIN(this HLA40.Session session)
+        public void UnblockUserPIN()
         {
-            CKR rv = session.LowLevelPkcs11.C_EX_UnblockUserPIN(session.SessionId);
+            CKR rv = _pkcs11LibraryExtentions.C_EX_UnblockUserPIN(SessionId);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_UnblockUserPIN", rv);
         }
 
-        public static void SetTokenName(this HLA40.Session session, string label)
+        void SetTokenName(this HLA40.Session session, string label)
         {
             var labelArray = ConvertUtils.Utf8StringToBytes(label);
             CKR rv = session.LowLevelPkcs11.C_EX_SetTokenName(session.SessionId, labelArray);
