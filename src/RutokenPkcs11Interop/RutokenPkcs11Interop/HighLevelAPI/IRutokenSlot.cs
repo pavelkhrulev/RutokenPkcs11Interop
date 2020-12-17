@@ -15,9 +15,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI
 
         byte[] GetJournal();
 
-        void SetLocalPIN(string userPin, string localPin, uint localPinId);
+        void SetLocalPIN(string userPin, string localPin, ulong localPinId);
 
-        void SetPIN2(uint pinId);
+        void SetPIN2(ulong pinId);
 
         ulong GetDriveSize();
 
@@ -26,10 +26,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI
         ICollection<IVolumeInfoExtended> GetVolumesInfo();
 
         void ChangeVolumeAttributes(CKU userType, string pin,
-            uint volumeId, FlashAccessMode newAccessMode, bool permanent);
+            ulong volumeId, FlashAccessMode newAccessMode, bool permanent);
 
         void SetActivationPassword(byte[] password);
 
-        void SlotManage(uint mode, byte[] value);
+        void SlotManage(ulong mode, byte[] value);
     }
 }

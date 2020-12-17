@@ -5,12 +5,44 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
 {
     public abstract class VolumeInfo
     {
-        public ulong VolumeSize { set; get; }
+        protected ulong _volumeSize;
 
-        public FlashAccessMode AccessMode { set; get; }
+        protected FlashAccessMode _accessMode;
 
-        public CKU VolumeOwner { set; get; }
+        protected CKU _volumeOwner;
 
-        public ulong Flags { set; get; }
+        protected ulong _flags;
+
+        public ulong VolumeSize
+        {
+            get
+            {
+                return _volumeSize;
+            }
+        }
+
+        public FlashAccessMode AccessMode
+        {
+            get
+            {
+                return _accessMode;
+            }
+        }
+
+        public CKU VolumeOwner
+        {
+            get
+            {
+                return _volumeOwner;
+            }
+        }
+
+        public ulong Flags
+        {
+            get
+            {
+                return _flags;
+            }
+        }
     }
 }

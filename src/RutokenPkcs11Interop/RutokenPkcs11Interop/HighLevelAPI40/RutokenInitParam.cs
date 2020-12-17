@@ -8,7 +8,7 @@ using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11Interop.HighLevelAPI40
 {
-    public class RutokenInitParam  : IRutokenInitParam
+    public class RutokenInitParam : IRutokenInitParam
     {
         private bool _disposed = false;
 

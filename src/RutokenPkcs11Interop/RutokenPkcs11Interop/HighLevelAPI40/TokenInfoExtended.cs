@@ -3,56 +3,57 @@ using System.Linq;
 using Net.Pkcs11Interop.Common;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI40;
+using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11Interop.HighLevelAPI40
 {
-    public class TokenInfoExtended
+    public class TokenInfoExtended : ITokenInfoExtended
     {
         private uint _sizeofThisStructure;
 
         public RutokenType TokenType { get; } = RutokenType.Unknown;
 
-        public uint ProtocolNumber { get; } = 0;
+        public ulong ProtocolNumber { get; } = 0;
 
-        public uint MicrocodeNumber { get; } = 0;
+        public ulong MicrocodeNumber { get; } = 0;
 
-        public uint OrderNumber { get; } = 0;
+        public ulong OrderNumber { get; } = 0;
 
-        public uint Flags { get; } = 0;
+        public ulong Flags { get; } = 0;
 
-        public uint MaxAdminPinLen { get; } = 0;
+        public ulong MaxAdminPinLen { get; } = 0;
 
-        public uint MinAdminPinLen { get; } = 0;
+        public ulong MinAdminPinLen { get; } = 0;
 
-        public uint MaxUserPinLen { get; } = 0;
+        public ulong MaxUserPinLen { get; } = 0;
 
-        public uint MinUserPinLen { get; } = 0;
+        public ulong MinUserPinLen { get; } = 0;
 
-        public uint MaxAdminRetryCount { get; } = 0;
+        public ulong MaxAdminRetryCount { get; } = 0;
 
-        public uint AdminRetryCountLeft { get; } = 0;
+        public ulong AdminRetryCountLeft { get; } = 0;
 
-        public uint MaxUserRetryCount { get; } = 0;
+        public ulong MaxUserRetryCount { get; } = 0;
 
-        public uint UserRetryCountLeft { get; } = 0;
+        public ulong UserRetryCountLeft { get; } = 0;
 
         public string SerialNumber { get; } = null;
 
-        public uint TotalMemory { get; } = 0;
+        public ulong TotalMemory { get; } = 0;
 
-        public uint FreeMemory { get; } = 0;
+        public ulong FreeMemory { get; } = 0;
 
         public string ATR { get; } = null;
 
-        public uint ATRLen { get; } = 0;
+        public ulong ATRLen { get; } = 0;
 
         public RutokenClass TokenClass { get; } = RutokenClass.Unknown;
 
-        public uint BatteryVoltage { get; } = 0;
+        public ulong BatteryVoltage { get; } = 0;
 
         public RutokenBodyColor BodyColor { get; } = RutokenBodyColor.Unknown;
 
-        public uint FirmwareChecksum { get; } = 0;
+        public ulong FirmwareChecksum { get; } = 0;
 
         internal TokenInfoExtended(CK_TOKEN_INFO_EXTENDED ckTokenInfoExtended)
         {

@@ -3,10 +3,11 @@ using System.Linq;
 using Net.Pkcs11Interop.Common;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI81;
+using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11Interop.HighLevelAPI81
 {
-    public class TokenInfoExtended
+    public class TokenInfoExtended : ITokenInfoExtended
     {
         private ulong _sizeofThisStructure;
 

@@ -48,7 +48,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Формирование параметров для инициализации токена
-                var rutokenInitParam = new RutokenInitParam(Settings.SecurityOfficerPin, Settings.NewUserPin,
+                var rutokenInitParam = new IRutokenInitParam(Settings.SecurityOfficerPin, Settings.NewUserPin,
                     Settings.TokenStdLabel,
                     new List<RutokenFlag> { RutokenFlag.AdminChangeUserPin, RutokenFlag.UserChangeUserPin }, 6, 6,
                     Settings.MAX_ADMIN_RETRY_COUNT, Settings.MAX_USER_RETRY_COUNT, 0);
@@ -106,7 +106,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Slot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Формирование параметров для инициализации токена
-                var rutokenInitParam = new RutokenInitParam(Settings.SecurityOfficerPin, Settings.NewUserPin,
+                var rutokenInitParam = new IRutokenInitParam(Settings.SecurityOfficerPin, Settings.NewUserPin,
                     Settings.TokenStdLabel,
                     new List<RutokenFlag> { RutokenFlag.AdminChangeUserPin, RutokenFlag.UserChangeUserPin }, 6, 6,
                     Settings.MAX_ADMIN_RETRY_COUNT, Settings.MAX_USER_RETRY_COUNT, 0, true);

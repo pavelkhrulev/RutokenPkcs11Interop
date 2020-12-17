@@ -1,10 +1,11 @@
 ﻿using Net.Pkcs11Interop.Common;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI81;
+using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11Interop.HighLevelAPI81
 {
-    public class VolumeFormatInfoExtended : VolumeInfo
+    public class VolumeFormatInfoExtended : VolumeInfo, IVolumeFormatInfoExtended
     {
         internal CK_VOLUME_FORMAT_INFO_EXTENDED CkVolumeFormatInfoExtended { get; }
 

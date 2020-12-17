@@ -8,23 +8,23 @@ using LLA = RutokenPkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11Interop.HighLevelAPI81
 {
-    public class Pkcs11LibraryExtensions : Pkcs11Library, IRutokenPkcs11Library
+    public class RutokenPkcs11Library : Pkcs11Library, IRutokenPkcs11Library
     {
         protected LLA.RutokenPkcs11Library _pkcs11LibraryExtention = null;
 
-        protected Pkcs11LibraryExtensions(Pkcs11InteropFactories factories, string libraryPath)
+        protected RutokenPkcs11Library(Pkcs11InteropFactories factories, string libraryPath)
             : base(factories, libraryPath)
         {
 
         }
 
-        public Pkcs11LibraryExtensions(Pkcs11InteropFactories factories, string libraryPath, AppType appType)
+        public RutokenPkcs11Library(Pkcs11InteropFactories factories, string libraryPath, AppType appType)
             : base(factories, libraryPath, appType)
         {
             _pkcs11LibraryExtention = new LLA.RutokenPkcs11Library(libraryPath);
         }
 
-        public Pkcs11LibraryExtensions(Pkcs11InteropFactories factories, string libraryPath, AppType appType, InitType initType)
+        public RutokenPkcs11Library(Pkcs11InteropFactories factories, string libraryPath, AppType appType, InitType initType)
             : base(factories, libraryPath, appType, initType)
         {
             _pkcs11LibraryExtention = new LLA.RutokenPkcs11Library(libraryPath);

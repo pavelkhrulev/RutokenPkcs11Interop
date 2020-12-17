@@ -1,138 +1,138 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using Net.Pkcs11Interop.LowLevelAPI40;
+using Net.Pkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11Interop.LowLevelAPI81
 {
     internal static class RutokenNativeMethods
     {
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetTokenInfoExtended(uint slotId, ref CK_TOKEN_INFO_EXTENDED info);
+        internal static extern ulong C_EX_GetTokenInfoExtended(ulong slotId, ref CK_TOKEN_INFO_EXTENDED info);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_InitToken(uint slotId, byte[] pin, uint pinLen, ref CK_RUTOKEN_INIT_PARAM initInfo);
+        internal static extern ulong C_EX_InitToken(ulong slotId, byte[] pin, ulong pinLen, ref CK_RUTOKEN_INIT_PARAM initInfo);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_UnblockUserPIN(uint session);
+        internal static extern ulong C_EX_UnblockUserPIN(ulong session);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SetTokenName(uint session, byte[] label, uint labelLen);
+        internal static extern ulong C_EX_SetTokenName(ulong session, byte[] label, ulong labelLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetTokenName(uint session, byte[] label, ref uint labelLen);
+        internal static extern ulong C_EX_GetTokenName(ulong session, byte[] label, ref ulong labelLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetJournal(uint slotId, byte[] journal, ref uint journalLen);
+        internal static extern ulong C_EX_GetJournal(ulong slotId, byte[] journal, ref ulong journalLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SignInvisibleInit(uint session, ref CK_MECHANISM mechanism, uint key);
+        internal static extern ulong C_EX_SignInvisibleInit(ulong session, ref CK_MECHANISM mechanism, ulong key);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SignInvisible(
-            uint session, byte[] data, uint dataLen, byte[] signature, ref uint signatureLen);
+        internal static extern ulong C_EX_SignInvisible(
+            ulong session, byte[] data, ulong dataLen, byte[] signature, ref ulong signatureLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SetLocalPIN(uint slotId, byte[] userPin, uint userPinLen,
-            byte[] newLocalPin, uint localPinLen, uint localPinId);
+        internal static extern ulong C_EX_SetLocalPIN(ulong slotId, byte[] userPin, ulong userPinLen,
+            byte[] newLocalPin, ulong localPinLen, ulong localPinId);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetDriveSize(uint slotId, ref uint driveSize);
+        internal static extern ulong C_EX_GetDriveSize(ulong slotId, ref ulong driveSize);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_FormatDrive(uint slotId, uint userType,
-            byte[] pin, uint pinLen,
-            CK_VOLUME_FORMAT_INFO_EXTENDED[] initParams, uint initParamsCount);
+        internal static extern ulong C_EX_FormatDrive(ulong slotId, ulong userType,
+            byte[] pin, ulong pinLen,
+            CK_VOLUME_FORMAT_INFO_EXTENDED[] initParams, ulong initParamsCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetVolumesInfo(uint slotId,
-            [Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 1)]CK_VOLUME_INFO_EXTENDED[] info, ref uint infoCount);
+        internal static extern ulong C_EX_GetVolumesInfo(ulong slotId,
+            [Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 1)] CK_VOLUME_INFO_EXTENDED[] info, ref ulong infoCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_ChangeVolumeAttributes(uint slotId, uint userType,
-            byte[] pin, uint pinLen,
-            uint volumeId, uint newAccessMode, bool permanent);
+        internal static extern ulong C_EX_ChangeVolumeAttributes(ulong slotId, ulong userType,
+            byte[] pin, ulong pinLen,
+            ulong volumeId, ulong newAccessMode, bool permanent);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SetLicense(
-            uint session, uint licenseNum, byte[] license, uint licenseLen);
+        internal static extern ulong C_EX_SetLicense(
+            ulong session, ulong licenseNum, byte[] license, ulong licenseLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetLicense(
-            uint session, uint licenseNum, byte[] license, ref uint licenseLen);
+        internal static extern ulong C_EX_GetLicense(
+            ulong session, ulong licenseNum, byte[] license, ref ulong licenseLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GenerateActivationPassword(uint session, uint passwordNumber,
-            byte[] password, ref uint passwordSize, uint passwordCharacterSet);
+        internal static extern ulong C_EX_GenerateActivationPassword(ulong session, ulong passwordNumber,
+            byte[] password, ref ulong passwordSize, ulong passwordCharacterSet);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_LoadActivationKey(uint session, byte[] key, uint keySize);
+        internal static extern ulong C_EX_LoadActivationKey(ulong session, byte[] key, ulong keySize);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SetActivationPassword(uint slotId, byte[] password);
+        internal static extern ulong C_EX_SetActivationPassword(ulong slotId, byte[] password);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_TokenManage(uint session, uint mode, IntPtr value);
+        internal static extern ulong C_EX_TokenManage(ulong session, ulong mode, IntPtr value);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SlotManage(uint slotId, uint mode, IntPtr value);
+        internal static extern ulong C_EX_SlotManage(ulong slotId, ulong mode, IntPtr value);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_WrapKey(uint session, ref CK_MECHANISM generationMechanism,
-            CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
+        internal static extern ulong C_EX_WrapKey(ulong session, ref CK_MECHANISM generationMechanism,
+            CK_ATTRIBUTE[] keyTemplate, ulong keyAttributeCount,
             ref CK_MECHANISM derivationMechanism,
-            uint baseKey,
+            ulong baseKey,
             ref CK_MECHANISM wrappingMechanism,
-            byte[] wrappedKey, ref uint wrappedKeyLen, ref uint key);
+            byte[] wrappedKey, ref ulong wrappedKeyLen, ref ulong key);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_UnwrapKey(uint session, ref CK_MECHANISM derivationMechanism,
-            uint baseKey, ref CK_MECHANISM unwrappingMechanism,
-            byte[] wrappedKey, uint wrappedKeyLen,
-            CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
-            ref uint key);
+        internal static extern ulong C_EX_UnwrapKey(ulong session, ref CK_MECHANISM derivationMechanism,
+            ulong baseKey, ref CK_MECHANISM unwrappingMechanism,
+            byte[] wrappedKey, ulong wrappedKeyLen,
+            CK_ATTRIBUTE[] keyTemplate, ulong keyAttributeCount,
+            ref ulong key);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_CreateCSR(uint session, uint publicKey,
-            IntPtr[] dn, uint dnLength,
-            out IntPtr csr, out uint csrLength,
-            uint privateKey,
-            IntPtr[] attributes, uint attributesLength,
-            IntPtr[] extensions, uint extensionsLength);
+        internal static extern ulong C_EX_CreateCSR(ulong session, ulong publicKey,
+            IntPtr[] dn, ulong dnLength,
+            out IntPtr csr, out ulong csrLength,
+            ulong privateKey,
+            IntPtr[] attributes, ulong attributesLength,
+            IntPtr[] extensions, ulong extensionsLength);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetCertificateInfoText(
-            uint session, uint cert, out IntPtr info, out uint infoLen);
+        internal static extern ulong C_EX_GetCertificateInfoText(
+            ulong session, ulong cert, out IntPtr info, out ulong infoLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7Sign(
-            uint session, byte[] data, uint dataLen,
-            uint cert,
-            out IntPtr envelope, out uint encelopeLen,
-            uint privateKey,
-            uint[] certificates, uint certificatesLen, uint flags);
+        internal static extern ulong C_EX_PKCS7Sign(
+            ulong session, byte[] data, ulong dataLen,
+            ulong cert,
+            out IntPtr envelope, out ulong encelopeLen,
+            ulong privateKey,
+            ulong[] certificates, ulong certificatesLen, ulong flags);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7VerifyInit(
-            uint session, byte[] cms, uint cmsSize,
-            ref CK_VENDOR_X509_STORE store, uint mode,
-            uint flags);
+        internal static extern ulong C_EX_PKCS7VerifyInit(
+            ulong session, byte[] cms, ulong cmsSize,
+            ref CK_VENDOR_X509_STORE store, ulong mode,
+            ulong flags);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7Verify(
-            uint session,
-            out IntPtr data, out uint dataSize,
-            out IntPtr signerCertificates, out uint signerCertificatesCount);
+        internal static extern ulong C_EX_PKCS7Verify(
+            ulong session,
+            out IntPtr data, out ulong dataSize,
+            out IntPtr signerCertificates, out ulong signerCertificatesCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7VerifyUpdate(
-            uint session, byte[] data, uint dataSize);
+        internal static extern ulong C_EX_PKCS7VerifyUpdate(
+            ulong session, byte[] data, ulong dataSize);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7VerifyFinal(
-            uint session,
-            out IntPtr signerCertificates, out uint signerCertificatesCount);
+        internal static extern ulong C_EX_PKCS7VerifyFinal(
+            ulong session,
+            out IntPtr signerCertificates, out ulong signerCertificatesCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_FreeBuffer(IntPtr buffer);
+        internal static extern ulong C_EX_FreeBuffer(IntPtr buffer);
     }
 }
