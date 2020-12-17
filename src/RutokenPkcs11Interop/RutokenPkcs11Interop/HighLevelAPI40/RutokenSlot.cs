@@ -4,14 +4,14 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI41;
-using HLA41 = Net.Pkcs11Interop.HighLevelAPI41;
+using RutokenPkcs11Interop.LowLevelAPI40;
+using HLA40 = Net.Pkcs11Interop.HighLevelAPI40;
 
-namespace RutokenPkcs11Interop.HighLevelAPI41
+namespace RutokenPkcs11Interop.HighLevelAPI40
 {
-    public static class SlotExtensions
+    public static class RutokenSlot
     {
-        public static TokenInfoExtended GetTokenInfoExtended(this HLA41.Slot slot)
+        public static TokenInfoExtended GetTokenInfoExtended(this HLA40.Slot slot)
         {
             var tokenInfo = new CK_TOKEN_INFO_EXTENDED
             {
@@ -25,7 +25,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             return new TokenInfoExtended(tokenInfo);
         }
 
-        public static void InitTokenExtended(this HLA41.Slot slot, string pin, RutokenInitParam initParam)
+        public static void InitTokenExtended(this HLA40.Slot slot, string pin, RutokenInitParam initParam)
         {
             if (pin == null)
                 throw new ArgumentNullException(nameof(pin));
@@ -41,7 +41,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_InitToken", rv);
         }
 
-        public static byte[] GetJournal(this HLA41.Slot slot)
+        public static byte[] GetJournal(this HLA40.Slot slot)
         {
             uint journalLength = 0;
             CKR rv = slot.LowLevelPkcs11.C_EX_GetJournal(slot.SlotId, null, ref journalLength);
@@ -57,7 +57,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             return journal;
         }
 
-        public static void SetLocalPIN(this HLA41.Slot slot, string userPin, string localPin, uint localPinId)
+        public static void SetLocalPIN(this HLA40.Slot slot, string userPin, string localPin, uint localPinId)
         {
             if (userPin == null)
                 throw new ArgumentNullException(nameof(userPin));
@@ -73,14 +73,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_SetLocalPIN", rv);
         }
 
-        public static void SetPIN2(this HLA41.Slot slot, uint pinId)
+        public static void SetPIN2(this HLA40.Slot slot, uint pinId)
         {
             CKR rv = slot.LowLevelPkcs11.C_EX_SetLocalPIN(slot.SlotId, null, null, pinId);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SetLocalPIN", rv);
         }
 
-        public static uint GetDriveSize(this HLA41.Slot slot)
+        public static uint GetDriveSize(this HLA40.Slot slot)
         {
             uint driveSize = 0;
             CKR rv = slot.LowLevelPkcs11.C_EX_GetDriveSize(slot.SlotId, ref driveSize);
@@ -90,7 +90,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             return driveSize;
         }
 
-        public static void FormatDrive(this HLA41.Slot slot, CKU userType,
+        public static void FormatDrive(this HLA40.Slot slot, CKU userType,
             string pin, IEnumerable<VolumeFormatInfoExtended> initParams)
         {
             if (pin == null)
@@ -113,7 +113,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_FormatDrive", rv);
         }
 
-        public static ICollection<VolumeInfoExtended> GetVolumesInfo(this HLA41.Slot slot)
+        public static ICollection<VolumeInfoExtended> GetVolumesInfo(this HLA40.Slot slot)
         {
             uint volumesInfoCount = 0;
             CKR rv = slot.LowLevelPkcs11.C_EX_GetVolumesInfo(slot.SlotId, null, ref volumesInfoCount);
@@ -133,7 +133,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
             return null;
         }
 
-        public static void ChangeVolumeAttributes(this HLA41.Slot slot, CKU userType, string pin,
+        public static void ChangeVolumeAttributes(this HLA40.Slot slot, CKU userType, string pin,
             uint volumeId, FlashAccessMode newAccessMode, bool permanent)
         {
             if (pin == null)
@@ -147,7 +147,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_ChangeVolumeAttributes", rv);
         }
 
-        public static void SetActivationPassword(this HLA41.Slot slot, byte[] password)
+        public static void SetActivationPassword(this HLA40.Slot slot, byte[] password)
         {
             if (password == null)
                 throw new ArgumentNullException(nameof(password));
@@ -158,7 +158,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI41
                 throw new Pkcs11Exception("C_EX_SetActivationPassword", rv);
         }
 
-        public static void SlotManage(this HLA41.Slot slot, uint mode, byte[] value)
+        public static void SlotManage(this HLA40.Slot slot, uint mode, byte[] value)
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));

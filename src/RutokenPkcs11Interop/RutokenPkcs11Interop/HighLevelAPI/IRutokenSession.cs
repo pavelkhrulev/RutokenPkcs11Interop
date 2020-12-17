@@ -9,7 +9,7 @@ using RutokenPkcs11Interop.Helpers;
 
 namespace RutokenPkcs11Interop.HighLevelAPI
 {
-    public interface ISessionExtensions: ISession
+    public interface IRutokenSession: ISession
     {
         void UnblockUserPIN();
 
@@ -17,9 +17,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI
 
         string GetTokenLabel();
 
-        void SetLicense(uint licenseNum, byte[] license);
+        void SetLicense(ulong licenseNum, byte[] license);
 
-        byte[] GetLicense(uint licenseNum);
+        byte[] GetLicense(ulong licenseNum);
 
         void LoadActivationKey(byte[] key);
 
@@ -34,16 +34,16 @@ namespace RutokenPkcs11Interop.HighLevelAPI
         string GetCertificateInfoText(IObjectHandle certificate);
 
         byte[] PKCS7Sign(byte[] data, IObjectHandle certificate,
-            IObjectHandle privateKey, uint[] certificates, uint flags);
+            IObjectHandle privateKey, ulong[] certificates, ulong flags);
 
         Pkcs7VerificationResult PKCS7Verify(byte[] cms,
             CkVendorX509Store vendorX509Store,
-            VendorCrlMode mode, uint flags);
+            VendorCrlMode mode, ulong flags);
 
         Pkcs7VerificationResult PKCS7Verify(byte[] cms,
             Stream inputStream,
             CkVendorX509Store vendorX509Store,
-            VendorCrlMode mode, uint flags);
+            VendorCrlMode mode, ulong flags);
 
         void TokenManage(TokenManageMode mode, byte[] value);
 

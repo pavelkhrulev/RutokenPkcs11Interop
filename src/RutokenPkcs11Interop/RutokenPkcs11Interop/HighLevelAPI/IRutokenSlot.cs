@@ -7,7 +7,7 @@ using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11Interop.HighLevelAPI
 {
-    public interface ISlotExtensions: ISlot
+    public interface IRutokenSlot: ISlot
     {
         ITokenInfoExtended GetTokenInfoExtended();
 

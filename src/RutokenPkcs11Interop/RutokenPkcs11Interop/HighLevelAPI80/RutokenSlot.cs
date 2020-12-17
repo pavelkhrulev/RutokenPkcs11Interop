@@ -9,7 +9,7 @@ using HLA80 = Net.Pkcs11Interop.HighLevelAPI80;
 
 namespace RutokenPkcs11Interop.HighLevelAPI80
 {
-    public static class SlotExtensions
+    public static class RutokenSlot
     {
         public static TokenInfoExtended GetTokenInfoExtended(this HLA80.Slot slot)
         {

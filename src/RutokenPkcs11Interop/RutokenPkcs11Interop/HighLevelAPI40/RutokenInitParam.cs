@@ -4,10 +4,11 @@ using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.LowLevelAPI40;
+using RutokenPkcs11Interop.HighLevelAPI;
 
 namespace RutokenPkcs11Interop.HighLevelAPI40
 {
-    public class RutokenInitParam : IDisposable
+    public class RutokenInitParam  : IRutokenInitParam
     {
         private bool _disposed = false;
 

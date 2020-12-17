@@ -1,15 +1,15 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
-using Net.Pkcs11Interop.HighLevelAPI81;
+using Net.Pkcs11Interop.HighLevelAPI40;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.Logging;
 
 using RutokenPkcs11Interop.HighLevelAPI;
-using LLA = RutokenPkcs11Interop.LowLevelAPI81;
+using LLA = RutokenPkcs11Interop.LowLevelAPI40;
 
-namespace RutokenPkcs11Interop.HighLevelAPI81
+namespace RutokenPkcs11Interop.HighLevelAPI40
 {
-    public class RutokenPkcs11Library : Pkcs11Library, IRutokenPkcs11Library
+    public class RutokenPkcs11Library: Pkcs11Library, IRutokenPkcs11Library
     {
         private Pkcs11InteropLogger _logger = Pkcs11InteropLoggerFactory.GetLogger(typeof(RutokenPkcs11Library));
 
@@ -74,8 +74,6 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
                 throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
         }
 
-
-
         protected override void Dispose(bool disposing)
         {
             _logger.Debug("RutokenPkcs11Library({0})::Dispose", _libraryPath);
@@ -84,5 +82,3 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
         }
     }
 }
-
-

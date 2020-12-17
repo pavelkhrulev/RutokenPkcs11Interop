@@ -4,14 +4,14 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI81;
-using HLA81 = Net.Pkcs11Interop.HighLevelAPI81;
+using RutokenPkcs11Interop.LowLevelAPI41;
+using HLA41 = Net.Pkcs11Interop.HighLevelAPI41;
 
-namespace RutokenPkcs11Interop.HighLevelAPI81
+namespace RutokenPkcs11Interop.HighLevelAPI41
 {
-    public static class SlotExtensions
+    public static class RutokenSlot
     {
-        public static TokenInfoExtended GetTokenInfoExtended(this HLA81.Slot slot)
+        public static TokenInfoExtended GetTokenInfoExtended(this HLA41.Slot slot)
         {
             var tokenInfo = new CK_TOKEN_INFO_EXTENDED
             {
@@ -25,7 +25,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
             return new TokenInfoExtended(tokenInfo);
         }
 
-        public static void InitTokenExtended(this HLA81.Slot slot, string pin, RutokenInitParam initParam)
+        public static void InitTokenExtended(this HLA41.Slot slot, string pin, RutokenInitParam initParam)
         {
             if (pin == null)
                 throw new ArgumentNullException(nameof(pin));
@@ -41,9 +41,9 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
                 throw new Pkcs11Exception("C_EX_InitToken", rv);
         }
 
-        public static byte[] GetJournal(this HLA81.Slot slot)
+        public static byte[] GetJournal(this HLA41.Slot slot)
         {
-            ulong journalLength = 0;
+            uint journalLength = 0;
             CKR rv = slot.LowLevelPkcs11.C_EX_GetJournal(slot.SlotId, null, ref journalLength);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetJournal", rv);
@@ -57,7 +57,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
             return journal;
         }
 
-        public static void SetLocalPIN(this HLA81.Slot slot, string userPin, string localPin, ulong localPinId)
+        public static void SetLocalPIN(this HLA41.Slot slot, string userPin, string localPin, uint localPinId)
         {
             if (userPin == null)
                 throw new ArgumentNullException(nameof(userPin));
@@ -73,16 +73,16 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
                 throw new Pkcs11Exception("C_EX_SetLocalPIN", rv);
         }
 
-        public static void SetPIN2(this HLA81.Slot slot, ulong pinId)
+        public static void SetPIN2(this HLA41.Slot slot, uint pinId)
         {
             CKR rv = slot.LowLevelPkcs11.C_EX_SetLocalPIN(slot.SlotId, null, null, pinId);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SetLocalPIN", rv);
         }
 
-        public static ulong GetDriveSize(this HLA81.Slot slot)
+        public static uint GetDriveSize(this HLA41.Slot slot)
         {
-            ulong driveSize = 0;
+            uint driveSize = 0;
             CKR rv = slot.LowLevelPkcs11.C_EX_GetDriveSize(slot.SlotId, ref driveSize);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetDriveSize", rv);
@@ -90,7 +90,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
             return driveSize;
         }
 
-        public static void FormatDrive(this HLA81.Slot slot, CKU userType,
+        public static void FormatDrive(this HLA41.Slot slot, CKU userType,
             string pin, IEnumerable<VolumeFormatInfoExtended> initParams)
         {
             if (pin == null)
@@ -107,15 +107,15 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
                 formatParams.Add(initParam.CkVolumeFormatInfoExtended);
             }
 
-            CKR rv = slot.LowLevelPkcs11.C_EX_FormatDrive(slot.SlotId, (ulong)userType,
+            CKR rv = slot.LowLevelPkcs11.C_EX_FormatDrive(slot.SlotId, (uint)userType,
                 pinArray, formatParams.ToArray());
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_FormatDrive", rv);
         }
 
-        public static ICollection<VolumeInfoExtended> GetVolumesInfo(this HLA81.Slot slot)
+        public static ICollection<VolumeInfoExtended> GetVolumesInfo(this HLA41.Slot slot)
         {
-            ulong volumesInfoCount = 0;
+            uint volumesInfoCount = 0;
             CKR rv = slot.LowLevelPkcs11.C_EX_GetVolumesInfo(slot.SlotId, null, ref volumesInfoCount);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetVolumesInfo", rv);
@@ -133,21 +133,21 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
             return null;
         }
 
-        public static void ChangeVolumeAttributes(this HLA81.Slot slot, CKU userType, string pin,
-            ulong volumeId, FlashAccessMode newAccessMode, bool permanent)
+        public static void ChangeVolumeAttributes(this HLA41.Slot slot, CKU userType, string pin,
+            uint volumeId, FlashAccessMode newAccessMode, bool permanent)
         {
             if (pin == null)
                 throw new ArgumentNullException(nameof(pin));
 
             byte[] pinArray = ConvertUtils.Utf8StringToBytes(pin);
 
-            CKR rv = slot.LowLevelPkcs11.C_EX_ChangeVolumeAttributes(slot.SlotId, (ulong)userType,
+            CKR rv = slot.LowLevelPkcs11.C_EX_ChangeVolumeAttributes(slot.SlotId, (uint)userType,
                 pinArray, volumeId, newAccessMode, permanent);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_ChangeVolumeAttributes", rv);
         }
 
-        public static void SetActivationPassword(this HLA81.Slot slot, byte[] password)
+        public static void SetActivationPassword(this HLA41.Slot slot, byte[] password)
         {
             if (password == null)
                 throw new ArgumentNullException(nameof(password));
@@ -158,7 +158,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI81
                 throw new Pkcs11Exception("C_EX_SetActivationPassword", rv);
         }
 
-        public static void SlotManage(this HLA81.Slot slot, ulong mode, byte[] value)
+        public static void SlotManage(this HLA41.Slot slot, uint mode, byte[] value)
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));

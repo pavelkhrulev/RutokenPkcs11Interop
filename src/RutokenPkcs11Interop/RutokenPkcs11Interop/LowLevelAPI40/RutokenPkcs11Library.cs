@@ -5,7 +5,7 @@ using RutokenPkcs11Interop.Common;
 
 namespace RutokenPkcs11Interop.LowLevelAPI40
 {
-    public class Pkcs11LibraryExtensions: Pkcs11Library
+    public class RutokenPkcs11Library: Pkcs11Library
     {
         /// <summary>
         /// Delegates for vendor specific unmanaged functions
@@ -16,7 +16,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI40
         /// Loads PCKS#11 library
         /// </summary>
         /// <param name="libraryPath">Library name or path</param>
-        public Pkcs11LibraryExtensions(string libraryPath)
+        public RutokenPkcs11Library(string libraryPath)
             : base(libraryPath)
         {
             try
@@ -35,7 +35,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI40
         /// </summary>
         /// <param name="libraryPath">Library name or path</param>
         /// <param name="useGetFunctionList">Flag indicating whether cryptoki function pointers should be acquired via C_GetFunctionList (true) or via platform native function (false)</param>
-        public Pkcs11LibraryExtensions(string libraryPath, bool useGetFunctionList)
+        public RutokenPkcs11Library(string libraryPath, bool useGetFunctionList)
             : base(libraryPath, useGetFunctionList)
         {
             try
