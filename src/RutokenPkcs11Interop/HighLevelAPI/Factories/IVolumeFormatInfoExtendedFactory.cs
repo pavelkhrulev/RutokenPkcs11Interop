@@ -1,7 +1,7 @@
-﻿using RutokenPkcs11Interop.Common;
+﻿using Net.RutokenPkcs11Interop.Common;
 using Net.Pkcs11Interop.Common;
 
-namespace RutokenPkcs11Interop.HighLevelAPI.Factories
+namespace Net.RutokenPkcs11Interop.HighLevelAPI.Factories
 {
 
     public interface IVolumeFormatInfoExtendedFactory

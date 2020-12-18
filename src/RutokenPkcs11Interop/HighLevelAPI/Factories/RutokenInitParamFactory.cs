@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
 using Net.Pkcs11Interop.Common;
-using RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.Common;
 
 // Note: Code in this file is maintained manually.
 
-namespace RutokenPkcs11Interop.HighLevelAPI.Factories
+namespace Net.RutokenPkcs11Interop.HighLevelAPI.Factories
 {
     /// <summary>
     /// Developer rarely uses this factory to create correct IObjectHandle instances.

@@ -1,8 +1,8 @@
 ﻿using System;
-using RutokenPkcs11Interop.LowLevelAPI81.MechanismParams;
-using RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
+using Net.RutokenPkcs11Interop.LowLevelAPI81.MechanismParams;
+using Net.RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
-namespace RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
+namespace Net.RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
 {
     public class CkGostR3410_12_256_DeriveParams : ICkGostR3410_12_256_DeriveParams
     {

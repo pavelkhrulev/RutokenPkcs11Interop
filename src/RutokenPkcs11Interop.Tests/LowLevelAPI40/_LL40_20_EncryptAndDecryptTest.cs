@@ -3,10 +3,10 @@ using System.IO;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI40;
 using NUnit.Framework;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI40;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.LowLevelAPI40;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI40
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 {
     /// <summary>
     /// C_EncryptInit, C_Encrypt, C_EncryptUpdate, C_EncryptFinish, C_DecryptInit, C_Decrypt, C_DecryptUpdate and C_DecryptFinish tests.

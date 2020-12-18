@@ -2,10 +2,10 @@
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI81;
 using NUnit.Framework;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI81;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.LowLevelAPI81;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI81
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
 {
     /// <summary>
     /// C_SignInit, C_Sign, C_SignUpdate, C_SignFinal, C_VerifyInit, C_Verify, C_VerifyUpdate and C_VerifyFinal tests.

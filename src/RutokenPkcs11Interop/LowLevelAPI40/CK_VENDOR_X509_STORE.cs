@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
-using RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
 
-namespace RutokenPkcs11Interop.LowLevelAPI40
+namespace Net.RutokenPkcs11Interop.LowLevelAPI40
 {
     /// <summary>
     /// Структура, которая содержит указатели на необходимые для проверки подписи доверенные сертификаты,

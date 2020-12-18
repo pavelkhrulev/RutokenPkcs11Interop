@@ -2,10 +2,10 @@
 using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI40;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI40;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.LowLevelAPI40;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI40
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 {
     [TestFixture()]
     public class _LL40_34_ManageEntityTest

@@ -1,4 +1,4 @@
-﻿namespace RutokenPkcs11InteropTests
+﻿namespace Net.RutokenPkcs11InteropTests
 {
     public static class TestData
     {

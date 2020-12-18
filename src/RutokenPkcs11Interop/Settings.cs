@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Net.Pkcs11Interop.Common;
 
-namespace RutokenPkcs11Interop
+namespace Net.RutokenPkcs11Interop
 {
     public static class Settings
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace RutokenPkcs11Interop.Common
+namespace Net.RutokenPkcs11Interop.Common
 {
     public class Pkcs7VerificationResult
     {

@@ -1,6 +1,6 @@
 ﻿using Net.Pkcs11Interop.Common;
 
-namespace RutokenPkcs11Interop.Common
+namespace Net.RutokenPkcs11Interop.Common
 {
     public enum Extended_CKH : uint
     {

@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
-using RutokenPkcs11Interop.LowLevelAPI41;
+using Net.RutokenPkcs11Interop.LowLevelAPI41;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI41
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
 {
     [TestFixture()]
     public class _LL41_31_LicenseTest
@@ -39,7 +39,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Сохранение лицензии
                 uint licenseNum = 1;
-                byte[] setlicense = new byte[RutokenPkcs11Interop.Settings.DefaultLicenseLength];
+                byte[] setlicense = new byte[Net.RutokenPkcs11Interop.Settings.DefaultLicenseLength];
                 (new Random()).NextBytes(setlicense);
                 rv = pkcs11.C_EX_SetLicense(session, licenseNum, setlicense);
                 if (rv != CKR.CKR_OK)

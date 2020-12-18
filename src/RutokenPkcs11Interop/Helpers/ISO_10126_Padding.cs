@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace RutokenPkcs11Interop.Helpers
+namespace Net.RutokenPkcs11Interop.Helpers
 {
     public static class ISO_10126_Padding
     {

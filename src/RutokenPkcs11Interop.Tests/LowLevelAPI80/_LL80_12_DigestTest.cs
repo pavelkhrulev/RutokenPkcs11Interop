@@ -2,10 +2,10 @@
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI80;
 using NUnit.Framework;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI80;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.LowLevelAPI80;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI80
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI80
 {
     /// <summary>
     /// C_DigestInit, C_Digest, C_DigestUpdate, C_DigestFinal and C_DigestKey tests.

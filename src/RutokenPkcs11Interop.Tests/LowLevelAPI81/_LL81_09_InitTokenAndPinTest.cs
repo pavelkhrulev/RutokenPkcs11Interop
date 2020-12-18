@@ -3,10 +3,10 @@ using System.Runtime.InteropServices;
 using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI81;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI81;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.LowLevelAPI81;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI81
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
 {
     [TestFixture()]
     public class _LL81_09_InitTokenAndPinTest

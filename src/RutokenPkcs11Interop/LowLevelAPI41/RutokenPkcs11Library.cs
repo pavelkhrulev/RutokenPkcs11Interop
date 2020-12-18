@@ -1,9 +1,9 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
-using RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.Common;
 
-namespace RutokenPkcs11Interop.LowLevelAPI41
+namespace Net.RutokenPkcs11Interop.LowLevelAPI41
 {
     public class RutokenPkcs11Library: Pkcs11Library
     {

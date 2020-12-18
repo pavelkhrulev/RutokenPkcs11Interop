@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI81;
-using RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.LowLevelAPI81;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
 
-namespace RutokenPkcs11Interop.HighLevelAPI81
+namespace Net.RutokenPkcs11Interop.HighLevelAPI81
 {
     public class RutokenInitParam : IRutokenInitParam
     {

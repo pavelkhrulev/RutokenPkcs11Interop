@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 
-namespace RutokenPkcs11Interop.Helpers
+namespace Net.RutokenPkcs11Interop.Helpers
 {
     public static class StringArrayHelpers
     {

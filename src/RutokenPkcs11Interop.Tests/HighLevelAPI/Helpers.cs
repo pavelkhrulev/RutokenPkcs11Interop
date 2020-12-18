@@ -4,12 +4,12 @@ using System.IO;
 using Net.Pkcs11Interop.Common;
 using NUnit.Framework;
 using Net.Pkcs11Interop.HighLevelAPI;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.Helpers;
-using RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.Helpers;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.MechanismParams;
 
-namespace RutokenPkcs11InteropTests.HighLevelAPI
+namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 {
     /// <summary>
     /// Helper methods for HighLevelAPI tests.

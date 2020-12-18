@@ -5,7 +5,7 @@ using Net.Pkcs11Interop.HighLevelAPI.Factories;
 
 // Note: Code in this file is generated automatically.
 
-namespace RutokenPkcs11Interop.HighLevelAPI40.Factories
+namespace Net.RutokenPkcs11Interop.HighLevelAPI40.Factories
 {
     /// <summary>
     /// Factory for creation of ISlot instances

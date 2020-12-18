@@ -1,8 +1,8 @@
 ﻿using Net.Pkcs11Interop.HighLevelAPI;
-using RutokenPkcs11Interop.HighLevelAPI.Factories;
+using Net.RutokenPkcs11Interop.HighLevelAPI.Factories;
 
 
-namespace RutokenPkcs11Interop.HighLevelAPI
+namespace Net.RutokenPkcs11Interop.HighLevelAPI
 {
     public class RutokenPkcs11InteropFactories : Pkcs11InteropFactories
     {

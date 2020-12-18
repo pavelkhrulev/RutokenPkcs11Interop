@@ -5,14 +5,14 @@ using System.Runtime.InteropServices;
 using System.Linq;
 
 using Net.Pkcs11Interop.Common;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.Helpers;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.Helpers;
 
-using RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.LowLevelAPI40;
 
-namespace RutokenPkcs11Interop.HighLevelAPI40
+namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 {
     public class RutokenSession: Net.Pkcs11Interop.HighLevelAPI40.Session, IRutokenSession
     {

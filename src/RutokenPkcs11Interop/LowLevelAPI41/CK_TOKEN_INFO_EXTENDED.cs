@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace RutokenPkcs11Interop.LowLevelAPI41
+namespace Net.RutokenPkcs11Interop.LowLevelAPI41
 {
     /// <summary>
     /// Структура для представления расширенной информации о токене

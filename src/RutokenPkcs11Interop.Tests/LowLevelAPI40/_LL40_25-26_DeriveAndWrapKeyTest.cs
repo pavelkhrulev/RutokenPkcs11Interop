@@ -3,11 +3,11 @@ using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI40;
 using Net.Pkcs11Interop.LowLevelAPI40.MechanismParams;
 using NUnit.Framework;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI40;
-using RutokenPkcs11Interop.LowLevelAPI40.MechanismParams;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.LowLevelAPI40;
+using Net.RutokenPkcs11Interop.LowLevelAPI40.MechanismParams;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI40
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 {
     [TestFixture()]
     public class _LL40_25_26_DeriveAndWrapKeyTest

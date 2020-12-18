@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RutokenPkcs11Interop.Helpers
+namespace Net.RutokenPkcs11Interop.Helpers
 {
     public static class ExtensionMethods
     {

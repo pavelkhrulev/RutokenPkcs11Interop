@@ -1,11 +1,11 @@
 ﻿using System;
 using NUnit.Framework;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.HighLevelAPI.Factories;
-using RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.HighLevelAPI.Factories;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI;
 
-namespace RutokenPkcs11InteropTests.HighLevelAPI
+namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 {
     /// <summary>
     /// C_GetInfo tests.

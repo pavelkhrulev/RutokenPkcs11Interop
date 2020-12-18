@@ -6,7 +6,7 @@ using NativeULong = System.UInt32;
 
 // Note: Code in this file is generated automatically.
 
-namespace RutokenPkcs11Interop.LowLevelAPI81
+namespace Net.RutokenPkcs11Interop.LowLevelAPI81
 {
     internal class RutokenDelegates
     {

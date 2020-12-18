@@ -2,10 +2,10 @@
 using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.LowLevelAPI41;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.LowLevelAPI41;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI41
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
 {
     [TestFixture()]
     public class _LL41_32_ActivationPasswordTest

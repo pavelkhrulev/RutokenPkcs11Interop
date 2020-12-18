@@ -1,4 +1,4 @@
-﻿namespace RutokenPkcs11Interop.Common
+﻿namespace Net.RutokenPkcs11Interop.Common
 {
     public enum TokenManageMode
     {

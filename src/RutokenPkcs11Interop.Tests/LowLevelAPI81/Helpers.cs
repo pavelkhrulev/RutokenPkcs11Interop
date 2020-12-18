@@ -5,12 +5,12 @@ using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI81;
 using Net.Pkcs11Interop.LowLevelAPI81.MechanismParams;
 
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.Helpers;
-using RutokenPkcs11Interop.LowLevelAPI81.MechanismParams;
-using RutokenPkcs11Interop.LowLevelAPI81;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.Helpers;
+using Net.RutokenPkcs11Interop.LowLevelAPI81.MechanismParams;
+using Net.RutokenPkcs11Interop.LowLevelAPI81;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI81
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
 {
     public static class Helpers
     {

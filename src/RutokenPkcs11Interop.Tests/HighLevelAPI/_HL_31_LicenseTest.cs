@@ -2,9 +2,9 @@
 using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
-using RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
 
-namespace RutokenPkcs11InteropTests.HighLevelAPI
+namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 {
     [TestFixture()]
     public class _HL_31_LicenseTest
@@ -25,7 +25,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
                     // Сохранение лицензии
                     uint licenseNum = 1;
-                    byte[] setlicense = new byte[RutokenPkcs11Interop.Settings.DefaultLicenseLength];
+                    byte[] setlicense = new byte[Net.RutokenPkcs11Interop.Settings.DefaultLicenseLength];
                     (new Random()).NextBytes(setlicense);
                     session.SetLicense(licenseNum, setlicense);
 

@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.LowLevelAPI40;
 
-namespace RutokenPkcs11Interop.LowLevelAPI40
+namespace Net.RutokenPkcs11Interop.LowLevelAPI40
 {
     internal static class RutokenNativeMethods
     {

@@ -4,11 +4,11 @@ using Net.Pkcs11Interop.Common;
 using NUnit.Framework;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.MechanismParams;
-using RutokenPkcs11Interop.Common;
-using RutokenPkcs11Interop.HighLevelAPI;
-using RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
+using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
-namespace RutokenPkcs11InteropTests.HighLevelAPI
+namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 {
     [TestFixture()]
     public class _HL_25_26_DeriveAndWrapKeyTest

@@ -4,7 +4,7 @@ using Net.Pkcs11Interop.HighLevelAPI.Factories;
 
 // Note: Code in this file is maintained manually.
 
-namespace RutokenPkcs11Interop.HighLevelAPI.Factories
+namespace Net.RutokenPkcs11Interop.HighLevelAPI.Factories
 {
     /// <summary>
     /// Factory for creation of ISession instances

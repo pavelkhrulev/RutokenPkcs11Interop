@@ -4,10 +4,10 @@ using Net.Pkcs11Interop.HighLevelAPI41;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.Logging;
 
-using RutokenPkcs11Interop.HighLevelAPI;
-using LLA = RutokenPkcs11Interop.LowLevelAPI41;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
+using LLA = Net.RutokenPkcs11Interop.LowLevelAPI41;
 
-namespace RutokenPkcs11Interop.HighLevelAPI41
+namespace Net.RutokenPkcs11Interop.HighLevelAPI41
 {
     public class RutokenPkcs11Library : Pkcs11Library, IRutokenPkcs11Library
     {

@@ -1,226 +1,66 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <TargetFrameworks>net40;net45;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{84987BE4-7AC6-4430-BF04-80689EBD22A3}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RutokenPkcs11Interop</RootNamespace>
-    <AssemblyName>RutokenPkcs11Interop</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <Version>5.1.1</Version>
+    <Authors>AktivCo</Authors>
+    <Description>Managed .NET wrapper for unmanaged Rutoken PKCS#11 libraries</Description>
+    <Copyright>Copyright (c) 2017-2020 The RutokenPkcs11Interop Project</Copyright>
+    <PackageProjectUrl>https://github.com/pavelkhrulev/RutokenPkcs11Interop</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pavelkhrulev/RutokenPkcs11Interop.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>pkcs pkcs11 security crypto cryptography smartcard hsm rutoken aktiv</PackageTags>
+    <Company />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>Net.RutokenPkcs11Interop</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+  
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+  
+  <PropertyGroup>
+    <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Pkcs11Interop, Version=5.1.1.0, Culture=neutral, PublicKeyToken=c10e9c2d8c006d2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pkcs11Interop.5.1.1\lib\net45\Pkcs11Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+  
+
+  <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Common\ActivationPasswordCharacterSet.cs" />
-    <Compile Include="Common\ActivationPasswordNumber.cs" />
-    <Compile Include="Common\Extended_CKA.cs" />
-    <Compile Include="Common\Extended_CKD.cs" />
-    <Compile Include="Common\Extended_CKH.cs" />
-    <Compile Include="Common\Extended_CKK.cs" />
-    <Compile Include="Common\Extended_CKM.cs" />
-    <Compile Include="Common\FlashAccessMode.cs" />
-    <Compile Include="Common\RutokenBodyColor.cs" />
-    <Compile Include="Common\RutokenClass.cs" />
-    <Compile Include="Common\RutokenType.cs" />
-    <Compile Include="Common\TokenManageMode.cs" />
-    <Compile Include="Common\VendorCrlMode.cs" />
-    <Compile Include="Helpers\ExtensionMethods.cs" />
-    <Compile Include="Helpers\ISO_10126_Padding.cs" />
-    <Compile Include="Helpers\PKIHelpers.cs" />
-    <Compile Include="Helpers\ReflectionHelper.cs" />
-    <Compile Include="Helpers\StringArrayHelpers.cs" />
-    <Compile Include="HighLevelAPI40\Factories\RutokenMechanismParamsFactory.cs" />
-    <Compile Include="HighLevelAPI40\Factories\VolumeFormatInfoExtendedFactory.cs" />
-    <Compile Include="HighLevelAPI40\Factories\RutokenInitParamFactory.cs" />
-    <Compile Include="HighLevelAPI40\Factories\RutokenPkcs11LibraryFactory.cs" />
-    <Compile Include="HighLevelAPI40\Factories\RutokenSessionFactory.cs" />
-    <Compile Include="HighLevelAPI40\Factories\RutokenSlotFactory.cs" />
-    <Compile Include="HighLevelAPI40\MechanismParams\CkGostR3410_12_256_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI40\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI40\RutokenPkcs11Library.cs" />
-    <Compile Include="HighLevelAPI40\RutokenInitParam.cs" />
-    <Compile Include="HighLevelAPI40\RutokenSession.cs" />
-    <Compile Include="HighLevelAPI40\RutokenSlot.cs" />
-    <Compile Include="HighLevelAPI40\TokenInfoExtended.cs" />
-    <Compile Include="HighLevelAPI40\VolumeFormatInfoExtended.cs" />
-    <Compile Include="HighLevelAPI40\VolumeInfo.cs" />
-    <Compile Include="HighLevelAPI40\VolumeInfoExtended.cs" />
-    <Compile Include="HighLevelAPI41\Factories\RutokenInitParamFactory.cs" />
-    <Compile Include="HighLevelAPI41\Factories\RutokenMechanismParamsFactory.cs" />
-    <Compile Include="HighLevelAPI41\Factories\RutokenPkcs11LibraryFactory.cs" />
-    <Compile Include="HighLevelAPI41\Factories\RutokenSessionFactory.cs" />
-    <Compile Include="HighLevelAPI41\Factories\RutokenSlotFactory.cs" />
-    <Compile Include="HighLevelAPI41\Factories\VolumeFormatInfoExtendedFactory.cs" />
-    <Compile Include="HighLevelAPI80\Factories\RutokenInitParamFactory.cs" />
-    <Compile Include="HighLevelAPI80\Factories\RutokenMechanismParamsFactory.cs" />
-    <Compile Include="HighLevelAPI80\Factories\RutokenPkcs11LibraryFactory.cs" />
-    <Compile Include="HighLevelAPI80\Factories\RutokenSessionFactory.cs" />
-    <Compile Include="HighLevelAPI80\Factories\RutokenSlotFactory.cs" />
-    <Compile Include="HighLevelAPI80\Factories\VolumeFormatInfoExtendedFactory.cs" />
-    <Compile Include="HighLevelAPI80\MechanismParams\CkGostR3410_12_256_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI80\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI80\RutokenPkcs11Library.cs" />
-    <Compile Include="HighLevelAPI80\RutokenInitParam.cs" />
-    <Compile Include="HighLevelAPI80\RutokenSession.cs" />
-    <Compile Include="HighLevelAPI80\RutokenSlot.cs" />
-    <Compile Include="HighLevelAPI80\TokenInfoExtended.cs" />
-    <Compile Include="HighLevelAPI80\VolumeFormatInfoExtended.cs" />
-    <Compile Include="HighLevelAPI80\VolumeInfo.cs" />
-    <Compile Include="HighLevelAPI80\VolumeInfoExtended.cs" />
-    <Compile Include="HighLevelAPI81\Factories\RutokenInitParamFactory.cs" />
-    <Compile Include="HighLevelAPI81\Factories\RutokenMechanismParamsFactory.cs" />
-    <Compile Include="HighLevelAPI81\Factories\RutokenPkcs11LibraryFactory.cs" />
-    <Compile Include="HighLevelAPI81\Factories\RutokenSessionFactory.cs" />
-    <Compile Include="HighLevelAPI81\Factories\RutokenSlotFactory.cs" />
-    <Compile Include="HighLevelAPI81\Factories\VolumeFormatInfoExtendedFactory.cs" />
-    <Compile Include="HighLevelAPI\CkVendorX509Store.cs" />
-    <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_256_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI41\RutokenPkcs11Library.cs" />
-    <Compile Include="Common\PinPolicy.cs" />
-    <Compile Include="HighLevelAPI\Factories\IRutokenSessionFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\IRutokenMechanismParamsFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\IRutokenSlotFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\IRutokenPkcs11LibraryFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\IVolumeFormatInfoExtendedFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\RutokenMechanismParamsFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\VolumeFormatInfoExtendedFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\RutokenInitParamFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\RutokenPkcs11LibraryFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\RutokenSessionFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\IRutokenInitParamFactory.cs" />
-    <Compile Include="HighLevelAPI\Factories\RutokenSlotFactory.cs" />
-    <Compile Include="HighLevelAPI\IRutokenPkcs11Library.cs" />
-    <Compile Include="Common\Pkcs7VerificationResult.cs" />
-    <Compile Include="HighLevelAPI41\RutokenInitParam.cs" />
-    <Compile Include="HighLevelAPI41\RutokenSession.cs" />
-    <Compile Include="HighLevelAPI41\RutokenSlot.cs" />
-    <Compile Include="HighLevelAPI41\TokenInfoExtended.cs" />
-    <Compile Include="HighLevelAPI41\VolumeFormatInfoExtended.cs" />
-    <Compile Include="HighLevelAPI41\VolumeInfo.cs" />
-    <Compile Include="HighLevelAPI41\VolumeInfoExtended.cs" />
-    <Compile Include="HighLevelAPI81\MechanismParams\CkGostR3410_12_256_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI81\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI81\RutokenPkcs11Library.cs" />
-    <Compile Include="HighLevelAPI81\RutokenInitParam.cs" />
-    <Compile Include="HighLevelAPI81\RutokenSession.cs" />
-    <Compile Include="HighLevelAPI81\RutokenSlot.cs" />
-    <Compile Include="HighLevelAPI81\TokenInfoExtended.cs" />
-    <Compile Include="HighLevelAPI81\VolumeFormatInfoExtended.cs" />
-    <Compile Include="HighLevelAPI81\VolumeInfo.cs" />
-    <Compile Include="HighLevelAPI81\VolumeInfoExtended.cs" />
-    <Compile Include="HighLevelAPI\MechanismParams\ICkGostR3410_12_256_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI\MechanismParams\ICkGostR3410_12_DeriveParams.cs" />
-    <Compile Include="HighLevelAPI\IRutokenInitParam.cs" />
-    <Compile Include="HighLevelAPI\IRutokenSession.cs" />
-    <Compile Include="HighLevelAPI\IRutokenSlot.cs" />
-    <Compile Include="HighLevelAPI\ITokenInfoExtended.cs" />
-    <Compile Include="HighLevelAPI\IVolumeFormatInfoExtended.cs" />
-    <Compile Include="HighLevelAPI\IVolumeInfoExtended.cs" />
-    <Compile Include="HighLevelAPI\RutokenPkcs11InteropFactories.cs" />
-    <Compile Include="LowLevelAPI40\CK_RUTOKEN_INIT_PARAM.cs" />
-    <Compile Include="LowLevelAPI40\CK_TOKEN_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI40\CK_VENDOR_BUFFER.cs" />
-    <Compile Include="LowLevelAPI40\CK_VENDOR_X509_STORE.cs" />
-    <Compile Include="LowLevelAPI40\CK_VOLUME_FORMAT_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI40\CK_VOLUME_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI40\MechanismParams\CK_GOSTR3410_12_256_DERIVE_PARAMS.cs" />
-    <Compile Include="LowLevelAPI40\MechanismParams\CK_GOSTR3410_12_DERIVE_PARAMS.cs" />
-    <Compile Include="LowLevelAPI40\RutokenPkcs11Library.cs" />
-    <Compile Include="LowLevelAPI40\RutokenDelegates.cs" />
-    <Compile Include="LowLevelAPI40\RutokenNativeMethods.cs" />
-    <Compile Include="LowLevelAPI41\CK_RUTOKEN_INIT_PARAM.cs" />
-    <Compile Include="LowLevelAPI41\CK_TOKEN_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI41\CK_VENDOR_BUFFER.cs" />
-    <Compile Include="LowLevelAPI41\CK_VENDOR_X509_STORE.cs" />
-    <Compile Include="LowLevelAPI41\CK_VOLUME_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI41\CK_VOLUME_FORMAT_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_12_256_DERIVE_PARAMS.cs" />
-    <Compile Include="LowLevelAPI41\MechanismParams\CK_GOSTR3410_12_DERIVE_PARAMS.cs" />
-    <Compile Include="LowLevelAPI41\RutokenPkcs11Library.cs" />
-    <Compile Include="LowLevelAPI41\RutokenDelegates.cs" />
-    <Compile Include="LowLevelAPI41\RutokenNativeMethods.cs" />
-    <Compile Include="Common\RutokenFlag.cs" />
-    <Compile Include="LowLevelAPI80\CK_RUTOKEN_INIT_PARAM.cs" />
-    <Compile Include="LowLevelAPI80\CK_TOKEN_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI80\CK_VENDOR_BUFFER.cs" />
-    <Compile Include="LowLevelAPI80\CK_VENDOR_X509_STORE.cs" />
-    <Compile Include="LowLevelAPI80\CK_VOLUME_FORMAT_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI80\CK_VOLUME_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI80\MechanismParams\CK_GOSTR3410_12_256_DERIVE_PARAMS.cs" />
-    <Compile Include="LowLevelAPI80\MechanismParams\CK_GOSTR3410_12_DERIVE_PARAMS.cs" />
-    <Compile Include="LowLevelAPI80\RutokenPkcs11Library.cs" />
-    <Compile Include="LowLevelAPI80\RutokenDelegates.cs" />
-    <Compile Include="LowLevelAPI80\RutokenNativeMethods.cs" />
-    <Compile Include="LowLevelAPI81\CK_RUTOKEN_INIT_PARAM.cs" />
-    <Compile Include="LowLevelAPI81\CK_TOKEN_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI81\CK_VENDOR_BUFFER.cs" />
-    <Compile Include="LowLevelAPI81\CK_VENDOR_X509_STORE.cs" />
-    <Compile Include="LowLevelAPI81\CK_VOLUME_FORMAT_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI81\CK_VOLUME_INFO_EXTENDED.cs" />
-    <Compile Include="LowLevelAPI81\MechanismParams\CK_GOSTR3410_12_256_DERIVE_PARAMS.cs" />
-    <Compile Include="LowLevelAPI81\MechanismParams\CK_GOSTR3410_12_DERIVE_PARAMS.cs" />
-    <Compile Include="LowLevelAPI81\RutokenPkcs11Library.cs" />
-    <Compile Include="LowLevelAPI81\RutokenDelegates.cs" />
-    <Compile Include="LowLevelAPI81\RutokenNativeMethods.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\AssemblyInfoCommon.cs" />
+
+  <ItemGroup Condition="$(TargetFramework) == 'netstandard1.3'">
+    <PackageReference Include="System.Diagnostics.TraceSource" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Thread" Version="4.3.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="packages.config" />
+    <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0-beta2-18618-05">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NUnit" Version="3.12.0" />
+    <PackageReference Include="Pkcs11Interop" Version="5.1.1" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
-  </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <Version>4.3.0</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation">
+      <Version>4.3.0</Version>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>

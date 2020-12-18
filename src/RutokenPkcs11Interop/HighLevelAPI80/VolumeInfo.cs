@@ -1,7 +1,7 @@
 ﻿using Net.Pkcs11Interop.Common;
-using RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.Common;
 
-namespace RutokenPkcs11Interop.HighLevelAPI80
+namespace Net.RutokenPkcs11Interop.HighLevelAPI80
 {
     public abstract class VolumeInfo
     {

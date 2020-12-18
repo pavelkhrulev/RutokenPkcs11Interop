@@ -2,7 +2,7 @@
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.Factories;
 
-namespace RutokenPkcs11Interop.HighLevelAPI81.Factories
+namespace Net.RutokenPkcs11Interop.HighLevelAPI81.Factories
 {
     /// <summary>
     /// Factory for creation of IPkcs11Library instances

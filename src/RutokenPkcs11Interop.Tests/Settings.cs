@@ -1,12 +1,12 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
-using RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
 using LLA40 = Net.Pkcs11Interop.LowLevelAPI40;
 using LLA41 = Net.Pkcs11Interop.LowLevelAPI41;
 using LLA80 = Net.Pkcs11Interop.LowLevelAPI80;
 using LLA81 = Net.Pkcs11Interop.LowLevelAPI81;
 
-namespace RutokenPkcs11InteropTests
+namespace Net.RutokenPkcs11InteropTests
 {
     public static class Settings
     {
@@ -93,7 +93,7 @@ namespace RutokenPkcs11InteropTests
         /// <summary>
         /// Application name that is used as a label for all objects created by these tests.
         /// </summary>
-        public static string ApplicationName = @"RutokenPkcs11Interop";
+        public static string ApplicationName = @"Net.RutokenPkcs11Interop";
 
         /* DEMO-метка открытого ключа RSA */
         public static string RsaPublicKeyLabel = @"Sample RSA Public Key (Aktiv Co.)";

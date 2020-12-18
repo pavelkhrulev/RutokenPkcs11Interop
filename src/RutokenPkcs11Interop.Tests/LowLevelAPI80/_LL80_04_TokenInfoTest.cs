@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI80;
-using RutokenPkcs11Interop.LowLevelAPI80;
+using Net.RutokenPkcs11Interop.LowLevelAPI80;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI80
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI80
 {
     [TestFixture()]
     public class _LL80_04_TokenInfoTest

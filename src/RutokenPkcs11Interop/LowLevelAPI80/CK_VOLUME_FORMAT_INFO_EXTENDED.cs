@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace RutokenPkcs11Interop.LowLevelAPI80
+namespace Net.RutokenPkcs11Interop.LowLevelAPI80
 {
     [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
     public struct CK_VOLUME_FORMAT_INFO_EXTENDED

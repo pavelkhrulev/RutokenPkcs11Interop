@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace RutokenPkcs11Interop.Helpers
+namespace Net.RutokenPkcs11Interop.Helpers
 {
     /// <summary>
     /// Многие свойства в исходной библиотеке PKCSInterop имеют модификатор Internal.

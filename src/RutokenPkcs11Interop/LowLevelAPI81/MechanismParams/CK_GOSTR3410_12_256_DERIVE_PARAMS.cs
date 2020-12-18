@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace RutokenPkcs11Interop.LowLevelAPI81.MechanismParams
+namespace Net.RutokenPkcs11Interop.LowLevelAPI81.MechanismParams
 {
     /// <summary>
     /// Structure that provides the parameters to the CKM_GOSTR3410_DERIVE mechanism

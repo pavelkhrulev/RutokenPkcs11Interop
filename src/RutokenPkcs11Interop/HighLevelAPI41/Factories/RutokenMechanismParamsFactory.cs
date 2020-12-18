@@ -1,13 +1,13 @@
 ﻿using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.Factories;
-using RutokenPkcs11Interop.HighLevelAPI.Factories;
-using RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
-using RutokenPkcs11Interop.HighLevelAPI41.MechanismParams;
+using Net.RutokenPkcs11Interop.HighLevelAPI.Factories;
+using Net.RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
+using Net.RutokenPkcs11Interop.HighLevelAPI41.MechanismParams;
 
 // Note: Code in this file is maintained manually.
 
-namespace RutokenPkcs11Interop.HighLevelAPI41.Factories
+namespace Net.RutokenPkcs11Interop.HighLevelAPI41.Factories
 {
     /// <summary>
     /// Factory for creation of ISession instances

@@ -2,9 +2,9 @@
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI40;
 using NUnit.Framework;
-using RutokenPkcs11Interop.LowLevelAPI40;
+using Net.RutokenPkcs11Interop.LowLevelAPI40;
 
-namespace RutokenPkcs11InteropTests.LowLevelAPI40
+namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 {
     /// <summary>
     /// C_GetInfo tests.

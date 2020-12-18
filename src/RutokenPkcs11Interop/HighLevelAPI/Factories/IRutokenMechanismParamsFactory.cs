@@ -1,9 +1,9 @@
 ﻿using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.Factories;
-using RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
+using Net.RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
-namespace RutokenPkcs11Interop.HighLevelAPI.Factories
+namespace Net.RutokenPkcs11Interop.HighLevelAPI.Factories
 {
 
     public interface IRutokenMechanismParamsFactory : IMechanismParamsFactory

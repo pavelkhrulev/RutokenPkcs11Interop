@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
-using RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.Common;
 
-namespace RutokenPkcs11Interop.HighLevelAPI
+namespace Net.RutokenPkcs11Interop.HighLevelAPI
 {
     public interface IRutokenSlot: ISlot
     {

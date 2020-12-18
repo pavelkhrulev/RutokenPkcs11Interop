@@ -3,9 +3,9 @@ using System.IO;
 using Net.Pkcs11Interop.Common;
 using NUnit.Framework;
 using Net.Pkcs11Interop.HighLevelAPI;
-using RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.Common;
 
-namespace RutokenPkcs11InteropTests.HighLevelAPI
+namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 {
     [TestFixture()]
     public class _HL_20_EncryptAndDecryptTest
