@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RutokenPkcs11Interop", "RutokenPkcs11Interop\RutokenPkcs11Interop.csproj", "{84987BE4-7AC6-4430-BF04-80689EBD22A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RutokenPkcs11InteropTests", "RutokenPkcs11InteropTests\RutokenPkcs11InteropTests.csproj", "{5E2B49A6-7BEF-4DC5-A84E-FEC52CDBE8A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RutokenPkcs11InteropTests", "RutokenPkcs11Interop.Tests\RutokenPkcs11Interop.Tests.csproj", "{5E2B49A6-7BEF-4DC5-A84E-FEC52CDBE8A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
