@@ -30,7 +30,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     // Generate symetric key
                     IObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
 
-                    var mechanism = Settings.Factories.MechanismFactory.Create((uint) Extended_CKM.CKM_GOST28147_ECB);
+                    var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_ECB);
 
                     byte[] sourceData = TestData.Encrypt_Gost28147_89_ECB_SourceData;
 
@@ -69,7 +69,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     IObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
 
                     // Specify encryption mechanism with initialization vector as parameter
-                    var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147);
+                    var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147);
 
                     byte[] sourceData = TestData.Encrypt_Gost28147_89_SourceData;
                     byte[] encryptedData = null;

@@ -24,7 +24,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Инициализация хэш-функции
-                    var digestMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3411_12_512);
+                    var digestMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3411_12_512);
 
                     byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 
@@ -37,7 +37,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     Helpers.GenerateGost512KeyPair(session, out dataPublicKey, out dataPrivateKey, Settings.Gost512KeyPairId1);
 
                     // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012(512)
-                    var signMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_512);
+                    var signMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_512);
 
                     // Подпись данных
                     byte[] dataSignature = session.Sign(signMechanism, dataPrivateKey, dataDigest);
@@ -94,7 +94,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Инициализация хэш-функции
-                    var digestMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3411_12_512);
+                    var digestMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3411_12_512);
 
                     string sourceData = TestData.Sign_PINPad_SourceData;
 
@@ -107,7 +107,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     Helpers.GenerateGost512PINPadPair(session, out dataPublicKey, out dataPrivateKey, Settings.Gost512KeyPairId1);
 
                     // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012(512)
-                    var signMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_512);
+                    var signMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_512);
 
                     // Подпись данных
                     byte[] dataSignature = session.SignInvisible(signMechanism, dataPrivateKey, dataDigest);

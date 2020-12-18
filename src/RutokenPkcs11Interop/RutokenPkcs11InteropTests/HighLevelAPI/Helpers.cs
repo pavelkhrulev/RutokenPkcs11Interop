@@ -93,7 +93,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             };
 
             // Определяем механизм генерации ключа
-            var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147_KEY_GEN);
+            var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_KEY_GEN);
 
             // Генерируем ключ
             return session.GenerateKey(mechanism, objectAttributes);
@@ -134,7 +134,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             };
 
             // Specify key generation mechanism
-            var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
+            var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
 
             // Generate key pair
             session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
@@ -178,7 +178,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             };
 
             // Specify key generation mechanism
-            var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+            var mechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
             // Generate key pair
             session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
@@ -218,7 +218,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             };
 
             // Определение механизма генерации ключей
-            var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+            var mechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
             // Генерация ключевой пары
             session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
@@ -266,7 +266,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             };
 
             // Определение механизма генерации ключей
-            var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+            var mechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
             // Генерация ключевой пары
             session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
@@ -348,7 +348,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     (uint)Extended_CKD.CKD_CPDIVERSIFY_KDF, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
 
             // Определяем механизм наследования ключа
-            var deriveMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_DERIVE, deriveMechanismParams);
+            var deriveMechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOSTR3410_DERIVE, deriveMechanismParams);
 
             // Наследуем ключ
             derivedKeyHandle = session.DeriveKey(deriveMechanism, privateKeyHandle, derivedKeyAttributes);
@@ -385,7 +385,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     (ulong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
 
             // Определяем механизм наследования ключа
-            IMechanism deriveMechanism = Settings.Factories.MechanismFactory.Create((ulong) Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
+            IMechanism deriveMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
 
             // Наследуем ключ
             derivedKeyHandle = session.DeriveKey(deriveMechanism, privateKeyHandle, derivedKeyAttributes);
@@ -413,7 +413,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
             using (var ms = new MemoryStream())
             {
-                var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147_ECB);
+                var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_ECB);
 
                 for (var i = 0; i < dataWithPadding.Length / Settings.GOST28147_89_BLOCK_SIZE; i++)
                 {
@@ -450,7 +450,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
             using (var ms = new MemoryStream())
             {
-                var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147_ECB);
+                var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_ECB);
 
                 for (var i = 0; i < data.Length / Settings.GOST28147_89_BLOCK_SIZE; i++)
                 {

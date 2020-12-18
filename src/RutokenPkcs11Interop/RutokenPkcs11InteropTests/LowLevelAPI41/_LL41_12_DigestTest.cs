@@ -104,7 +104,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Assert.Fail(rv.ToString());
 
                 // Specify digesting mechanism (needs no parameter => no unamanaged memory is needed)
-                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3411_12_512);
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3411_12_512);
 
                 // Initialize digesting operation
                 rv = pkcs11.C_DigestInit(session, ref mechanism);
@@ -171,7 +171,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Assert.Fail(rv.ToString());
 
                 // Specify digesting mechanism (needs no parameter => no unamanaged memory is needed)
-                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3411_12_256);
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3411_12_256);
 
                 // Initialize digesting operation
                 rv = pkcs11.C_DigestInit(session, ref mechanism);
@@ -238,7 +238,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                     Assert.Fail(rv.ToString());
 
                 // Specify digesting mechanism (needs no parameter => no unamanaged memory is needed)
-                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3411);
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOSTR3411);
 
                 // Initialize digesting operation
                 rv = pkcs11.C_DigestInit(session, ref mechanism);

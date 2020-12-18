@@ -56,7 +56,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 using (ISession session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
-                    var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3411_12_512);
+                    var mechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3411_12_512);
 
                     byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 
@@ -86,7 +86,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 using (ISession session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
-                    var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3411_12_256);
+                    var mechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3411_12_256);
 
                     byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 
@@ -115,7 +115,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 using (ISession session = slot.OpenSession(SessionType.ReadOnly))
                 {
                     // Specify digesting mechanism
-                    var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3411);
+                    var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOSTR3411);
 
                     byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 

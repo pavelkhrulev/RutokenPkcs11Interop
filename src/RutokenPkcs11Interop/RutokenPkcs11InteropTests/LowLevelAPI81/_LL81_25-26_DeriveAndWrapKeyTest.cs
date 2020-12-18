@@ -96,7 +96,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                     Len = Convert.ToUInt64(ukm.Length)
                 };
                 UnmanagedMemory.Write(wrapMechanismParams.Data, ukm);
-                CK_MECHANISM wrapMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
+                CK_MECHANISM wrapMechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
 
                 // Получение длины маскированного ключа
                 ulong wrappedKeyLen = 0;
@@ -302,7 +302,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                 wrapMechanismParams.Data = UnmanagedMemory.Allocate(ukm.Length);
                 UnmanagedMemory.Write(wrapMechanismParams.Data, ukm);
                 wrapMechanismParams.Len = Convert.ToUInt64(ukm.Length);
-                CK_MECHANISM wrapMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
+                CK_MECHANISM wrapMechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
 
                 // Получение длины маскированного ключа
                 ulong wrappedKeyLen = 0;
@@ -465,7 +465,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                CK_MECHANISM generationMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOST28147_KEY_GEN);
+                CK_MECHANISM generationMechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147_KEY_GEN);
 
                 // Получаем публичный ключ по его Id
                 CK_ATTRIBUTE[] publicKeyValueTemplate = new CK_ATTRIBUTE[1];
@@ -480,7 +480,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
 
                 var deriveMechanismParams = new CK_GOSTR3410_12_DERIVE_PARAMS
                 {
-                    Kdf = (ulong)Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
+                    Kdf = (ulong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
                     PublicDataLen = Convert.ToUInt64(publicKey.Length),
                     PublicData = new byte[Settings.GOST_3410_12_512_KEY_SIZE],
                     UKMLen = Convert.ToUInt64(ukm.Length),
@@ -489,7 +489,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                 Array.Copy(publicKey, deriveMechanismParams.PublicData, publicKey.Length);
                 Array.Copy(ukm, deriveMechanismParams.UKM, ukm.Length);
 
-                CK_MECHANISM derivationMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
+                CK_MECHANISM derivationMechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
 
                 // Определение параметров механизма маскирования
                 // В LowLevelAPI выделенная для параметров память должны быть освобождена после использования
@@ -497,7 +497,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                 wrapMechanismParams.Data = UnmanagedMemory.Allocate(ukm.Length);
                 UnmanagedMemory.Write(wrapMechanismParams.Data, ukm);
                 wrapMechanismParams.Len = Convert.ToUInt64(ukm.Length);
-                CK_MECHANISM wrappingMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
+                CK_MECHANISM wrappingMechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
 
                 // Получение длины маскированного ключа
                 ulong sessionKeyId = CK.CK_INVALID_HANDLE;
@@ -536,7 +536,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
 
                 deriveMechanismParams = new CK_GOSTR3410_12_DERIVE_PARAMS
                 {
-                    Kdf = (ulong)Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
+                    Kdf = (ulong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
                     PublicDataLen = Convert.ToUInt64(publicKey.Length),
                     PublicData = new byte[Settings.GOST_3410_12_512_KEY_SIZE],
                     UKMLen = Convert.ToUInt64(ukm.Length),
@@ -545,7 +545,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                 Array.Copy(publicKey, deriveMechanismParams.PublicData, publicKey.Length);
                 Array.Copy(ukm, deriveMechanismParams.UKM, ukm.Length);
 
-                derivationMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
+                derivationMechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
 
                 // Демаскирование сессионного ключа с помощью общего выработанного
                 // ключа на стороне получателя

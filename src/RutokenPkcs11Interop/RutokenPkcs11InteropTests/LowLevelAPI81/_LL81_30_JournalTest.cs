@@ -45,7 +45,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                     Assert.Fail(rv.ToString());
 
                 // Инициализация хэш-функции
-                CK_MECHANISM digestMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOSTR3411_12_512);
+                CK_MECHANISM digestMechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3411_12_512);
                 rv = pkcs11.C_DigestInit(session, ref digestMechanism);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
@@ -72,7 +72,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                 Helpers.GenerateGost512KeyPair(pkcs11, session, ref dataPublicKeyId, ref dataPrivateKeyId, Settings.Gost512KeyPairId1);
 
                 // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012
-                CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOSTR3410_512);
+                CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_512);
                 rv = pkcs11.C_SignInit(session, ref signMechanism, dataPrivateKeyId);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
@@ -234,7 +234,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                     Assert.Fail(rv.ToString());
 
                 // Инициализация хэш-функции
-                CK_MECHANISM digestMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOSTR3411_12_512);
+                CK_MECHANISM digestMechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3411_12_512);
                 rv = pkcs11.C_DigestInit(session, ref digestMechanism);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
@@ -264,7 +264,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                     pkcs11, session, ref dataPublicKeyId, ref dataPrivateKeyId, Settings.Gost512KeyPairId1);
 
                 // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012 (512)
-                CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOSTR3410_512);
+                CK_MECHANISM signMechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_512);
                 rv = pkcs11.C_EX_SignInvisibleInit(session, ref signMechanism, dataPrivateKeyId);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());

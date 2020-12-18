@@ -102,7 +102,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             template[7] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
             template[8] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOST28147_PARAMS, Settings.Gost28147Parameters);
 
-            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOST28147_KEY_GEN);
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)CKM.CKM_GOST28147_KEY_GEN);
 
             // Генерация секретного ключа ГОСТ 28147-89
             rv = pkcs11.C_GenerateKey(session, ref mechanism, template, Convert.ToUInt32(template.Length), ref keyId);
@@ -156,7 +156,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             privateKeyTemplate[7] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters);
             privateKeyTemplate[8] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411Parameters);
 
-            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
 
             // Генерация ключевой пары
             rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt32(publicKeyTemplate.Length),
@@ -219,7 +219,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             privateKeyTemplate[7] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
             privateKeyTemplate[8] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
 
-            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
             // Генерация ключевой пары
             rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt32(publicKeyTemplate.Length),
@@ -275,7 +275,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             privateKeyTemplate[4] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
             privateKeyTemplate[5] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, false);
 
-            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
             // Генерация ключевой пары
             rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt32(publicKeyTemplate.Length),
@@ -340,7 +340,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             privateKeyTemplate[8] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
             privateKeyTemplate[9] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
 
-            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
             // Генерация ключевой пары
             rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt32(publicKeyTemplate.Length),
@@ -480,7 +480,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             UnmanagedMemory.Write(deriveMechanismParams.UKM, ukm);
 
             // Определяем механизм выработки ключа
-            CK_MECHANISM deriveMechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_DERIVE, deriveMechanismParams);
+            CK_MECHANISM deriveMechanism = CkmUtils.CreateMechanism(CKM.CKM_GOSTR3410_DERIVE, deriveMechanismParams);
 
             // Выработка ключа согласно установленному выше шаблону
             rv = pkcs11.C_DeriveKey(session, ref deriveMechanism, privateKeyId, derivedKeyTemplate,
@@ -569,7 +569,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
             Array.Copy(ukm, deriveMechanismParams.UKM, ukm.Length);
 
             // Определяем механизм выработки ключа
-            CK_MECHANISM deriveMechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
+            CK_MECHANISM deriveMechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
 
             // Выработка ключа согласно установленному выше шаблону
             rv = pkcs11.C_DeriveKey(session, ref deriveMechanism, privateKeyId, derivedKeyTemplate,
@@ -619,7 +619,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
             using (var ms = new MemoryStream())
             {
-                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147_ECB);
 
                 for (var i = 0; i < dataWithPadding.Length / Settings.GOST28147_89_BLOCK_SIZE; i++)
                 {
@@ -668,7 +668,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
 
             using (var ms = new MemoryStream())
             {
-                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)Extended_CKM.CKM_GOST28147_ECB);
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147_ECB);
 
                 for (var i = 0; i < data.Length / Settings.GOST28147_89_BLOCK_SIZE; i++)
                 {

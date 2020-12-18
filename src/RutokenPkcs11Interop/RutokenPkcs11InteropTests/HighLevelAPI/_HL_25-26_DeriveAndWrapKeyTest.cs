@@ -68,7 +68,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
                     // Определение параметров механизма маскирования
                     var wrapMechanismParams = Settings.Factories.MechanismParamsFactory.CreateCkKeyDerivationStringData(ukm);
-                    var wrapMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
+                    var wrapMechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
 
                     // Маскирование ключа на общем ключе, выработанном на стороне отправителя
                     byte[] wrappedKey = session.WrapKey(wrapMechanism, senderDerivedKeyHandle, sessionKeyHandle);
@@ -182,7 +182,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
                     // Определение параметров механизма маскирования
                     var wrapMechanismParams = Settings.Factories.MechanismParamsFactory.CreateCkKeyDerivationStringData(ukm);
-                    var wrapMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
+                    var wrapMechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_KEY_WRAP, wrapMechanismParams);
 
                     // Маскирование ключа на общем ключе, выработанном на стороне отправителя
                     byte[] wrappedKey = session.WrapKey(wrapMechanism, senderDerivedKeyHandle, sessionKeyHandle);
@@ -281,7 +281,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     byte[] ukm = session.GenerateRandom(Settings.UKM_LENGTH);
 
                     // Определение механизма генерации ключа для маскирования
-                    var generationMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147_KEY_GEN);
+                    var generationMechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_KEY_GEN);
 
                     // Получаем публичный ключ по его Id
                     var publicKeyAttributeNames = new List<CKA>
@@ -292,14 +292,14 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
                     // Определение параметров механизма наследования ключа
                     var deriveMechanismParams = Settings.Factories.RutokenMechanismParamsFactory.CreateCkGostR3410_12_DeriveParams(
-                            (uint)Extended_CKM.CKM_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
+                            (ulong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
 
                     // Определяем механизм наследования ключа
-                    var derivationMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
+                    var derivationMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
 
                     // Определение параметров механизма маскирования
                     var wrapMechanismParams = Settings.Factories.MechanismParamsFactory.CreateCkKeyDerivationStringData(ukm);
-                    var wrappingMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147_KEY_WRAP,
+                    var wrappingMechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_KEY_WRAP,
                         wrapMechanismParams);
 
                     // Маскирование ключа на общем ключе, выработанном на стороне отправителя

@@ -48,7 +48,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                 ulong keyId = CK.CK_INVALID_HANDLE;
                 Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
 
-                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOST28147_ECB);
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147_ECB);
 
                 // Инициализация операции шифрования
                 rv = pkcs11.C_EncryptInit(session, ref mechanism, keyId);
@@ -148,7 +148,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
                 ulong keyId = CK.CK_INVALID_HANDLE;
                 Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
 
-                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((ulong)Extended_CKM.CKM_GOST28147);
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147);
 
                 byte[] sourceData = TestData.Encrypt_Gost28147_89_SourceData;
                 byte[] encryptedData = null;
