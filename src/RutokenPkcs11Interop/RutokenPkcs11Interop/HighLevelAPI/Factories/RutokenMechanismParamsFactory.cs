@@ -18,6 +18,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI.Factories
         /// Initializes a new instance of the MockSessionFactory class
         /// </summary>
         public RutokenMechanismParamsFactory()
+            : base()
         {
             if (Platform.NativeULongSize == 4)
             {

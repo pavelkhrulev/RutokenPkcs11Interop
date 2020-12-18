@@ -88,7 +88,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
                     // Импорт сертификата
                     IObjectHandle certificateHandle;
-                    Helpers.PKI_ImportCertificate(session, certificateDer, out certificateHandle);
+                    Helpers.PKI_ImportCertificate(session, certificateDer, out certificateHandle, Settings.GostKeyPairId1);
 
                     // Получение информации о сертификате
                     string certificateInfo = session.GetCertificateInfoText(certificateHandle);

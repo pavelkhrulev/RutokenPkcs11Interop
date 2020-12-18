@@ -381,11 +381,11 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
 
             // Определение параметров механизма наследования ключа
             var deriveMechanismParams =
-                Settings.Factories.MechanismParamsFactory.CreateCkGostR3410DeriveParams(
-                    (uint)Extended_CKM.CKM_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
+                Settings.Factories.RutokenMechanismParamsFactory.CreateCkGostR3410_12_DeriveParams(
+                    (ulong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
 
             // Определяем механизм наследования ключа
-            IMechanism deriveMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
+            IMechanism deriveMechanism = Settings.Factories.MechanismFactory.Create((ulong) Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
 
             // Наследуем ключ
             derivedKeyHandle = session.DeriveKey(deriveMechanism, privateKeyHandle, derivedKeyAttributes);
@@ -474,14 +474,14 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             }
         }
 
-        public static void PKI_ImportCertificate(ISession session, byte[] certificateDer, out IObjectHandle certificate)
+        public static void PKI_ImportCertificate(ISession session, byte[] certificateDer, out IObjectHandle certificate, string certId)
         {
             // Шаблон для импорта сертификата
             var certificateAttributes = new List<IObjectAttribute>
             {
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_VALUE, certificateDer),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.GostKeyPairId1),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, certId),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, false),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),

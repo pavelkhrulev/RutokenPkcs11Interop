@@ -54,9 +54,7 @@ namespace RutokenPkcs11Interop.LowLevelAPI41
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            RutokenDelegates.C_EX_GetTokenInfoExtendedDelegate cGetTokenInfoExtended = null;
-
-            uint rv = cGetTokenInfoExtended(slotId, ref info);
+            uint rv = _rutokenDelegates.C_EX_GetTokenInfoExtended(slotId, ref info);
             return (CKR)rv;
         }
 
