@@ -72,7 +72,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
                 CK_ATTRIBUTE[] sessionKeyTemplate = new CK_ATTRIBUTE[9];
                 sessionKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
                 sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel);
-                sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
+                sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 sessionKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
                 sessionKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
                 sessionKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
@@ -121,7 +121,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
                 CK_ATTRIBUTE[] unwrappedKeyTemplate = new CK_ATTRIBUTE[8];
                 unwrappedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
                 unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel);
-                unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
+                unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 unwrappedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
                 unwrappedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
                 unwrappedKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
@@ -280,7 +280,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
                 CK_ATTRIBUTE[] sessionKeyTemplate = new CK_ATTRIBUTE[9];
                 sessionKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
                 sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel);
-                sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
+                sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 sessionKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
                 sessionKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
                 sessionKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
@@ -327,7 +327,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
                 CK_ATTRIBUTE[] unwrappedKeyTemplate = new CK_ATTRIBUTE[8];
                 unwrappedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
                 unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel);
-                unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
+                unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 unwrappedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
                 unwrappedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
                 unwrappedKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
@@ -452,7 +452,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
                 CK_ATTRIBUTE[] sessionKeyTemplate = new CK_ATTRIBUTE[7];
                 sessionKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
                 sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel);
-                sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
+                sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 sessionKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
                 sessionKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
                 sessionKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);
@@ -522,7 +522,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
                 CK_ATTRIBUTE[] unwrappedKeyTemplate = new CK_ATTRIBUTE[7];
                 unwrappedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
                 unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel);
-                unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147);
+                unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 unwrappedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
                 unwrappedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
                 unwrappedKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);

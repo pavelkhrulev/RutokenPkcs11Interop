@@ -95,12 +95,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             template[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
             template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.GostSecretKeyLabel);
             template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.GostSecretKeyId);
-            template[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (ulong)Extended_CKK.CKK_GOST28147);
+            template[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
             template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
             template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);
             template[6] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             template[7] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
-            template[8] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOST28147_PARAMS, Settings.Gost28147Parameters);
+            template[8] = CkaUtils.CreateAttribute(CKA.CKA_GOST28147_PARAMS, Settings.Gost28147Parameters);
 
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147_KEY_GEN);
 
@@ -139,22 +139,22 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             publicKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
             publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.GostPublicKeyLabel);
             publicKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
-            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (ulong)Extended_CKK.CKK_GOSTR3410);
+            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOSTR3410);
             publicKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             publicKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
-            publicKeyTemplate[6] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters);
+            publicKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters);
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001
             var privateKeyTemplate = new CK_ATTRIBUTE[9];
             privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
             privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.GostPrivateKeyLabel);
             privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
-            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (ulong)Extended_CKK.CKK_GOSTR3410);
+            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOSTR3410);
             privateKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             privateKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
             privateKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_DERIVE, true);
-            privateKeyTemplate[7] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters);
-            privateKeyTemplate[8] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411Parameters);
+            privateKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters);
+            privateKeyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411Parameters);
 
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
 
@@ -205,7 +205,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (ulong)Extended_CKK.CKK_GOSTR3410_512);
             publicKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             publicKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
-            publicKeyTemplate[6] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
+            publicKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
             var privateKeyTemplate = new CK_ATTRIBUTE[9];
@@ -216,8 +216,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             privateKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             privateKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
             privateKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_DERIVE, true);
-            privateKeyTemplate[7] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
-            privateKeyTemplate[8] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
+            privateKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
+            privateKeyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
 
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
@@ -324,8 +324,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (ulong)Extended_CKK.CKK_GOSTR3410_512);
             publicKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             publicKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
-            publicKeyTemplate[6] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
-            publicKeyTemplate[7] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
+            publicKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
+            publicKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
             var privateKeyTemplate = new CK_ATTRIBUTE[10];
@@ -337,8 +337,8 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             privateKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
             privateKeyTemplate[6] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true);
             privateKeyTemplate[7] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_VENDOR_KEY_PIN_ENTER, false);
-            privateKeyTemplate[8] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
-            privateKeyTemplate[9] = CkaUtils.CreateAttribute((ulong)Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
+            privateKeyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
+            privateKeyTemplate[9] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
 
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
@@ -448,7 +448,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             var derivedKeyTemplate = new CK_ATTRIBUTE[8];
             derivedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
             derivedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.DerivedKeyLabel);
-            derivedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (ulong)Extended_CKK.CKK_GOST28147);
+            derivedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
             derivedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
             derivedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
             derivedKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
@@ -470,7 +470,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             // Определяем параметры механизма выработки ключа
             var deriveMechanismParams = new CK_GOSTR3410_DERIVE_PARAMS
             {
-                Kdf = (ulong) Extended_CKD.CKD_CPDIVERSIFY_KDF,
+                Kdf = (ulong) CKD.CKD_CPDIVERSIFY_KDF,
                 PublicData = UnmanagedMemory.Allocate(publicKey.Length),
                 PublicDataLen = Convert.ToUInt64(publicKey.Length),
                 UKM = UnmanagedMemory.Allocate(ukm.Length),
@@ -537,7 +537,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
             var derivedKeyTemplate = new CK_ATTRIBUTE[8];
             derivedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
             derivedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.DerivedKeyLabel);
-            derivedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (ulong)Extended_CKK.CKK_GOST28147);
+            derivedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
             derivedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
             derivedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
             derivedKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);

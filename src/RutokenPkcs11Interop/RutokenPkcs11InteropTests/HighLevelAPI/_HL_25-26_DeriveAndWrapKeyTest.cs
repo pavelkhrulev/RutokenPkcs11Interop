@@ -53,7 +53,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     {
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.WrappedKeyLabel),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
@@ -82,7 +82,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     {
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
@@ -167,7 +167,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     {
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.WrappedKeyLabel),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
@@ -196,7 +196,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     {
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
@@ -269,7 +269,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     {
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.WrappedKeyLabel),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),
@@ -312,7 +312,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     {
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),

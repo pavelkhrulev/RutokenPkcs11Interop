@@ -84,12 +84,12 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.GostSecretKeyLabel),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.GostSecretKeyId),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint) Extended_CKK.CKK_GOST28147),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOST28147_PARAMS, Settings.Gost28147Parameters)
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOST28147_PARAMS, Settings.Gost28147Parameters)
             };
 
             // Определяем механизм генерации ключа
@@ -113,10 +113,10 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.GostPublicKeyLabel),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, keyPairId),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOSTR3410),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, false),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters)
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters)
             };
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001
@@ -125,12 +125,12 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.GostPrivateKeyLabel),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, keyPairId),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOSTR3410),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DERIVE, true),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411Parameters)
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411Parameters)
             };
 
             // Specify key generation mechanism
@@ -160,7 +160,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, false),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters)
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters)
             };
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001
@@ -173,8 +173,8 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DERIVE, true),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
             };
 
             // Specify key generation mechanism
@@ -246,8 +246,8 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, false),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
             };
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
@@ -261,8 +261,8 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
                 Settings.Factories.ObjectAttributeFactory.Create((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true),
                 Settings.Factories.ObjectAttributeFactory.Create((uint)Extended_CKA.CKA_VENDOR_KEY_PIN_ENTER, false),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
-                Settings.Factories.ObjectAttributeFactory.Create((uint) Extended_CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
             };
 
             // Определение механизма генерации ключей
@@ -327,7 +327,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             {
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.DerivedKeyLabel),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
@@ -345,7 +345,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             // Определение параметров механизма наследования ключа
             var deriveMechanismParams =
                 Settings.Factories.MechanismParamsFactory.CreateCkGostR3410DeriveParams(
-                    (uint)Extended_CKD.CKD_CPDIVERSIFY_KDF, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
+                    (ulong) CKD.CKD_CPDIVERSIFY_KDF, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
 
             // Определяем механизм наследования ключа
             var deriveMechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOSTR3410_DERIVE, deriveMechanismParams);
@@ -364,7 +364,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
             {
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.DerivedKeyLabel),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOST28147),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
