@@ -12,13 +12,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_32_01_ActivationPasswordTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации администратора
                     session.Login(CKU.CKU_SO, Settings.SecurityOfficerPin);

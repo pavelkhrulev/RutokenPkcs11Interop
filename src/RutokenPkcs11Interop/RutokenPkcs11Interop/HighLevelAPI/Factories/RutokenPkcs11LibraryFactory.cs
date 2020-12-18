@@ -5,7 +5,7 @@ using Net.Pkcs11Interop.HighLevelAPI.Factories;
 
 namespace RutokenPkcs11Interop.HighLevelAPI.Factories
 {
-    public class RutokenPkcs11LibraryFactory : IPkcs11LibraryFactory
+    public class RutokenPkcs11LibraryFactory : IRutokenPkcs11LibraryFactory
     {
 
         private IPkcs11LibraryFactory _factory = null;
@@ -36,6 +36,16 @@ namespace RutokenPkcs11Interop.HighLevelAPI.Factories
         public IPkcs11Library LoadPkcs11Library(Pkcs11InteropFactories factories, string libraryPath, AppType appType, InitType initType)
         {
             return _factory.LoadPkcs11Library(factories, libraryPath, appType, initType);
+        }
+
+        public IRutokenPkcs11Library LoadRutokenPkcs11Library(Pkcs11InteropFactories factories, string libraryPath, AppType appType)
+        {
+            return (IRutokenPkcs11Library) LoadPkcs11Library(factories, libraryPath, appType);
+        }
+
+        public IRutokenPkcs11Library LoadRutokenPkcs11Library(Pkcs11InteropFactories factories, string libraryPath, AppType appType, InitType initType)
+        {
+            return (IRutokenPkcs11Library)LoadPkcs11Library(factories, libraryPath, appType, initType);
         }
     }
 }

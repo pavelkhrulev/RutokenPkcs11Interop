@@ -38,8 +38,8 @@ namespace RutokenPkcs11Interop.HighLevelAPI.Factories
             }
         }
 
-        public IVolumeFormatInfoExtended Create(uint volumeSize, FlashAccessMode accessMode,
-            CKU volumeOwner, uint flags)
+        public IVolumeFormatInfoExtended Create(ulong volumeSize, FlashAccessMode accessMode,
+            CKU volumeOwner, ulong flags)
         {
             return _factory.Create(volumeSize, accessMode, volumeOwner, flags);
         }

@@ -68,6 +68,7 @@
     <Compile Include="Helpers\PKIHelpers.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="Helpers\StringArrayHelpers.cs" />
+    <Compile Include="HighLevelAPI40\Factories\RutokenMechanismParamsFactory.cs" />
     <Compile Include="HighLevelAPI40\Factories\VolumeFormatInfoExtendedFactory.cs" />
     <Compile Include="HighLevelAPI40\Factories\RutokenInitParamFactory.cs" />
     <Compile Include="HighLevelAPI40\Factories\RutokenPkcs11LibraryFactory.cs" />
@@ -84,11 +85,13 @@
     <Compile Include="HighLevelAPI40\VolumeInfo.cs" />
     <Compile Include="HighLevelAPI40\VolumeInfoExtended.cs" />
     <Compile Include="HighLevelAPI41\Factories\RutokenInitParamFactory.cs" />
+    <Compile Include="HighLevelAPI41\Factories\RutokenMechanismParamsFactory.cs" />
     <Compile Include="HighLevelAPI41\Factories\RutokenPkcs11LibraryFactory.cs" />
     <Compile Include="HighLevelAPI41\Factories\RutokenSessionFactory.cs" />
     <Compile Include="HighLevelAPI41\Factories\RutokenSlotFactory.cs" />
     <Compile Include="HighLevelAPI41\Factories\VolumeFormatInfoExtendedFactory.cs" />
     <Compile Include="HighLevelAPI80\Factories\RutokenInitParamFactory.cs" />
+    <Compile Include="HighLevelAPI80\Factories\RutokenMechanismParamsFactory.cs" />
     <Compile Include="HighLevelAPI80\Factories\RutokenPkcs11LibraryFactory.cs" />
     <Compile Include="HighLevelAPI80\Factories\RutokenSessionFactory.cs" />
     <Compile Include="HighLevelAPI80\Factories\RutokenSlotFactory.cs" />
@@ -104,6 +107,7 @@
     <Compile Include="HighLevelAPI80\VolumeInfo.cs" />
     <Compile Include="HighLevelAPI80\VolumeInfoExtended.cs" />
     <Compile Include="HighLevelAPI81\Factories\RutokenInitParamFactory.cs" />
+    <Compile Include="HighLevelAPI81\Factories\RutokenMechanismParamsFactory.cs" />
     <Compile Include="HighLevelAPI81\Factories\RutokenPkcs11LibraryFactory.cs" />
     <Compile Include="HighLevelAPI81\Factories\RutokenSessionFactory.cs" />
     <Compile Include="HighLevelAPI81\Factories\RutokenSlotFactory.cs" />
@@ -113,7 +117,12 @@
     <Compile Include="HighLevelAPI41\MechanismParams\CkGostR3410_12_DeriveParams.cs" />
     <Compile Include="HighLevelAPI41\RutokenPkcs11Library.cs" />
     <Compile Include="Common\PinPolicy.cs" />
+    <Compile Include="HighLevelAPI\Factories\IRutokenSessionFactory.cs" />
+    <Compile Include="HighLevelAPI\Factories\IRutokenMechanismParamsFactory.cs" />
+    <Compile Include="HighLevelAPI\Factories\IRutokenSlotFactory.cs" />
+    <Compile Include="HighLevelAPI\Factories\IRutokenPkcs11LibraryFactory.cs" />
     <Compile Include="HighLevelAPI\Factories\IVolumeFormatInfoExtendedFactory.cs" />
+    <Compile Include="HighLevelAPI\Factories\RutokenMechanismParamsFactory.cs" />
     <Compile Include="HighLevelAPI\Factories\VolumeFormatInfoExtendedFactory.cs" />
     <Compile Include="HighLevelAPI\Factories\RutokenInitParamFactory.cs" />
     <Compile Include="HighLevelAPI\Factories\RutokenPkcs11LibraryFactory.cs" />

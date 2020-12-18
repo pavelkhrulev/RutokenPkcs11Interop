@@ -12,10 +12,10 @@ namespace RutokenPkcs11Interop.HighLevelAPI41.Factories
     /// </summary>
     public class VolumeFormatInfoExtendedFactory : IVolumeFormatInfoExtendedFactory
     {
-        public IVolumeFormatInfoExtended Create(uint volumeSize, FlashAccessMode accessMode,
-            CKU volumeOwner, uint flags)
+        public IVolumeFormatInfoExtended Create(ulong volumeSize, FlashAccessMode accessMode,
+            CKU volumeOwner, ulong flags)
         {
-            return new VolumeFormatInfoExtended(volumeSize, accessMode, volumeOwner, flags);
+            return new VolumeFormatInfoExtended(ConvertUtils.UInt32FromUInt64(volumeSize), accessMode, volumeOwner, ConvertUtils.UInt32FromUInt64(flags));
         }
     }
 }

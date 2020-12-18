@@ -16,13 +16,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_04_01_TokenInfoTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                ISlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Get token info
-                TokenInfo tokenInfo = slot.GetTokenInfo();
+                ITokenInfo tokenInfo = slot.GetTokenInfo();
 
                 // Do something interesting with token info
                 Assert.IsFalse(String.IsNullOrEmpty(tokenInfo.ManufacturerId));
@@ -35,13 +35,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_04_02_TokenInfoExtendedTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Get token info
-                TokenInfoExtended tokenInfo = slot.GetTokenInfoExtended();
+                ITokenInfoExtended tokenInfo = slot.GetTokenInfoExtended();
 
                 // Do something interesting with token info
                 Assert.IsFalse(String.IsNullOrEmpty(tokenInfo.SerialNumber));

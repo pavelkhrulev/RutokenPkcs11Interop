@@ -12,19 +12,19 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_30_01_SignJournalTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (ISession session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Инициализация хэш-функции
-                    var digestMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_512);
+                    var digestMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3411_12_512);
 
                     byte[] sourceData = TestData.Digest_Gost3411_SourceData;
 
@@ -32,12 +32,12 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     byte[] dataDigest = session.Digest(digestMechanism, sourceData);
 
                     // Генерация ключевой пары ГОСТ Р 34.10-2012
-                    ObjectHandle dataPublicKey = null;
-                    ObjectHandle dataPrivateKey = null;
+                    IObjectHandle dataPublicKey = null;
+                    IObjectHandle dataPrivateKey = null;
                     Helpers.GenerateGost512KeyPair(session, out dataPublicKey, out dataPrivateKey, Settings.Gost512KeyPairId1);
 
                     // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012(512)
-                    var signMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512);
+                    var signMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_512);
 
                     // Подпись данных
                     byte[] dataSignature = session.Sign(signMechanism, dataPrivateKey, dataDigest);
@@ -52,8 +52,8 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     byte[] journal = slot.GetJournal();
 
                     // Генерация ключевой пары ГОСТ Р 34.10-2012 для подписи журнала
-                    ObjectHandle journalPublicKey = null;
-                    ObjectHandle journalPrivateKey = null;
+                    IObjectHandle journalPublicKey = null;
+                    IObjectHandle journalPrivateKey = null;
                     Helpers.GenerateGost512JournalKeyPair(session, out journalPublicKey, out journalPrivateKey);
 
                     // Вычисление хэш-кода журнала
@@ -82,19 +82,19 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_30_02_SignInvisibleJournalTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Инициализация хэш-функции
-                    var digestMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3411_12_512);
+                    var digestMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3411_12_512);
 
                     string sourceData = TestData.Sign_PINPad_SourceData;
 
@@ -102,12 +102,12 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     byte[] dataDigest = session.Digest(digestMechanism, ConvertUtils.Utf8StringToBytes(sourceData));
 
                     // Генерация ключевой пары ГОСТ Р 34.10-2012
-                    ObjectHandle dataPublicKey = null;
-                    ObjectHandle dataPrivateKey = null;
+                    IObjectHandle dataPublicKey = null;
+                    IObjectHandle dataPrivateKey = null;
                     Helpers.GenerateGost512PINPadPair(session, out dataPublicKey, out dataPrivateKey, Settings.Gost512KeyPairId1);
 
                     // Инициализация операции подписи данных по алгоритму ГОСТ Р 34.10-2012(512)
-                    var signMechanism = new Mechanism((uint)Extended_CKM.CKM_GOSTR3410_512);
+                    var signMechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOSTR3410_512);
 
                     // Подпись данных
                     byte[] dataSignature = session.SignInvisible(signMechanism, dataPrivateKey, dataDigest);
@@ -122,8 +122,8 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     byte[] journal = slot.GetJournal();
 
                     // Генерация ключевой пары ГОСТ Р 34.10-2012 для подписи журнала
-                    ObjectHandle journalPublicKey = null;
-                    ObjectHandle journalPrivateKey = null;
+                    IObjectHandle journalPublicKey = null;
+                    IObjectHandle journalPrivateKey = null;
                     Helpers.GenerateGost512JournalKeyPair(session, out journalPublicKey, out journalPrivateKey);
 
                     // Вычисление хэш-кода журнала

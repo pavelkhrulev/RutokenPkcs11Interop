@@ -9,7 +9,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI.Factories
     /// <summary>
     /// Factory for creation of ISession instances
     /// </summary>
-    public class RutokenSessionFactory : ISessionFactory
+    public class RutokenSessionFactory : IRutokenSessionFactory
     {
         /// <summary>
         /// Platform specific factory for creation of ISession instances
@@ -46,6 +46,11 @@ namespace RutokenPkcs11Interop.HighLevelAPI.Factories
         public ISession Create(Pkcs11InteropFactories factories, LowLevelPkcs11Library pkcs11Library, ulong sessionId)
         {
             return _factory.Create(factories, pkcs11Library, sessionId);
+        }
+
+        public IRutokenSession CreateRutoken(Pkcs11InteropFactories factories, LowLevelPkcs11Library pkcs11Library, ulong sessionId)
+        {
+            return (IRutokenSession) Create(factories, pkcs11Library, sessionId);
         }
     }
 }

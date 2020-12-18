@@ -11,16 +11,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
     [TestFixture()]
     public class _HL_29_ManageFlashTest
     {
-        /// <summary>
-        /// Тест для проверки наличия флеш-памяти у токена
-        /// </summary>
         [Test()]
         public void _HL_29_01_FlashAvailabilityTest()
         {
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = (IRutokenSlot) Helpers.GetUsableSlot(pkcs11);
 
                 var tokenInfo = slot.GetTokenInfoExtended();
 
@@ -36,10 +33,10 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_29_02_FlashWorkTest()
         {
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = (IRutokenSlot) Helpers.GetUsableSlot(pkcs11);
 
                 var tokenInfo = slot.GetTokenInfoExtended();
 
@@ -66,12 +63,12 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 ulong volumeHiSize = driveSize / 8;
                 ulong volumeCdSize = driveSize - volumeRwSize - volumeRoSize - volumeHiSize;
 
-                var initParams = new List<VolumeFormatInfoExtended>()
+                var initParams = new List<IVolumeFormatInfoExtended>()
                 {
-                    new VolumeFormatInfoExtended(volumeRwSize, FlashAccessMode.Readwrite, CKU.CKU_USER, 0),
-                    new VolumeFormatInfoExtended(volumeRoSize, FlashAccessMode.Readonly, CKU.CKU_SO, 0),
-                    new VolumeFormatInfoExtended(volumeHiSize, FlashAccessMode.Hidden, (CKU)Settings.LocalPinId1, 0),
-                    new VolumeFormatInfoExtended(volumeCdSize, FlashAccessMode.Cdrom, (CKU)Settings.LocalPinId2, 0),
+                    Settings.Factories.VolumeInfoExtendedFactory.Create(volumeRwSize, FlashAccessMode.Readwrite, CKU.CKU_USER, 0),
+                    Settings.Factories.VolumeInfoExtendedFactory.Create(volumeRoSize, FlashAccessMode.Readonly, CKU.CKU_SO, 0),
+                    Settings.Factories.VolumeInfoExtendedFactory.Create(volumeHiSize, FlashAccessMode.Hidden, (CKU)Settings.LocalPinId1, 0),
+                    Settings.Factories.VolumeInfoExtendedFactory.Create(volumeCdSize, FlashAccessMode.Cdrom, (CKU)Settings.LocalPinId2, 0),
                 };
 
                 slot.FormatDrive(CKU.CKU_SO, Settings.SecurityOfficerPin, initParams);

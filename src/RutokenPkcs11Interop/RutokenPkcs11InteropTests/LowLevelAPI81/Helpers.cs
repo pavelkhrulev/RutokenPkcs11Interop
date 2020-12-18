@@ -3,9 +3,12 @@ using System.IO;
 using NUnit.Framework;
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI81;
+using Net.Pkcs11Interop.LowLevelAPI81.MechanismParams;
+
 using RutokenPkcs11Interop.Common;
 using RutokenPkcs11Interop.Helpers;
 using RutokenPkcs11Interop.LowLevelAPI81.MechanismParams;
+using RutokenPkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI81
 {
@@ -17,7 +20,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// </summary>
         /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
         /// <returns>Слот, содержащий токен</returns>
-        public static ulong GetUsableSlot(Pkcs11 pkcs11)
+        public static ulong GetUsableSlot(RutokenPkcs11Library pkcs11)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -83,7 +86,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name='session'>Сессия пользователя</param>
         /// <param name='keyId'>Хэндл ключа</param>
         /// <returns>Return value of C_GenerateKey</returns>
-        public static void GenerateGostSymmetricKey(Pkcs11 pkcs11, ulong session, ref ulong keyId)
+        public static void GenerateGostSymmetricKey(RutokenPkcs11Library pkcs11, ulong session, ref ulong keyId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -126,7 +129,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateGostKeyPair(Pkcs11 pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId,
+        public static void GenerateGostKeyPair(RutokenPkcs11Library pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -189,7 +192,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateGost512KeyPair(Pkcs11 pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId,
+        public static void GenerateGost512KeyPair(RutokenPkcs11Library pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -251,7 +254,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name='publicKeyId'>Хэндл публичного ключа</param>
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateGost512JournalKeyPair(Pkcs11 pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId)
+        public static void GenerateGost512JournalKeyPair(RutokenPkcs11Library pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -308,7 +311,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateGost512PINPadKeyPair(Pkcs11 pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId,
+        public static void GenerateGost512PINPadKeyPair(RutokenPkcs11Library pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -373,7 +376,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateRSAKeyPair(Pkcs11 pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId,
+        public static void GenerateRSAKeyPair(RutokenPkcs11Library pkcs11, ulong session, ref ulong publicKeyId, ref ulong privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -436,7 +439,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name="ukm"></param>
         /// <param name="derivedKeyId">ID вырабатанного ключа</param>
         /// <returns>Return value of C_DeriveKey</returns>
-        public static void Derive_GostR3410_Key(Pkcs11 pkcs11, ulong session, ulong publicKeyId, ulong privateKeyId,
+        public static void Derive_GostR3410_Key(RutokenPkcs11Library pkcs11, ulong session, ulong publicKeyId, ulong privateKeyId,
             byte[] ukm, ref ulong derivedKeyId)
         {
             CKR rv = CKR.CKR_OK;
@@ -525,7 +528,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name="ukm"></param>
         /// <param name="derivedKeyId">ID вырабатанного ключа</param>
         /// <returns>Return value of C_DeriveKey</returns>
-        public static void Derive_GostR3410_12_Key(Pkcs11 pkcs11, ulong session, ulong publicKeyId, ulong privateKeyId,
+        public static void Derive_GostR3410_12_Key(RutokenPkcs11Library pkcs11, ulong session, ulong publicKeyId, ulong privateKeyId,
             byte[] ukm, ref ulong derivedKeyId)
         {
             CKR rv = CKR.CKR_OK;
@@ -605,7 +608,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name="initVector">Синхропосылка</param>
         /// <param name="keyId">Ключ для шифрования</param>
         /// <returns>Зашифрованные данные</returns>
-        public static byte[] CBC_Gost28147_89_Encrypt(Pkcs11 pkcs11, ulong session, byte[] data,
+        public static byte[] CBC_Gost28147_89_Encrypt(RutokenPkcs11Library pkcs11, ulong session, byte[] data,
             byte[] initVector, ulong keyId)
         {
             // Дополняем данные по ISO 10126
@@ -657,7 +660,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name="initVector">Синхропосылка</param>
         /// <param name="keyId">Ключ для расшифрования</param>
         /// <returns>Расшифрованные данные</returns>
-        public static byte[] CBC_Gost28147_89_Decrypt(Pkcs11 pkcs11, ulong session,
+        public static byte[] CBC_Gost28147_89_Decrypt(RutokenPkcs11Library pkcs11, ulong session,
             byte[] data, byte[] initVector, ulong keyId)
         {
             byte[] round = new byte[Settings.GOST28147_89_BLOCK_SIZE];
@@ -709,7 +712,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         /// <param name="certificateDer">Сертификат в формате DER</param>
         /// <param name="certificateId">Хэндл сертификата</param>
         /// <returns></returns>
-        public static void PKI_ImportCertificate(Pkcs11 pkcs11, ulong session, byte[] certificateDer, ref ulong certificateId)
+        public static void PKI_ImportCertificate(RutokenPkcs11Library pkcs11, ulong session, byte[] certificateDer, ref ulong certificateId)
         {
             CKR rv = CKR.CKR_OK;
 

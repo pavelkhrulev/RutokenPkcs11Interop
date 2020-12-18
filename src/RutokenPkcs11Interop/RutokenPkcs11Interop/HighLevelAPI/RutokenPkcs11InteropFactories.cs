@@ -26,6 +26,38 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             }
         }
 
+        public IRutokenPkcs11LibraryFactory RutokenPkcs11LibraryFactory
+        {
+            get
+            {
+                return (IRutokenPkcs11LibraryFactory) _pkcs11LibraryFactory;
+            }
+        }
+
+        public IRutokenSlotFactory RutokenSlotFactory
+        {
+            get
+            {
+                return (IRutokenSlotFactory) _slotFactory;
+            }
+        }
+
+        public IRutokenSessionFactory RutokenSessionFactory
+        {
+            get
+            {
+                return (IRutokenSessionFactory) _sessionFactory;
+            }
+        }
+
+        public IRutokenMechanismParamsFactory RutokenMechanismParamsFactory
+        {
+            get
+            {
+                return (IRutokenMechanismParamsFactory) _mechanismParamsFactory;
+            }
+        }
+
         public RutokenPkcs11InteropFactories()
             : base()
         {
@@ -34,6 +66,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI
             _pkcs11LibraryFactory = new RutokenPkcs11LibraryFactory();
             _slotFactory = new RutokenSlotFactory();
             _sessionFactory = new RutokenSessionFactory();
+            _mechanismParamsFactory = new RutokenMechanismParamsFactory();
         }
     }
 }

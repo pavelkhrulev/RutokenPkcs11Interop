@@ -1,5 +1,6 @@
 ﻿using System;
 using Net.Pkcs11Interop.Common;
+using RutokenPkcs11Interop.HighLevelAPI;
 using LLA40 = Net.Pkcs11Interop.LowLevelAPI40;
 using LLA41 = Net.Pkcs11Interop.LowLevelAPI41;
 using LLA80 = Net.Pkcs11Interop.LowLevelAPI80;
@@ -9,6 +10,17 @@ namespace RutokenPkcs11InteropTests
 {
     public static class Settings
     {
+        /// <summary>
+        /// Factories to be used by Developer and Pkcs11Interop library
+        /// </summary>
+        public static RutokenPkcs11InteropFactories Factories = new RutokenPkcs11InteropFactories();
+
+        /// <summary>
+        /// Type of application that will be using PKCS#11 library.
+        /// When set to AppType.MultiThreaded unmanaged PKCS#11 library performs locking to ensure thread safety.
+        /// </summary>
+        public static AppType AppType = AppType.MultiThreaded;
+
         /// <summary>
         /// Relative name or absolute path of unmanaged PKCS#11 library provided by smartcard or HSM vendor.
         /// </summary>

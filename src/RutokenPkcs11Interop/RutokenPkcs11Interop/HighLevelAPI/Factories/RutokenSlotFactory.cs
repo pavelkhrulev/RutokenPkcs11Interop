@@ -9,7 +9,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI.Factories
     /// <summary>
     /// Factory for creation of ISlot instances
     /// </summary>
-    public class RutokenSlotFactory : ISlotFactory
+    public class RutokenSlotFactory : IRutokenSlotFactory
     {
         /// <summary>
         /// Platform specific factory for creation of ISlot instances
@@ -37,15 +37,14 @@ namespace RutokenPkcs11Interop.HighLevelAPI.Factories
             }
         }
 
-        /// <summary>
-        /// Creates slot with specified handle
-        /// </summary>
-        /// <param name="factories">Factories to be used by Developer and Pkcs11Interop library</param>
-        /// <param name="pkcs11Library">Low level PKCS#11 wrapper</param>
-        /// <param name="slotId">PKCS#11 handle of slot</param>
         public ISlot Create(Pkcs11InteropFactories factories, LowLevelPkcs11Library pkcs11Library, ulong slotId)
         {
             return _factory.Create(factories, pkcs11Library, slotId);
+        }
+
+        public IRutokenSlot CreateRutoken(Pkcs11InteropFactories factories, LowLevelPkcs11Library pkcs11Library, ulong slotId)
+        {
+            return (IRutokenSlot) Create(factories, pkcs11Library, slotId);
         }
     }
 }

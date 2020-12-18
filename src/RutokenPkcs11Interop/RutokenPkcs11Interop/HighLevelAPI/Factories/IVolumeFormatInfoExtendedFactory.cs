@@ -6,7 +6,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI.Factories
 
     public interface IVolumeFormatInfoExtendedFactory
     {
-        IVolumeFormatInfoExtended Create(uint volumeSize, FlashAccessMode accessMode,
-            CKU volumeOwner, uint flags);
+        IVolumeFormatInfoExtended Create(ulong volumeSize, FlashAccessMode accessMode,
+            CKU volumeOwner, ulong flags);
     }
 }

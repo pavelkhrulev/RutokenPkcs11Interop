@@ -16,21 +16,21 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                ISlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (ISession session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Generate symetric key
-                    ObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
+                    IObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
 
-                    var mechanism = new Mechanism((uint) Extended_CKM.CKM_GOST28147_ECB);
+                    var mechanism = Settings.Factories.MechanismFactory.Create((uint) Extended_CKM.CKM_GOST28147_ECB);
 
                     byte[] sourceData = TestData.Encrypt_Gost28147_89_ECB_SourceData;
 
@@ -54,22 +54,22 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                ISlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (ISession session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Generate symetric key
-                    ObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
+                    IObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
 
                     // Specify encryption mechanism with initialization vector as parameter
-                    var mechanism = new Mechanism((uint)Extended_CKM.CKM_GOST28147);
+                    var mechanism = Settings.Factories.MechanismFactory.Create((uint)Extended_CKM.CKM_GOST28147);
 
                     byte[] sourceData = TestData.Encrypt_Gost28147_89_SourceData;
                     byte[] encryptedData = null;
@@ -114,19 +114,19 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                ISlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RW session
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (ISession session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Login as normal user
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Generate symetric key
-                    ObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
+                    IObjectHandle generatedKey = Helpers.GenerateGostSymmetricKey(session);
 
                     byte[] sourceData = TestData.Encrypt_CBC_Gost28147_89_ECB_SourceData;
 
@@ -157,24 +157,24 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_20_04_EncryptAndDecrypt_RSA_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                ISlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (ISession session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Генерация ключей для RSA шифрования
-                    ObjectHandle privateKeyHandle = null;
-                    ObjectHandle publicKeyHandle = null;
+                    IObjectHandle privateKeyHandle = null;
+                    IObjectHandle publicKeyHandle = null;
                     Helpers.GenerateRSAKeyPair(session, out publicKeyHandle, out privateKeyHandle, Settings.RsaKeyPairId);
 
                     // Инициализация механизма шифрования
-                    var mechanism = new Mechanism(CKM.CKM_RSA_PKCS);
+                    var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_RSA_PKCS);
 
                     byte[] sourceData = TestData.Encrypt_RSA_SourceData;
 

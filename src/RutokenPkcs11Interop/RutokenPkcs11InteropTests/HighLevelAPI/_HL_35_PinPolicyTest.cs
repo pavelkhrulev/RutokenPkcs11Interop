@@ -20,13 +20,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_35_01_SupportsPinPolicy_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(SessionType.ReadOnly))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadOnly))
                 {
                     bool res;
                     try
@@ -48,13 +48,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_35_02_GetPinPolicy_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(SessionType.ReadOnly))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadOnly))
                 {
                     try
                     {
@@ -91,13 +91,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_35_03_SetPinPolicy_Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadWrite))
                 {
                     session.Login(CKU.CKU_SO, Settings.SecurityOfficerPin);
                     try

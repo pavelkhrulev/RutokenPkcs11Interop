@@ -16,16 +16,16 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_09_01_BasicInitTokenAndPinTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                ISlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Инициализация токена
                 slot.InitToken(Settings.SecurityOfficerPin, Settings.TokenStdLabel);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (ISession session = slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Аутентификация администратора
                     session.Login(CKU.CKU_SO, Settings.SecurityOfficerPin);
@@ -42,13 +42,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_09_02_ExtendedInitTokenAndPinTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = (IRutokenSlot) Helpers.GetUsableSlot(pkcs11);
 
                 // Формирование параметров для инициализации токена
-                var rutokenInitParam = new IRutokenInitParam(Settings.SecurityOfficerPin, Settings.NewUserPin,
+                var rutokenInitParam = Settings.Factories.RutokenInitParamFactory.Create(Settings.SecurityOfficerPin, Settings.NewUserPin,
                     Settings.TokenStdLabel,
                     new List<RutokenFlag> { RutokenFlag.AdminChangeUserPin, RutokenFlag.UserChangeUserPin }, 6, 6,
                     Settings.MAX_ADMIN_RETRY_COUNT, Settings.MAX_USER_RETRY_COUNT, 0);
@@ -57,7 +57,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                 slot.InitTokenExtended(Settings.SecurityOfficerPin, rutokenInitParam);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Блокировка PIN-кода пользователя путем ввода неверного пин-кода нужное число раз
                     try
@@ -100,13 +100,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_09_03_ExtendedInitTokenRepairModeTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = (IRutokenSlot) Helpers.GetUsableSlot(pkcs11);
 
                 // Формирование параметров для инициализации токена
-                var rutokenInitParam = new IRutokenInitParam(Settings.SecurityOfficerPin, Settings.NewUserPin,
+                var rutokenInitParam = Settings.Factories.RutokenInitParamFactory.Create(Settings.SecurityOfficerPin, Settings.NewUserPin,
                     Settings.TokenStdLabel,
                     new List<RutokenFlag> { RutokenFlag.AdminChangeUserPin, RutokenFlag.UserChangeUserPin }, 6, 6,
                     Settings.MAX_ADMIN_RETRY_COUNT, Settings.MAX_USER_RETRY_COUNT, 0, true);

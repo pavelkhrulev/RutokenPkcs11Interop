@@ -14,20 +14,20 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_33_01_CreateCSR_PKCS10Test()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Генерация ключевой пары ГОСТ Р 34.10-2001
-                    ObjectHandle publicKey = null;
-                    ObjectHandle privateKey = null;
+                    IObjectHandle publicKey = null;
+                    IObjectHandle privateKey = null;
                     Helpers.GenerateGostKeyPair(session, out publicKey, out privateKey, Settings.GostKeyPairId1);
 
                     // Создание запроса на сертификат
@@ -69,13 +69,13 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_33_02_ImportCertificateTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
@@ -87,7 +87,7 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
                     byte[] certificateDer = PKIHelpers.GetDerFromBase64(certificateBase64);
 
                     // Импорт сертификата
-                    ObjectHandle certificateHandle;
+                    IObjectHandle certificateHandle;
                     Helpers.PKI_ImportCertificate(session, certificateDer, out certificateHandle);
 
                     // Получение информации о сертификате
@@ -105,46 +105,46 @@ namespace RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_33_03_PKCS7SignTest()
         {
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath, AppType.MultiThreaded))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                Slot slot = Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (Session session = slot.OpenSession(SessionType.ReadWrite))
+                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
 
                     // Шаблон для поиска закрытого ключа ГОСТ Р 34.10-2001
-                    var privateKeyAttributes = new List<ObjectAttribute>
+                    var privateKeyAttributes = new List<IObjectAttribute>
                     {
-                        new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
-                        new ObjectAttribute(CKA.CKA_TOKEN, true),
-                        new ObjectAttribute(CKA.CKA_ID, Settings.GostKeyPairId1),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.GostKeyPairId1),
                    };
 
                     // Шаблон для поиска сертификата ключа подписи
                     uint tokenUserCertificate = 1;
-                    var certificateAttributes = new List<ObjectAttribute>
+                    var certificateAttributes = new List<IObjectAttribute>
                     {
-                        new ObjectAttribute(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE),
-                        new ObjectAttribute(CKA.CKA_TOKEN, true),
-                        new ObjectAttribute(CKA.CKA_ID, Settings.GostKeyPairId1),
-                        new ObjectAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
-                        new ObjectAttribute(CKA.CKA_CERTIFICATE_CATEGORY, tokenUserCertificate)
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_CERTIFICATE),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.GostKeyPairId1),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CERTIFICATE_CATEGORY, tokenUserCertificate)
                     };
 
                     // Данные
                     string signData = "01234";
 
                     // Поиск закрытого ключа на токене
-                    List<ObjectHandle> privateKeys = session.FindAllObjects(privateKeyAttributes);
+                    List<IObjectHandle> privateKeys = session.FindAllObjects(privateKeyAttributes);
                     Assert.IsTrue(privateKeys != null);
                     Assert.IsTrue(privateKeys.Count > 0);
 
                     // Поиск сертификата на токене
-                    List<ObjectHandle> certificates = session.FindAllObjects(certificateAttributes);
+                    List<IObjectHandle> certificates = session.FindAllObjects(certificateAttributes);
                     Assert.IsTrue(certificates != null);
                     Assert.IsTrue(certificates.Count > 0);
 
