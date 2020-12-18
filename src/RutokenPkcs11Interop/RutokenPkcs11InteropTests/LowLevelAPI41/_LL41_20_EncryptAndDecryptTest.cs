@@ -4,6 +4,7 @@ using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI41;
 using NUnit.Framework;
 using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.LowLevelAPI41;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI41
 {
@@ -19,12 +20,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         [Test()]
         public void _LL41_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs41);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
@@ -119,12 +120,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         [Test()]
         public void _LL41_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs41);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
@@ -285,18 +286,18 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         [Test()]
         public void _LL41_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs41);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
                     Assert.Fail(rv.ToString());
 
-                // Установление соединения с Рутокен в первом доступном слоте
+                // Find first slot with token present
                 uint slotId = Helpers.GetUsableSlot(pkcs11);
 
                 uint session = CK.CK_INVALID_HANDLE;
@@ -304,7 +305,7 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
 
-                // Выполнение аутентификации Пользователя
+                // Login as normal user
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());
@@ -353,12 +354,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         [Test()]
         public void _LL41_20_04_EncryptAndDecrypt_RSA_Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs41);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))

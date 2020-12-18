@@ -17,12 +17,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
         [Test()]
         public void _LL80_09_01_BasicInitTokenAndPinTest()
         {
-            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 0)
+            if (Platform.NativeULongSize != 8 || Platform.StructPackingSize != 0)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 // Инициализация библиотеки
                 rv = pkcs11.C_Initialize(Settings.InitArgs80);
@@ -76,12 +76,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
         [Test()]
         public void _LL80_09_02_ExtendedInitTokenAndPinTest()
         {
-            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 0)
+            if (Platform.NativeULongSize != 8 || Platform.StructPackingSize != 0)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 // Инициализация библиотеки
                 rv = pkcs11.C_Initialize(Settings.InitArgs80);
@@ -209,12 +209,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI80
         [Test()]
         public void _LL80_09_03_LocalPinTest()
         {
-            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 0)
+            if (Platform.NativeULongSize != 8 || Platform.StructPackingSize != 0)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 // Инициализация библиотеки
                 rv = pkcs11.C_Initialize(Settings.InitArgs80);

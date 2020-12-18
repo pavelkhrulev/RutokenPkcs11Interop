@@ -14,12 +14,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         [Test()]
         public void _LL41_33_01_CreateCSR_PKCS10Test()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (var pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 // Инициализация библиотеки
                 rv = pkcs11.C_Initialize(Settings.InitArgs41);
@@ -122,12 +122,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI41
         [Test()]
         public void _LL41_33_02_ImportCertificateTest()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (var pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 // Инициализация библиотеки
                 rv = pkcs11.C_Initialize(Settings.InitArgs41);

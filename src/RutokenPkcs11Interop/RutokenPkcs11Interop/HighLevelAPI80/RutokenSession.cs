@@ -538,7 +538,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
             ckKeyAttributes = new CK_ATTRIBUTE[keyAttributes.Count];
             for (int i = 0; i < keyAttributes.Count; i++)
             {
-                ckKeyAttributes[i] = keyAttributes[i].GetPrivatePropertyValue<CK_ATTRIBUTE>("CkAttribute");
+                ckKeyAttributes[i] = (CK_ATTRIBUTE)keyAttributes[i].ToMarshalableStructure();
             }
             ckKeyAttributesLen = Convert.ToUInt64(keyAttributes.Count);
 
@@ -611,7 +611,7 @@ namespace RutokenPkcs11Interop.HighLevelAPI80
             ckKeyAttributes = new CK_ATTRIBUTE[keyAttributes.Count];
             for (int i = 0; i < keyAttributes.Count; i++)
             {
-                ckKeyAttributes[i] = keyAttributes[i].GetPrivatePropertyValue<CK_ATTRIBUTE>("CkAttribute");
+                ckKeyAttributes[i] = (CK_ATTRIBUTE)keyAttributes[i].ToMarshalableStructure();
             }
             ckKeyAttributesLen = Convert.ToUInt64(keyAttributes.Count);
 

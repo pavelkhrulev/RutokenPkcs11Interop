@@ -12,12 +12,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
         [Test()]
         public void _LL40_31_01_SetAndGetLicenseTest()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 0)
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 0)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (var pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (var pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs40);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))

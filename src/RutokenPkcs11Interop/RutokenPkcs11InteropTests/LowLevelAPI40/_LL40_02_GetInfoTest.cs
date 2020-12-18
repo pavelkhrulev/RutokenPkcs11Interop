@@ -2,6 +2,7 @@
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI40;
 using NUnit.Framework;
+using RutokenPkcs11Interop.LowLevelAPI40;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI40
 {
@@ -17,12 +18,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI40
         [Test()]
         public void _LL40_02_01_BasicGetInfoTest()
         {
-            if (Platform.UnmanagedLongSize != 4 || Platform.StructPackingSize != 0)
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 0)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs40);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))

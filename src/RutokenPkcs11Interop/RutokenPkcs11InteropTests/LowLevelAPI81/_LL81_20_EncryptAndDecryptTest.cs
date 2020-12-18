@@ -4,6 +4,7 @@ using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI81;
 using NUnit.Framework;
 using RutokenPkcs11Interop.Common;
+using RutokenPkcs11Interop.LowLevelAPI81;
 
 namespace RutokenPkcs11InteropTests.LowLevelAPI81
 {
@@ -19,12 +20,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         [Test()]
         public void _LL81_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
-            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs81);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
@@ -119,12 +120,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         [Test()]
         public void _LL81_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
-            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs81);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
@@ -285,12 +286,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         [Test()]
         public void _LL81_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
-            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs81);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
@@ -353,12 +354,12 @@ namespace RutokenPkcs11InteropTests.LowLevelAPI81
         [Test()]
         public void _LL81_20_04_EncryptAndDecrypt_RSA_Test()
         {
-            if (Platform.UnmanagedLongSize != 8 || Platform.StructPackingSize != 1)
+            if (Platform.NativeULongSize != 8 || Platform.StructPackingSize != 1)
                 Assert.Inconclusive("Test cannot be executed on this platform");
 
             CKR rv = CKR.CKR_OK;
 
-            using (Pkcs11 pkcs11 = new Pkcs11(Settings.Pkcs11LibraryPath))
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
             {
                 rv = pkcs11.C_Initialize(Settings.InitArgs81);
                 if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
