@@ -1,9 +1,11 @@
 ﻿using Net.Pkcs11Interop.Common;
 using Net.RutokenPkcs11Interop.Common;
+using Net.RutokenPkcs11Interop.HighLevelAPI;
+using Net.RutokenPkcs11Interop.LowLevelAPI40;
 
 namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 {
-    public abstract class VolumeInfo
+    public class VolumeInfo : IVolumeInfo
     {
         protected uint _volumeSize;
 
@@ -43,6 +45,14 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             {
                 return _flags;
             }
+        }
+
+        public VolumeInfo(uint _volumeSize, FlashAccessMode _accessMode, CKU _volumeOwner, uint _flags)
+        {
+            this._volumeSize = _volumeSize;
+            this._accessMode = _accessMode;
+            this._volumeOwner = _volumeOwner;
+            this._flags = _flags;
         }
     }
 }

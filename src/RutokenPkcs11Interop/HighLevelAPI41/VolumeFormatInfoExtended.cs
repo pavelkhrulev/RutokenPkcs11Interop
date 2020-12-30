@@ -5,7 +5,7 @@ using Net.RutokenPkcs11Interop.HighLevelAPI;
 
 namespace Net.RutokenPkcs11Interop.HighLevelAPI41
 {
-    public class VolumeFormatInfoExtended : VolumeInfo, IVolumeFormatInfoExtended
+    public class VolumeFormatInfoExtended : IVolumeFormatInfoExtended
     {
         internal CK_VOLUME_FORMAT_INFO_EXTENDED CkVolumeFormatInfoExtended { get; }
 

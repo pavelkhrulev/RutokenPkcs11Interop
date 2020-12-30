@@ -4,16 +4,8 @@ using Net.RutokenPkcs11Interop.Common;
 
 namespace Net.RutokenPkcs11Interop.HighLevelAPI
 {
-    public interface IVolumeInfoExtended
+    public interface IVolumeInfoExtended : IVolumeInfo
     {
-        ulong VolumeSize { get; }
-
-        FlashAccessMode AccessMode { get; }
-
-        CKU VolumeOwner { get; }
-
-        ulong Flags { get; }
-
         ulong VolumeId { get; }
     }
 }

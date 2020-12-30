@@ -9,6 +9,8 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI
 {
     public interface IRutokenSlot: ISlot
     {
+        IRutokenSession OpenRutokenSession(SessionType sessionType);
+
         ITokenInfoExtended GetTokenInfoExtended();
 
         void InitTokenExtended(string pin, IRutokenInitParam initParam);

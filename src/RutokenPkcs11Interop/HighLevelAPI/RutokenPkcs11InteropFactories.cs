@@ -8,7 +8,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI
     {
         protected IVolumeFormatInfoExtendedFactory _volumeFormatInfoExtendedFactory = null;
 
-        public IVolumeFormatInfoExtendedFactory VolumeInfoExtendedFactory
+        public IVolumeFormatInfoExtendedFactory VolumeFormatInfoExtendedFactory
         {
             get
             {
@@ -23,6 +23,26 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI
             get
             {
                 return _rutokenInitParamFactory;
+            }
+        }
+
+        protected IVolumeInfoFactory _volumeInfoFactory = null;
+
+        public IVolumeInfoFactory VolumeInfoFactory
+        {
+            get
+            {
+                return (IVolumeInfoFactory) _volumeInfoFactory;
+            }
+        }
+
+        protected IVolumeInfoExtendedFactory _volumeInfoExtendedFactory = null;
+
+        public IVolumeInfoExtendedFactory VolumeInfoExtendedFactory
+        {
+            get
+            {
+                return (IVolumeInfoExtendedFactory) _volumeInfoExtendedFactory;
             }
         }
 
@@ -67,6 +87,8 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI
             _slotFactory = new RutokenSlotFactory();
             _sessionFactory = new RutokenSessionFactory();
             _mechanismParamsFactory = new RutokenMechanismParamsFactory();
+            _volumeInfoFactory = new VolumeInfoFactory();
+            _volumeInfoExtendedFactory = new VolumeInfoExtendedFactory();
         }
     }
 }

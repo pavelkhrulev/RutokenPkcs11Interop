@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI41;
 using Net.Pkcs11Interop.HighLevelAPI;
@@ -57,6 +60,11 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41
                 }
                 throw;
             }
+        }
+
+        public List<IRutokenSlot> GetRutokenSlotList(SlotsType slotsType)
+        {
+            return GetSlotList(slotsType).Select(slot => (IRutokenSlot)slot).ToList();
         }
 
         public void FreeBuffer(IntPtr buffer)

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI81;
 using Net.Pkcs11Interop.HighLevelAPI;
@@ -28,6 +31,11 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI81
             : base(factories, libraryPath, appType, initType)
         {
             _pkcs11LibraryExtention = new LLA.RutokenPkcs11Library(libraryPath);
+        }
+
+        public List<IRutokenSlot> GetRutokenSlotList(SlotsType slotsType)
+        {
+            return GetSlotList(slotsType).Select(slot => (IRutokenSlot)slot).ToList();
         }
 
         public void FreeBuffer(IntPtr buffer)

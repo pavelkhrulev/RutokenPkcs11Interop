@@ -16,13 +16,16 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41
             }
         }
 
+        internal VolumeInfoExtended(ulong volumeId, ulong volumeSize, FlashAccessMode accessMode, CKU volumeOwner, ulong flags)
+    : base((uint)volumeSize, accessMode, volumeOwner, (uint)flags)
+        {
+            _volumeId = (uint)volumeId;
+        }
+
         internal VolumeInfoExtended(CK_VOLUME_INFO_EXTENDED ckVolumeInfoExtended)
+            : base(ckVolumeInfoExtended.VolumeSize, (FlashAccessMode)ckVolumeInfoExtended.AccessMode, (CKU)ckVolumeInfoExtended.VolumeOwner, ckVolumeInfoExtended.Flags)
         {
             _volumeId = ckVolumeInfoExtended.VolumeId;
-            _volumeSize = ckVolumeInfoExtended.VolumeSize;
-            _accessMode = (FlashAccessMode)ckVolumeInfoExtended.AccessMode;
-            _volumeOwner = (CKU)ckVolumeInfoExtended.VolumeOwner;
-            _flags = ckVolumeInfoExtended.Flags;
         }
     }
 }

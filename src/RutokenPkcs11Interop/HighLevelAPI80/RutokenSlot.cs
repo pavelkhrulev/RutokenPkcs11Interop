@@ -18,6 +18,11 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI80
         {
         }
 
+        public IRutokenSession OpenRutokenSession(SessionType sessionType)
+        {
+            return (IRutokenSession)OpenSession(sessionType);
+        }
+
         public ITokenInfoExtended GetTokenInfoExtended()
         {
             var tokenInfo = new LowLevelAPI80.CK_TOKEN_INFO_EXTENDED
