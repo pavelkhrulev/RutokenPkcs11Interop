@@ -2,137 +2,141 @@
 using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.LowLevelAPI41;
 
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is maintained manually
+
 namespace Net.RutokenPkcs11Interop.LowLevelAPI41
 {
     internal static class RutokenNativeMethods
     {
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetTokenInfoExtended(uint slotId, ref CK_TOKEN_INFO_EXTENDED info);
+        internal static extern NativeULong C_EX_GetTokenInfoExtended(NativeULong slotId, ref CK_TOKEN_INFO_EXTENDED info);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_InitToken(uint slotId, byte[] pin, uint pinLen, ref CK_RUTOKEN_INIT_PARAM initInfo);
+        internal static extern NativeULong C_EX_InitToken(NativeULong slotId, byte[] pin, NativeULong pinLen, ref CK_RUTOKEN_INIT_PARAM initInfo);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_UnblockUserPIN(uint session);
+        internal static extern NativeULong C_EX_UnblockUserPIN(NativeULong session);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SetTokenName(uint session, byte[] label, uint labelLen);
+        internal static extern NativeULong C_EX_SetTokenName(NativeULong session, byte[] label, NativeULong labelLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetTokenName(uint session, byte[] label, ref uint labelLen);
+        internal static extern NativeULong C_EX_GetTokenName(NativeULong session, byte[] label, ref NativeULong labelLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetJournal(uint slotId, byte[] journal, ref uint journalLen);
+        internal static extern NativeULong C_EX_GetJournal(NativeULong slotId, byte[] journal, ref NativeULong journalLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SignInvisibleInit(uint session, ref CK_MECHANISM mechanism, uint key);
+        internal static extern NativeULong C_EX_SignInvisibleInit(NativeULong session, ref CK_MECHANISM mechanism, NativeULong key);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SignInvisible(
-            uint session, byte[] data, uint dataLen, byte[] signature, ref uint signatureLen);
+        internal static extern NativeULong C_EX_SignInvisible(
+            NativeULong session, byte[] data, NativeULong dataLen, byte[] signature, ref NativeULong signatureLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SetLocalPIN(uint slotId, byte[] userPin, uint userPinLen,
-            byte[] newLocalPin, uint localPinLen, uint localPinId);
+        internal static extern NativeULong C_EX_SetLocalPIN(NativeULong slotId, byte[] userPin, NativeULong userPinLen,
+            byte[] newLocalPin, NativeULong localPinLen, NativeULong localPinId);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetDriveSize(uint slotId, ref uint driveSize);
+        internal static extern NativeULong C_EX_GetDriveSize(NativeULong slotId, ref NativeULong driveSize);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_FormatDrive(uint slotId, uint userType,
-            byte[] pin, uint pinLen,
-            CK_VOLUME_FORMAT_INFO_EXTENDED[] initParams, uint initParamsCount);
+        internal static extern NativeULong C_EX_FormatDrive(NativeULong slotId, NativeULong userType,
+            byte[] pin, NativeULong pinLen,
+            CK_VOLUME_FORMAT_INFO_EXTENDED[] initParams, NativeULong initParamsCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetVolumesInfo(uint slotId,
-            [Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 1)]CK_VOLUME_INFO_EXTENDED[] info, ref uint infoCount);
+        internal static extern NativeULong C_EX_GetVolumesInfo(NativeULong slotId,
+            [Out][MarshalAs(UnmanagedType.LPArray, SizeConst = 1)]CK_VOLUME_INFO_EXTENDED[] info, ref NativeULong infoCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_ChangeVolumeAttributes(uint slotId, uint userType,
-            byte[] pin, uint pinLen,
-            uint volumeId, uint newAccessMode, bool permanent);
+        internal static extern NativeULong C_EX_ChangeVolumeAttributes(NativeULong slotId, NativeULong userType,
+            byte[] pin, NativeULong pinLen,
+            NativeULong volumeId, NativeULong newAccessMode, bool permanent);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SetLicense(
-            uint session, uint licenseNum, byte[] license, uint licenseLen);
+        internal static extern NativeULong C_EX_SetLicense(
+            NativeULong session, NativeULong licenseNum, byte[] license, NativeULong licenseLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetLicense(
-            uint session, uint licenseNum, byte[] license, ref uint licenseLen);
+        internal static extern NativeULong C_EX_GetLicense(
+            NativeULong session, NativeULong licenseNum, byte[] license, ref NativeULong licenseLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GenerateActivationPassword(uint session, uint passwordNumber,
-            byte[] password, ref uint passwordSize, uint passwordCharacterSet);
+        internal static extern NativeULong C_EX_GenerateActivationPassword(NativeULong session, NativeULong passwordNumber,
+            byte[] password, ref NativeULong passwordSize, NativeULong passwordCharacterSet);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_LoadActivationKey(uint session, byte[] key, uint keySize);
+        internal static extern NativeULong C_EX_LoadActivationKey(NativeULong session, byte[] key, NativeULong keySize);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SetActivationPassword(uint slotId, byte[] password);
+        internal static extern NativeULong C_EX_SetActivationPassword(NativeULong slotId, byte[] password);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_TokenManage(uint session, uint mode, IntPtr value);
+        internal static extern NativeULong C_EX_TokenManage(NativeULong session, NativeULong mode, IntPtr value);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_SlotManage(uint slotId, uint mode, IntPtr value);
+        internal static extern NativeULong C_EX_SlotManage(NativeULong slotId, NativeULong mode, IntPtr value);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_WrapKey(uint session, ref CK_MECHANISM generationMechanism,
-            CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
+        internal static extern NativeULong C_EX_WrapKey(NativeULong session, ref CK_MECHANISM generationMechanism,
+            CK_ATTRIBUTE[] keyTemplate, NativeULong keyAttributeCount,
             ref CK_MECHANISM derivationMechanism,
-            uint baseKey,
+            NativeULong baseKey,
             ref CK_MECHANISM wrappingMechanism,
-            byte[] wrappedKey, ref uint wrappedKeyLen, ref uint key);
+            byte[] wrappedKey, ref NativeULong wrappedKeyLen, ref NativeULong key);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_UnwrapKey(uint session, ref CK_MECHANISM derivationMechanism,
-            uint baseKey, ref CK_MECHANISM unwrappingMechanism,
-            byte[] wrappedKey, uint wrappedKeyLen,
-            CK_ATTRIBUTE[] keyTemplate, uint keyAttributeCount,
-            ref uint key);
+        internal static extern NativeULong C_EX_UnwrapKey(NativeULong session, ref CK_MECHANISM derivationMechanism,
+            NativeULong baseKey, ref CK_MECHANISM unwrappingMechanism,
+            byte[] wrappedKey, NativeULong wrappedKeyLen,
+            CK_ATTRIBUTE[] keyTemplate, NativeULong keyAttributeCount,
+            ref NativeULong key);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_CreateCSR(uint session, uint publicKey,
-            IntPtr[] dn, uint dnLength,
-            out IntPtr csr, out uint csrLength,
-            uint privateKey,
-            IntPtr[] attributes, uint attributesLength,
-            IntPtr[] extensions, uint extensionsLength);
+        internal static extern NativeULong C_EX_CreateCSR(NativeULong session, NativeULong publicKey,
+            IntPtr[] dn, NativeULong dnLength,
+            out IntPtr csr, out NativeULong csrLength,
+            NativeULong privateKey,
+            IntPtr[] attributes, NativeULong attributesLength,
+            IntPtr[] extensions, NativeULong extensionsLength);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_GetCertificateInfoText(
-            uint session, uint cert, out IntPtr info, out uint infoLen);
+        internal static extern NativeULong C_EX_GetCertificateInfoText(
+            NativeULong session, NativeULong cert, out IntPtr info, out NativeULong infoLen);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7Sign(
-            uint session, byte[] data, uint dataLen,
-            uint cert,
-            out IntPtr envelope, out uint encelopeLen,
-            uint privateKey,
-            uint[] certificates, uint certificatesLen, uint flags);
+        internal static extern NativeULong C_EX_PKCS7Sign(
+            NativeULong session, byte[] data, NativeULong dataLen,
+            NativeULong cert,
+            out IntPtr envelope, out NativeULong encelopeLen,
+            NativeULong privateKey,
+            NativeULong[] certificates, NativeULong certificatesLen, NativeULong flags);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7VerifyInit(
-            uint session, byte[] cms, uint cmsSize,
-            ref CK_VENDOR_X509_STORE store, uint mode,
-            uint flags);
+        internal static extern NativeULong C_EX_PKCS7VerifyInit(
+            NativeULong session, byte[] cms, NativeULong cmsSize,
+            ref CK_VENDOR_X509_STORE store, NativeULong mode,
+            NativeULong flags);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7Verify(
-            uint session,
-            out IntPtr data, out uint dataSize,
-            out IntPtr signerCertificates, out uint signerCertificatesCount);
+        internal static extern NativeULong C_EX_PKCS7Verify(
+            NativeULong session,
+            out IntPtr data, out NativeULong dataSize,
+            out IntPtr signerCertificates, out NativeULong signerCertificatesCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7VerifyUpdate(
-            uint session, byte[] data, uint dataSize);
+        internal static extern NativeULong C_EX_PKCS7VerifyUpdate(
+            NativeULong session, byte[] data, NativeULong dataSize);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_PKCS7VerifyFinal(
-            uint session,
-            out IntPtr signerCertificates, out uint signerCertificatesCount);
+        internal static extern NativeULong C_EX_PKCS7VerifyFinal(
+            NativeULong session,
+            out IntPtr signerCertificates, out NativeULong signerCertificatesCount);
 
         [DllImport("__Internal", CallingConvention = CallingConvention.Cdecl)]
-        internal static extern uint C_EX_FreeBuffer(IntPtr buffer);
+        internal static extern NativeULong C_EX_FreeBuffer(IntPtr buffer);
     }
 }

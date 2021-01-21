@@ -8,6 +8,10 @@ using Net.RutokenPkcs11Interop.Common;
 
 using Net.RutokenPkcs11Interop.HighLevelAPI;
 
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 {
     public class RutokenSlot : Net.Pkcs11Interop.HighLevelAPI40.Slot, IRutokenSlot
@@ -20,14 +24,14 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
         public IRutokenSession OpenRutokenSession(SessionType sessionType)
         {
-            return (IRutokenSession) OpenSession(sessionType);
+            return (IRutokenSession)OpenSession(sessionType);
         }
 
         public ITokenInfoExtended GetTokenInfoExtended()
         {
             var tokenInfo = new LowLevelAPI40.CK_TOKEN_INFO_EXTENDED
             {
-                SizeofThisStructure = Convert.ToUInt32(Marshal.SizeOf(typeof(LowLevelAPI40.CK_TOKEN_INFO_EXTENDED)))
+                SizeofThisStructure = (NativeULong)(Marshal.SizeOf(typeof(LowLevelAPI40.CK_TOKEN_INFO_EXTENDED)))
             };
 
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GetTokenInfoExtended(_slotId, ref tokenInfo);
@@ -37,7 +41,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             return new TokenInfoExtended(tokenInfo);
         }
 
-        public void InitTokenExtended(string pin, HighLevelAPI.IRutokenInitParam initParam)
+        public void InitTokenExtended(string pin, IRutokenInitParam initParam)
         {
             if (pin == null)
                 throw new ArgumentNullException(nameof(pin));
@@ -45,7 +49,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             if (initParam == null)
                 throw new ArgumentNullException(nameof(initParam));
 
-            LowLevelAPI40.CK_RUTOKEN_INIT_PARAM ckInitParam = ((RutokenInitParam)initParam).CkRutokenInitParam;
+            LowLevelAPI40.CK_RUTOKEN_INIT_PARAM ckInitParam = ((RutokenInitParam) initParam).CkRutokenInitParam;
 
             byte[] pinArray = ConvertUtils.Utf8StringToBytes(pin);
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_InitToken(_slotId, pinArray, ref ckInitParam);
@@ -55,7 +59,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
         public byte[] GetJournal()
         {
-            uint journalLength = 0;
+            NativeULong journalLength = 0;
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GetJournal(_slotId, null, ref journalLength);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetJournal", rv);
@@ -80,21 +84,21 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             byte[] userPinArray = ConvertUtils.Utf8StringToBytes(userPin);
             byte[] localPinArray = ConvertUtils.Utf8StringToBytes(localPin);
 
-            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SetLocalPIN(_slotId, userPinArray, localPinArray, ConvertUtils.UInt32FromUInt64(localPinId));
+            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SetLocalPIN(_slotId, userPinArray, localPinArray,(NativeULong)(localPinId));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SetLocalPIN", rv);
         }
 
         public void SetPIN2(ulong pinId)
         {
-            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SetLocalPIN(_slotId, null, null, ConvertUtils.UInt32FromUInt64(pinId));
+            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SetLocalPIN(_slotId, null, null,(NativeULong)(pinId));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SetLocalPIN", rv);
         }
 
         public ulong GetDriveSize()
         {
-            uint driveSize = 0;
+            NativeULong driveSize = 0;
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GetDriveSize(_slotId, ref driveSize);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetDriveSize", rv);
@@ -119,7 +123,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                 formatParams.Add(((VolumeFormatInfoExtended) initParam).CkVolumeFormatInfoExtended);
             }
 
-            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_FormatDrive(_slotId, (uint)userType,
+            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_FormatDrive(_slotId, (NativeULong)userType,
                 pinArray, formatParams.ToArray());
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_FormatDrive", rv);
@@ -127,7 +131,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
         public ICollection<IVolumeInfoExtended> GetVolumesInfo()
         {
-            uint volumesInfoCount = 0;
+            NativeULong volumesInfoCount = 0;
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GetVolumesInfo(_slotId, null, ref volumesInfoCount);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetVolumesInfo", rv);
@@ -153,8 +157,8 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
             byte[] pinArray = ConvertUtils.Utf8StringToBytes(pin);
 
-            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_ChangeVolumeAttributes(_slotId, (uint)userType,
-                pinArray, ConvertUtils.UInt32FromUInt64(volumeId), newAccessMode, permanent);
+            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_ChangeVolumeAttributes(_slotId, (NativeULong)userType,
+                pinArray,(NativeULong)(volumeId), newAccessMode, permanent);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_ChangeVolumeAttributes", rv);
         }
@@ -180,7 +184,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
             try
             {
-                CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SlotManage(_slotId, ConvertUtils.UInt32FromUInt64(mode), valuePtr);
+                CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SlotManage(_slotId,(NativeULong)(mode), valuePtr);
                 if (rv != CKR.CKR_OK)
                     throw new Pkcs11Exception("C_EX_SlotManage", rv);
             }

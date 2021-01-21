@@ -1,18 +1,21 @@
 ﻿using System.Runtime.InteropServices;
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is generated automatically
 
 namespace Net.RutokenPkcs11Interop.LowLevelAPI40
 {
     [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
     public struct CK_VOLUME_INFO_EXTENDED
     {
-        public uint VolumeId;
+        public NativeULong VolumeId;
 
-        public uint VolumeSize;
+        public NativeULong VolumeSize;
 
-        public uint AccessMode;
+        public NativeULong AccessMode;
 
-        public uint VolumeOwner;
+        public NativeULong VolumeOwner;
 
-        public uint Flags;
+        public NativeULong Flags;
     }
 }

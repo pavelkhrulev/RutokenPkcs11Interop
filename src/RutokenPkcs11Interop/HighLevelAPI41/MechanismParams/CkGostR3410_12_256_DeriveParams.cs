@@ -2,6 +2,10 @@
 using Net.RutokenPkcs11Interop.LowLevelAPI41.MechanismParams;
 using Net.RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is maintained manually
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI41.MechanismParams
 {
     public class CkGostR3410_12_256_DeriveParams : ICkGostR3410_12_256_DeriveParams
@@ -22,7 +26,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41.MechanismParams
         /// <param name="kdf">Additional key diversification algorithm (CKD)</param>
         /// <param name="publicData">Data with public key of a receiver</param>
         /// <param name="ukm">UKM data</param>
-        public CkGostR3410_12_256_DeriveParams(uint kdf, byte[] publicData, byte[] ukm)
+        public CkGostR3410_12_256_DeriveParams(ulong kdf, byte[] publicData, byte[] ukm)
         {
             _lowLevelStruct.Kdf = 0;
             _lowLevelStruct.PublicDataLen = 0;
@@ -42,10 +46,10 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41.MechanismParams
             if (ukm.Length != 8)
                 throw new ArgumentOutOfRangeException(nameof(ukm), "Array has to be 8 bytes long");
 
-            _lowLevelStruct.Kdf = kdf;
-            _lowLevelStruct.PublicDataLen = Convert.ToUInt32(publicData.Length);
+            _lowLevelStruct.Kdf = (NativeULong) kdf;
+            _lowLevelStruct.PublicDataLen = (NativeULong)(publicData.Length);
             Array.Copy(publicData, _lowLevelStruct.PublicData, publicData.Length);
-            _lowLevelStruct.UKMLen = Convert.ToUInt32(ukm.Length);
+            _lowLevelStruct.UKMLen = (NativeULong)(ukm.Length);
             Array.Copy(ukm, _lowLevelStruct.UKM, ukm.Length);
         }
 

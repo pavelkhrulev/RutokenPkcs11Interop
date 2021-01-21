@@ -12,9 +12,13 @@ using Net.RutokenPkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.LowLevelAPI40;
 
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 {
-    public class RutokenSession: Net.Pkcs11Interop.HighLevelAPI40.Session, IRutokenSession
+    public class RutokenSession : Net.Pkcs11Interop.HighLevelAPI40.Session, IRutokenSession
     {
         internal RutokenSession(Pkcs11InteropFactories factories, LowLevelAPI40.RutokenPkcs11Library pkcs11Library, ulong sessionId)
             : base(factories, pkcs11Library, sessionId)
@@ -47,7 +51,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            uint tokenLabelLength = 0;
+            NativeULong tokenLabelLength = 0;
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GetTokenName(_sessionId, null, ref tokenLabelLength);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetTokenName", rv);
@@ -62,7 +66,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetTokenName", rv);
 
-            if (tokenLabel.Length != tokenLabelLength)
+            if ((NativeULong) tokenLabel.Length != tokenLabelLength)
                 Array.Resize(ref tokenLabel, Convert.ToInt32(tokenLabelLength));
 
             return ConvertUtils.BytesToUtf8String(tokenLabel);
@@ -73,14 +77,14 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            if (!Settings.LicenseAllowedNumbers.Contains(ConvertUtils.UInt32FromUInt64(licenseNum)))
+            if (!Settings.LicenseAllowedNumbers.Contains((uint)(licenseNum)))
                 throw new ArgumentOutOfRangeException(nameof(licenseNum));
 
             if (license == null)
                 throw new ArgumentNullException(nameof(license));
 
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SetLicense(
-                _sessionId, ConvertUtils.UInt32FromUInt64(licenseNum), license);
+                _sessionId, (NativeULong)(licenseNum), license);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SetLicense", rv);
         }
@@ -90,12 +94,12 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
 
-            if (!Settings.LicenseAllowedNumbers.Contains(ConvertUtils.UInt32FromUInt64(licenseNum)))
+            if (!Settings.LicenseAllowedNumbers.Contains((uint)(licenseNum)))
                 throw new ArgumentOutOfRangeException(nameof(licenseNum));
 
-            uint licenseLen = 0;
+            NativeULong licenseLen = 0;
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GetLicense(
-                _sessionId, ConvertUtils.UInt32FromUInt64(licenseNum), null, ref licenseLen);
+                _sessionId, (NativeULong)(licenseNum), null, ref licenseLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetLicense", rv);
 
@@ -105,7 +109,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             byte[] license = new byte[licenseLen];
 
             rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GetLicense(
-                _sessionId, ConvertUtils.UInt32FromUInt64(licenseNum), license, ref licenseLen);
+                _sessionId, (NativeULong)(licenseNum), license, ref licenseLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetLicense", rv);
 
@@ -133,9 +137,9 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                 throw new ObjectDisposedException(this.GetType().FullName);
 
             // Получение длины пароля активации
-            uint passwordLength = 0;
+            NativeULong passwordLength = 0;
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GenerateActivationPassword(
-                _sessionId, (uint)passwordNumber, null, ref passwordLength, (uint)characterSet);
+                _sessionId, (NativeULong)passwordNumber, null, ref passwordLength, (NativeULong)characterSet);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GenerateActivationPassword", rv);
 
@@ -146,7 +150,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             // Генерация пароля активации
             byte[] password = new byte[passwordLength];
             rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GenerateActivationPassword(
-                _sessionId, (uint)passwordNumber, password, ref passwordLength, (uint)characterSet);
+                _sessionId, (NativeULong)passwordNumber, password, ref passwordLength, (NativeULong)characterSet);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GenerateActivationPassword", rv);
 
@@ -154,7 +158,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
         }
 
         public byte[] SignInvisible(
-             IMechanism mechanism, IObjectHandle keyHandle, byte[] data)
+            IMechanism mechanism, IObjectHandle keyHandle, byte[] data)
         {
             if (this._disposed)
                 throw new ObjectDisposedException(this.GetType().FullName);
@@ -170,16 +174,16 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
             var ckMechanism = new CK_MECHANISM()
             {
-                Mechanism = ConvertUtils.UInt32FromUInt64(mechanism.Type)
+                Mechanism =(NativeULong)(mechanism.Type)
             };
 
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SignInvisibleInit(_sessionId, ref ckMechanism,
-                ConvertUtils.UInt32FromUInt64(keyHandle.ObjectId));
+               (NativeULong)(keyHandle.ObjectId));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisibleInit", rv);
 
-            uint signatureLen = 0;
-            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SignInvisible(_sessionId, data, Convert.ToUInt32(data.Length), null,
+            NativeULong signatureLen = 0;
+            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SignInvisible(_sessionId, data, (NativeULong)(data.Length), null,
                 ref signatureLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisible", rv);
@@ -189,12 +193,12 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                     "C_EX_SignInvisible: invalid signature length");
 
             byte[] signature = new byte[signatureLen];
-            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SignInvisible(_sessionId, data, Convert.ToUInt32(data.Length),
+            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_SignInvisible(_sessionId, data, (NativeULong)(data.Length),
                 signature, ref signatureLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_SignInvisible", rv);
 
-            if (signature.Length != signatureLen)
+            if ((NativeULong)signature.Length != signatureLen)
                 Array.Resize(ref signature, Convert.ToInt32(signatureLen));
 
             return signature;
@@ -210,14 +214,14 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             IntPtr[] extsPtr = StringArrayHelpers.ConvertStringArrayToIntPtrArray(extensions);
 
             IntPtr csr;
-            uint csrLength;
+            NativeULong csrLength;
 
-            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_CreateCSR(_sessionId, ConvertUtils.UInt32FromUInt64(publicKey.ObjectId),
-                dnPtr, (uint) dnPtr.Length,
+            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_CreateCSR(_sessionId,(NativeULong)(publicKey.ObjectId),
+                dnPtr, (NativeULong) dnPtr.Length,
                 out csr, out csrLength,
-                ConvertUtils.UInt32FromUInt64(privateKey.ObjectId),
+               (NativeULong)(privateKey.ObjectId),
                 null, 0,
-                extsPtr, (uint) extsPtr.Length);
+                extsPtr, (NativeULong) extsPtr.Length);
 
             StringArrayHelpers.FreeUnmanagedIntPtrArray(dnPtr);
             StringArrayHelpers.FreeUnmanagedIntPtrArray(extsPtr);
@@ -247,10 +251,10 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                 throw new ObjectDisposedException(this.GetType().FullName);
 
             IntPtr certificateInfo;
-            uint certificateInfoLen;
+            NativeULong certificateInfoLen;
 
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_GetCertificateInfoText(
-                _sessionId, ConvertUtils.UInt32FromUInt64(certificate.ObjectId), out certificateInfo, out certificateInfoLen);
+                _sessionId,(NativeULong)(certificate.ObjectId), out certificateInfo, out certificateInfoLen);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_GetCertificateInfoText", rv);
 
@@ -275,14 +279,14 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                 throw new ObjectDisposedException(this.GetType().FullName);
 
             IntPtr signature;
-            uint signatureLen;
+            NativeULong signatureLen;
 
-            var certificates40 = certificates.Select(cert => (uint)cert).ToArray();
+            NativeULong[] certificates40 = certificates.Select(cert => (NativeULong)cert).ToArray();
 
-            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_PKCS7Sign(_sessionId, data, ConvertUtils.UInt32FromUInt64(certificate.ObjectId),
+            CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_PKCS7Sign(_sessionId, data,(NativeULong)(certificate.ObjectId),
                 out signature, out signatureLen,
-                ConvertUtils.UInt32FromUInt64(privateKey.ObjectId),
-                certificates40, ConvertUtils.UInt32FromUInt64(flags));
+               (NativeULong)(privateKey.ObjectId),
+                certificates40, (NativeULong)(flags));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_PKCS7Sign", rv);
 
@@ -314,15 +318,15 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             var storeNative = new LowLevelAPI40.CK_VENDOR_X509_STORE(vendorX509Store);
 
             var data = IntPtr.Zero;
-            uint dataLen = 0;
+            NativeULong dataLen = 0;
 
             var initialSignerSertificates = IntPtr.Zero;
             var signerSertificates = IntPtr.Zero;
-            uint signerSertificatesCount = 0;
+            NativeULong signerSertificatesCount = 0;
 
             try
             {
-                CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_PKCS7VerifyInit(_sessionId, cms, ref storeNative, Convert.ToUInt32(mode), ConvertUtils.UInt32FromUInt64(flags));
+                CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_PKCS7VerifyInit(_sessionId, cms, ref storeNative, (NativeULong)(mode), (NativeULong)(flags));
                 if (rv != CKR.CKR_OK)
                     throw new Pkcs11Exception("C_EX_PKCS7VerifyInit", rv);
 
@@ -338,7 +342,8 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                     result.Certificates = new List<byte[]>();
                     var structSize = Marshal.SizeOf(typeof(LowLevelAPI40.CK_VENDOR_BUFFER));
                     initialSignerSertificates = signerSertificates;
-                    for (var i = 0; i < signerSertificatesCount; i++)
+
+                    for (NativeULong i = 0; i < signerSertificatesCount; i++)
                     {
                         var certificatePtr = (LowLevelAPI40.CK_VENDOR_BUFFER)Marshal.PtrToStructure(signerSertificates, typeof(LowLevelAPI40.CK_VENDOR_BUFFER));
                         signerSertificates += structSize;
@@ -370,7 +375,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                 {
                     var structSize = Marshal.SizeOf(typeof(LowLevelAPI40.CK_VENDOR_BUFFER));
 
-                    for (var i = 0; i < signerSertificatesCount; i++)
+                    for (NativeULong i = 0; i < signerSertificatesCount; i++)
                     {
                         var certificatePtr = (LowLevelAPI40.CK_VENDOR_BUFFER)Marshal.PtrToStructure(initialSignerSertificates, typeof(LowLevelAPI40.CK_VENDOR_BUFFER));
                         initialSignerSertificates += structSize;
@@ -406,11 +411,11 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
             var initialSignerSertificates = IntPtr.Zero;
             var signerSertificates = IntPtr.Zero;
-            uint signerSertificatesCount = 0;
+            NativeULong signerSertificatesCount = 0;
 
             try
             {
-                CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_PKCS7VerifyInit(_sessionId, cms, ref storeNative, Convert.ToUInt32(mode), ConvertUtils.UInt32FromUInt64(flags));
+                CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_PKCS7VerifyInit(_sessionId, cms, ref storeNative, (NativeULong)(mode), (NativeULong)(flags));
                 if (rv != CKR.CKR_OK)
                     throw new Pkcs11Exception("C_EX_PKCS7VerifyInit", rv);
 
@@ -432,8 +437,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                     result.Certificates = new List<byte[]>();
                     var structSize = Marshal.SizeOf(typeof(LowLevelAPI40.CK_VENDOR_BUFFER));
                     initialSignerSertificates = signerSertificates;
-
-                    for (var i = 0; i < signerSertificatesCount; i++)
+                    for (NativeULong i = 0; i < signerSertificatesCount; i++)
                     {
                         var certificatePtr = (LowLevelAPI40.CK_VENDOR_BUFFER)Marshal.PtrToStructure(signerSertificates, typeof(LowLevelAPI40.CK_VENDOR_BUFFER));
                         signerSertificates += structSize;
@@ -465,7 +469,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                 {
                     var structSize = Marshal.SizeOf(typeof(LowLevelAPI40.CK_VENDOR_BUFFER));
 
-                    for (var i = 0; i < signerSertificatesCount; i++)
+                    for (NativeULong i = 0; i < signerSertificatesCount; i++)
                     {
                         var certificatePtr = (LowLevelAPI40.CK_VENDOR_BUFFER)Marshal.PtrToStructure(initialSignerSertificates, typeof(LowLevelAPI40.CK_VENDOR_BUFFER));
                         initialSignerSertificates += structSize;
@@ -491,7 +495,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
             try
             {
-                CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_TokenManage(_sessionId, (uint)mode, valuePtr);
+                CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_TokenManage(_sessionId, (NativeULong)mode, valuePtr);
                 if (rv != CKR.CKR_OK)
                     throw new Pkcs11Exception("C_EX_TokenManage", rv);
             }
@@ -526,34 +530,34 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
             var ckGenerationMechanism = new CK_MECHANISM()
             {
-                Mechanism = ConvertUtils.UInt32FromUInt64(generationMechanism.Type)
+                Mechanism =(NativeULong)(generationMechanism.Type)
             };
 
             var ckDerivationMechanism = new CK_MECHANISM()
             {
-                Mechanism = ConvertUtils.UInt32FromUInt64(derivationMechanism.Type)
+                Mechanism =(NativeULong)(derivationMechanism.Type)
             };
             var ckWrappingMechanism = new CK_MECHANISM()
             {
-                Mechanism = ConvertUtils.UInt32FromUInt64(wrappingMechanism.Type)
+                Mechanism =(NativeULong)(wrappingMechanism.Type)
             };
 
             // Преобразование ObjectAttributes в CK_ATTRIBUTES
             CK_ATTRIBUTE[] ckKeyAttributes = null;
-            uint ckKeyAttributesLen = 0;
+            NativeULong ckKeyAttributesLen = 0;
             ckKeyAttributes = new CK_ATTRIBUTE[keyAttributes.Count];
             for (int i = 0; i < keyAttributes.Count; i++)
             {
-                ckKeyAttributes[i] = (CK_ATTRIBUTE)keyAttributes[i].ToMarshalableStructure();
+                ckKeyAttributes[i] = (CK_ATTRIBUTE) keyAttributes[i].ToMarshalableStructure();
             }
-            ckKeyAttributesLen = Convert.ToUInt32(keyAttributes.Count);
+            ckKeyAttributesLen = (NativeULong)(keyAttributes.Count);
 
             // Получение длины wrapped key
-            uint generatedKey = CK.CK_INVALID_HANDLE;
-            uint wrappedKeyLen = 0;
+            NativeULong generatedKey = CK.CK_INVALID_HANDLE;
+            NativeULong wrappedKeyLen = 0;
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_WrapKey(_sessionId, ref ckGenerationMechanism, ckKeyAttributes,
                 ckKeyAttributesLen,
-                ref ckDerivationMechanism, ConvertUtils.UInt32FromUInt64(baseKey.ObjectId), ref ckWrappingMechanism, null, ref wrappedKeyLen,
+                ref ckDerivationMechanism,(NativeULong)(baseKey.ObjectId), ref ckWrappingMechanism, null, ref wrappedKeyLen,
                 ref generatedKey);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_WrapKey", rv);
@@ -566,7 +570,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             byte[] wrappedKey = new byte[wrappedKeyLen];
             rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_WrapKey(_sessionId, ref ckGenerationMechanism, ckKeyAttributes,
                 ckKeyAttributesLen,
-                ref ckDerivationMechanism, ConvertUtils.UInt32FromUInt64(baseKey.ObjectId), ref ckWrappingMechanism, wrappedKey, ref wrappedKeyLen,
+                ref ckDerivationMechanism,(NativeULong)(baseKey.ObjectId), ref ckWrappingMechanism, wrappedKey, ref wrappedKeyLen,
                 ref generatedKey);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_WrapKey", rv);
@@ -574,7 +578,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             if (generatedKey == CK.CK_INVALID_HANDLE)
                 throw new InvalidOperationException("C_EX_WrapKey: invalid generated key handle");
 
-            if (wrappedKey.Length != wrappedKeyLen)
+            if ((NativeULong)wrappedKey.Length != wrappedKeyLen)
                 Array.Resize(ref wrappedKey, Convert.ToInt32(wrappedKeyLen));
 
             key = new Net.Pkcs11Interop.HighLevelAPI40.ObjectHandle(generatedKey);
@@ -607,28 +611,28 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
             var ckDerivationMechanism = new CK_MECHANISM()
             {
-                Mechanism = ConvertUtils.UInt32FromUInt64(derivationMechanism.Type)
+                Mechanism =(NativeULong)(derivationMechanism.Type)
             };
             var ckUnwrappingMechanism = new CK_MECHANISM()
             {
-                Mechanism = ConvertUtils.UInt32FromUInt64(unwrappingMechanism.Type)
+                Mechanism =(NativeULong)(unwrappingMechanism.Type)
             };
 
             // Преобразование ObjectAttributes в CK_ATTRIBUTES
             CK_ATTRIBUTE[] ckKeyAttributes = null;
-            uint ckKeyAttributesLen = 0;
+            NativeULong ckKeyAttributesLen = 0;
             ckKeyAttributes = new CK_ATTRIBUTE[keyAttributes.Count];
             for (int i = 0; i < keyAttributes.Count; i++)
             {
-                 ckKeyAttributes[i] = (CK_ATTRIBUTE) keyAttributes[i].ToMarshalableStructure();
+                ckKeyAttributes[i] = (CK_ATTRIBUTE)keyAttributes[i].ToMarshalableStructure();
             }
-            ckKeyAttributesLen = Convert.ToUInt32(keyAttributes.Count);
+            ckKeyAttributesLen = (NativeULong)(keyAttributes.Count);
 
             // Размаскирование ключа
-            uint unwrappedKey = CK.CK_INVALID_HANDLE;
+            NativeULong unwrappedKey = CK.CK_INVALID_HANDLE;
             CKR rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_EX_UnwrapKey(_sessionId,
-                ref ckDerivationMechanism, ConvertUtils.UInt32FromUInt64(baseKey.ObjectId),
-                ref ckUnwrappingMechanism, wrappedKey, (uint) wrappedKey.Length,
+                ref ckDerivationMechanism,(NativeULong)(baseKey.ObjectId),
+                ref ckUnwrappingMechanism, wrappedKey, (NativeULong) wrappedKey.Length,
                 ckKeyAttributes, ckKeyAttributesLen,
                 ref unwrappedKey);
             if (rv != CKR.CKR_OK)
@@ -639,6 +643,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
             return new Net.Pkcs11Interop.HighLevelAPI40.ObjectHandle(unwrappedKey);
         }
+
         public IObjectHandle GetPinPolicyObject(CKU userType)
         {
             if (this._disposed)
@@ -648,17 +653,17 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             CK_ATTRIBUTE[] pinPolicyTemplate = new CK_ATTRIBUTE[3];
 
             pinPolicyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_HW_FEATURE);
-            pinPolicyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_HW_FEATURE_TYPE, (uint)Extended_CKH.CKH_VENDOR_PIN_POLICY);
-            pinPolicyTemplate[2] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_USER_TYPE, (uint)userType);
+            pinPolicyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_HW_FEATURE_TYPE, (NativeULong)Extended_CKH.CKH_VENDOR_PIN_POLICY);
+            pinPolicyTemplate[2] = CkaUtils.CreateAttribute((CKA) Extended_CKA.CKA_VENDOR_USER_TYPE, (NativeULong) userType);
 
-            uint foundObjectCount = 0;
-            uint[] foundObjectIds = new uint[1];
+            NativeULong foundObjectCount = 0;
+            NativeULong[] foundObjectIds = new NativeULong[1];
 
-            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_FindObjectsInit(_sessionId, pinPolicyTemplate, Convert.ToUInt32(pinPolicyTemplate.Length));
+            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_FindObjectsInit(_sessionId, pinPolicyTemplate, (NativeULong)(pinPolicyTemplate.Length));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_FindObjectsInit", rv);
 
-            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_FindObjects(_sessionId, foundObjectIds, Convert.ToUInt32(foundObjectIds.Length), ref foundObjectCount);
+            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_FindObjects(_sessionId, foundObjectIds, (NativeULong)(foundObjectIds.Length), ref foundObjectCount);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_FindObjects", rv);
 
@@ -682,7 +687,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             CK_ATTRIBUTE[] pinPolicyTemplate = new CK_ATTRIBUTE[1];
             pinPolicyTemplate[0] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_SUPPORTED_PIN_POLICIES);
 
-            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_GetAttributeValue(_sessionId, ConvertUtils.UInt32FromUInt64(pinPolicyObj.ObjectId), pinPolicyTemplate, Convert.ToUInt32(pinPolicyTemplate.Length));
+            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_GetAttributeValue(_sessionId,(NativeULong)(pinPolicyObj.ObjectId), pinPolicyTemplate, (NativeULong)(pinPolicyTemplate.Length));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_GetAttributeValue", rv);
 
@@ -710,7 +715,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             pinPolicyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, new bool());
             pinPolicyTemplate[9] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICIES_DELETABLE, new bool());
 
-            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_GetAttributeValue(_sessionId, ConvertUtils.UInt32FromUInt64(pinPolicyObj.ObjectId), pinPolicyTemplate, Convert.ToUInt32(pinPolicyTemplate.Length));
+            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_GetAttributeValue(_sessionId,(NativeULong)(pinPolicyObj.ObjectId), pinPolicyTemplate, (NativeULong)(pinPolicyTemplate.Length));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_GetAttributeValue", rv);
 
@@ -767,9 +772,9 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
 
             CK_ATTRIBUTE[] pinPolicyTemplate = new CK_ATTRIBUTE[10];
-            uint len = 0;
+            NativeULong len = 0;
 
-            if (pinPolicy.MinPinLength != null) 
+            if (pinPolicy.MinPinLength != null)
                 pinPolicyTemplate[len++] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_MIN_LENGTH, new byte[] { Convert.ToByte(pinPolicy.MinPinLength) });
             if (pinPolicy.PinHistoryDepth != null)
                 pinPolicyTemplate[len++] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICY_HISTORY_DEPTH, new byte[] { Convert.ToByte(pinPolicy.PinHistoryDepth) });
@@ -790,7 +795,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
             if (pinPolicy.RemovePinPolicyAfterFormat != null)
                 pinPolicyTemplate[len++] = CkaUtils.CreateAttribute((CKA)Extended_CKA.CKA_VENDOR_PIN_POLICIES_DELETABLE, Convert.ToBoolean(pinPolicy.RemovePinPolicyAfterFormat));
 
-            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_SetAttributeValue(_sessionId, ConvertUtils.UInt32FromUInt64(pinPolicyObj.ObjectId), pinPolicyTemplate, len);
+            rv = ((LowLevelAPI40.RutokenPkcs11Library)_pkcs11Library).C_SetAttributeValue(_sessionId,(NativeULong)(pinPolicyObj.ObjectId), pinPolicyTemplate, len);
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_GetAttributeValue", rv);
         }

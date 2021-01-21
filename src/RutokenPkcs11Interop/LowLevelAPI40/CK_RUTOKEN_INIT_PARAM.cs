@@ -1,38 +1,42 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.LowLevelAPI40
 {
     [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
     public struct CK_RUTOKEN_INIT_PARAM
     {
-        public uint SizeofThisStructure;
+        public NativeULong SizeofThisStructure;
 
-        public uint UseRepairMode;
+        public NativeULong UseRepairMode;
 
         public IntPtr NewAdminPin;
 
-        public uint NewAdminPinLen;
+        public NativeULong NewAdminPinLen;
 
         public IntPtr NewUserPin;
 
-        public uint NewUserPinLen;
+        public NativeULong NewUserPinLen;
 
-        public uint ChangeUserPINPolicy;
+        public NativeULong ChangeUserPINPolicy;
 
-        public uint MinAdminPinLen;
+        public NativeULong MinAdminPinLen;
 
-        public uint MinUserPinLen;
+        public NativeULong MinUserPinLen;
 
-        public uint MaxAdminRetryCount;
+        public NativeULong MaxAdminRetryCount;
 
-        public uint MaxUserRetryCount;
+        public NativeULong MaxUserRetryCount;
 
         public IntPtr TokenLabel;
 
-        public uint LabelLen;
+        public NativeULong LabelLen;
 
-        public uint SmMode;
+        public NativeULong SmMode;
 
     }
 }

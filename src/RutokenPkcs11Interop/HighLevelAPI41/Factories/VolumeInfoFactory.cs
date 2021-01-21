@@ -4,6 +4,8 @@ using Net.RutokenPkcs11Interop.HighLevelAPI;
 using Net.RutokenPkcs11Interop.HighLevelAPI.Factories;
 using Net.RutokenPkcs11Interop.Common;
 
+// Note: Code in this file is maintained manually
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI41.Factories
 {
     /// <summary>
@@ -13,7 +15,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41.Factories
     {
         public IVolumeInfo Create(ulong VolumeSize, FlashAccessMode AccessMode, CKU VolumeOwner, ulong Flags)
         {
-            return new VolumeInfo(ConvertUtils.UInt32FromUInt64(VolumeSize), AccessMode, VolumeOwner, ConvertUtils.UInt32FromUInt64(Flags));
+            return new VolumeInfo(VolumeSize, AccessMode, VolumeOwner, Flags);
         }
     }
 }

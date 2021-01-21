@@ -16,12 +16,12 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41.Factories
     {
         public ICkGostR3410_12_256_DeriveParams CreateCkGostR3410_12_256_DeriveParams(ulong kdf, byte[] publicData, byte[] ukm)
         {
-            return new CkGostR3410_12_256_DeriveParams(ConvertUtils.UInt32FromUInt64(kdf), publicData, ukm);
+            return new CkGostR3410_12_256_DeriveParams(kdf, publicData, ukm);
         }
 
         public ICkGostR3410_12_DeriveParams CreateCkGostR3410_12_DeriveParams(ulong kdf, byte[] publicData, byte[] ukm)
         {
-            return new CkGostR3410_12_DeriveParams(ConvertUtils.UInt32FromUInt64(kdf), publicData, ukm);
+            return new CkGostR3410_12_DeriveParams(kdf, publicData, ukm);
         }
     }
 }

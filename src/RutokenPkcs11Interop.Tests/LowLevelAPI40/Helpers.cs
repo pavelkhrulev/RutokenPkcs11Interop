@@ -10,6 +10,8 @@ using Net.RutokenPkcs11Interop.Helpers;
 using Net.RutokenPkcs11Interop.LowLevelAPI40.MechanismParams;
 using Net.RutokenPkcs11Interop.LowLevelAPI40;
 
+using NativeULong = System.UInt32;
+
 namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 {
     public static class Helpers
@@ -20,19 +22,19 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// </summary>
         /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
         /// <returns>Слот, содержащий токен</returns>
-        public static uint GetUsableSlot(RutokenPkcs11Library pkcs11)
+        public static NativeULong GetUsableSlot(RutokenPkcs11Library pkcs11)
         {
             CKR rv = CKR.CKR_OK;
 
             // Получение списка слотов
-            uint slotCount = 0;
+            NativeULong slotCount = 0;
             rv = pkcs11.C_GetSlotList(true, null, ref slotCount);
             if (rv != CKR.CKR_OK)
                 Assert.Fail(rv.ToString());
 
             Assert.IsTrue(slotCount > 0);
 
-            uint[] slotList = new uint[slotCount];
+            NativeULong[] slotList = new NativeULong[slotCount];
 
             rv = pkcs11.C_GetSlotList(true, slotList, ref slotCount);
             if (rv != CKR.CKR_OK)
@@ -43,14 +45,14 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             if (Settings.TokenSerial == null && Settings.TokenLabel == null)
                 return slotList[0];
 
-            uint? matchingSlot = slotList[0];
+            NativeULong? matchingSlot = slotList[0];
 
             // Ищем токен в соответствии с установлеными критериями
             if (Settings.TokenSerial != null || Settings.TokenLabel != null)
             {
                 matchingSlot = null;
 
-                foreach (uint slot in slotList)
+                foreach (NativeULong slot in slotList)
                 {
                     CK_TOKEN_INFO tokenInfo = new CK_TOKEN_INFO();
                     rv = pkcs11.C_GetTokenInfo(slot, ref tokenInfo);
@@ -86,7 +88,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name='session'>Сессия пользователя</param>
         /// <param name='keyId'>Хэндл ключа</param>
         /// <returns>Return value of C_GenerateKey</returns>
-        public static void GenerateGostSymmetricKey(RutokenPkcs11Library pkcs11, uint session, ref uint keyId)
+        public static void GenerateGostSymmetricKey(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -102,7 +104,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             template[7] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
             template[8] = CkaUtils.CreateAttribute(CKA.CKA_GOST28147_PARAMS, Settings.Gost28147Parameters);
 
-            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)CKM.CKM_GOST28147_KEY_GEN);
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)CKM.CKM_GOST28147_KEY_GEN);
 
             // Генерация секретного ключа ГОСТ 28147-89
             rv = pkcs11.C_GenerateKey(session, ref mechanism, template, Convert.ToUInt32(template.Length), ref keyId);
@@ -129,7 +131,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateGostKeyPair(RutokenPkcs11Library pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
+        public static void GenerateGostKeyPair(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong publicKeyId, ref NativeULong privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -156,7 +158,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             privateKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410Parameters);
             privateKeyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411Parameters);
 
-            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((uint)CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
 
             // Генерация ключевой пары
             rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt32(publicKeyTemplate.Length),
@@ -192,7 +194,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateGost512KeyPair(RutokenPkcs11Library pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
+        public static void GenerateGost512KeyPair(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong publicKeyId, ref NativeULong privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -202,7 +204,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             publicKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
             publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel);
             publicKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
-            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (NativeULong)Extended_CKK.CKK_GOSTR3410_512);
             publicKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             publicKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
             publicKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
@@ -212,7 +214,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
             privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel);
             privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
-            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (NativeULong)Extended_CKK.CKK_GOSTR3410_512);
             privateKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             privateKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
             privateKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_DERIVE, true);
@@ -254,26 +256,26 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name='publicKeyId'>Хэндл публичного ключа</param>
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateGost512JournalKeyPair(RutokenPkcs11Library pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId)
+        public static void GenerateGost512JournalKeyPair(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong publicKeyId, ref NativeULong privateKeyId)
         {
             CKR rv = CKR.CKR_OK;
 
             // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012
             var publicKeyTemplate = new CK_ATTRIBUTE[5];
             publicKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
-            publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (NativeULong)Extended_CKK.CKK_GOSTR3410_512);
             publicKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
-            publicKeyTemplate[4] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
+            publicKeyTemplate[4] = CkaUtils.CreateAttribute((NativeULong)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
 
             // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
             var privateKeyTemplate = new CK_ATTRIBUTE[6];
             privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
-            privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (NativeULong)Extended_CKK.CKK_GOSTR3410_512);
             privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
-            privateKeyTemplate[4] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
-            privateKeyTemplate[5] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, false);
+            privateKeyTemplate[4] = CkaUtils.CreateAttribute((NativeULong)Extended_CKA.CKA_VENDOR_KEY_JOURNAL, true);
+            privateKeyTemplate[5] = CkaUtils.CreateAttribute((NativeULong)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, false);
 
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
 
@@ -311,7 +313,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateGost512PINPadKeyPair(RutokenPkcs11Library pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
+        public static void GenerateGost512PINPadKeyPair(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong publicKeyId, ref NativeULong privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -321,7 +323,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             publicKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
             publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel);
             publicKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
-            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (NativeULong)Extended_CKK.CKK_GOSTR3410_512);
             publicKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             publicKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
             publicKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
@@ -332,11 +334,11 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
             privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel);
             privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
-            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512);
+            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (NativeULong)Extended_CKK.CKK_GOSTR3410_512);
             privateKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
             privateKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
-            privateKeyTemplate[6] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true);
-            privateKeyTemplate[7] = CkaUtils.CreateAttribute((uint)Extended_CKA.CKA_VENDOR_KEY_PIN_ENTER, false);
+            privateKeyTemplate[6] = CkaUtils.CreateAttribute((NativeULong)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true);
+            privateKeyTemplate[7] = CkaUtils.CreateAttribute((NativeULong)Extended_CKA.CKA_VENDOR_KEY_PIN_ENTER, false);
             privateKeyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters);
             privateKeyTemplate[9] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters);
 
@@ -376,7 +378,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name='privateKeyId'>Хэндл приватного ключа</param>
         /// <param name="keyPairId">ID ключевой пары</param>
         /// <returns>Return value of C_GenerateKeyPair</returns>
-        public static void GenerateRSAKeyPair(RutokenPkcs11Library pkcs11, uint session, ref uint publicKeyId, ref uint privateKeyId,
+        public static void GenerateRSAKeyPair(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong publicKeyId, ref NativeULong privateKeyId,
             string keyPairId)
         {
             CKR rv = CKR.CKR_OK;
@@ -439,8 +441,8 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name="ukm"></param>
         /// <param name="derivedKeyId">ID вырабатанного ключа</param>
         /// <returns>Return value of C_DeriveKey</returns>
-        public static void Derive_GostR3410_Key(RutokenPkcs11Library pkcs11, uint session, uint publicKeyId, uint privateKeyId,
-            byte[] ukm, ref uint derivedKeyId)
+        public static void Derive_GostR3410_Key(RutokenPkcs11Library pkcs11, NativeULong session, NativeULong publicKeyId, NativeULong privateKeyId,
+            byte[] ukm, ref NativeULong derivedKeyId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -470,7 +472,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             // Определяем параметры механизма выработки ключа
             var deriveMechanismParams = new CK_GOSTR3410_DERIVE_PARAMS
             {
-                Kdf = (uint) CKD.CKD_CPDIVERSIFY_KDF,
+                Kdf = (NativeULong) CKD.CKD_CPDIVERSIFY_KDF,
                 PublicData = UnmanagedMemory.Allocate(publicKey.Length),
                 PublicDataLen = Convert.ToUInt32(publicKey.Length),
                 UKM = UnmanagedMemory.Allocate(ukm.Length),
@@ -528,8 +530,8 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name="ukm"></param>
         /// <param name="derivedKeyId">ID вырабатанного ключа</param>
         /// <returns>Return value of C_DeriveKey</returns>
-        public static void Derive_GostR3410_12_Key(RutokenPkcs11Library pkcs11, uint session, uint publicKeyId, uint privateKeyId,
-            byte[] ukm, ref uint derivedKeyId)
+        public static void Derive_GostR3410_12_Key(RutokenPkcs11Library pkcs11, NativeULong session, NativeULong publicKeyId, NativeULong privateKeyId,
+            byte[] ukm, ref NativeULong derivedKeyId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -559,7 +561,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             // Определяем параметры механизма выработки ключа
             var deriveMechanismParams = new CK_GOSTR3410_12_DERIVE_PARAMS
             {
-                Kdf = (uint) Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
+                Kdf = (NativeULong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
                 PublicDataLen = Convert.ToUInt32(publicKey.Length),
                 PublicData = new byte[Settings.GOST_3410_12_512_KEY_SIZE],
                 UKMLen = Convert.ToUInt32(ukm.Length),
@@ -608,8 +610,8 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name="initVector">Синхропосылка</param>
         /// <param name="keyId">Ключ для шифрования</param>
         /// <returns>Зашифрованные данные</returns>
-        public static byte[] CBC_Gost28147_89_Encrypt(RutokenPkcs11Library pkcs11, uint session, byte[] data,
-            byte[] initVector, uint keyId)
+        public static byte[] CBC_Gost28147_89_Encrypt(RutokenPkcs11Library pkcs11, NativeULong session, byte[] data,
+            byte[] initVector, NativeULong keyId)
         {
             // Дополняем данные по ISO 10126
             byte[] dataWithPadding = ISO_10126_Padding.Pad(data, Settings.GOST28147_89_BLOCK_SIZE);
@@ -637,7 +639,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                     // Получение зашифрованного блока данных
                     byte[] encryptedBlock = new byte[block.Length];
-                    uint blockLength = Convert.ToUInt32(block.Length);
+                    NativeULong blockLength = Convert.ToUInt32(block.Length);
                     rv = pkcs11.C_Encrypt(session, block, Convert.ToUInt32(block.Length), encryptedBlock, ref blockLength);
                     if (rv != CKR.CKR_OK)
                         Assert.Fail(rv.ToString());
@@ -660,8 +662,8 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name="initVector">Синхропосылка</param>
         /// <param name="keyId">Ключ для расшифрования</param>
         /// <returns>Расшифрованные данные</returns>
-        public static byte[] CBC_Gost28147_89_Decrypt(RutokenPkcs11Library pkcs11, uint session,
-            byte[] data, byte[] initVector, uint keyId)
+        public static byte[] CBC_Gost28147_89_Decrypt(RutokenPkcs11Library pkcs11, NativeULong session,
+            byte[] data, byte[] initVector, NativeULong keyId)
         {
             byte[] round = new byte[Settings.GOST28147_89_BLOCK_SIZE];
             Buffer.BlockCopy(initVector, 0, round, 0, initVector.Length);
@@ -685,7 +687,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                     // Получение расшифрованного блока данных
                     byte[] decryptedBlock = new byte[currentData.Length];
-                    uint blockLength = Convert.ToUInt32(currentData.Length);
+                    NativeULong blockLength = Convert.ToUInt32(currentData.Length);
                     rv = pkcs11.C_Decrypt(session, currentData, Convert.ToUInt32(currentData.Length),
                         decryptedBlock, ref blockLength);
                     if (rv != CKR.CKR_OK)
@@ -712,7 +714,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
         /// <param name="certificateDer">Сертификат в формате DER</param>
         /// <param name="certificateId">Хэндл сертификата</param>
         /// <returns></returns>
-        public static void PKI_ImportCertificate(RutokenPkcs11Library pkcs11, uint session, byte[] certificateDer, ref uint certificateId)
+        public static void PKI_ImportCertificate(RutokenPkcs11Library pkcs11, NativeULong session, byte[] certificateDer, ref NativeULong certificateId)
         {
             CKR rv = CKR.CKR_OK;
 
@@ -725,7 +727,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
             certificateTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
             certificateTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_CERTIFICATE_TYPE, CKC.CKC_X_509);
 
-            uint tokenUserCertificate = 1;
+            NativeULong tokenUserCertificate = 1;
             certificateTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_CERTIFICATE_CATEGORY, tokenUserCertificate);
 
             // Создание сертификата на токене

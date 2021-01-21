@@ -8,11 +8,11 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI.Factories
     public interface IRutokenInitParamFactory
     {
         IRutokenInitParam Create(string newAdminPin, string newUserPin, string tokenLabel,
-            IList<RutokenFlag> changeUserPINPolicy, uint minAdminPinLen, uint minUserPinLen,
-            uint maxAdminRetryCount, uint maxUserRetryCount, uint smMode);
+            IList<RutokenFlag> changeUserPINPolicy, ulong minAdminPinLen, ulong minUserPinLen,
+            ulong maxAdminRetryCount, ulong maxUserRetryCount, ulong smMode);
 
         IRutokenInitParam Create(string newAdminPin, string newUserPin, string tokenLabel,
-            IList<RutokenFlag> changeUserPINPolicy, uint minAdminPinLen, uint minUserPinLen,
-            uint maxAdminRetryCount, uint maxUserRetryCount, uint smMode, bool useRepairMode);
+            IList<RutokenFlag> changeUserPINPolicy, ulong minAdminPinLen, ulong minUserPinLen,
+            ulong maxAdminRetryCount, ulong maxUserRetryCount, ulong smMode, bool useRepairMode);
     }
 }

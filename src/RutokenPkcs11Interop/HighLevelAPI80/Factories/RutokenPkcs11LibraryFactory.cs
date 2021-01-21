@@ -2,6 +2,8 @@
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.Factories;
 
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI80.Factories
 {
     /// <summary>

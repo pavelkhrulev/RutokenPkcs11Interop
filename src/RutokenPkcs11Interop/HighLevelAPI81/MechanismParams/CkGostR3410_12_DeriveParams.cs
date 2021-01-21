@@ -2,6 +2,10 @@
 using Net.RutokenPkcs11Interop.LowLevelAPI81.MechanismParams;
 using Net.RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
+using NativeULong = System.UInt64;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
 {
     public class CkGostR3410_12_DeriveParams : ICkGostR3410_12_DeriveParams
@@ -42,10 +46,10 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI81.MechanismParams
             if (ukm.Length != 8)
                 throw new ArgumentOutOfRangeException(nameof(ukm), "Array has to be 8 bytes long");
 
-            _lowLevelStruct.Kdf = kdf;
-            _lowLevelStruct.PublicDataLen = Convert.ToUInt64(publicData.Length);
+            _lowLevelStruct.Kdf = (NativeULong) kdf;
+            _lowLevelStruct.PublicDataLen = (NativeULong)(publicData.Length);
             Array.Copy(publicData, _lowLevelStruct.PublicData, publicData.Length);
-            _lowLevelStruct.UKMLen = Convert.ToUInt64(ukm.Length);
+            _lowLevelStruct.UKMLen = (NativeULong)(ukm.Length);
             Array.Copy(ukm, _lowLevelStruct.UKM, ukm.Length);
         }
 

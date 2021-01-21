@@ -5,11 +5,15 @@ using Net.RutokenPkcs11Interop.Common;
 using Net.RutokenPkcs11Interop.LowLevelAPI81;
 using Net.RutokenPkcs11Interop.HighLevelAPI;
 
+using NativeULong = System.UInt64;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI81
 {
     public class TokenInfoExtended : ITokenInfoExtended
     {
-        private ulong _sizeofThisStructure;
+        private NativeULong _sizeofThisStructure;
 
         public RutokenType TokenType { get; } = RutokenType.Unknown;
 
@@ -57,7 +61,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI81
 
         internal TokenInfoExtended(CK_TOKEN_INFO_EXTENDED ckTokenInfoExtended)
         {
-            _sizeofThisStructure = ckTokenInfoExtended.SizeofThisStructure;
+            _sizeofThisStructure = (NativeULong) ckTokenInfoExtended.SizeofThisStructure;
             TokenType = (RutokenType) ckTokenInfoExtended.TokenType;
             ProtocolNumber = ckTokenInfoExtended.ProtocolNumber;
             MicrocodeNumber = ckTokenInfoExtended.MicrocodeNumber;

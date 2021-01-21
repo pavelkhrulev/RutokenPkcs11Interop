@@ -3,6 +3,8 @@ using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.HighLevelAPI;
 using Net.Pkcs11Interop.HighLevelAPI.Factories;
 
+// Note: Code in this file is maintained manually
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI41.Factories
 {
     /// <summary>

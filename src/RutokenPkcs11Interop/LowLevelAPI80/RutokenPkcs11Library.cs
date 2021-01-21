@@ -3,6 +3,10 @@ using Net.Pkcs11Interop.Common;
 using Net.Pkcs11Interop.LowLevelAPI80;
 using Net.RutokenPkcs11Interop.Common;
 
+using NativeULong = System.UInt64;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.LowLevelAPI80
 {
     public class RutokenPkcs11Library: Pkcs11Library
@@ -49,329 +53,329 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI80
             }
         }
 
-        public CKR C_EX_GetTokenInfoExtended(ulong slotId, ref CK_TOKEN_INFO_EXTENDED info)
+        public CKR C_EX_GetTokenInfoExtended(NativeULong slotId, ref CK_TOKEN_INFO_EXTENDED info)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_GetTokenInfoExtended(slotId, ref info);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_GetTokenInfoExtended(slotId, ref info);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_InitToken(ulong slotId, byte[] pin, ref CK_RUTOKEN_INIT_PARAM initInfo)
+        public CKR C_EX_InitToken(NativeULong slotId, byte[] pin, ref CK_RUTOKEN_INIT_PARAM initInfo)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong pinLength = 0;
+            NativeULong pinLength = 0;
             if (pin != null)
-                pinLength = Convert.ToUInt32(pin.Length);
+                pinLength = (NativeULong)(pin.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_InitToken(slotId, pin, pinLength, ref initInfo);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_InitToken(slotId, pin, pinLength, ref initInfo);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_UnblockUserPIN(ulong session)
+        public CKR C_EX_UnblockUserPIN(NativeULong session)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_UnblockUserPIN(session);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_UnblockUserPIN(session);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_SetTokenName(ulong session, byte[] label)
+        public CKR C_EX_SetTokenName(NativeULong session, byte[] label)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong labelLength = 0;
+            NativeULong labelLength = 0;
             if (label != null)
-                labelLength = Convert.ToUInt32(label.Length);
+                labelLength = (NativeULong)(label.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_SetTokenName(session, label, labelLength);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_SetTokenName(session, label, labelLength);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_GetTokenName(ulong session, byte[] label, ref ulong labelLen)
+        public CKR C_EX_GetTokenName(NativeULong session, byte[] label, ref NativeULong labelLen)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_GetTokenName(session, label, ref labelLen);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_GetTokenName(session, label, ref labelLen);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_GetJournal(ulong slotId, byte[] journal, ref ulong journalLen)
+        public CKR C_EX_GetJournal(NativeULong slotId, byte[] journal, ref NativeULong journalLen)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_GetJournal(slotId, journal, ref journalLen);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_GetJournal(slotId, journal, ref journalLen);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_SignInvisibleInit(ulong session, ref CK_MECHANISM mechanism, ulong key)
+        public CKR C_EX_SignInvisibleInit(NativeULong session, ref CK_MECHANISM mechanism, NativeULong key)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_SignInvisibleInit(session, ref mechanism, key);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_SignInvisibleInit(session, ref mechanism, key);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_SignInvisible(ulong session, byte[] data, ulong dataLen, byte[] signature, ref ulong signatureLen)
+        public CKR C_EX_SignInvisible(NativeULong session, byte[] data, NativeULong dataLen, byte[] signature, ref NativeULong signatureLen)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_SignInvisible(
+            NativeULong rv = _rutokenDelegates.C_EX_SignInvisible(
                 session, data, dataLen, signature, ref signatureLen);
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_SetLocalPIN(ulong slotId, byte[] userPin,
-            byte[] newLocalPin, ulong localPinId)
+        public CKR C_EX_SetLocalPIN(NativeULong slotId, byte[] userPin,
+            byte[] newLocalPin, NativeULong localPinId)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong userPinLength = 0;
+            NativeULong userPinLength = 0;
             if (userPin != null)
-                userPinLength = Convert.ToUInt32(userPin.Length);
+                userPinLength = (NativeULong)(userPin.Length);
 
-            ulong newLocalPinLength = 0;
+            NativeULong newLocalPinLength = 0;
             if (newLocalPin != null)
-                newLocalPinLength = Convert.ToUInt32(newLocalPin.Length);
+                newLocalPinLength = (NativeULong)(newLocalPin.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_SetLocalPIN(slotId, userPin, userPinLength,
+            NativeULong rv = _rutokenDelegates.C_EX_SetLocalPIN(slotId, userPin, userPinLength,
                 newLocalPin, newLocalPinLength, localPinId);
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_GetDriveSize(ulong slotId, ref ulong driveSize)
+        public CKR C_EX_GetDriveSize(NativeULong slotId, ref NativeULong driveSize)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_GetDriveSize(slotId, ref driveSize);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_GetDriveSize(slotId, ref driveSize);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_FormatDrive(ulong slotId, ulong userType,
+        public CKR C_EX_FormatDrive(NativeULong slotId, NativeULong userType,
             byte[] pin, CK_VOLUME_FORMAT_INFO_EXTENDED[] initParams)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong pinLength = 0;
+            NativeULong pinLength = 0;
             if (pin != null)
-                pinLength = Convert.ToUInt32(pin.Length);
+                pinLength = (NativeULong)(pin.Length);
 
-            ulong initParamsLength = 0;
+            NativeULong initParamsLength = 0;
             if (initParams != null)
-                initParamsLength = Convert.ToUInt32(initParams.Length);
+                initParamsLength = (NativeULong)(initParams.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_FormatDrive(slotId, userType, pin, pinLength,
+            NativeULong rv = _rutokenDelegates.C_EX_FormatDrive(slotId, userType, pin, pinLength,
                 initParams, initParamsLength);
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_GetVolumesInfo(ulong slotId,
-            CK_VOLUME_INFO_EXTENDED[] volumesInfo, ref ulong volumesInfoCount)
+        public CKR C_EX_GetVolumesInfo(NativeULong slotId,
+            CK_VOLUME_INFO_EXTENDED[] volumesInfo, ref NativeULong volumesInfoCount)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_GetVolumesInfo(slotId, volumesInfo, ref volumesInfoCount);
-            return (CKR)Convert.ToUInt32(rv);
+            NativeULong rv = _rutokenDelegates.C_EX_GetVolumesInfo(slotId, volumesInfo, ref volumesInfoCount);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_ChangeVolumeAttributes(ulong slotId, ulong userType,
-            byte[] pin, ulong volumeId, FlashAccessMode newAccessMode, bool permanent)
+        public CKR C_EX_ChangeVolumeAttributes(NativeULong slotId, NativeULong userType,
+            byte[] pin, NativeULong volumeId, FlashAccessMode newAccessMode, bool permanent)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong pinLength = 0;
+            NativeULong pinLength = 0;
             if (pin != null)
-                pinLength = Convert.ToUInt32(pin.Length);
+                pinLength = (NativeULong)(pin.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_ChangeVolumeAttributes(slotId, userType,
+            NativeULong rv = _rutokenDelegates.C_EX_ChangeVolumeAttributes(slotId, userType,
                 pin, pinLength,
-                volumeId, (ulong)newAccessMode, permanent);
-            return (CKR)Convert.ToUInt32(rv);
+                volumeId, (NativeULong)newAccessMode, permanent);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_SetLicense(ulong session,
-            ulong licenseNum, byte[] license)
+        public CKR C_EX_SetLicense(NativeULong session,
+            NativeULong licenseNum, byte[] license)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong licenseLength = 0;
+            NativeULong licenseLength = 0;
             if (license != null)
-                licenseLength = Convert.ToUInt32(license.Length);
+                licenseLength = (NativeULong)(license.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_SetLicense(session, licenseNum, license, licenseLength);
+            NativeULong rv = _rutokenDelegates.C_EX_SetLicense(session, licenseNum, license, licenseLength);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_GetLicense(ulong session,
-            ulong licenseNum, byte[] license, ref ulong licenseLen)
+        public CKR C_EX_GetLicense(NativeULong session,
+            NativeULong licenseNum, byte[] license, ref NativeULong licenseLen)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_GetLicense(session, licenseNum, license, ref licenseLen);
+            NativeULong rv = _rutokenDelegates.C_EX_GetLicense(session, licenseNum, license, ref licenseLen);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_GenerateActivationPassword(ulong session, ulong passwordNumber,
-            byte[] password, ref ulong passwordSize, ulong passwordCharacterSet)
+        public CKR C_EX_GenerateActivationPassword(NativeULong session, NativeULong passwordNumber,
+            byte[] password, ref NativeULong passwordSize, NativeULong passwordCharacterSet)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_GenerateActivationPassword(
+            NativeULong rv = _rutokenDelegates.C_EX_GenerateActivationPassword(
                 session, passwordNumber, password, ref passwordSize, passwordCharacterSet);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_LoadActivationKey(ulong session, byte[] key)
+        public CKR C_EX_LoadActivationKey(NativeULong session, byte[] key)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong keyLength = 0;
+            NativeULong keyLength = 0;
             if (key != null)
-                keyLength = Convert.ToUInt32(key.Length);
+                keyLength = (NativeULong)(key.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_LoadActivationKey(session, key, keyLength);
+            NativeULong rv = _rutokenDelegates.C_EX_LoadActivationKey(session, key, keyLength);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_SetActivationPassword(ulong slotId, byte[] password)
+        public CKR C_EX_SetActivationPassword(NativeULong slotId, byte[] password)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_SetActivationPassword(slotId, password);
+            NativeULong rv = _rutokenDelegates.C_EX_SetActivationPassword(slotId, password);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_CreateCSR(ulong session,
-                ulong publicKey,
-                IntPtr[] dn, ulong dnLength,
-                out IntPtr csr, out ulong csrLength,
-                ulong privateKey,
-                IntPtr[] attributes, ulong attributesLength,
-                IntPtr[] extensions, ulong extensionsLength)
+        public CKR C_EX_CreateCSR(NativeULong session,
+                NativeULong publicKey,
+                IntPtr[] dn, NativeULong dnLength,
+                out IntPtr csr, out NativeULong csrLength,
+                NativeULong privateKey,
+                IntPtr[] attributes, NativeULong attributesLength,
+                IntPtr[] extensions, NativeULong extensionsLength)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_CreateCSR(session, publicKey, dn, dnLength, out csr, out csrLength, privateKey, attributes,
+            NativeULong rv = _rutokenDelegates.C_EX_CreateCSR(session, publicKey, dn, dnLength, out csr, out csrLength, privateKey, attributes,
                 attributesLength, extensions, extensionsLength);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_GetCertificateInfoText(ulong session,
-                ulong cert, out IntPtr info, out ulong infoLen)
+        public CKR C_EX_GetCertificateInfoText(NativeULong session,
+                NativeULong cert, out IntPtr info, out NativeULong infoLen)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_GetCertificateInfoText(session, cert, out info, out infoLen);
+            NativeULong rv = _rutokenDelegates.C_EX_GetCertificateInfoText(session, cert, out info, out infoLen);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_PKCS7Sign(ulong session,
-            byte[] data, ulong cert,
-            out IntPtr envelope, out ulong encelopeLen,
-            ulong privateKey,
-            ulong[] certificates,
-            ulong flags)
+        public CKR C_EX_PKCS7Sign(NativeULong session,
+            byte[] data, NativeULong cert,
+            out IntPtr envelope, out NativeULong encelopeLen,
+            NativeULong privateKey,
+            NativeULong[] certificates,
+            NativeULong flags)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong dataLength = 0;
+            NativeULong dataLength = 0;
             if (data != null)
-                dataLength = Convert.ToUInt32(data.Length);
+                dataLength = (NativeULong)(data.Length);
 
-            ulong certificatesLength = 0;
+            NativeULong certificatesLength = 0;
             if (certificates != null)
-                certificatesLength = Convert.ToUInt32(certificates.Length);
+                certificatesLength = (NativeULong)(certificates.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_PKCS7Sign(session, data, dataLength,
+            NativeULong rv = _rutokenDelegates.C_EX_PKCS7Sign(session, data, dataLength,
                 cert, out envelope, out encelopeLen,
                 privateKey,
                 certificates, certificatesLength,
                 flags);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_PKCS7VerifyInit(ulong session,
+        public CKR C_EX_PKCS7VerifyInit(NativeULong session,
             byte[] cms,
-            ref CK_VENDOR_X509_STORE store, uint mode,
-            ulong flags)
+            ref CK_VENDOR_X509_STORE store, NativeULong mode,
+            NativeULong flags)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong cmsLength = 0;
+            NativeULong cmsLength = 0;
             if (cms != null)
-                cmsLength = Convert.ToUInt64(cms.Length);
+                cmsLength = (NativeULong)(cms.Length);
 
-            ulong rv = _rutokenDelegates.C_EX_PKCS7VerifyInit(session, cms, cmsLength, ref store, mode, flags);
+            NativeULong rv = _rutokenDelegates.C_EX_PKCS7VerifyInit(session, cms, cmsLength, ref store, mode, flags);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_PKCS7Verify(ulong session,
-            out IntPtr data, out ulong dataSize,
-            out IntPtr signerCertificates, out ulong signerCertificatesCount)
+        public CKR C_EX_PKCS7Verify(NativeULong session,
+            out IntPtr data, out NativeULong dataSize,
+            out IntPtr signerCertificates, out NativeULong signerCertificatesCount)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            var rv = _rutokenDelegates.C_EX_PKCS7Verify(session, out data, out dataSize, out signerCertificates, out signerCertificatesCount);
+            NativeULong rv = _rutokenDelegates.C_EX_PKCS7Verify(session, out data, out dataSize, out signerCertificates, out signerCertificatesCount);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_PKCS7VerifyUpdate(ulong session, byte[] data)
+        public CKR C_EX_PKCS7VerifyUpdate(NativeULong session, byte[] data)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong dataLength = 0;
+            NativeULong dataLength = 0;
             if (data != null)
-                dataLength = Convert.ToUInt64(data.Length);
+                dataLength = (NativeULong)(data.Length);
 
-            var rv = _rutokenDelegates.C_EX_PKCS7VerifyUpdate(session, data, dataLength);
+            NativeULong rv = _rutokenDelegates.C_EX_PKCS7VerifyUpdate(session, data, dataLength);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_PKCS7VerifyFinal(ulong session,
-            out IntPtr signerCertificates, out ulong signerCertificatesCount)
+        public CKR C_EX_PKCS7VerifyFinal(NativeULong session,
+            out IntPtr signerCertificates, out NativeULong signerCertificatesCount)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            var rv = _rutokenDelegates.C_EX_PKCS7VerifyFinal(session, out signerCertificates, out signerCertificatesCount);
+            NativeULong rv = _rutokenDelegates.C_EX_PKCS7VerifyFinal(session, out signerCertificates, out signerCertificatesCount);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
         public CKR C_EX_FreeBuffer(IntPtr buffer)
@@ -379,43 +383,43 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI80
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_FreeBuffer(buffer);
+            NativeULong rv = _rutokenDelegates.C_EX_FreeBuffer(buffer);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_TokenManage(ulong session, ulong mode, IntPtr value)
+        public CKR C_EX_TokenManage(NativeULong session, NativeULong mode, IntPtr value)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_TokenManage(session, mode, value);
+            NativeULong rv = _rutokenDelegates.C_EX_TokenManage(session, mode, value);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_SlotManage(ulong slotId, ulong mode, IntPtr value)
+        public CKR C_EX_SlotManage(NativeULong slotId, NativeULong mode, IntPtr value)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_SlotManage(slotId, mode, value);
+            NativeULong rv = _rutokenDelegates.C_EX_SlotManage(slotId, mode, value);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_WrapKey(ulong session,
+        public CKR C_EX_WrapKey(NativeULong session,
             ref CK_MECHANISM generationMechanism,
-            CK_ATTRIBUTE[] keyTemplate, ulong keyAttributeCount,
+            CK_ATTRIBUTE[] keyTemplate, NativeULong keyAttributeCount,
             ref CK_MECHANISM derivationMechanism,
-            ulong baseKey,
+            NativeULong baseKey,
             ref CK_MECHANISM wrappingMechanism,
-            byte[] wrappedKey, ref ulong wrappedKeyLen, ref ulong key)
+            byte[] wrappedKey, ref NativeULong wrappedKeyLen, ref NativeULong key)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_WrapKey(session,
+            NativeULong rv = _rutokenDelegates.C_EX_WrapKey(session,
                 ref generationMechanism,
                 keyTemplate, keyAttributeCount,
                 ref derivationMechanism,
@@ -423,27 +427,27 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI80
                 ref wrappingMechanism,
                 wrappedKey, ref wrappedKeyLen, ref key);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
-        public CKR C_EX_UnwrapKey(ulong session,
+        public CKR C_EX_UnwrapKey(NativeULong session,
             ref CK_MECHANISM derivationMechanism,
-            ulong baseKey, ref CK_MECHANISM unwrappingMechanism,
-            byte[] wrappedKey, ulong wrappedKeyLen,
-            CK_ATTRIBUTE[] keyTemplate, ulong keyAttributeCount,
-            ref ulong key)
+            NativeULong baseKey, ref CK_MECHANISM unwrappingMechanism,
+            byte[] wrappedKey, NativeULong wrappedKeyLen,
+            CK_ATTRIBUTE[] keyTemplate, NativeULong keyAttributeCount,
+            ref NativeULong key)
         {
             if (_disposed)
                 throw new ObjectDisposedException(GetType().FullName);
 
-            ulong rv = _rutokenDelegates.C_EX_UnwrapKey(session,
+            NativeULong rv = _rutokenDelegates.C_EX_UnwrapKey(session,
                 ref derivationMechanism,
                 baseKey, ref unwrappingMechanism,
                 wrappedKey, wrappedKeyLen,
                 keyTemplate, keyAttributeCount,
                 ref key);
 
-            return (CKR)Convert.ToUInt32(rv);
+            return (CKR)rv;
         }
 
     }

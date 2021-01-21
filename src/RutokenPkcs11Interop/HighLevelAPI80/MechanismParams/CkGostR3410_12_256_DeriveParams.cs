@@ -2,6 +2,10 @@
 using Net.RutokenPkcs11Interop.LowLevelAPI80.MechanismParams;
 using Net.RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 
+using NativeULong = System.UInt64;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI80.MechanismParams
 {
     public class CkGostR3410_12_256_DeriveParams : ICkGostR3410_12_256_DeriveParams
@@ -14,7 +18,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI80.MechanismParams
         /// <summary>
         /// Low level mechanism parameters
         /// </summary>
-        private readonly CK_GOSTR3410_12_DERIVE_PARAMS _lowLevelStruct;
+        private readonly CK_GOSTR3410_12_256_DERIVE_PARAMS _lowLevelStruct;
 
         /// <summary>
         /// Initializes a new instance of the CkGostR3410DeriveParams class.
@@ -42,10 +46,10 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI80.MechanismParams
             if (ukm.Length != 8)
                 throw new ArgumentOutOfRangeException(nameof(ukm), "Array has to be 8 bytes long");
 
-            _lowLevelStruct.Kdf = kdf;
-            _lowLevelStruct.PublicDataLen = Convert.ToUInt64(publicData.Length);
+            _lowLevelStruct.Kdf = (NativeULong) kdf;
+            _lowLevelStruct.PublicDataLen = (NativeULong)(publicData.Length);
             Array.Copy(publicData, _lowLevelStruct.PublicData, publicData.Length);
-            _lowLevelStruct.UKMLen = Convert.ToUInt64(ukm.Length);
+            _lowLevelStruct.UKMLen = (NativeULong)(ukm.Length);
             Array.Copy(ukm, _lowLevelStruct.UKM, ukm.Length);
         }
 

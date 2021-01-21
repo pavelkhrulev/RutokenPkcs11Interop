@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props" Condition="Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" />
   <Import Project="..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.props" Condition="Exists('..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.props')" />
   <Import Project="..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.props" Condition="Exists('..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.props')" />
   <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
@@ -78,61 +79,61 @@
     <Compile Include="HighLevelAPI\_HL_31_LicenseTest.cs" />
     <Compile Include="HighLevelAPI\_HL_33_PKITest.cs" />
     <Compile Include="LowLevelAPI40\Helpers.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_02_GetInfoTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_04_TokenInfoTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_09_InitTokenAndPinTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_12_DigestTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_21_SignAndVerifyTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_29_ManageFlashTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_30_JournalTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_32_ActivationPasswordTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI40\_LL40_34_ManageEntityTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_02_GetInfoTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_04_TokenInfoTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_09_InitTokenAndPinTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_12_DigestTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_20_EncryptAndDecryptTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_21_SignAndVerifyTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_29_ManageFlashTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_30_JournalTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_31_LicenseTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_32_ActivationPasswordTest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_33_PKITest.cs" />
+    <Compile Include="LowLevelAPI40\_LL_34_ManageEntityTest.cs" />
     <Compile Include="LowLevelAPI41\Helpers.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_02_GetInfoTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_04_TokenInfoTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_09_InitTokenAndPinTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_12_DigestTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_21_SignAndVerifyTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_29_ManageFlashTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_30_JournalTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_32_ActivationPasswordTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI41\_LL41_34_ManageEntityTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_02_GetInfoTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_04_TokenInfoTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_09_InitTokenAndPinTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_12_DigestTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_20_EncryptAndDecryptTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_21_SignAndVerifyTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_29_ManageFlashTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_30_JournalTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_31_LicenseTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_32_ActivationPasswordTest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_33_PKITest.cs" />
+    <Compile Include="LowLevelAPI41\_LL_34_ManageEntityTest.cs" />
     <Compile Include="LowLevelAPI80\Helpers.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_02_GetInfoTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_04_TokenInfoTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_09_InitTokenAndPinTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_12_DigestTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_21_SignAndVerifyTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_29_ManageFlashTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_30_JournalTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_32_ActivationPasswordTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI80\_LL80_34_ManageEntityTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_02_GetInfoTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_04_TokenInfoTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_09_InitTokenAndPinTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_12_DigestTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_20_EncryptAndDecryptTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_21_SignAndVerifyTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_29_ManageFlashTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_30_JournalTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_31_LicenseTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_32_ActivationPasswordTest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_33_PKITest.cs" />
+    <Compile Include="LowLevelAPI80\_LL_34_ManageEntityTest.cs" />
     <Compile Include="LowLevelAPI81\Helpers.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_02_GetInfoTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_04_TokenInfoTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_09_InitTokenAndPinTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_12_DigestTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_21_SignAndVerifyTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_29_ManageFlashTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_30_JournalTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_32_ActivationPasswordTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI81\_LL81_34_ManageEntityTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_02_GetInfoTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_04_TokenInfoTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_09_InitTokenAndPinTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_12_DigestTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_20_EncryptAndDecryptTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_21_SignAndVerifyTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_25-26_DeriveAndWrapKeyTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_29_ManageFlashTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_30_JournalTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_31_LicenseTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_32_ActivationPasswordTest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_33_PKITest.cs" />
+    <Compile Include="LowLevelAPI81\_LL_34_ManageEntityTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TestData.cs" />
@@ -175,9 +176,12 @@
     <Error Condition="!Exists('..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.targets')" />
   <Import Project="..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.targets" Condition="Exists('..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.targets')" />
+  <Import Project="..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -39,16 +39,16 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI.Factories
         }
 
         public IRutokenInitParam Create(string newAdminPin, string newUserPin, string tokenLabel,
-            IList<RutokenFlag> changeUserPINPolicy, uint minAdminPinLen, uint minUserPinLen,
-            uint maxAdminRetryCount, uint maxUserRetryCount, uint smMode)
+            IList<RutokenFlag> changeUserPINPolicy, ulong minAdminPinLen, ulong minUserPinLen,
+            ulong maxAdminRetryCount, ulong maxUserRetryCount, ulong smMode)
         {
             return _factory.Create(newAdminPin, newUserPin, tokenLabel, changeUserPINPolicy, minAdminPinLen, minUserPinLen,
                 maxAdminRetryCount, maxUserRetryCount, smMode);
         }
 
         public IRutokenInitParam Create(string newAdminPin, string newUserPin, string tokenLabel,
-            IList<RutokenFlag> changeUserPINPolicy, uint minAdminPinLen, uint minUserPinLen,
-            uint maxAdminRetryCount, uint maxUserRetryCount, uint smMode, bool useRepairMode)
+            IList<RutokenFlag> changeUserPINPolicy, ulong minAdminPinLen, ulong minUserPinLen,
+            ulong maxAdminRetryCount, ulong maxUserRetryCount, ulong smMode, bool useRepairMode)
         {
             return _factory.Create(newAdminPin, newUserPin, tokenLabel, changeUserPINPolicy, minAdminPinLen, minUserPinLen,
                 maxAdminRetryCount, maxUserRetryCount, smMode, useRepairMode);

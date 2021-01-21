@@ -1,5 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is maintained manually
+
 namespace Net.RutokenPkcs11Interop.LowLevelAPI41
 {
     /// <summary>
@@ -8,36 +12,36 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI41
     [StructLayout(LayoutKind.Sequential, Pack = 1, CharSet = CharSet.Unicode)]
     public struct CK_TOKEN_INFO_EXTENDED
     {
-        public uint SizeofThisStructure;
+        public NativeULong SizeofThisStructure;
 
-        public uint TokenType;
+        public NativeULong TokenType;
 
-        public uint ProtocolNumber;
+        public NativeULong ProtocolNumber;
 
-        public uint MicrocodeNumber;
+        public NativeULong MicrocodeNumber;
 
-        public uint OrderNumber;
+        public NativeULong OrderNumber;
 
         /// <summary>
         /// Bit flags indicating capabilities and status of the device
         /// </summary>
-        public uint Flags;
+        public NativeULong Flags;
 
-        public uint MaxAdminPinLen;
+        public NativeULong MaxAdminPinLen;
 
-        public uint MinAdminPinLen;
+        public NativeULong MinAdminPinLen;
 
-        public uint MaxUserPinLen;
+        public NativeULong MaxUserPinLen;
 
-        public uint MinUserPinLen;
+        public NativeULong MinUserPinLen;
 
-        public uint MaxAdminRetryCount;
+        public NativeULong MaxAdminRetryCount;
 
-        public uint AdminRetryCountLeft;
+        public NativeULong AdminRetryCountLeft;
 
-        public uint MaxUserRetryCount;
+        public NativeULong MaxUserRetryCount;
 
-        public uint UserRetryCountLeft;
+        public NativeULong UserRetryCountLeft;
 
         /// <summary>
         /// token serial number in Big Endian format
@@ -45,9 +49,9 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI41
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
         public byte[] SerialNumber;
 
-        public uint TotalMemory;
+        public NativeULong TotalMemory;
 
-        public uint FreeMemory;
+        public NativeULong FreeMemory;
 
         /// <summary>
         /// atr of the token
@@ -55,14 +59,14 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI41
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
         public byte[] ATR;
 
-        public uint ATRLen;
+        public NativeULong ATRLen;
 
-        public uint TokenClass;
+        public NativeULong TokenClass;
 
-        public uint BatteryVoltage;
+        public NativeULong BatteryVoltage;
 
-        public uint BodyColor;
+        public NativeULong BodyColor;
 
-        public uint FirmwareChecksum;
+        public NativeULong FirmwareChecksum;
     }
 }

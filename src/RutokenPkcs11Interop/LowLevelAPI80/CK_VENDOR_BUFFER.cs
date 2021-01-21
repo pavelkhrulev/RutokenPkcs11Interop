@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+using NativeULong = System.UInt64;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.LowLevelAPI80
 {
     [StructLayout(LayoutKind.Sequential, Pack = 0, CharSet = CharSet.Unicode)]
@@ -14,6 +18,6 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI80
         /// <summary>
         /// Length of data
         /// </summary>
-        public ulong Size;
+        public NativeULong Size;
     }
 }

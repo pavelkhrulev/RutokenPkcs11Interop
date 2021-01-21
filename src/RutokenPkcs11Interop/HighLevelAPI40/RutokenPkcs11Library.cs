@@ -10,9 +10,11 @@ using Net.Pkcs11Interop.Logging;
 using Net.RutokenPkcs11Interop.HighLevelAPI;
 using LLA = Net.RutokenPkcs11Interop.LowLevelAPI40;
 
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 {
-    public class RutokenPkcs11Library: Pkcs11Library, IRutokenPkcs11Library
+    public class RutokenPkcs11Library : Pkcs11Library, IRutokenPkcs11Library
     {
         private Pkcs11InteropLogger _logger = Pkcs11InteropLoggerFactory.GetLogger(typeof(RutokenPkcs11Library));
 
@@ -64,7 +66,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
 
         public List<IRutokenSlot> GetRutokenSlotList(SlotsType slotsType)
         {
-            return GetSlotList(slotsType).Select(slot => (IRutokenSlot) slot).ToList();
+            return GetSlotList(slotsType).Select(slot => (IRutokenSlot)slot).ToList();
         }
 
         public void FreeBuffer(IntPtr buffer)
@@ -82,6 +84,8 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
                 throw new Pkcs11Exception("C_EX_FreeBuffer", rv);
         }
 
+
+
         protected override void Dispose(bool disposing)
         {
             _logger.Debug("RutokenPkcs11Library({0})::Dispose", _libraryPath);
@@ -90,3 +94,5 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI40
         }
     }
 }
+
+

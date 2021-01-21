@@ -5,6 +5,10 @@ using System.Runtime.InteropServices;
 using Net.Pkcs11Interop.Common;
 using Net.RutokenPkcs11Interop.HighLevelAPI;
 
+using NativeULong = System.UInt64;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.LowLevelAPI81
 {
     /// <summary>
@@ -50,7 +54,7 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI81
         /// <summary>
         /// Количество доверенных сертификатов в массиве
         /// </summary>
-        public ulong TrustedCertificateCount;
+        public NativeULong TrustedCertificateCount;
 
         /// <summary>
         /// Массив, содержащий сертификаты для проверки подписи
@@ -60,7 +64,7 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI81
         /// <summary>
         /// Количество сертификатов в цепочке сертификатов
         /// </summary>
-        public ulong CertificateCount;
+        public NativeULong CertificateCount;
 
         /// <summary>
         /// Массив списков отзыва сертификатов
@@ -70,28 +74,28 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI81
         /// <summary>
         /// Количество списков отзыва сертификатов в массиве
         /// </summary>
-        public ulong CrlCount;
+        public NativeULong CrlCount;
 
-        private void AllocateNativeCertificates(IList<byte[]> managedCertificates, ref IntPtr certificatesPtr, ref ulong certificatesCount)
+        private void AllocateNativeCertificates(IList<byte[]> managedCertificates, ref IntPtr certificatesPtr, ref NativeULong certificatesCount)
         {
             if (managedCertificates == null || !managedCertificates.Any())
                 return;
 
-            certificatesCount = Convert.ToUInt32(managedCertificates.Count);
+            certificatesCount = (NativeULong)(managedCertificates.Count);
 
             var nativeCertificates = new CK_VENDOR_BUFFER[certificatesCount];
 
-            for (int i = 0; i < (int)certificatesCount; i++)
+            for (NativeULong i = 0; i < certificatesCount; i++)
             {
-                nativeCertificates[i].Data = UnmanagedMemory.Allocate(managedCertificates[i].Length);
-                UnmanagedMemory.Write(nativeCertificates[i].Data, managedCertificates[i]);
-                nativeCertificates[i].Size = Convert.ToUInt64(managedCertificates[i].Length);
+                nativeCertificates[i].Data = UnmanagedMemory.Allocate(managedCertificates[ConvertUtils.UInt64ToInt32(i)].Length);
+                UnmanagedMemory.Write(nativeCertificates[i].Data, managedCertificates[ConvertUtils.UInt64ToInt32(i)]);
+                nativeCertificates[i].Size = (NativeULong)(managedCertificates[ConvertUtils.UInt64ToInt32(i)].Length);
             }
 
             var structSize = Marshal.SizeOf(typeof(CK_VENDOR_BUFFER));
             certificatesPtr = Marshal.AllocHGlobal(managedCertificates.Count * structSize);
             var ptr = certificatesPtr;
-            for (ulong i = 0; i < certificatesCount; i++)
+            for (NativeULong i = 0; i < certificatesCount; i++)
             {
                 Marshal.StructureToPtr(nativeCertificates[i], ptr, false);
                 ptr += structSize;

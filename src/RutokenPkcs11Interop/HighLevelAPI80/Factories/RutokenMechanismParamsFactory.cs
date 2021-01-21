@@ -5,7 +5,7 @@ using Net.RutokenPkcs11Interop.HighLevelAPI.Factories;
 using Net.RutokenPkcs11Interop.HighLevelAPI.MechanismParams;
 using Net.RutokenPkcs11Interop.HighLevelAPI80.MechanismParams;
 
-// Note: Code in this file is maintained manually.
+// Note: Code in this file is generated automatically.
 
 namespace Net.RutokenPkcs11Interop.HighLevelAPI80.Factories
 {

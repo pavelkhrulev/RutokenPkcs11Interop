@@ -1,5 +1,9 @@
 ﻿using System.Runtime.InteropServices;
 
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.LowLevelAPI40.MechanismParams
 {
     /// <summary>
@@ -11,12 +15,12 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI40.MechanismParams
         /// <summary>
         /// Additional key diversification algorithm (CKD)
         /// </summary>
-        public uint Kdf;
+        public NativeULong Kdf;
 
         /// <summary>
         /// Length of data with public key of a receiver. Must be 128.
         /// </summary>
-        public uint PublicDataLen;
+        public NativeULong PublicDataLen;
 
         /// <summary>
         /// Pointer to data with public key of a receiver
@@ -27,7 +31,7 @@ namespace Net.RutokenPkcs11Interop.LowLevelAPI40.MechanismParams
         /// <summary>
         /// Length of UKM data in bytes. Must be 8.
         /// </summary>
-        public uint UKMLen;
+        public NativeULong UKMLen;
 
         /// <summary>
         /// Pointer to a UKM data

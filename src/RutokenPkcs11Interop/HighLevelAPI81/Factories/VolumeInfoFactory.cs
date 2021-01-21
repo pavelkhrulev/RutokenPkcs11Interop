@@ -4,6 +4,8 @@ using Net.RutokenPkcs11Interop.HighLevelAPI;
 using Net.RutokenPkcs11Interop.HighLevelAPI.Factories;
 using Net.RutokenPkcs11Interop.Common;
 
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI81.Factories
 {
     /// <summary>

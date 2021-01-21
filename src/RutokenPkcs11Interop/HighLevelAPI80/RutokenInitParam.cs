@@ -6,6 +6,10 @@ using Net.RutokenPkcs11Interop.Common;
 using Net.RutokenPkcs11Interop.LowLevelAPI80;
 using Net.RutokenPkcs11Interop.HighLevelAPI;
 
+using NativeULong = System.UInt64;
+
+// Note: Code in this file is generated automatically
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI80
 {
     public class RutokenInitParam : IRutokenInitParam
@@ -32,7 +36,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI80
         {
             _ckRutokenInitParam = new CK_RUTOKEN_INIT_PARAM()
             {
-                SizeofThisStructure = Convert.ToUInt64(Marshal.SizeOf(typeof(CK_RUTOKEN_INIT_PARAM)))
+                SizeofThisStructure = (NativeULong)(Marshal.SizeOf(typeof(CK_RUTOKEN_INIT_PARAM)))
             };
 
             if (!string.IsNullOrEmpty(newAdminPin))
@@ -40,7 +44,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI80
                 var newAdminPinArray = ConvertUtils.Utf8StringToBytes(newAdminPin);
                 _ckRutokenInitParam.NewAdminPin = UnmanagedMemory.Allocate(newAdminPinArray.Length);
                 UnmanagedMemory.Write(_ckRutokenInitParam.NewAdminPin, newAdminPinArray);
-                _ckRutokenInitParam.NewAdminPinLen = Convert.ToUInt64(newAdminPinArray.Length);
+                _ckRutokenInitParam.NewAdminPinLen = (NativeULong)(newAdminPinArray.Length);
             }
 
             if (!string.IsNullOrEmpty(newUserPin))
@@ -48,7 +52,7 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI80
                 var newUserPinArray = ConvertUtils.Utf8StringToBytes(newUserPin);
                 _ckRutokenInitParam.NewUserPin = UnmanagedMemory.Allocate(newUserPinArray.Length);
                 UnmanagedMemory.Write(_ckRutokenInitParam.NewUserPin, newUserPinArray);
-                _ckRutokenInitParam.NewUserPinLen = Convert.ToUInt64(newUserPinArray.Length);
+                _ckRutokenInitParam.NewUserPinLen = (NativeULong)(newUserPinArray.Length);
             }
 
             if (!string.IsNullOrEmpty(tokenLabel))
@@ -56,22 +60,22 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI80
                 var tokenLabelArray = ConvertUtils.Utf8StringToBytes(tokenLabel);
                 _ckRutokenInitParam.TokenLabel = UnmanagedMemory.Allocate(tokenLabelArray.Length);
                 UnmanagedMemory.Write(_ckRutokenInitParam.TokenLabel, tokenLabelArray);
-                _ckRutokenInitParam.LabelLen = Convert.ToUInt64(tokenLabelArray.Length);
+                _ckRutokenInitParam.LabelLen = (NativeULong)(tokenLabelArray.Length);
             }
 
             if (changeUserPINPolicy != null)
             {
                 foreach (var flag in changeUserPINPolicy)
                 {
-                    _ckRutokenInitParam.ChangeUserPINPolicy |= Convert.ToUInt64(flag);
+                    _ckRutokenInitParam.ChangeUserPINPolicy |= (NativeULong)(flag);
                 }
             }
 
-            _ckRutokenInitParam.MinAdminPinLen = minAdminPinLen;
-            _ckRutokenInitParam.MinUserPinLen = minUserPinLen;
-            _ckRutokenInitParam.MaxAdminRetryCount = maxAdminRetryCount;
-            _ckRutokenInitParam.MaxUserRetryCount = maxUserRetryCount;
-            _ckRutokenInitParam.SmMode = smMode;
+            _ckRutokenInitParam.MinAdminPinLen = (NativeULong)minAdminPinLen;
+            _ckRutokenInitParam.MinUserPinLen = (NativeULong)minUserPinLen;
+            _ckRutokenInitParam.MaxAdminRetryCount = (NativeULong)maxAdminRetryCount;
+            _ckRutokenInitParam.MaxUserRetryCount = (NativeULong)maxUserRetryCount;
+            _ckRutokenInitParam.SmMode = (NativeULong)smMode;
         }
 
         public RutokenInitParam(string newAdminPin, string newUserPin, string tokenLabel,

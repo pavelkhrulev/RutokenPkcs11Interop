@@ -3,17 +3,21 @@ using Net.RutokenPkcs11Interop.Common;
 using Net.RutokenPkcs11Interop.HighLevelAPI;
 using Net.RutokenPkcs11Interop.LowLevelAPI41;
 
+using NativeULong = System.UInt32;
+
+// Note: Code in this file is maintained manually
+
 namespace Net.RutokenPkcs11Interop.HighLevelAPI41
 {
     public class VolumeInfo : IVolumeInfo
     {
-        protected uint _volumeSize;
+        protected NativeULong _volumeSize;
 
         protected FlashAccessMode _accessMode;
 
         protected CKU _volumeOwner;
 
-        protected uint _flags;
+        protected NativeULong _flags;
 
         public ulong VolumeSize
         {
@@ -47,12 +51,12 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41
             }
         }
 
-        public VolumeInfo(uint _volumeSize, FlashAccessMode _accessMode, CKU _volumeOwner, uint _flags)
+        public VolumeInfo(ulong _volumeSize, FlashAccessMode _accessMode, CKU _volumeOwner, ulong _flags)
         {
-            this._volumeSize = _volumeSize;
-            this._accessMode = _accessMode;
+            this._volumeSize = (NativeULong) _volumeSize;
+            this._accessMode =  _accessMode;
             this._volumeOwner = _volumeOwner;
-            this._flags = _flags;
+            this._flags = (NativeULong) _flags;
         }
     }
 }
