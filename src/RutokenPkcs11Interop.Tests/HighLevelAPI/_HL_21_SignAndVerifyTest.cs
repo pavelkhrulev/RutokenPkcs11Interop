@@ -14,7 +14,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_21_01_SignAndVerify_Gost3410_01_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 ISlot slot = Helpers.GetUsableSlot(pkcs11);
@@ -63,7 +63,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_21_02_SignAndVerify_Gost3410_12_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 ISlot slot = Helpers.GetUsableSlot(pkcs11);
@@ -112,7 +112,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_21_03_SignAndVerify_RSA_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 ISlot slot = Helpers.GetUsableSlot(pkcs11);

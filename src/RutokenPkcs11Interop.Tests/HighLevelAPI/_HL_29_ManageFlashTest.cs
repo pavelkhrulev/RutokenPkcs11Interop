@@ -14,10 +14,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_29_01_FlashAvailabilityTest()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                var slot = (IRutokenSlot) Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 var tokenInfo = slot.GetTokenInfoExtended();
 
@@ -33,10 +33,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_29_02_FlashWorkTest()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
-                var slot = (IRutokenSlot) Helpers.GetUsableSlot(pkcs11);
+                var slot = Helpers.GetUsableSlot(pkcs11);
 
                 var tokenInfo = slot.GetTokenInfoExtended();
 

@@ -12,7 +12,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_34_01_ManageSlotTest()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 var slot = Helpers.GetUsableSlot(pkcs11);
@@ -27,7 +27,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_34_02_ManageTokenTest()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 var slot = Helpers.GetUsableSlot(pkcs11);

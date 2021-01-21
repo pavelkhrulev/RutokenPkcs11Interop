@@ -16,7 +16,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_20_01_EncryptAndDecrypt_Gost28147_89_ECB_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
                 ISlot slot = Helpers.GetUsableSlot(pkcs11);
@@ -54,7 +54,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_20_02_EncryptAndDecrypt_Gost28147_89_Stream_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
                 ISlot slot = Helpers.GetUsableSlot(pkcs11);
@@ -114,7 +114,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_20_03_EncryptAndDecrypt_Gost28147_89_CBC_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
                 ISlot slot = Helpers.GetUsableSlot(pkcs11);
@@ -157,7 +157,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_20_04_EncryptAndDecrypt_RSA_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Установление соединения с Рутокен в первом доступном слоте
                 ISlot slot = Helpers.GetUsableSlot(pkcs11);

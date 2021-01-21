@@ -21,23 +21,23 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         /// </summary>
         /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
         /// <returns>Slot containing the token that matches criteria</returns>
-        public static IRutokenSlot GetUsableSlot(IPkcs11Library pkcs11)
+        public static IRutokenSlot GetUsableSlot(IRutokenPkcs11Library pkcs11)
         {
             // Get list of available slots with token present
-            List<ISlot> slots = pkcs11.GetSlotList(SlotsType.WithTokenPresent);
+            List<IRutokenSlot> slots = pkcs11.GetRutokenSlotList(SlotsType.WithTokenPresent);
 
             Assert.IsNotNull(slots);
             Assert.IsTrue(slots.Count > 0);
 
             // First slot with token present is OK...
-            ISlot matchingSlot = slots[0];
+            IRutokenSlot matchingSlot = slots[0];
 
             // ...unless there are matching criteria specified in Settings class
             if (Settings.TokenSerial != null || Settings.TokenLabel != null)
             {
                 matchingSlot = null;
 
-                foreach (ISlot slot in slots)
+                foreach (IRutokenSlot slot in slots)
                 {
                     ITokenInfo tokenInfo = null;
 
@@ -68,7 +68,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
             }
 
             Assert.IsTrue(matchingSlot != null, "Token matching criteria specified in Settings class is not present");
-            return (IRutokenSlot) matchingSlot;
+            return matchingSlot;
         }
 
         /// <summary>

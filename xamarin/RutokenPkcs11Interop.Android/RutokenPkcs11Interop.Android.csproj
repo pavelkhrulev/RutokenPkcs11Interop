@@ -116,7 +116,7 @@
       <Link>Tests\HighLevelAPI\_HL_35_PinPolicyTest.cs</Link>
     </Compile>
     <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\Helpers.cs">
-      <Link>Tests\HighLevelAPI40\Helpers.cs</Link>
+      <Link>Tests\LowLevelAPI40\Helpers.cs</Link>
     </Compile>
     <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL40_02_GetInfoTest.cs">
       <Link>Tests\LowLevelAPI40\_LL40_02_GetInfoTest.cs</Link>

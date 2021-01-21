@@ -19,10 +19,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_12_01_Digest_SHA1_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                ISlot slot = Helpers.GetUsableSlot(pkcs11);
+                IRutokenSlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
                 using (ISession session = slot.OpenSession(SessionType.ReadOnly))
@@ -47,10 +47,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_12_02_Digest_Gost3411_12_512_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find firsst slot with token present
-                ISlot slot = Helpers.GetUsableSlot(pkcs11);
+                IRutokenSlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
                 using (ISession session = slot.OpenSession(SessionType.ReadOnly))
@@ -77,10 +77,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_12_03_Digest_Gost3411_12_256_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                ISlot slot = Helpers.GetUsableSlot(pkcs11);
+                IRutokenSlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
                 using (ISession session = slot.OpenSession(SessionType.ReadOnly))
@@ -106,10 +106,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         [Test()]
         public void _HL_12_04_Digest_Gost3411_94_Test()
         {
-            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
             {
                 // Find first slot with token present
-                ISlot slot = Helpers.GetUsableSlot(pkcs11);
+                IRutokenSlot slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Open RO session
                 using (ISession session = slot.OpenSession(SessionType.ReadOnly))
