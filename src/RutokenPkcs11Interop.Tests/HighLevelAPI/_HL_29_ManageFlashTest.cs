@@ -65,10 +65,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 
                 var initParams = new List<IVolumeFormatInfoExtended>()
                 {
-                    Settings.Factories.VolumeInfoExtendedFactory.Create(volumeRwSize, FlashAccessMode.Readwrite, CKU.CKU_USER, 0),
-                    Settings.Factories.VolumeInfoExtendedFactory.Create(volumeRoSize, FlashAccessMode.Readonly, CKU.CKU_SO, 0),
-                    Settings.Factories.VolumeInfoExtendedFactory.Create(volumeHiSize, FlashAccessMode.Hidden, (CKU)Settings.LocalPinId1, 0),
-                    Settings.Factories.VolumeInfoExtendedFactory.Create(volumeCdSize, FlashAccessMode.Cdrom, (CKU)Settings.LocalPinId2, 0),
+                    Settings.Factories.VolumeFormatInfoExtendedFactory.Create(volumeRwSize, FlashAccessMode.Readwrite, CKU.CKU_USER, 0),
+                    Settings.Factories.VolumeFormatInfoExtendedFactory.Create(volumeRoSize, FlashAccessMode.Readonly, CKU.CKU_SO, 0),
+                    Settings.Factories.VolumeFormatInfoExtendedFactory.Create(volumeHiSize, FlashAccessMode.Hidden, (CKU)Settings.LocalPinId1, 0),
+                    Settings.Factories.VolumeFormatInfoExtendedFactory.Create(volumeCdSize, FlashAccessMode.Cdrom, (CKU)Settings.LocalPinId2, 0),
                 };
 
                 slot.FormatDrive(CKU.CKU_SO, Settings.SecurityOfficerPin, initParams);
