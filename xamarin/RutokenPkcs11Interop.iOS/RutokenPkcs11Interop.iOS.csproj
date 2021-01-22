@@ -31,7 +31,6 @@
     <DeviceSpecificBuild>false</DeviceSpecificBuild>
     <MtouchVerbosity>
     </MtouchVerbosity>
-    <MtouchExtraArgs>-gcc_flags "-L${ProjectDir} -lpkcs11-mock -force_load ${ProjectDir}/libpkcs11-mock.a"</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>pdbonly</DebugType>
@@ -50,7 +49,6 @@
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <MtouchVerbosity>
     </MtouchVerbosity>
-    <MtouchExtraArgs>-gcc_flags "-L${ProjectDir} -lpkcs11-mock -force_load ${ProjectDir}/libpkcs11-mock.a"</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>pdbonly</DebugType>
@@ -67,7 +65,6 @@
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <MtouchVerbosity>
     </MtouchVerbosity>
-    <MtouchExtraArgs>-gcc_flags "-L${ProjectDir} -lpkcs11-mock -force_load ${ProjectDir}/libpkcs11-mock.a"</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -90,7 +87,6 @@
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
     <MtouchVerbosity>
     </MtouchVerbosity>
-    <MtouchExtraArgs>-gcc_flags "-L${ProjectDir} -lpkcs11-mock -force_load ${ProjectDir}/libpkcs11-mock.a"</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <AppExtensionDebugBundleId />
@@ -114,7 +110,6 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
-    <None Include="libpkcs11-mock.a" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -164,7 +159,7 @@
       <Link>Tests\HighLevelAPI\_HL_35_PinPolicyTest.cs</Link>
     </Compile>
     <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\Helpers.cs">
-      <Link>Tests\HighLevelAPI40\Helpers.cs</Link>
+      <Link>Tests\LowLevelAPI40\Helpers.cs</Link>
     </Compile>
     <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL40_02_GetInfoTest.cs">
       <Link>Tests\LowLevelAPI40\_LL40_02_GetInfoTest.cs</Link>
@@ -340,12 +335,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="UnitTestAppDelegate.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\RutokenPkcs11Interop.Mock\Pkcs11Interop.Mock.csproj">
-      <Project>{2cb6fea0-a585-47ad-beb0-f697777151b8}</Project>
-      <Name>Pkcs11Interop.Mock</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -354,4 +343,5 @@
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
   </Target>
   <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\packages\Aktiv.RtPkcs11Ecp.Natives.iOS.2.0.11\build\Aktiv.RtPkcs11Ecp.Natives.iOS.targets" Condition="Exists('..\packages\Aktiv.RtPkcs11Ecp.Natives.iOS.2.0.11\build\Aktiv.RtPkcs11Ecp.Natives.iOS.targets')" />
 </Project>

@@ -32,5 +32,10 @@
 			<key>NSAllowsArbitraryLoads</key>
 			<true />
 		</dict>
+		
+		<key>UISupportedExternalAccessoryProtocols</key>
+		<array>
+			<string>com.aktivco.rutokenecp</string>
+		</array>
 	</dict>
 </plist>
