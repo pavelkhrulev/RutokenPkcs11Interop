@@ -71,6 +71,8 @@ build/nuget/*.nuspec
 *.pidb
 *.svclog
 *.scc
+*.nuget
+*.snuget
 
 # Chutzpah Test files
 _Chutzpah*

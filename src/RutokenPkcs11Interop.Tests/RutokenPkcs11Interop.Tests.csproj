@@ -1,193 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props" Condition="Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" />
-  <Import Project="..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.props" Condition="Exists('..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.props')" />
-  <Import Project="..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.props" Condition="Exists('..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.props')" />
-  <Import Project="..\packages\NUnit.3.12.0\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <TargetFrameworks>net40;net45;netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5E2B49A6-7BEF-4DC5-A84E-FEC52CDBE8A5}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RutokenPkcs11InteropTests</RootNamespace>
-    <AssemblyName>RutokenPkcs11InteropTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <RootNamespace>Net.Pkcs11Interop.Tests</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="Pkcs11Interop, Version=5.1.2.0, Culture=neutral, PublicKeyToken=c10e9c2d8c006d2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Pkcs11Interop.5.1.2\lib\net45\Pkcs11Interop.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-    </Reference>
+    <PackageReference Include="NUnit" Version="3.11.0" />
   </ItemGroup>
-  <Choose>
-    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
-      </ItemGroup>
-    </When>
-    <Otherwise />
-  </Choose>
+
+  <ItemGroup Condition="$(TargetFramework) == 'netcoreapp2.0'">
+    <PackageReference Include="NUnit3TestAdapter" Version="3.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+  </ItemGroup>
+  
   <ItemGroup>
-    <Compile Include="HighLevelAPI\Helpers.cs" />
-    <Compile Include="HighLevelAPI\_HL_35_PinPolicyTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_32_ActivationPasswordTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_34_ManageEntityTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_04_TokenInfoTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_21_SignAndVerifyTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_12_DigestTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_09_InitTokenAndPinTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_02_GetInfoTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_29_ManageFlashTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_30_JournalTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_31_LicenseTest.cs" />
-    <Compile Include="HighLevelAPI\_HL_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI40\Helpers.cs" />
-    <Compile Include="LowLevelAPI40\_LL_02_GetInfoTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_04_TokenInfoTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_09_InitTokenAndPinTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_12_DigestTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_21_SignAndVerifyTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_29_ManageFlashTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_30_JournalTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_32_ActivationPasswordTest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI40\_LL_34_ManageEntityTest.cs" />
-    <Compile Include="LowLevelAPI41\Helpers.cs" />
-    <Compile Include="LowLevelAPI41\_LL_02_GetInfoTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_04_TokenInfoTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_09_InitTokenAndPinTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_12_DigestTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_21_SignAndVerifyTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_29_ManageFlashTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_30_JournalTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_32_ActivationPasswordTest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI41\_LL_34_ManageEntityTest.cs" />
-    <Compile Include="LowLevelAPI80\Helpers.cs" />
-    <Compile Include="LowLevelAPI80\_LL_02_GetInfoTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_04_TokenInfoTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_09_InitTokenAndPinTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_12_DigestTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_21_SignAndVerifyTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_29_ManageFlashTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_30_JournalTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_32_ActivationPasswordTest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI80\_LL_34_ManageEntityTest.cs" />
-    <Compile Include="LowLevelAPI81\Helpers.cs" />
-    <Compile Include="LowLevelAPI81\_LL_02_GetInfoTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_04_TokenInfoTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_09_InitTokenAndPinTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_12_DigestTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_20_EncryptAndDecryptTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_21_SignAndVerifyTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_25-26_DeriveAndWrapKeyTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_29_ManageFlashTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_30_JournalTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_31_LicenseTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_32_ActivationPasswordTest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_33_PKITest.cs" />
-    <Compile Include="LowLevelAPI81\_LL_34_ManageEntityTest.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings.cs" />
-    <Compile Include="TestData.cs" />
+    <ProjectReference Include="..\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RutokenPkcs11Interop\RutokenPkcs11Interop.csproj">
-      <Project>{84987be4-7ac6-4430-bf04-80689ebd22a3}</Project>
-      <Name>RutokenPkcs11Interop</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <Choose>
-    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\NUnit.3.12.0\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.12.0\build\NUnit.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.props'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets'))" />
-  </Target>
-  <Import Project="..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.targets" Condition="Exists('..\packages\Microsoft.Build.Tasks.Git.1.0.0-beta2-18618-05\build\Microsoft.Build.Tasks.Git.targets')" />
-  <Import Project="..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.targets" Condition="Exists('..\packages\Microsoft.SourceLink.Common.1.0.0-beta2-18618-05\build\Microsoft.SourceLink.Common.targets')" />
-  <Import Project="..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets" Condition="Exists('..\packages\Microsoft.SourceLink.GitHub.1.0.0\build\Microsoft.SourceLink.GitHub.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

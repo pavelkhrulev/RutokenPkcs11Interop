@@ -13,7 +13,7 @@ set SIGNTOOL="C:\Program Files (x86)\Microsoft SDKs\ClickOnce\SignTool\signtool.
 @rem Define signing options
 set CERTHASH=9ccadd88b898155baef4c7b8ff7b17595275b1bb
 set TSAURL=http://time.certum.pl/
-set LIBNAME=RutokenPkcs11Interop
+set LIBNAME=Pkcs11Interop
 set LIBURL=https://www.pkcs11interop.net/
 
 @rem Clean output directory
@@ -33,14 +33,15 @@ del /Q *.nupkg || goto :error
 
 @rem Sign all assemblies using SHA256withRSA algorithm
 %SIGNTOOL% sign /sha1 %CERTHASH% /fd sha256 /tr %TSAURL% /td sha256 /d %LIBNAME% /du %LIBURL% ^
-lib\net40\RutokenPkcs11Interop.dll ^
-lib\net45\RutokenPkcs11Interop.dll ^
-lib\netstandard2.0\RutokenPkcs11Interop.dll || goto :error
+lib\net20\Pkcs11Interop.dll ^
+lib\net40\Pkcs11Interop.dll ^
+lib\net45\Pkcs11Interop.dll ^
+lib\netstandard2.0\Pkcs11Interop.dll || goto :error
 
 @rem Create signed package with signed assemblies
-%NUGET% pack RutokenPkcs11Interop.nuspec || goto :error
-%NUGET% sign RutokenPkcs11Interop*.nupkg -CertificateFingerprint %CERTHASH% -Timestamper %TSAURL% || goto :error
-%NUGET% verify -Signature RutokenPkcs11Interop*.nupkg || goto :error
+%NUGET% pack Pkcs11Interop.nuspec || goto :error
+%NUGET% sign Pkcs11Interop*.nupkg -CertificateFingerprint %CERTHASH% -Timestamper %TSAURL% || goto :error
+%NUGET% verify -Signature Pkcs11Interop*.nupkg || goto :error
 copy %inputdir%\*.snupkg . || goto :error
 
 @rem Clean up
