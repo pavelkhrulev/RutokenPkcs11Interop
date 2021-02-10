@@ -38,7 +38,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Выполнение аутентификации администратора
                 rv = pkcs11.C_Login(session, CKU.CKU_SO, Settings.SecurityOfficerPinArray,
                     Convert.ToUInt32(Settings.SecurityOfficerPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // TODO: сделать вызов функций активации в правильном порядке

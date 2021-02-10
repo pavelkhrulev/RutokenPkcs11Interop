@@ -4,8 +4,8 @@ set -e
 
 SLNDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-cd $SLNDIR/Pkcs11Interop
+cd $SLNDIR/RutokenPkcs11Interop
 ./regeneratecode.sh
 
-cd $SLNDIR/Pkcs11Interop.Tests
+cd $SLNDIR/RutokenPkcs11Interop.Tests
 ./regeneratecode.sh

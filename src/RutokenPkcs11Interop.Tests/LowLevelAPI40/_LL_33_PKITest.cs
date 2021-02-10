@@ -40,7 +40,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                 // Выполнение аутентификации пользователя
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Генерация ключевой пары ГОСТ Р 34.10-2001
@@ -148,7 +148,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                 // Выполнение аутентификации пользователя
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Получение сохраненного тестового сертификата в формате base64

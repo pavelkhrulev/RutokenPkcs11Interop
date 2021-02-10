@@ -66,6 +66,9 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41
 
         public List<IRutokenSlot> GetRutokenSlotList(SlotsType slotsType)
         {
+            List<ISlot> slots = GetSlotList(slotsType);
+            if (slots == null)
+                return null;
             return GetSlotList(slotsType).Select(slot => (IRutokenSlot)slot).ToList();
         }
 

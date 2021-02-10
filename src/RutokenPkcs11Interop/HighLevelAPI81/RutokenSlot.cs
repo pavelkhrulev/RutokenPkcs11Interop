@@ -143,6 +143,8 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI81
                 if (rv != CKR.CKR_OK)
                     throw new Pkcs11Exception("C_EX_GetVolumesInfo", rv);
 
+                if (volumesInfo == null)
+                    return null;
                 return volumesInfo.Select(volumeInfo => (IVolumeInfoExtended) new VolumeInfoExtended(volumeInfo)).ToList();
             }
 

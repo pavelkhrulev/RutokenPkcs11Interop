@@ -43,7 +43,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                 // Выполнение аутентификации пользователя
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Генерация ключа для симметричного шифрования
@@ -143,7 +143,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                 // Login as normal user
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Generate symetric key
@@ -309,7 +309,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                 // Login as normal user
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Генерация ключа для симметричного шифрования
@@ -377,7 +377,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                 // Выполнение аутентификации пользователя
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Генерация ключей для RSA шифрования

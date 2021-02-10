@@ -281,12 +281,14 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI41
             IntPtr signature;
             NativeULong signatureLen;
 
-            NativeULong[] certificates40 = certificates.Select(cert => (NativeULong)cert).ToArray();
+            NativeULong[] nativeCertificates = null;
+            if (certificates != null)
+                nativeCertificates = certificates.Select(cert => (NativeULong)cert).ToArray();
 
             CKR rv = ((LowLevelAPI41.RutokenPkcs11Library)_pkcs11Library).C_EX_PKCS7Sign(_sessionId, data,(NativeULong)(certificate.ObjectId),
                 out signature, out signatureLen,
                (NativeULong)(privateKey.ObjectId),
-                certificates40, (NativeULong)(flags));
+                nativeCertificates, (NativeULong)(flags));
             if (rv != CKR.CKR_OK)
                 throw new Pkcs11Exception("C_EX_PKCS7Sign", rv);
 

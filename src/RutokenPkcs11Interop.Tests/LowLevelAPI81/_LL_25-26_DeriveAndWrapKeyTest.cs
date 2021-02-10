@@ -40,7 +40,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
 
                 // Выполнение аутентификации пользователя
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt64(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Генерация параметра для структуры типа CK_GOSTR3410_DERIVE_PARAMS
@@ -248,7 +248,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
 
                 // Выполнение аутентификации пользователя
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt64(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Генерация параметра для структуры типа CK_GOSTR3410_DERIVE_PARAMS
@@ -437,7 +437,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
 
                 // Выполнение аутентификации пользователя
                 rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt64(Settings.NormalUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Генерация ключевой пары ГОСТ Р 34.10-2012 отправителя

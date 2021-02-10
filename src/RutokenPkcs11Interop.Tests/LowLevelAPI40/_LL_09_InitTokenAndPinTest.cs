@@ -49,7 +49,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
 
                 // Аутентификация администратора
                 rv = pkcs11.C_Login(session, CKU.CKU_SO, Settings.SecurityOfficerPinArray, Convert.ToUInt32(Settings.SecurityOfficerPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Инициализация ПИН-кода пользователя
@@ -150,7 +150,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Аутентификация администратора
                 rv = pkcs11.C_Login(session, CKU.CKU_SO,
                     Settings.SecurityOfficerPinArray, Convert.ToUInt32(Settings.SecurityOfficerPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Разблокировка PIN-кода пользователя
@@ -166,7 +166,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Аутентификация пользователя
                 rv = pkcs11.C_Login(session, CKU.CKU_USER,
                     Settings.NewUserPinArray, Convert.ToUInt32(Settings.NewUserPinArray.Length));
-                if (rv != CKR.CKR_OK)
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
                     Assert.Fail(rv.ToString());
 
                 // Изменение метки токена на "длинную"

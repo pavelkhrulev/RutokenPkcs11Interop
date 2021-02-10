@@ -75,7 +75,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
                 var slot = Helpers.GetUsableSlot(pkcs11);
 
                 // Открытие RW сессии
-                using (var session = (IRutokenSession) slot.OpenSession(SessionType.ReadWrite))
+                using (var session = slot.OpenRutokenSession(SessionType.ReadWrite))
                 {
                     // Выполнение аутентификации пользователя
                     session.Login(CKU.CKU_USER, Settings.NormalUserPin);
