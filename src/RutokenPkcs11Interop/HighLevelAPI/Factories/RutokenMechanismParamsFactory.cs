@@ -45,5 +45,20 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI.Factories
         {
             return _factory.CreateCkGostR3410_12_DeriveParams(kdf, publicData, ukm);
         }
+
+        public ICkKdfTreeGostParams CreateCkKdfTreeGostParams(byte[] label, byte[] seed, long r, long l, long offset)
+        {
+            return _factory.CreateCkKdfTreeGostParams(label, seed, r, l, offset);
+        }
+
+        public ICkVendorGostKegParams CreateCkVendorGostKegParams(byte[] publicData, byte[] ukm)
+        {
+            return _factory.CreateCkVendorGostKegParams(publicData, ukm);
+        }
+
+        public ICkVendorVkoGostR3410_2012_512Params CreateCkVendorVkoGostR3410_2012_512Params(ulong kdf, byte[] publicData, byte[] ukm)
+        {
+            return _factory.CreateCkVendorVkoGostR3410_2012_512Params(kdf, publicData, ukm);
+        }
     }
 }

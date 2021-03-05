@@ -482,7 +482,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
 
                 var deriveMechanismParams = new CK_GOSTR3410_12_DERIVE_PARAMS
                 {
-                    Kdf = (NativeULong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
+                    Kdf = (NativeULong) Extended_CKD.CKD_KDF_GOSTR3411_2012_256,
                     PublicDataLen = Convert.ToUInt64(publicKey.Length),
                     PublicData = new byte[Settings.GOST_3410_12_512_KEY_SIZE],
                     UKMLen = Convert.ToUInt64(ukm.Length),
@@ -538,7 +538,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
 
                 deriveMechanismParams = new CK_GOSTR3410_12_DERIVE_PARAMS
                 {
-                    Kdf = (NativeULong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256,
+                    Kdf = (NativeULong) Extended_CKD.CKD_KDF_GOSTR3411_2012_256,
                     PublicDataLen = Convert.ToUInt64(publicKey.Length),
                     PublicData = new byte[Settings.GOST_3410_12_512_KEY_SIZE],
                     UKMLen = Convert.ToUInt64(ukm.Length),

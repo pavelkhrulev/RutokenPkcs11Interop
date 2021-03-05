@@ -11,5 +11,11 @@ namespace Net.RutokenPkcs11Interop.HighLevelAPI.Factories
         ICkGostR3410_12_256_DeriveParams CreateCkGostR3410_12_256_DeriveParams(ulong kdf, byte[] publicData, byte[] ukm);
 
         ICkGostR3410_12_DeriveParams CreateCkGostR3410_12_DeriveParams(ulong kdf, byte[] publicData, byte[] ukm);
+
+        ICkKdfTreeGostParams CreateCkKdfTreeGostParams(byte[] label, byte[] seed, long r, long l, long offset);
+
+        ICkVendorGostKegParams CreateCkVendorGostKegParams(byte[] publicData, byte[] ukm);
+
+        ICkVendorVkoGostR3410_2012_512Params CreateCkVendorVkoGostR3410_2012_512Params(ulong kdf, byte[] publicData, byte[] ukm);
     }
 }

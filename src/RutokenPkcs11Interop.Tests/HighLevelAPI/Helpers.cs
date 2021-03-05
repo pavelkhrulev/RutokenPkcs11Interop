@@ -382,7 +382,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
             // Определение параметров механизма наследования ключа
             var deriveMechanismParams =
                 Settings.Factories.RutokenMechanismParamsFactory.CreateCkGostR3410_12_DeriveParams(
-                    (ulong) Extended_CKM.CKM_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
+                    (ulong) Extended_CKD.CKD_KDF_GOSTR3411_2012_256, publicKeyAttributes[0].GetValueAsByteArray(), ukm);
 
             // Определяем механизм наследования ключа
             IMechanism deriveMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_12_DERIVE, deriveMechanismParams);
