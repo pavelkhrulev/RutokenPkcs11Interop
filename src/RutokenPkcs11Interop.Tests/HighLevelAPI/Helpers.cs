@@ -99,12 +99,18 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
             return session.GenerateKey(mechanism, objectAttributes);
         }
 
+        public enum KeyDestenation
+        {
+            ForEncDec,
+            ForSigVer
+        }
+
         /// <summary>
         /// Generates Kuznechik symetric key.
         /// </summary>
         /// <param name = 'session' > Read - write session with user logged in</param>
         /// <returns>Object handle</returns>
-        public static IObjectHandle GenerateKuznechikKey(ISession session)
+        public static IObjectHandle GenerateKuznechikKey(ISession session, KeyDestenation dest = KeyDestenation.ForEncDec)
         {
             // Шаблон для создания симметричного ключа Кузнечик
             var objectAttributes = new List<IObjectAttribute>()
@@ -113,8 +119,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.KuznechikKeyLabel),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.KuznechikKeyId),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (CKK) Extended_CKK.CKK_KUZNECHIK),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, dest == KeyDestenation.ForEncDec),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, dest == KeyDestenation.ForEncDec),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_SIGN, dest == KeyDestenation.ForSigVer),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_VERIFY, dest == KeyDestenation.ForSigVer),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
             };
@@ -131,7 +139,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         /// </summary>
         /// <param name = 'session' > Read - write session with user logged in</param>
         /// <returns>Object handle</returns>
-        public static IObjectHandle GenerateMagmaKey(ISession session)
+        public static IObjectHandle GenerateMagmaKey(ISession session, KeyDestenation dest = KeyDestenation.ForEncDec)
         {
             // Шаблон для создания симметричного ключа Кузнечик
             var objectAttributes = new List<IObjectAttribute>()
@@ -140,8 +148,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.MagmaLabel),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.MagmaKeyId),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (CKK) Extended_CKK.CKK_MAGMA),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, dest == KeyDestenation.ForEncDec),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, dest == KeyDestenation.ForEncDec),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_SIGN, dest == KeyDestenation.ForSigVer),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_VERIFY, dest == KeyDestenation.ForSigVer),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
             };

@@ -154,5 +154,87 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
                 }
             }
         }
+
+        /// <summary>
+        /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
+        /// </summary>
+        [Test()]
+        public void _HL_21_04_SignAndVerify_KuznechikMac_Test()
+        {
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            {
+                // Установление соединения с Рутокен в первом доступном слоте
+                ISlot slot = Helpers.GetUsableSlot(pkcs11);
+
+                // Открытие RW сессии
+                using (ISession session = slot.OpenSession(SessionType.ReadWrite))
+                {
+                    // Выполнение аутентификации пользователя
+                    session.Login(CKU.CKU_USER, Settings.NormalUserPin);
+
+                    // Генерация ключей для шифрования Магма
+                    // Generate symetric key
+                    IObjectHandle generatedKey = Helpers.GenerateKuznechikKey(session, Helpers.KeyDestenation.ForSigVer);
+
+                    // Инициализация хэш-функции
+                    var signMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_KUZNECHIK_MAC);
+
+                    byte[] sourceData = TestData.Digest_Gost3411_SourceData;
+
+                    // Подпись данных
+                    byte[] signature = session.Sign(signMechanism, generatedKey, sourceData);
+
+                    // Проверка подписи для данных
+                    bool isValid = false;
+                    session.Verify(signMechanism, generatedKey, sourceData, signature, out isValid);
+
+                    Assert.IsTrue(isValid);
+
+                    session.DestroyObject(generatedKey);
+                    session.Logout();
+                }
+            }
+        }
+
+        /// <summary>
+        /// C_SignInit, C_Sign, C_VerifyInit and C_Verify test.
+        /// </summary>
+        [Test()]
+        public void _HL_21_05_SignAndVerify_MagmaMac_Test()
+        {
+            using (var pkcs11 = Settings.Factories.RutokenPkcs11LibraryFactory.LoadRutokenPkcs11Library(Settings.Factories, Settings.Pkcs11LibraryPath, Settings.AppType))
+            {
+                // Установление соединения с Рутокен в первом доступном слоте
+                ISlot slot = Helpers.GetUsableSlot(pkcs11);
+
+                // Открытие RW сессии
+                using (ISession session = slot.OpenSession(SessionType.ReadWrite))
+                {
+                    // Выполнение аутентификации пользователя
+                    session.Login(CKU.CKU_USER, Settings.NormalUserPin);
+
+                    // Генерация ключей для шифрования Магма
+                    // Generate symetric key
+                    IObjectHandle generatedKey = Helpers.GenerateMagmaKey(session, Helpers.KeyDestenation.ForSigVer);
+
+                    // Инициализация хэш-функции
+                    var signMechanism = Settings.Factories.MechanismFactory.Create((CKM)Extended_CKM.CKM_MAGMA_MAC);
+
+                    byte[] sourceData = TestData.Digest_Gost3411_SourceData;
+
+                    // Подпись данных
+                    byte[] signature = session.Sign(signMechanism, generatedKey, sourceData);
+
+                    // Проверка подписи для данных
+                    bool isValid = false;
+                    session.Verify(signMechanism, generatedKey, sourceData, signature, out isValid);
+
+                    Assert.IsTrue(isValid);
+
+                    session.DestroyObject(generatedKey);
+                    session.Logout();
+                }
+            }
+        }
     }
 }
