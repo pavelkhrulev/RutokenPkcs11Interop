@@ -88,15 +88,15 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='session'>Сессия пользователя</param>
         /// <param name='keyId'>Хэндл ключа</param>
         /// <returns>Return value of C_GenerateKey</returns>
-        public static void GenerateGostSymmetricKey(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId)
+        public static void GenerateGost28147_89Key(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId)
         {
             CKR rv = CKR.CKR_OK;
 
             // Шаблон для создания симметричного ключа ГОСТ 28147-89
             var template = new CK_ATTRIBUTE[9];
             template[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-            template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.GostSecretKeyLabel);
-            template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.GostSecretKeyId);
+            template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost28147_89KeyLabel);
+            template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.Gost28147_89KeyId);
             template[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
             template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
             template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);
@@ -107,6 +107,86 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)CKM.CKM_GOST28147_KEY_GEN);
 
             // Генерация секретного ключа ГОСТ 28147-89
+            rv = pkcs11.C_GenerateKey(session, ref mechanism, template, Convert.ToUInt32(template.Length), ref keyId);
+
+            // Очистка памяти, выделенной под аттрибуты
+            for (int i = 0; i < template.Length; i++)
+            {
+                UnmanagedMemory.Free(ref template[i].value);
+                template[i].valueLen = 0;
+            }
+
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(keyId != CK.CK_INVALID_HANDLE);
+        }
+
+        /// <summary>
+        /// Вспомогательная функция для генерации симметричного ключа Кузнечик
+        /// </summary>
+        /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
+        /// <param name='session'>Сессия пользователя</param>
+        /// <param name='keyId'>Хэндл ключа</param>
+        /// <returns>Return value of C_GenerateKey</returns>
+        public static void GenerateKuznechikKey(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для создания симметричного ключа Кузнечик
+            var template = new CK_ATTRIBUTE[8];
+            template[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
+            template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.KuznechikKeyLabel);
+            template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.KuznechikKeyId);
+            template[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (CKK) Extended_CKK.CKK_KUZNECHIK);
+            template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
+            template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);
+            template[6] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            template[7] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong) Extended_CKM.CKM_KUZNECHIK_KEY_GEN);
+
+            // Генерация секретного ключа
+            rv = pkcs11.C_GenerateKey(session, ref mechanism, template, Convert.ToUInt32(template.Length), ref keyId);
+
+            // Очистка памяти, выделенной под аттрибуты
+            for (int i = 0; i < template.Length; i++)
+            {
+                UnmanagedMemory.Free(ref template[i].value);
+                template[i].valueLen = 0;
+            }
+
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(keyId != CK.CK_INVALID_HANDLE);
+        }
+
+        /// <summary>
+        /// Вспомогательная функция для генерации симметричного ключа Магма
+        /// </summary>
+        /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
+        /// <param name='session'>Сессия пользователя</param>
+        /// <param name='keyId'>Хэндл ключа</param>
+        /// <returns>Return value of C_GenerateKey</returns>
+        public static void GenerateMagmaKey(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для создания симметричного ключа Магма
+            var template = new CK_ATTRIBUTE[8];
+            template[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
+            template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.MagmaLabel);
+            template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.MagmaKeyId);
+            template[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (CKK)Extended_CKK.CKK_MAGMA);
+            template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
+            template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);
+            template[6] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            template[7] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)Extended_CKM.CKM_MAGMA_KEY_GEN);
+
+            // Генерация секретного ключа
             rv = pkcs11.C_GenerateKey(session, ref mechanism, template, Convert.ToUInt32(template.Length), ref keyId);
 
             // Очистка памяти, выделенной под аттрибуты

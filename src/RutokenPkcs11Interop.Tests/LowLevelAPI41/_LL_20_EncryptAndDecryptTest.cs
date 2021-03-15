@@ -48,7 +48,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Генерация ключа для симметричного шифрования
                 NativeULong keyId = CK.CK_INVALID_HANDLE;
-                Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
+                Helpers.GenerateGost28147_89Key(pkcs11, session, ref keyId);
 
                 CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)CKM.CKM_GOST28147_ECB);
 
@@ -148,7 +148,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Generate symetric key
                 NativeULong keyId = CK.CK_INVALID_HANDLE;
-                Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
+                Helpers.GenerateGost28147_89Key(pkcs11, session, ref keyId);
 
                 CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOST28147);
 
@@ -314,7 +314,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
 
                 // Генерация ключа для симметричного шифрования
                 NativeULong keyId = CK.CK_INVALID_HANDLE;
-                Helpers.GenerateGostSymmetricKey(pkcs11, session, ref keyId);
+                Helpers.GenerateGost28147_89Key(pkcs11, session, ref keyId);
 
                 // Получение исходных данных
                 byte[] sourceData = TestData.Encrypt_CBC_Gost28147_89_ECB_SourceData;
@@ -443,6 +443,430 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
                     Assert.Fail(rv.ToString());
 
                 // Завершение сессии
+                rv = pkcs11.C_Logout(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_CloseSession(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Finalize(IntPtr.Zero);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+            }
+        }
+
+        /// <summary>
+        /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
+        /// </summary>
+        [Test()]
+        public void _LL_20_05_EncryptAndDecrypt_Kuznechik_ECB_Test()
+        {
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
+            CKR rv = CKR.CKR_OK;
+
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
+            {
+                rv = pkcs11.C_Initialize(Settings.InitArgs41);
+                if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
+                    Assert.Fail(rv.ToString());
+
+                // Установление соединения с Рутокен в первом доступном слоте
+                NativeULong slotId = Helpers.GetUsableSlot(pkcs11);
+
+                NativeULong session = CK.CK_INVALID_HANDLE;
+                rv = pkcs11.C_OpenSession(slotId, (CKF.CKF_SERIAL_SESSION | CKF.CKF_RW_SESSION), IntPtr.Zero, IntPtr.Zero, ref session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Выполнение аутентификации пользователя
+                rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
+                    Assert.Fail(rv.ToString());
+
+                // Генерация ключа для симметричного шифрования
+                NativeULong keyId = CK.CK_INVALID_HANDLE;
+                Helpers.GenerateKuznechikKey(pkcs11, session, ref keyId);
+
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)Extended_CKM.CKM_KUZNECHIK_ECB);
+
+                // Инициализация операции шифрования
+                rv = pkcs11.C_EncryptInit(session, ref mechanism, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                byte[] sourceData = TestData.Encrypt_Gost28147_89_ECB_SourceData;
+
+                // Получение длины массива с зашифрованными данными
+                NativeULong encryptedDataLen = 0;
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), null, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(encryptedDataLen > 0);
+
+                // Выделение памяти для массива с зашифрованными данными
+                byte[] encryptedData = new byte[encryptedDataLen];
+
+                // Получение зашифрованных данных
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), encryptedData, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Инициализация операции расишфрования
+                rv = pkcs11.C_DecryptInit(session, ref mechanism, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Получение длины массива с расшифрованными данными
+                NativeULong decryptedDataLen = 0;
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), null, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(decryptedDataLen > 0);
+
+                // Выделение памяти для массива с расшифрованными данными
+                byte[] decryptedData = new byte[decryptedDataLen];
+
+                // Получение расшифрованных данных
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), decryptedData, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(Convert.ToBase64String(sourceData) == Convert.ToBase64String(decryptedData));
+
+                rv = pkcs11.C_DestroyObject(session, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Logout(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_CloseSession(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Finalize(IntPtr.Zero);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+            }
+        }
+
+        /// <summary>
+        /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
+        /// </summary>
+        [Test()]
+        public void _LL_20_06_EncryptAndDecrypt_Magma_ECB_Test()
+        {
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
+            CKR rv = CKR.CKR_OK;
+
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
+            {
+                rv = pkcs11.C_Initialize(Settings.InitArgs41);
+                if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
+                    Assert.Fail(rv.ToString());
+
+                // Установление соединения с Рутокен в первом доступном слоте
+                NativeULong slotId = Helpers.GetUsableSlot(pkcs11);
+
+                NativeULong session = CK.CK_INVALID_HANDLE;
+                rv = pkcs11.C_OpenSession(slotId, (CKF.CKF_SERIAL_SESSION | CKF.CKF_RW_SESSION), IntPtr.Zero, IntPtr.Zero, ref session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Выполнение аутентификации пользователя
+                rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
+                    Assert.Fail(rv.ToString());
+
+                // Генерация ключа для симметричного шифрования
+                NativeULong keyId = CK.CK_INVALID_HANDLE;
+                Helpers.GenerateMagmaKey(pkcs11, session, ref keyId);
+
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)Extended_CKM.CKM_MAGMA_ECB);
+
+                // Инициализация операции шифрования
+                rv = pkcs11.C_EncryptInit(session, ref mechanism, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                byte[] sourceData = TestData.Encrypt_Gost28147_89_ECB_SourceData;
+
+                // Получение длины массива с зашифрованными данными
+                NativeULong encryptedDataLen = 0;
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), null, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(encryptedDataLen > 0);
+
+                // Выделение памяти для массива с зашифрованными данными
+                byte[] encryptedData = new byte[encryptedDataLen];
+
+                // Получение зашифрованных данных
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), encryptedData, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Инициализация операции расишфрования
+                rv = pkcs11.C_DecryptInit(session, ref mechanism, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Получение длины массива с расшифрованными данными
+                NativeULong decryptedDataLen = 0;
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), null, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(decryptedDataLen > 0);
+
+                // Выделение памяти для массива с расшифрованными данными
+                byte[] decryptedData = new byte[decryptedDataLen];
+
+                // Получение расшифрованных данных
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), decryptedData, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(Convert.ToBase64String(sourceData) == Convert.ToBase64String(decryptedData));
+
+                rv = pkcs11.C_DestroyObject(session, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Logout(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_CloseSession(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Finalize(IntPtr.Zero);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+            }
+        }
+
+        /// <summary>
+        /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
+        /// </summary>
+        [Test()]
+        public void _LL_20_07_EncryptAndDecrypt_Kuznechik_CTR_ACPKM_Test()
+        {
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
+            CKR rv = CKR.CKR_OK;
+
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
+            {
+                rv = pkcs11.C_Initialize(Settings.InitArgs41);
+                if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
+                    Assert.Fail(rv.ToString());
+
+                // Установление соединения с Рутокен в первом доступном слоте
+                NativeULong slotId = Helpers.GetUsableSlot(pkcs11);
+
+                NativeULong session = CK.CK_INVALID_HANDLE;
+                rv = pkcs11.C_OpenSession(slotId, (CKF.CKF_SERIAL_SESSION | CKF.CKF_RW_SESSION), IntPtr.Zero, IntPtr.Zero, ref session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Выполнение аутентификации пользователя
+                rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
+                    Assert.Fail(rv.ToString());
+
+                // Генерация ключа для симметричного шифрования
+                NativeULong keyId = CK.CK_INVALID_HANDLE;
+                Helpers.GenerateKuznechikKey(pkcs11, session, ref keyId);
+
+                var random = new Random();
+                byte[] initVector = new byte[Settings.KUZNYECHIK_BLOCK_SIZE / 2];
+                random.NextBytes(initVector);
+
+                byte[] mechaismParams = new byte[Settings.CTR_ACPKM_PERIOD_SIZE + Settings.KUZNYECHIK_BLOCK_SIZE / 2];
+
+                mechaismParams[0] = 0x01;
+                mechaismParams[1] = 0x00;
+                mechaismParams[2] = 0x00;
+                mechaismParams[3] = 0x00;
+                Array.Copy(initVector, 0, mechaismParams, Settings.CTR_ACPKM_PERIOD_SIZE, initVector.Length);
+
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)Extended_CKM.CKM_KUZNECHIK_CTR_ACPKM, mechaismParams);
+
+                // Инициализация операции шифрования
+                rv = pkcs11.C_EncryptInit(session, ref mechanism, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                byte[] sourceData = TestData.Encrypt_Gost28147_89_ECB_SourceData;
+
+                // Получение длины массива с зашифрованными данными
+                NativeULong encryptedDataLen = 0;
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), null, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(encryptedDataLen > 0);
+
+                // Выделение памяти для массива с зашифрованными данными
+                byte[] encryptedData = new byte[encryptedDataLen];
+
+                // Получение зашифрованных данных
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), encryptedData, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Инициализация операции расишфрования
+                rv = pkcs11.C_DecryptInit(session, ref mechanism, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Получение длины массива с расшифрованными данными
+                NativeULong decryptedDataLen = 0;
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), null, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(decryptedDataLen > 0);
+
+                // Выделение памяти для массива с расшифрованными данными
+                byte[] decryptedData = new byte[decryptedDataLen];
+
+                // Получение расшифрованных данных
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), decryptedData, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(Convert.ToBase64String(sourceData) == Convert.ToBase64String(decryptedData));
+
+                rv = pkcs11.C_DestroyObject(session, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Logout(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_CloseSession(session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                rv = pkcs11.C_Finalize(IntPtr.Zero);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+            }
+        }
+
+        /// <summary>
+        /// C_EncryptInit, C_Encrypt, C_DecryptInit and C_Decrypt test.
+        /// </summary>
+        [Test()]
+        public void _LL_20_08_EncryptAndDecrypt_Magma_CTR_ACPKM_Test()
+        {
+            if (Platform.NativeULongSize != 4 || Platform.StructPackingSize != 1)
+                Assert.Inconclusive("Test cannot be executed on this platform");
+
+            CKR rv = CKR.CKR_OK;
+
+            using (RutokenPkcs11Library pkcs11 = new RutokenPkcs11Library(Settings.Pkcs11LibraryPath))
+            {
+                rv = pkcs11.C_Initialize(Settings.InitArgs41);
+                if ((rv != CKR.CKR_OK) && (rv != CKR.CKR_CRYPTOKI_ALREADY_INITIALIZED))
+                    Assert.Fail(rv.ToString());
+
+                // Установление соединения с Рутокен в первом доступном слоте
+                NativeULong slotId = Helpers.GetUsableSlot(pkcs11);
+
+                NativeULong session = CK.CK_INVALID_HANDLE;
+                rv = pkcs11.C_OpenSession(slotId, (CKF.CKF_SERIAL_SESSION | CKF.CKF_RW_SESSION), IntPtr.Zero, IntPtr.Zero, ref session);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Выполнение аутентификации пользователя
+                rv = pkcs11.C_Login(session, CKU.CKU_USER, Settings.NormalUserPinArray, Convert.ToUInt32(Settings.NormalUserPinArray.Length));
+                if (rv != CKR.CKR_OK && rv != CKR.CKR_USER_ALREADY_LOGGED_IN)
+                    Assert.Fail(rv.ToString());
+
+                // Генерация ключа для симметричного шифрования
+                NativeULong keyId = CK.CK_INVALID_HANDLE;
+                Helpers.GenerateMagmaKey(pkcs11, session, ref keyId);
+
+                var random = new Random();
+                byte[] initVector = new byte[Settings.MAGMA_BLOCK_SIZE / 2];
+                random.NextBytes(initVector);
+
+                byte[] mechaismParams = new byte[Settings.CTR_ACPKM_PERIOD_SIZE + Settings.MAGMA_BLOCK_SIZE / 2];
+
+                mechaismParams[0] = 0x01;
+                mechaismParams[1] = 0x00;
+                mechaismParams[2] = 0x00;
+                mechaismParams[3] = 0x00;
+                Array.Copy(initVector, 0, mechaismParams, Settings.CTR_ACPKM_PERIOD_SIZE, initVector.Length);
+
+                CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)Extended_CKM.CKM_MAGMA_CTR_ACPKM, mechaismParams);
+
+                // Инициализация операции шифрования
+                rv = pkcs11.C_EncryptInit(session, ref mechanism, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                byte[] sourceData = TestData.Encrypt_Gost28147_89_ECB_SourceData;
+
+                // Получение длины массива с зашифрованными данными
+                NativeULong encryptedDataLen = 0;
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), null, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(encryptedDataLen > 0);
+
+                // Выделение памяти для массива с зашифрованными данными
+                byte[] encryptedData = new byte[encryptedDataLen];
+
+                // Получение зашифрованных данных
+                rv = pkcs11.C_Encrypt(session, sourceData, Convert.ToUInt32(sourceData.Length), encryptedData, ref encryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Инициализация операции расишфрования
+                rv = pkcs11.C_DecryptInit(session, ref mechanism, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                // Получение длины массива с расшифрованными данными
+                NativeULong decryptedDataLen = 0;
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), null, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(decryptedDataLen > 0);
+
+                // Выделение памяти для массива с расшифрованными данными
+                byte[] decryptedData = new byte[decryptedDataLen];
+
+                // Получение расшифрованных данных
+                rv = pkcs11.C_Decrypt(session, encryptedData, Convert.ToUInt32(encryptedData.Length), decryptedData, ref decryptedDataLen);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
+                Assert.IsTrue(Convert.ToBase64String(sourceData) == Convert.ToBase64String(decryptedData));
+
+                rv = pkcs11.C_DestroyObject(session, keyId);
+                if (rv != CKR.CKR_OK)
+                    Assert.Fail(rv.ToString());
+
                 rv = pkcs11.C_Logout(session);
                 if (rv != CKR.CKR_OK)
                     Assert.Fail(rv.ToString());

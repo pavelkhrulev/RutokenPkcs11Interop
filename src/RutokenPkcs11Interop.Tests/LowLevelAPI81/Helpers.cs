@@ -95,8 +95,8 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI81
             // Шаблон для создания симметричного ключа ГОСТ 28147-89
             var template = new CK_ATTRIBUTE[9];
             template[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-            template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.GostSecretKeyLabel);
-            template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.GostSecretKeyId);
+            template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost28147_89KeyLabel);
+            template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.Gost28147_89KeyId);
             template[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
             template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
             template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);

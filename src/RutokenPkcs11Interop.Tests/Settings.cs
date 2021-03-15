@@ -108,10 +108,23 @@ namespace Net.RutokenPkcs11InteropTests
         public static string RsaKeyPairId = @"RSA sample keypair ID (Aktiv Co.)";
 
         /* DEMO-метка симметричного ключа ГОСТ 28147-89 */
-        public static string GostSecretKeyLabel = @"Sample GOST 28147 - 89 Secret Key(Aktiv Co.)";
+        public static string Gost28147_89KeyLabel = @"Sample GOST 28147 - 89 Secret Key(Aktiv Co.)";
+
+        /* DEMO-метка симметричного ключа Кузнечик */
+        public static string KuznechikKeyLabel = @"Sample Kuznechik Secret Key(Aktiv Co.)";
+
+
+        /* DEMO-метка симметричного ключа Магма */
+        public static string MagmaLabel = @"Sample Magma Secret Key(Aktiv Co.)";
 
         /* DEMO ID симметричного ключа ГОСТ 28147-89 */
-        public static string GostSecretKeyId = @"GOST 28147-89 Secret Key ID (Aktiv Co.)";
+        public static string Gost28147_89KeyId = @"GOST 28147-89 Secret Key ID (Aktiv Co.)";
+
+        /* DEMO ID симметричного ключа Кузнечик */
+        public static string KuznechikKeyId = @"Kuznechik Secret Key ID (Aktiv Co.)";
+
+        /* DEMO ID симметричного ключа Магма */
+        public static string MagmaKeyId = @"Magma Secret Key ID (Aktiv Co.)";
 
         /* DEMO-метка  открытого ключа #1 ГОСТ Р 34.10-2001 */
         public static string GostPublicKeyLabel = @"Sample GOST R 34.10-2001 Public Key 1 (Aktiv Co.)";
@@ -169,6 +182,15 @@ namespace Net.RutokenPkcs11InteropTests
 
         /* Размер блока в байтах */
         public static int GOST28147_89_BLOCK_SIZE = 8;
+
+        /* Размер блока шифрования в байтах для алгоритма Кузнечик */
+        public static int KUZNYECHIK_BLOCK_SIZE = 16;
+
+        /* Размер блока шифрования в байтах для алгоритма Магма */
+        public static int MAGMA_BLOCK_SIZE = 8;
+
+        /* Размер блока в байтах для для хранения значения периода смены ключа */
+        public static int CTR_ACPKM_PERIOD_SIZE = 4;
 
         /* Размер симметричного ключа ГОСТ 28147-89 в байтах */
         public static int GOST_28147_KEY_SIZE = 32;

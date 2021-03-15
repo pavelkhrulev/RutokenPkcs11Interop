@@ -72,18 +72,18 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         }
 
         /// <summary>
-        /// Generates symetric key.
+        /// Generates Gost 28147-89 symetric key.
         /// </summary>
         /// <param name = 'session' > Read - write session with user logged in</param>
         /// <returns>Object handle</returns>
-        public static IObjectHandle GenerateGostSymmetricKey(ISession session)
+        public static IObjectHandle GenerateGost28147_89Key(ISession session)
         {
             // Шаблон для создания симметричного ключа ГОСТ 28147-89
             var objectAttributes = new List<IObjectAttribute>()
             {
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.GostSecretKeyLabel),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.GostSecretKeyId),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.Gost28147_89KeyLabel),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.Gost28147_89KeyId),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),
@@ -94,6 +94,60 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 
             // Определяем механизм генерации ключа
             var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOST28147_KEY_GEN);
+
+            // Генерируем ключ
+            return session.GenerateKey(mechanism, objectAttributes);
+        }
+
+        /// <summary>
+        /// Generates Kuznechik symetric key.
+        /// </summary>
+        /// <param name = 'session' > Read - write session with user logged in</param>
+        /// <returns>Object handle</returns>
+        public static IObjectHandle GenerateKuznechikKey(ISession session)
+        {
+            // Шаблон для создания симметричного ключа Кузнечик
+            var objectAttributes = new List<IObjectAttribute>()
+            {
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.KuznechikKeyLabel),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.KuznechikKeyId),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (CKK) Extended_CKK.CKK_KUZNECHIK),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
+            };
+
+            // Определяем механизм генерации ключа
+            var mechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_KUZNECHIK_KEY_GEN);
+
+            // Генерируем ключ
+            return session.GenerateKey(mechanism, objectAttributes);
+        }
+
+        /// <summary>
+        /// Generates Magma symetric key.
+        /// </summary>
+        /// <param name = 'session' > Read - write session with user logged in</param>
+        /// <returns>Object handle</returns>
+        public static IObjectHandle GenerateMagmaKey(ISession session)
+        {
+            // Шаблон для создания симметричного ключа Кузнечик
+            var objectAttributes = new List<IObjectAttribute>()
+            {
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.MagmaLabel),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, Settings.MagmaKeyId),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (CKK) Extended_CKK.CKK_MAGMA),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
+            };
+
+            // Определяем механизм генерации ключа
+            var mechanism = Settings.Factories.MechanismFactory.Create((CKM)Extended_CKM.CKM_MAGMA_KEY_GEN);
 
             // Генерируем ключ
             return session.GenerateKey(mechanism, objectAttributes);
