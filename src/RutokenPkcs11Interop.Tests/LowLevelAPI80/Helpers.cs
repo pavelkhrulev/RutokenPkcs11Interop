@@ -276,7 +276,70 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI80
         }
 
         /// <summary>
-        /// Вспомогательная функция для генерации асимметричных ключей по ГОСТ Р 34.10-2012
+        /// Вспомогательная функция для генерации асимметричных ключей по ГОСТ Р 34.10-2012(256)
+        /// </summary>
+        /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
+        /// <param name='session'>Сессия пользователя</param>
+        /// <param name='publicKeyId'>Хэндл публичного ключа</param>
+        /// <param name='privateKeyId'>Хэндл приватного ключа</param>
+        /// <param name="keyPairId">ID ключевой пары</param>
+        /// <returns>Return value of C_GenerateKeyPair</returns>
+        public static void GenerateGost256KeyPair(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong publicKeyId, ref NativeULong privateKeyId,
+            string keyPairId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012(256)
+            var publicKeyTemplate = new CK_ATTRIBUTE[7];
+            publicKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY);
+            publicKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost256PublicKeyLabel);
+            publicKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
+            publicKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOSTR3410);
+            publicKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            publicKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, false);
+            publicKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_256_Parameters);
+
+            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012(256)
+            var privateKeyTemplate = new CK_ATTRIBUTE[9];
+            privateKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY);
+            privateKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.Gost256PrivateKeyLabel);
+            privateKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, keyPairId);
+            privateKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOSTR3410);
+            privateKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            privateKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+            privateKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_DERIVE, true);
+            privateKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_256_Parameters);
+            privateKeyTemplate[8] = CkaUtils.CreateAttribute(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_256_Parameters);
+
+            CK_MECHANISM mechanism = CkmUtils.CreateMechanism(CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
+
+            // Генерация ключевой пары
+            rv = pkcs11.C_GenerateKeyPair(session, ref mechanism, publicKeyTemplate, Convert.ToUInt64(publicKeyTemplate.Length),
+                privateKeyTemplate, Convert.ToUInt64(privateKeyTemplate.Length),
+                ref publicKeyId, ref privateKeyId);
+
+            // Очистка памяти, выделенной под аттрибуты
+            for (int i = 0; i < privateKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref privateKeyTemplate[i].value);
+                privateKeyTemplate[i].valueLen = 0;
+            }
+
+            for (int i = 0; i < publicKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref publicKeyTemplate[i].value);
+                publicKeyTemplate[i].valueLen = 0;
+            }
+
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(publicKeyId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyId != CK.CK_INVALID_HANDLE);
+        }
+
+        /// <summary>
+        /// Вспомогательная функция для генерации асимметричных ключей по ГОСТ Р 34.10-2012(512)
         /// </summary>
         /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
         /// <param name='session'>Сессия пользователя</param>
@@ -609,6 +672,95 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI80
 
             Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
         }
+
+        /// <summary>
+        /// Вспомогательная функция для выработки двйоственного ключа Кузнечик по ГОСТ 34.10-2012 (256)
+        /// </summary>
+        /// <param name='pkcs11'>Initialized PKCS11 wrapper</param>
+        /// <param name='session'>Сессия пользователя</param>
+        /// <param name='publicKeyId'>Хэндл публичного ключа</param>
+        /// <param name='privateKeyId'>Хэндл приватного ключа</param>
+        /// <param name="ukm"></param>
+        /// <param name="derivedKeyId">ID вырабатанного ключа</param>
+        /// <returns>Return value of C_DeriveKey</returns>
+        public static void DeriveKuznechikTwin_GostR3410_12_Key(RutokenPkcs11Library pkcs11, NativeULong session, NativeULong publicKeyId, NativeULong privateKeyId,
+            byte[] ukm, ref NativeULong derivedKeyId)
+        {
+            CKR rv = CKR.CKR_OK;
+
+            // Шаблон для создания ключа обмена
+            var derivedKeyTemplate = new CK_ATTRIBUTE[8];
+            derivedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
+            derivedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.DerivedKuznechikTwinKeyLabel);
+            derivedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (CKK) Extended_CKK.CKK_KUZNECHIK_TWIN_KEY);
+            derivedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
+            derivedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
+            derivedKeyTemplate[5] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+            derivedKeyTemplate[6] = CkaUtils.CreateAttribute(CKA.CKA_EXTRACTABLE, true);
+            derivedKeyTemplate[7] = CkaUtils.CreateAttribute(CKA.CKA_SENSITIVE, false);
+
+            // Получаем публичный ключ по его Id
+            var valueTemplate = new CK_ATTRIBUTE[1];
+            valueTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_VALUE);
+            valueTemplate[0].value = UnmanagedMemory.Allocate(Settings.GOST_3410_KEY_SIZE);
+            valueTemplate[0].valueLen = Convert.ToUInt64(Settings.GOST_3410_KEY_SIZE);
+
+            rv = pkcs11.C_GetAttributeValue(session, publicKeyId, valueTemplate, Convert.ToUInt64(valueTemplate.Length));
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            byte[] publicKey = UnmanagedMemory.Read(valueTemplate[0].value, Convert.ToInt32(valueTemplate[0].valueLen));
+
+            // Определяем параметры механизма выработки ключа
+            var kegMechanismParams = new CK_VENDOR_GOST_KEG_PARAMS
+            {
+                pPublicData = UnmanagedMemory.Allocate(publicKey.Length),
+                ulPublicDataLen = Convert.ToUInt64(publicKey.Length),
+                pUKM = UnmanagedMemory.Allocate(ukm.Length),
+                ulUKMLen = Convert.ToUInt64(ukm.Length)
+            };
+            UnmanagedMemory.Write(kegMechanismParams.pPublicData, publicKey);
+            UnmanagedMemory.Write(kegMechanismParams.pUKM, ukm);
+
+            // Определяем механизм выработки ключа
+            CK_MECHANISM kegMechanism = CkmUtils.CreateMechanism((CKM) Extended_CKM.CKM_VENDOR_GOST_KEG, kegMechanismParams);
+
+            // Выработка ключа согласно установленному выше шаблону
+            rv = pkcs11.C_DeriveKey(session, ref kegMechanism, privateKeyId, derivedKeyTemplate,
+                Convert.ToUInt64(derivedKeyTemplate.Length), ref derivedKeyId);
+
+            // Очистка памяти, выделенной под различные параметры
+            UnmanagedMemory.Free(ref valueTemplate[0].value);
+            valueTemplate[0].valueLen = 0;
+
+            UnmanagedMemory.Free(ref kegMechanismParams.pPublicData);
+            kegMechanismParams.ulPublicDataLen = 0;
+
+            UnmanagedMemory.Free(ref kegMechanismParams.pUKM);
+            kegMechanismParams.ulUKMLen = 0;
+
+            UnmanagedMemory.Free(ref kegMechanism.Parameter);
+            kegMechanism.ParameterLen = 0;
+
+            // Очистка памяти, выделенной под аттрибуты
+            for (int i = 0; i < valueTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref valueTemplate[i].value);
+                valueTemplate[i].valueLen = 0;
+            }
+
+            for (int i = 0; i < derivedKeyTemplate.Length; i++)
+            {
+                UnmanagedMemory.Free(ref derivedKeyTemplate[i].value);
+                derivedKeyTemplate[i].valueLen = 0;
+            }
+
+            if (rv != CKR.CKR_OK)
+                Assert.Fail(rv.ToString());
+
+            Assert.IsTrue(derivedKeyId != CK.CK_INVALID_HANDLE);
+        }
+
 
         /// <summary>
         /// Вспомогательная функция для выработки ключа по ГОСТ 34.10-2012

@@ -270,10 +270,11 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.WrappedGost28147_89KeyLabel),
                         Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ENCRYPT, true),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DECRYPT, true),
-                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true)
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_EXTRACTABLE, true),
+                        Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_SENSITIVE, false),
                     };
 
                     // Генерация параметра для структуры типа CK_GOSTR3410_DERIVE_PARAMS
@@ -408,10 +409,10 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 
                     // Генерация имитовставки для механизма KExp15 на двойственном ключе типа Кузнечик
                     // для выработки общего ключа
-                    byte[] kexpUkm = session.GenerateRandom(Settings.KEXP15_KUZNECHIK_TWIN_UKM_LENGTH);
+                    byte[] kexp15Ukm = session.GenerateRandom(Settings.KEXP15_KUZNECHIK_TWIN_UKM_LENGTH);
 
                     // Определение параметров механизма маскирования
-                    var wrapMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_KUZNECHIK_KEXP_15_WRAP, kexpUkm);
+                    var wrapMechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_KUZNECHIK_KEXP_15_WRAP, kexp15Ukm);
 
                     // Маскирование ключа на общем ключе, выработанном на стороне отправителя
                     byte[] wrappedKey = session.WrapKey(wrapMechanism, senderDerivedTwinKeyHandle, sessionKeyHandle);
