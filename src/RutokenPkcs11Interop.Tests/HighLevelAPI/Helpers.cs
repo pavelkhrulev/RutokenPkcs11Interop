@@ -336,54 +336,6 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         }
 
         /// <summary>
-        /// Вспомогательная функция для генерации пары ключей по ГОСТ Р 34.10-2012
-        /// </summary>
-        /// <param name="session">Открытая сессия с токеном</param>
-        /// <param name="publicKeyHandle">Хэндл публичного ключа</param>
-        /// <param name="privateKeyHandle">Хэндл приватного ключа</param>
-        /// <param name="keyPairId">ID ключевой пары</param>
-        public static void GenerateGost512PINPadPair(
-            ISession session, out IObjectHandle publicKeyHandle, out IObjectHandle privateKeyHandle, string keyPairId)
-        {
-            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012
-            var publicKeyAttributes = new List<IObjectAttribute>()
-            {
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.Gost512PublicKeyLabel),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, keyPairId),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, false),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
-            };
-
-            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012
-            var privateKeyAttributes = new List<IObjectAttribute>()
-            {
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.Gost512PrivateKeyLabel),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, keyPairId),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (uint)Extended_CKK.CKK_GOSTR3410_512),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
-                Settings.Factories.ObjectAttributeFactory.Create((uint)Extended_CKA.CKA_VENDOR_KEY_CONFIRM_OP, true),
-                Settings.Factories.ObjectAttributeFactory.Create((uint)Extended_CKA.CKA_VENDOR_KEY_PIN_ENTER, false),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_512_Parameters)
-            };
-
-            // Определение механизма генерации ключей
-            var mechanism = Settings.Factories.MechanismFactory.Create((CKM) Extended_CKM.CKM_GOSTR3410_512_KEY_PAIR_GEN);
-
-            // Генерация ключевой пары
-            session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
-
-            Assert.IsTrue(publicKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
-            Assert.IsTrue(privateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
-        }
-
-        /// <summary>
         /// Generates asymetric key pair.
         /// </summary>
         /// <param name = 'session' > Read - write session with user logged in</param>
