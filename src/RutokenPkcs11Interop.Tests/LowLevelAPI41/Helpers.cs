@@ -122,6 +122,12 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
             Assert.IsTrue(keyId != CK.CK_INVALID_HANDLE);
         }
 
+        public enum KeyDestenation
+        {
+            ForEncDec,
+            ForSigVer
+        }
+
         /// <summary>
         /// Вспомогательная функция для генерации симметричного ключа Кузнечик
         /// </summary>
@@ -129,20 +135,22 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='session'>Сессия пользователя</param>
         /// <param name='keyId'>Хэндл ключа</param>
         /// <returns>Return value of C_GenerateKey</returns>
-        public static void GenerateKuznechikKey(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId)
+        public static void GenerateKuznechikKey(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId, KeyDestenation dest = KeyDestenation.ForEncDec)
         {
             CKR rv = CKR.CKR_OK;
 
             // Шаблон для создания симметричного ключа Кузнечик
-            var template = new CK_ATTRIBUTE[8];
+            var template = new CK_ATTRIBUTE[10];
             template[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
             template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.KuznechikKeyLabel);
             template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.KuznechikKeyId);
             template[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (CKK) Extended_CKK.CKK_KUZNECHIK);
-            template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
-            template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);
-            template[6] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
-            template[7] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+            template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, dest == KeyDestenation.ForEncDec);
+            template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, dest == KeyDestenation.ForEncDec);
+            template[6] = CkaUtils.CreateAttribute(CKA.CKA_SIGN, dest == KeyDestenation.ForSigVer);
+            template[7] = CkaUtils.CreateAttribute(CKA.CKA_VERIFY, dest == KeyDestenation.ForSigVer);
+            template[8] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            template[9] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
 
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong) Extended_CKM.CKM_KUZNECHIK_KEY_GEN);
 
@@ -169,20 +177,22 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI41
         /// <param name='session'>Сессия пользователя</param>
         /// <param name='keyId'>Хэндл ключа</param>
         /// <returns>Return value of C_GenerateKey</returns>
-        public static void GenerateMagmaKey(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId)
+        public static void GenerateMagmaKey(RutokenPkcs11Library pkcs11, NativeULong session, ref NativeULong keyId, KeyDestenation dest = KeyDestenation.ForEncDec)
         {
             CKR rv = CKR.CKR_OK;
 
             // Шаблон для создания симметричного ключа Магма
-            var template = new CK_ATTRIBUTE[8];
+            var template = new CK_ATTRIBUTE[10];
             template[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
             template[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.MagmaLabel);
             template[2] = CkaUtils.CreateAttribute(CKA.CKA_ID, Settings.MagmaKeyId);
             template[3] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, (CKK)Extended_CKK.CKK_MAGMA);
-            template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
-            template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, true);
-            template[6] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
-            template[7] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
+            template[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, dest == KeyDestenation.ForEncDec);
+            template[5] = CkaUtils.CreateAttribute(CKA.CKA_DECRYPT, dest == KeyDestenation.ForEncDec);
+            template[6] = CkaUtils.CreateAttribute(CKA.CKA_SIGN, dest == KeyDestenation.ForSigVer);
+            template[7] = CkaUtils.CreateAttribute(CKA.CKA_VERIFY, dest == KeyDestenation.ForSigVer);
+            template[8] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
+            template[9] = CkaUtils.CreateAttribute(CKA.CKA_PRIVATE, true);
 
             CK_MECHANISM mechanism = CkmUtils.CreateMechanism((NativeULong)Extended_CKM.CKM_MAGMA_KEY_GEN);
 
