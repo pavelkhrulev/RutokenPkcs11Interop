@@ -213,9 +213,53 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
         /// <param name = 'session' > Read - write session with user logged in</param>
         /// <param name = 'publicKeyHandle' > Output parameter for public key object handle</param>
         /// <param name = 'privateKeyHandle' > Output parameter for private key object handle</param>
+        public static void GenerateGost256KeyPair(ISession session, out IObjectHandle publicKeyHandle, out IObjectHandle privateKeyHandle, string keyPairId)
+        {
+            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012 (256 бит)
+            var publicKeyAttributes = new List<IObjectAttribute>()
+            {
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.Gost256PublicKeyLabel),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, keyPairId),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOSTR3410),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, false),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_256_Parameters)
+            };
+
+            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012 (256 бит)
+            var privateKeyAttributes = new List<IObjectAttribute>()
+            {
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.Gost256PrivateKeyLabel),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_ID, keyPairId),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOSTR3410),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_DERIVE, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_256_Parameters),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3411_PARAMS, Settings.GostR3411_256_Parameters)
+            };
+
+            // Specify key generation mechanism
+            var mechanism = Settings.Factories.MechanismFactory.Create(CKM.CKM_GOSTR3410_KEY_PAIR_GEN);
+
+            // Generate key pair
+            session.GenerateKeyPair(mechanism, publicKeyAttributes, privateKeyAttributes, out publicKeyHandle, out privateKeyHandle);
+
+            Assert.IsTrue(publicKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+            Assert.IsTrue(privateKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+        }
+
+        /// <summary>
+        /// Generates asymetric key pair.
+        /// </summary>
+        /// <param name = 'session' > Read - write session with user logged in</param>
+        /// <param name = 'publicKeyHandle' > Output parameter for public key object handle</param>
+        /// <param name = 'privateKeyHandle' > Output parameter for private key object handle</param>
         public static void GenerateGost512KeyPair(ISession session, out IObjectHandle publicKeyHandle, out IObjectHandle privateKeyHandle, string keyPairId)
         {
-            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2001
+            // Шаблон для генерации открытого ключа ГОСТ Р 34.10-2012 (256 бит)
             var publicKeyAttributes = new List<IObjectAttribute>()
             {
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PUBLIC_KEY),
@@ -227,7 +271,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_GOSTR3410_PARAMS, Settings.GostR3410_512_Parameters)
             };
 
-            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2001
+            // Шаблон для генерации закрытого ключа ГОСТ Р 34.10-2012 (256 бит)
             var privateKeyAttributes = new List<IObjectAttribute>()
             {
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_PRIVATE_KEY),
@@ -390,7 +434,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
             var derivedKeyAttributes = new List<IObjectAttribute>
             {
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.DerivedKeyLabel),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.DerivedGost28147_89KeyLabel),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
@@ -427,7 +471,7 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
             var derivedKeyAttributes = new List<IObjectAttribute>
             {
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
-                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.DerivedKeyLabel),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.DerivedGost28147_89KeyLabel),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
                 Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
@@ -453,6 +497,42 @@ namespace Net.RutokenPkcs11InteropTests.HighLevelAPI
 
             // Наследуем ключ
             derivedKeyHandle = session.DeriveKey(deriveMechanism, privateKeyHandle, derivedKeyAttributes);
+
+            Assert.IsTrue(derivedKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
+        }
+
+        public static void DeriveKuznechikTwin_GostR3410_12_Key(ISession session, IObjectHandle publicKeyHandle, IObjectHandle privateKeyHandle,
+    byte[] ukm, out IObjectHandle derivedKeyHandle)
+        {
+            // Шаблон для создания ключа обмена
+            var derivedKeyAttributes = new List<IObjectAttribute>
+            {
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_LABEL, Settings.DerivedKuznechikTwinKeyLabel),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_KEY_TYPE, (CKK) Extended_CKK.CKK_KUZNECHIK_TWIN_KEY),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_TOKEN, false),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_MODIFIABLE, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_PRIVATE, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_EXTRACTABLE, true),
+                Settings.Factories.ObjectAttributeFactory.Create(CKA.CKA_SENSITIVE, false)
+            };
+
+            // Получаем публичный ключ по его Id
+            var attributes = new List<CKA>
+            {
+                CKA.CKA_VALUE
+            };
+            List<IObjectAttribute> publicKeyAttributes = session.GetAttributeValue(publicKeyHandle, attributes);
+
+            // Определение параметров механизма наследования ключа
+            var kegMechanismParams =
+                Settings.Factories.RutokenMechanismParamsFactory.CreateCkVendorGostKegParams(publicKeyAttributes[0].GetValueAsByteArray(), ukm);
+
+            // Определяем механизм наследования ключа
+            IMechanism kegMechanism = Settings.Factories.MechanismFactory.Create((CKM)Extended_CKM.CKM_VENDOR_GOST_KEG, kegMechanismParams);
+
+            // Наследуем ключ
+            derivedKeyHandle = session.DeriveKey(kegMechanism, privateKeyHandle, derivedKeyAttributes);
 
             Assert.IsTrue(derivedKeyHandle.ObjectId != CK.CK_INVALID_HANDLE);
         }

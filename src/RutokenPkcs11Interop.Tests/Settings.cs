@@ -138,6 +138,12 @@ namespace Net.RutokenPkcs11InteropTests
         /* DEMO ID пары ключей #2 ГОСТ Р 34.10-2001 */
         public static string GostKeyPairId2 = "GOST R 34.10-2001 sample keypair 2 ID (Aktiv Co.)";
 
+        /* DEMO-метка  открытого ключа #1 ГОСТ Р 34.10-2012(256) */
+        public static string Gost256PublicKeyLabel = @"Sample GOST R 34.10-2012(256) Public Key 1 (Aktiv Co.)";
+
+        /* DEMO-метка  закрытого ключа #1 ГОСТ Р 34.10-2012(256) */
+        public static string Gost256PrivateKeyLabel = @"Sample GOST R 34.10-2012(256) Private Key 1 (Aktiv Co.)";
+
         /* DEMO-метка  открытого ключа #1 ГОСТ Р 34.10-2012(512) */
         public static string Gost512PublicKeyLabel = @"Sample GOST R 34.10-2012(512) Public Key 1 (Aktiv Co.)";
 
@@ -150,14 +156,23 @@ namespace Net.RutokenPkcs11InteropTests
         /* DEMO ID пары ключей #2 ГОСТ Р 34.10-2012(512) */
         public static string Gost512KeyPairId2 = @"GOST R 34.10-2012(512) sample keypair 2 ID (Aktiv Co.)";
 
-        /* DEMO-метка общего выработанного ключа */
-        public static string DerivedKeyLabel = @"Derived GOST 28147-89 key";
+        /* DEMO-метка общего выработанного ключа типа ГОСТ 28147-89 */
+        public static string DerivedGost28147_89KeyLabel = @"Derived GOST 28147-89 key";
 
-        /* DEMO-метка для маскируемого ключа */
-        public static string WrappedKeyLabel =  @"GOST 28147-89 key to wrap";
+        /* DEMO-метка общего выработанного ключа типа Кузнечик */
+        public static string DerivedKuznechikTwinKeyLabel = @"Derived Kuznechik twin key";
 
-        /* DEMO-метка для демаскированного ключа */
-        public static string UnwrappedKeyLabel = @"Unwrapped GOST 28147-89 key";
+        /* DEMO-метка для маскируемого ключа ГОСТ 28147-89 */
+        public static string WrappedGost28147_89KeyLabel =  @"GOST 28147-89 key to wrap";
+
+        /* DEMO-метка для маскируемого ключа Кузнечик */
+        public static string WrappedKuznechikKeyLabel = @"Kuznechik key to wrap";
+
+        /* DEMO-метка для демаскированного ключа ГОСТ 28147-89 */
+        public static string UnwrappedGost28147_89KeyLabel = @"Unwrapped GOST 28147-89 key";
+
+        /* DEMO-метка для демаскированного ключа Кузнечик */
+        public static string UnwrappedKuznechikKeyLabel = @"Unwrapped Kuznechik key";
 
         /* Длина модуля ключа RSA в битах */
         public static uint RsaModulusBits = 512;
@@ -168,17 +183,32 @@ namespace Net.RutokenPkcs11InteropTests
         /* Набор параметров КриптоПро A алгоритма ГОСТ Р 34.10-2001 */
         public static byte[] GostR3410Parameters = { 0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x23, 0x01 };
 
+        /* Набор параметров КриптоПро A алгоритма ГОСТ Р 34.10-2012(256) */
+        public static byte[] GostR3410_256_Parameters = { 0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x23, 0x01 };
+
         /* Набор параметров КриптоПро A алгоритма ГОСТ Р 34.10-2012(512) */
         public static byte[] GostR3410_512_Parameters = { 0x06, 0x09, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x02, 0x01, 0x02, 0x01 };
 
         /* Набор параметров КриптоПро алгоритма ГОСТ Р 34.11-1994 */
         public static byte[] GostR3411Parameters = { 0x06, 0x07, 0x2a, 0x85, 0x03, 0x02, 0x02, 0x1e, 0x01 };
 
+        /* Набор параметров КриптоПро алгоритма ГОСТ Р 34.11-2012(256) */
+        public static byte[] GostR3411_256_Parameters = { 0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x02 };
+
         /* Набор параметров КриптоПро алгоритма ГОСТ Р 34.11-2012(512) */
         public static byte[] GostR3411_512_Parameters = { 0x06, 0x08, 0x2a, 0x85, 0x03, 0x07, 0x01, 0x01, 0x02, 0x03 };
 
         /* Размер синхропосылки в байтах */
         public static int UKM_LENGTH = 8;
+
+        /* Размер синхропосылки в байтах */
+        public static int KEG_256_UKM_LENGTH = 24;
+
+        public static int KEG_512_UKM_LENGTH = 16;
+
+        public static int KEXP15_KUZNECHIK_TWIN_UKM_LENGTH = 8;
+
+        public static int KEXP15_MAGMA_TWIN_UKM_LENGTH = 4;
 
         /* Размер блока в байтах */
         public static int GOST28147_89_BLOCK_SIZE = 8;

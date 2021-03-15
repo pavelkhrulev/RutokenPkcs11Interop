@@ -73,7 +73,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Шаблон для создания маскируемого ключа
                 CK_ATTRIBUTE[] sessionKeyTemplate = new CK_ATTRIBUTE[9];
                 sessionKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-                sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel);
+                sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedGost28147_89KeyLabel);
                 sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 sessionKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
                 sessionKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
@@ -122,7 +122,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Шаблон демаскированного ключа
                 CK_ATTRIBUTE[] unwrappedKeyTemplate = new CK_ATTRIBUTE[8];
                 unwrappedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-                unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel);
+                unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedGost28147_89KeyLabel);
                 unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 unwrappedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
                 unwrappedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
@@ -281,7 +281,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Шаблон для создания маскируемого ключа
                 CK_ATTRIBUTE[] sessionKeyTemplate = new CK_ATTRIBUTE[9];
                 sessionKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-                sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel);
+                sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedGost28147_89KeyLabel);
                 sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 sessionKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
                 sessionKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
@@ -328,7 +328,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Шаблон демаскированного ключа
                 CK_ATTRIBUTE[] unwrappedKeyTemplate = new CK_ATTRIBUTE[8];
                 unwrappedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-                unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel);
+                unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedGost28147_89KeyLabel);
                 unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 unwrappedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, false);
                 unwrappedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_MODIFIABLE, true);
@@ -453,7 +453,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Шаблон для создания маскируемого ключа
                 CK_ATTRIBUTE[] sessionKeyTemplate = new CK_ATTRIBUTE[7];
                 sessionKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-                sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedKeyLabel);
+                sessionKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.WrappedGost28147_89KeyLabel);
                 sessionKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 sessionKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
                 sessionKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
@@ -523,7 +523,7 @@ namespace Net.RutokenPkcs11InteropTests.LowLevelAPI40
                 // Шаблон демаскированного ключа
                 CK_ATTRIBUTE[] unwrappedKeyTemplate = new CK_ATTRIBUTE[7];
                 unwrappedKeyTemplate[0] = CkaUtils.CreateAttribute(CKA.CKA_CLASS, CKO.CKO_SECRET_KEY);
-                unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedKeyLabel);
+                unwrappedKeyTemplate[1] = CkaUtils.CreateAttribute(CKA.CKA_LABEL, Settings.UnwrappedGost28147_89KeyLabel);
                 unwrappedKeyTemplate[2] = CkaUtils.CreateAttribute(CKA.CKA_KEY_TYPE, CKK.CKK_GOST28147);
                 unwrappedKeyTemplate[3] = CkaUtils.CreateAttribute(CKA.CKA_TOKEN, true);
                 unwrappedKeyTemplate[4] = CkaUtils.CreateAttribute(CKA.CKA_ENCRYPT, true);
