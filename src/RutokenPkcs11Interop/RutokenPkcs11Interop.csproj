@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <TargetFrameworks>net40;net45;netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(OS)' != 'Windows_NT'">
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Version>5.1.1</Version>
+    <Authors>AktivCo</Authors>
+    <Description>Managed .NET wrapper for unmanaged Rutoken PKCS#11 libraries</Description>
+    <Copyright>Copyright (c) 2017-2021 The RutokenPkcs11Interop Project</Copyright>
+    <PackageProjectUrl>https://github.com/pavelkhrulev/RutokenPkcs11Interop</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pavelkhrulev/RutokenPkcs11Interop.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>pkcs pkcs11 security crypto cryptography smartcard hsm rutoken aktiv</PackageTags>
+    <Company />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RootNamespace>Net.RutokenPkcs11Interop</RootNamespace>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.Common" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Pkcs11Interop" Version="5.1.2" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(OS)' == 'Windows_NT'">
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectGuid>{26824C27-7364-4F10-80F0-5AF38A7125DB}</ProjectGuid>
+    <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>RutokenPkcs11Interop.iOS</RootNamespace>
+    <AssemblyName>RutokenPkcs11Interop.iOS</AssemblyName>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <MtouchFastDev>true</MtouchFastDev>
+    <IOSDebuggerPort>23647</IOSDebuggerPort>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <DeviceSpecificBuild>false</DeviceSpecificBuild>
+    <MtouchVerbosity>
+    </MtouchVerbosity>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchUseLlvm>true</MtouchUseLlvm>
+    <MtouchFloat32>true</MtouchFloat32>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchArch>ARM64</MtouchArch>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <MtouchVerbosity>
+    </MtouchVerbosity>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <MtouchLink>None</MtouchLink>
+    <MtouchArch>x86_64</MtouchArch>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <MtouchVerbosity>
+    </MtouchVerbosity>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignKey>iPhone Developer</CodesignKey>
+    <DeviceSpecificBuild>true</DeviceSpecificBuild>
+    <MtouchDebug>true</MtouchDebug>
+    <MtouchNoSymbolStrip>true</MtouchNoSymbolStrip>
+    <MtouchFastDev>true</MtouchFastDev>
+    <MtouchFloat32>true</MtouchFloat32>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <IOSDebuggerPort>55387</IOSDebuggerPort>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchArch>ARM64</MtouchArch>
+    <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+    <MtouchVerbosity>
+    </MtouchVerbosity>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
+    <AppExtensionDebugBundleId />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Pkcs11Interop, Version=5.1.1.0, Culture=neutral, PublicKeyToken=c10e9c2d8c006d2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Pkcs11Interop.5.1.1\lib\netstandard2.0\Pkcs11Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="RutokenPkcs11Interop, Version=5.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RutokenPkcs11Interop.5.1.1\lib\netstandard2.0\RutokenPkcs11Interop.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="MonoTouch.NUnitLite" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterfaceDefinition Include="LaunchScreen.storyboard" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\Helpers.cs">
+      <Link>Tests\HighLevelAPI\Helpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_02_GetInfoTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_02_GetInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_04_TokenInfoTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_04_TokenInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_09_InitTokenAndPinTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_09_InitTokenAndPinTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_12_DigestTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_12_DigestTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_20_EncryptAndDecryptTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_20_EncryptAndDecryptTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_21_SignAndVerifyTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_21_SignAndVerifyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_25-26_DeriveAndWrapKeyTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_25-26_DeriveAndWrapKeyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_29_ManageFlashTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_29_ManageFlashTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_30_JournalTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_30_JournalTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_31_LicenseTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_31_LicenseTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_32_ActivationPasswordTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_32_ActivationPasswordTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_33_PKITest.cs">
+      <Link>Tests\HighLevelAPI\_HL_33_PKITest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_34_ManageEntityTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_34_ManageEntityTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\HighLevelAPI\_HL_35_PinPolicyTest.cs">
+      <Link>Tests\HighLevelAPI\_HL_35_PinPolicyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\Helpers.cs">
+      <Link>Tests\LowLevelAPI40\Helpers.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_02_GetInfoTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_02_GetInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_04_TokenInfoTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_04_TokenInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_09_InitTokenAndPinTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_09_InitTokenAndPinTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_12_DigestTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_12_DigestTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_20_EncryptAndDecryptTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_20_EncryptAndDecryptTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_21_SignAndVerifyTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_21_SignAndVerifyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_25-26_DeriveAndWrapKeyTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_25-26_DeriveAndWrapKeyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_29_ManageFlashTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_29_ManageFlashTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_30_JournalTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_30_JournalTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_31_LicenseTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_31_LicenseTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_32_ActivationPasswordTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_32_ActivationPasswordTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_33_PKITest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_33_PKITest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI40\_LL_34_ManageEntityTest.cs">
+      <Link>Tests\LowLevelAPI40\_LL_34_ManageEntityTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_02_GetInfoTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_02_GetInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_04_TokenInfoTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_04_TokenInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_09_InitTokenAndPinTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_09_InitTokenAndPinTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_12_DigestTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_12_DigestTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_20_EncryptAndDecryptTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_20_EncryptAndDecryptTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_21_SignAndVerifyTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_21_SignAndVerifyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_25-26_DeriveAndWrapKeyTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_25-26_DeriveAndWrapKeyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_29_ManageFlashTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_29_ManageFlashTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_30_JournalTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_30_JournalTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_31_LicenseTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_31_LicenseTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_32_ActivationPasswordTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_32_ActivationPasswordTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_33_PKITest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_33_PKITest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\_LL_34_ManageEntityTest.cs">
+      <Link>Tests\LowLevelAPI41\_LL_34_ManageEntityTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI41\Helpers.cs">
+      <Link>Tests\LowLevelAPI41\Helpers</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_02_GetInfoTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_02_GetInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_04_TokenInfoTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_04_TokenInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_09_InitTokenAndPinTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_09_InitTokenAndPinTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_12_DigestTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_12_DigestTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_20_EncryptAndDecryptTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_20_EncryptAndDecryptTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_21_SignAndVerifyTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_21_SignAndVerifyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_25-26_DeriveAndWrapKeyTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_25-26_DeriveAndWrapKeyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_29_ManageFlashTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_29_ManageFlashTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_30_JournalTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_30_JournalTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_31_LicenseTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_31_LicenseTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_32_ActivationPasswordTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_32_ActivationPasswordTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_33_PKITest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_33_PKITest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\_LL_34_ManageEntityTest.cs">
+      <Link>Tests\LowLevelAPI80\_LL_34_ManageEntityTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI80\Helpers.cs">
+      <Link>Tests\LowLevelAPI80\Helpers</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_02_GetInfoTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_02_GetInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_04_TokenInfoTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_04_TokenInfoTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_09_InitTokenAndPinTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_09_InitTokenAndPinTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_12_DigestTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_12_DigestTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_20_EncryptAndDecryptTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_20_EncryptAndDecryptTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_21_SignAndVerifyTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_21_SignAndVerifyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_25-26_DeriveAndWrapKeyTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_25-26_DeriveAndWrapKeyTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_29_ManageFlashTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_29_ManageFlashTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_30_JournalTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_30_JournalTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_31_LicenseTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_31_LicenseTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_32_ActivationPasswordTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_32_ActivationPasswordTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_33_PKITest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_33_PKITest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\_LL_34_ManageEntityTest.cs">
+      <Link>Tests\LowLevelAPI81\_LL_34_ManageEntityTest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\LowLevelAPI81\Helpers.cs">
+      <Link>Tests\LowLevelAPI81\Helpers</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\Settings.cs">
+      <Link>Tests\Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\RutokenPkcs11Interop.Tests\TestData.cs">
+      <Link>Tests\TestData.cs</Link>
+    </Compile>
+    <Compile Include="Main.cs" />
+    <Compile Include="UnitTestAppDelegate.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
+  </Target>
+  <Import Project="..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\packages\Aktiv.RtPkcs11Ecp.Natives.iOS.2.0.11\build\Aktiv.RtPkcs11Ecp.Natives.iOS.targets" Condition="Exists('..\packages\Aktiv.RtPkcs11Ecp.Natives.iOS.2.0.11\build\Aktiv.RtPkcs11Ecp.Natives.iOS.targets')" />
+</Project>

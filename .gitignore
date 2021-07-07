@@ -71,6 +71,8 @@ build/nuget/*.nuspec
 *.pidb
 *.svclog
 *.scc
+*.nuget
+*.snuget
 
 # Chutzpah Test files
 _Chutzpah*
@@ -155,6 +157,7 @@ PublishScripts/
 
 # NuGet Packages
 *.nupkg
+*.snupkg
 # The packages folder can be ignored because of Package Restore
 **/packages/*
 # except build/, which is used as an MSBuild target.
